@@ -1,0 +1,47 @@
+body {
+  padding: 0 10px;
+}
+
+.scrolling-wrapper {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  min-width: 100px;
+}
+.y-scroll {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.cell {
+  margin: 5px;
+  min-width: 500px;
+  max-width: 600px;
+  display: inline-block;
+}
+
+.data-column {
+  display: flex;
+}
+
+.side-bar {
+  height: 100%;
+  display: inline-block;
+}
+
+.rotate-90 {
+  -webkit-transform: rotate(-90deg);
+  margin-top: 250px;
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
