@@ -52,13 +52,6 @@ const Practicals = ({ user, selectedSubject, setAllPracticals }) => {
     setShowForm(showForm ? false : true)
   }
 
-  if (practicals.length === 0)
-    return (
-      <p>
-        There are no <b>Pracitcals</b> in the database
-      </p>
-    )
-
   const filtered =
     selectedSubject && selectedSubject._id
       ? practicals.filter(m => m.subject._id === selectedSubject._id)

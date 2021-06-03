@@ -53,13 +53,6 @@ const Notes = ({ user, selectedSubject, setAllNotes }) => {
     setShowForm(showForm ? false : true)
   }
 
-  if (notes.length === 0)
-    return (
-      <p>
-        There are no <b>Notes</b> in the database
-      </p>
-    )
-
   const flitered =
     selectedSubject && selectedSubject._id
       ? notes.filter(n => n.subject._id === selectedSubject._id)

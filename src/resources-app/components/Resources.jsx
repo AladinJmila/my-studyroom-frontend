@@ -93,13 +93,6 @@ function Resources({ user, selectedSubject, setAllResources }) {
     setShowForm(showForm ? false : true)
   }
 
-  if (resources.length === 0)
-    return (
-      <p>
-        There are no <b>Resources</b> in the database
-      </p>
-    )
-
   const filtered =
     selectedSubject && selectedSubject._id
       ? resources.filter(r => r.subject._id === selectedSubject._id)

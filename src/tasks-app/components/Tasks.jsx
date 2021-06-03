@@ -64,13 +64,6 @@ const Tasks = ({ user, selectedSubject, setAllTasks }) => {
     setShowForm(showForm ? false : true)
   }
 
-  if (tasks.length === 0)
-    return (
-      <p>
-        There are no <b>Tasks</b> in the database
-      </p>
-    )
-
   const filtered =
     selectedSubject && selectedSubject._id
       ? tasks.filter(t => t.subject._id === selectedSubject._id)
