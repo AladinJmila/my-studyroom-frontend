@@ -32,7 +32,9 @@ class SubjectsForm extends Form {
 
     const { data: subject } = await saveSubject(data)
 
-    const updatedSubjects = [subject, ...this.props.subjects]
+    let updatedSubjects = [...this.props.subjects]
+    updatedSubjects.shift()
+    updatedSubjects.push(subject)
 
     this.props.setSubjects(updatedSubjects)
     this.props.updateSubjects()

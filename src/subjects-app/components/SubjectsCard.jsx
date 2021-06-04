@@ -16,7 +16,6 @@ const SubjectsCard = ({
   onSubjectSelect,
   onToggleProp,
   onDelete,
-  onEdit,
   selectedSubject,
   allTasks,
   allResources,

@@ -21,13 +21,18 @@ const Subjects = ({
   const [subjects, setSubjects] = useState([])
   const [showForm, setShowForm] = useState(false)
 
-  const firstSubject = { key: 'key', name: 'All Subjects' }
+  const allSubjects = { key: 'key', name: 'All Subjects' }
 
   useEffect(async () => {
+    let isMounted = true
     const { data } = await getSubjects()
 
-    const subjects = [firstSubject, ...data]
-    setSubjects(subjects)
+    const subjects = [allSubjects, ...data]
+    if (isMounted) setSubjects(subjects)
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const handleDelete = async subject => {
@@ -72,7 +77,7 @@ const Subjects = ({
     pinnedSubjects = _.orderBy(pinnedSubjects, ['name'], ['asc'])
     let notPinnedSubjects = data.filter(s => !s.isPinned)
     notPinnedSubjects = _.orderBy(notPinnedSubjects, ['name'], ['asc'])
-    return [firstSubject, ...pinnedSubjects, ...notPinnedSubjects]
+    return [allSubjects, ...pinnedSubjects, ...notPinnedSubjects]
   }
 
   const sorted = sortSubjects()
@@ -81,7 +86,7 @@ const Subjects = ({
     <>
       <HeaderCard
         user={user}
-        count={sorted.length}
+        count={sorted.length - 1}
         item='Subjects'
         onClick={handleShowForm}
         showForm={showForm}
@@ -110,7 +115,7 @@ const Subjects = ({
           allResources={allResources}
           allNotes={allNotes}
           allPracticals={allPracticals}
-          firstSubject={firstSubject}
+          allSubjects={allSubjects}
         />
       ))}
     </>
