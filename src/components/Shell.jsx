@@ -14,7 +14,7 @@ function Shell({ user }) {
 
   return (
     <main
-      style={{ backgroundImage: 'linear-gradient(#eed1ff, #ff9c9c)' }}
+      style={{ backgroundImage: 'linear-gradient(#6b6b6b, #5dcdde)' }}
       className='row pt-3'
     >
       <div

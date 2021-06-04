@@ -1,4 +1,7 @@
-import { backgroundOpacity } from './../../services/stylesService'
+import {
+  backgroundOpacity,
+  mainContentStyle,
+} from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const ResourcesCard = ({
@@ -35,7 +38,9 @@ const ResourcesCard = ({
             )}
           </div>
         </h6>
-        <p className='card-text'>{resource.content}</p>
+        <p className='card-text' style={mainContentStyle}>
+          {resource.content}
+        </p>
         <div className='row'>
           {user && (
             <div className='col'>

@@ -1,5 +1,8 @@
 import Check from '../../common/Check'
-import { backgroundOpacity } from './../../services/stylesService'
+import {
+  backgroundOpacity,
+  mainContentStyle,
+} from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete, onCheck }) => {
@@ -46,7 +49,9 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete, onCheck }) => {
               <s>{task.content}</s>
             </p>
           ) : (
-            <p className='card-text'>{task.content}</p>
+            <p className='card-text' style={mainContentStyle}>
+              {task.content}
+            </p>
           )}
         </>
         <div className='row'>

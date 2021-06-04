@@ -1,5 +1,8 @@
 import Star from '../../common/Star'
-import { backgroundOpacity } from './../../services/stylesService'
+import {
+  backgroundOpacity,
+  mainContentStyle,
+} from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
@@ -31,7 +34,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             {note.resource.content}
           </p>
         )}
-        <p className='card-text'>{note.content}</p>
+        <p className='card-text' style={mainContentStyle}>
+          {note.content}
+        </p>
         <div className='row'>
           {user && (
             <div className='col'>

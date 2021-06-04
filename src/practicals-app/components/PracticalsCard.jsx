@@ -1,4 +1,7 @@
-import { backgroundOpacity } from './../../services/stylesService'
+import {
+  backgroundOpacity,
+  mainContentStyle,
+} from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const PracticalsCard = ({
@@ -33,22 +36,24 @@ const PracticalsCard = ({
         <div>
           {practical.about && (
             <>
-              <h6>About:</h6> <p>{practical.about}</p>
+              <h6>About:</h6> <p style={mainContentStyle}>{practical.about}</p>
             </>
           )}
           {practical.cause && (
             <>
-              <h6>Cause:</h6> <p>{practical.cause}</p>
+              <h6>Cause:</h6> <p style={mainContentStyle}>{practical.cause}</p>
             </>
           )}
           {practical.solution && (
             <>
-              <h6>Solution:</h6> <p>{practical.solution}</p>
+              <h6>Solution:</h6>{' '}
+              <p style={mainContentStyle}>{practical.solution}</p>
             </>
           )}
           {practical.lesson && (
             <>
-              <h6>Lesson:</h6> <p>{practical.lesson}</p>
+              <h6>Lesson:</h6>{' '}
+              <p style={mainContentStyle}>{practical.lesson}</p>
             </>
           )}
         </div>

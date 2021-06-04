@@ -23,10 +23,13 @@ const AppsData = ({
   const [showNotes, setShowNotes] = useState(true)
   const [showTasks, setShowTasks] = useState(true)
 
+  // const barColor = 'linear-gradient(#80eeff, #0c616e)'
+  const barColor = 'rgba(255, 255, 255, 0.7)'
+
   const appsDataArray = [
     {
       name: 'Tasks',
-      color: 'rgba(153, 255, 43, 0.4)',
+      color: barColor,
       icon: 'paw',
       count: allTasks.length,
       show: showTasks,
@@ -41,7 +44,7 @@ const AppsData = ({
     },
     {
       name: 'Resources',
-      color: 'rgba(43, 255, 188, 0.4)',
+      color: barColor,
       icon: 'circle',
       count: allResources.length,
       show: showResources,
@@ -56,7 +59,7 @@ const AppsData = ({
     },
     {
       name: 'Notes',
-      color: 'rgba(255, 209, 43, 0.4)',
+      color: barColor,
       icon: 'certificate',
       count: allNotes.length,
       show: showNotes,
@@ -71,7 +74,7 @@ const AppsData = ({
     },
     {
       name: 'Practicals',
-      color: 'rgba(25, 155, 255, 0.4)',
+      color: barColor,
       icon: 'asterisk',
       count: allPracticals.length,
       show: showPracticals,
