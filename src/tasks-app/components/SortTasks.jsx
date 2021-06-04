@@ -2,7 +2,7 @@ import { backgroundOpacity } from './../../services/stylesService'
 
 const columns = [
   {
-    path: 'checked',
+    path: 'isChecked',
     label: (
       <div style={{ cursor: 'pointer' }}>
         <i className='fa fa-sort' aria-hidden='true'></i> Checked

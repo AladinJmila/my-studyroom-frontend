@@ -13,10 +13,7 @@ function Shell({ user }) {
   // const [updateUi, setUpdateUi] = useState(false)
 
   return (
-    <main
-      style={{ backgroundImage: 'linear-gradient(#6b6b6b, #5dcdde)' }}
-      className='row pt-3'
-    >
+    <main className='row pt-3'>
       <div
         style={{ paddingRight: '0', minWidth: 300 }}
         className='col-2 y-scroll'
