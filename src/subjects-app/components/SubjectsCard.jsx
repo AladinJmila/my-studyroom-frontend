@@ -7,7 +7,10 @@ import {
   totalNotesPerSubject,
   totalPracticalsPerSubject,
 } from '../services/generateStatsData'
-import { backgroundOpacity } from './../../services/stylesService'
+import {
+  backgroundOpacity,
+  mainContentStyle,
+} from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const SubjectsCard = ({
@@ -80,24 +83,45 @@ const SubjectsCard = ({
           </div>
         </div>
 
-        <p className='card-text mt-2'>Tasks: {totalTasks}</p>
-        <p className='card-text mt-2'>Resources: {totalResources}</p>
-        <p className='card-text mt-2'>Notes: {totalNotes}</p>
-        <p className='card-text mt-2'>Practicals : {totalPracticals}</p>
-        {user && (
-          <a href='#' className='card-link' onClick={() => onDelete(subject)}>
-            delete
-          </a>
-        )}
-        {subject.name !== 'All Subjects' && user && (
-          <h6 className='float-right'>
-            Public
-            <Toggle
-              onToggle={() => onToggleProp(subject, 'isPublic')}
-              toggled={subject.isPublic}
-            />
-          </h6>
-        )}
+        <div className='font-weight-bold' style={mainContentStyle}>
+          {Boolean(totalTasks) && (
+            <p style={{ margin: 2 }}>
+              Tasks: <span className='float-right'>{totalTasks}</span>
+            </p>
+          )}
+          {Boolean(totalNotes) && (
+            <p style={{ margin: 2 }}>
+              Notes: <span className='float-right'>{totalNotes}</span>
+            </p>
+          )}
+          {Boolean(totalResources) && (
+            <p style={{ margin: 2 }}>
+              Resources: <span className='float-right'>{totalResources}</span>
+            </p>
+          )}
+          {Boolean(totalPracticals) && (
+            <p style={{ margin: 2 }}>
+              Practicals :{' '}
+              <span className='float-right'>{totalPracticals}</span>
+            </p>
+          )}
+        </div>
+        <div className='mt-2'>
+          {user && (
+            <a href='#' className='card-link' onClick={() => onDelete(subject)}>
+              delete
+            </a>
+          )}
+          {subject.name !== 'All Subjects' && user && (
+            <h6 className='float-right'>
+              Public
+              <Toggle
+                onToggle={() => onToggleProp(subject, 'isPublic')}
+                toggled={subject.isPublic}
+              />
+            </h6>
+          )}
+        </div>
         {/* <a href='#' className='card-link float-right'>
           share
         </a> */}

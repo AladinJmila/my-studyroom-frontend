@@ -5,7 +5,7 @@ function NavBar({ user }) {
     <div>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
         <Link className='navbar-brand' to='/shell'>
-          Neurogenesis
+          StudyApp
         </Link>
         <button
           className='navbar-toggler'

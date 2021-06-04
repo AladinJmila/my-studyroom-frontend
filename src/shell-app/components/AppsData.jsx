@@ -22,29 +22,30 @@ const AppsData = ({
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
   const [showTasks, setShowTasks] = useState(true)
+  const [sortedTasks, setSortedTasks] = useState(1)
 
   // const barColor = 'linear-gradient(#80eeff, #0c616e)'
-  const barColor = 'rgba(255, 255, 255, 0.7)'
 
   const appsDataArray = [
     {
       name: 'Tasks',
-      color: barColor,
       icon: 'paw',
       count: allTasks.length,
       show: showTasks,
+      sortedCount: sortedTasks,
+      setSortedCount: setSortedTasks,
       setShow: setShowTasks,
       data: (
         <Tasks
           user={user}
           selectedSubject={selectedSubject}
           setAllTasks={setAllTasks}
+          setSortedTasks={setSortedTasks}
         />
       ),
     },
     {
       name: 'Resources',
-      color: barColor,
       icon: 'circle',
       count: allResources.length,
       show: showResources,
@@ -59,7 +60,6 @@ const AppsData = ({
     },
     {
       name: 'Notes',
-      color: barColor,
       icon: 'certificate',
       count: allNotes.length,
       show: showNotes,
@@ -74,7 +74,6 @@ const AppsData = ({
     },
     {
       name: 'Practicals',
-      color: barColor,
       icon: 'asterisk',
       count: allPracticals.length,
       show: showPracticals,
@@ -98,13 +97,16 @@ const AppsData = ({
           key={item.name}
           data={item.data}
           name={item.name}
-          color={item.color}
           icon={item.icon}
           show={item.show}
           setShow={item.setShow}
+          sortedCount={item.sortedCount}
+          setSortedCount={item.setSortedCount}
         />
       ))}
-      <div style={{ minWidth: 30, backgroundColor: 'grey' }}></div>
+      <div
+        style={{ minWidth: 30, backgroundColor: 'rgba(255, 255, 255, 0.7)' }}
+      ></div>
     </div>
   )
 }

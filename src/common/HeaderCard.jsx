@@ -6,7 +6,7 @@ const HeaderCard = ({ user, count, outOfCount, item, onClick, showForm }) => {
       <div className='card-body'>
         <h6 className='float-left'>
           Showing {count}
-          {outOfCount && '/' + outOfCount} {item}.
+          {Boolean(outOfCount) && '/' + outOfCount} {item}.
         </h6>
         {user && (
           <button

@@ -1,4 +1,4 @@
-const SideBar = ({ name, color, icon, show, setShow }) => {
+const SideBar = ({ name, icon, show, setShow }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
@@ -8,7 +8,10 @@ const SideBar = ({ name, color, icon, show, setShow }) => {
   return (
     <div
       className='float-left side-bar mr-2'
-      style={{ minWidth: minWidth, backgroundColor: color }}
+      style={{
+        minWidth: minWidth,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      }}
     >
       <i
         className={
@@ -27,7 +30,7 @@ const SideBar = ({ name, color, icon, show, setShow }) => {
         }
         aria-hidden='true'
       ></i>
-      {!show && <h2 class='rotate-90'>{name}</h2>}
+      {!show && <h2 className='rotate-90'>{name}</h2>}
     </div>
   )
 }

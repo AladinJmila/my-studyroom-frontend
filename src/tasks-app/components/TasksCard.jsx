@@ -45,7 +45,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete, onCheck }) => {
             )}
           </div>{' '}
           {task.isChecked ? (
-            <p className='card-text'>
+            <p className='card-text' style={mainContentStyle}>
               <s>{task.content}</s>
             </p>
           ) : (

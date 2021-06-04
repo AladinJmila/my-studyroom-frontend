@@ -6,7 +6,7 @@ import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
 
-const Tasks = ({ user, selectedSubject, setAllTasks }) => {
+const Tasks = ({ user, selectedSubject, setAllTasks, setSortedTasks }) => {
   const [tasks, setTasks] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [selectedTask, setSelectedTask] = useState()
@@ -71,6 +71,9 @@ const Tasks = ({ user, selectedSubject, setAllTasks }) => {
 
   const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
   const checked = sorted.filter(t => t.isChecked === true)
+
+  // setSortedTasks(sorted.length)
+  // console.log(sorted.length)
 
   return (
     <>
