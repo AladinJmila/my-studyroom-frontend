@@ -13,7 +13,7 @@ function Shell({ user }) {
   // const [updateUi, setUpdateUi] = useState(false)
 
   return (
-    <main className='row pt-3'>
+    <main className='row pl-2 mr-2 pt-3'>
       <div
         style={{ paddingRight: '0', minWidth: 300 }}
         className='col-2 y-scroll'
