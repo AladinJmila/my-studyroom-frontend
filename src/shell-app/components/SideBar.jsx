@@ -3,13 +3,14 @@ const SideBar = ({ name, icon, show, setShow }) => {
     show = show ? false : true
     setShow(show)
   }
-  const minWidth = show ? 30 : 110
+  const minWidth = show ? 30 : 120
 
   return (
     <div
       className='float-left side-bar mr-2'
       style={{
         minWidth: minWidth,
+        maxWidth: 120,
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
       }}
     >
