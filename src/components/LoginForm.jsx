@@ -29,7 +29,7 @@ class LoginForm extends Form {
 
   render() {
     return (
-      <div className='container'>
+      <div className='container full-height'>
         <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput('email', 'Email')}

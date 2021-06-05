@@ -1,5 +1,9 @@
 const Profile = () => {
-  return <h2>Profile</h2>
+  return (
+    <div className='container full-height'>
+      <h2>Profile</h2>
+    </div>
+  )
 }
 
 export default Profile
