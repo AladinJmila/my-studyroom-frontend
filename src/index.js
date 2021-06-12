@@ -4,9 +4,20 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import logger from './services/logService'
+import store from './store/configureStore'
+import { addSubject, loadSubjects } from './store/subjects'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
+
+// store.dispatch(
+//   addSubject({
+//     name: 'Rabbix',
+//     userId: '60afd9645739643bcc77844d',
+//   })
+// )
+
+store.dispatch(loadSubjects())
 
 logger.init()
 
