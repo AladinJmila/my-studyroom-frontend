@@ -1,28 +1,18 @@
 import httpService from '../services/httpService'
-import { getCurrentUser } from '../services/authService'
 import * as actions from '../api'
 
 const api =
   ({ dispatch }) =>
   next =>
   async action => {
-    if (action.type !== actions.apiGetCallBegan.type) return next(action)
+    if (action.type !== actions.apiDeleteCallBegan.type) return next(action)
 
-    const { apiEndPoint, itemId, onStart, onSuccess, onError } = action.payload
-
-    if (onStart) dispatch({ type: onStart })
+    const { apiEndPoint, itemId, onSuccess, onError } = action.payload
 
     next(action)
 
-    let userid
-    const user = getCurrentUser()
-    if (user) userid = user._id
-
     try {
-      const response = await httpService.get(apiEndPoint, {
-        headers: { userid },
-      })
-
+      const response = await httpService.delete(`${apiEndPoint}/${itemId}`)
       dispatch(actions.apiCallSuccess(response.data))
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
     } catch (error) {

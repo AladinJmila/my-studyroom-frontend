@@ -68,8 +68,6 @@ const Subjects = ({
     setShowForm(showForm ? false : true)
   }
 
-  if (subjects.length === 0) return <p>There are no subjects in the database</p>
-
   const sortSubjects = () => {
     let data = [...subjects]
     delete data[0]

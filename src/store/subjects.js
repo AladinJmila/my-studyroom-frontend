@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
-import { apiGetCallBegan, apiSaveCallBegan } from './api'
+import { apiGetCallBegan, apiSaveCallBegan, apiDeleteCallBegan } from './api'
 
 const slice = createSlice({
   name: 'subjects',
@@ -25,11 +25,17 @@ const slice = createSlice({
     },
 
     subjectAdded: (subjects, action) => {
-      console.log(subjects)
       subjects.list.push({
         name: action.payload.name,
         userId: action.payload.userId,
       })
+    },
+
+    subjectDeleted: (subjects, action) => {
+      const index = subjects.list.findIndex(
+        subject => subject._id === action.payload.itemId
+      )
+      subjects.list.splice(index, 1)
     },
   },
 })
@@ -39,6 +45,7 @@ export const {
   subjectsReceived,
   subjectsRequestFailed,
   subjectAdded,
+  subjectDeleted,
 } = slice.actions
 export default slice.reducer
 
@@ -54,9 +61,7 @@ export const loadSubjects = () => (dispatch, getState) => {
   dispatch(
     apiGetCallBegan({
       apiEndPoint,
-      // userid: 'undefined',
       onStart: subjectsRequested.type,
-      userid: '60afd9645739643bcc77844d',
       onSuccess: subjectsReceived.type,
       onError: subjectsRequestFailed.type,
     })
@@ -67,7 +72,13 @@ export const addSubject = subject =>
   apiSaveCallBegan({
     apiEndPoint,
     data: subject,
-    onSuccess: subjectAdded.type,
+    // onSuccess: subjectAdded.type,
   })
 
+export const deleteSubject = subjectId =>
+  apiDeleteCallBegan({
+    apiEndPoint,
+    itemId: subjectId,
+    // onSuccess: subjectDeleted.type,
+  })
 // Selector
