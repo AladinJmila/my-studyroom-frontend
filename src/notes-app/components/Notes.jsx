@@ -1,54 +1,47 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { getNotes, deleteNote, saveNote } from '../../services/notesService'
+import { useDispatch, useSelector } from 'react-redux'
 import HeaderCard from '../../common/HeaderCard'
 import NotesForm from './NotesForm'
 import NotesCard from './NotesCard'
+import {
+  loadNotes,
+  patchNote,
+  deleteNote,
+  toggleNoteProp,
+  setSelectedNote,
+} from './../../store/apps/notesActions'
 
 const Notes = ({ user, setAllNotes }) => {
-  const [notes, setNotes] = useState([])
   const [showForm, setShowForm] = useState(false)
-  const [selectedNote, setSelectedNote] = useState()
 
+  const dispatch = useDispatch()
+  const notes = useSelector(state => state.apps.notes.list)
   const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
-  useEffect(async () => {
-    const { data: notes } = await getNotes()
-    setNotes(notes)
+  useEffect(() => {
+    dispatch(loadNotes())
     setAllNotes(notes)
   }, [])
 
-  const handleDelete = async note => {
-    const updatedNotes = notes.filter(n => n._id !== note._id)
-    setNotes(updatedNotes)
-    setAllNotes(updatedNotes)
-    await deleteNote(note._id)
+  const handleDelete = note => {
+    dispatch(deleteNote(note._id))
+    dispatch(loadNotes())
   }
 
   const handleNoteSelect = note => {
-    setSelectedNote(note)
+    dispatch(setSelectedNote(note))
     handleShowForm()
   }
 
-  const handleToggleProp = async (note, property) => {
+  const handleToggleProp = (note, property) => {
     const newNotes = [...notes]
     const index = newNotes.indexOf(note)
-    newNotes[index] = { ...note }
-    newNotes[index][property] = !newNotes[index][property]
+    const noteToUpdate = { ...notes[index] }
+    noteToUpdate[property] = !noteToUpdate[index]
+    const update = { [property]: noteToUpdate[property] }
 
-    let updatedNote = { ...newNotes[index] }
-    updatedNote.subjectId = updatedNote.subject._id
-    delete updatedNote.subject
-    delete updatedNote.__v
-
-    if (note.resource) {
-      updatedNote.resourceId = updatedNote.resource._id
-      delete updatedNote.resource
-    }
-
-    await saveNote(updatedNote)
-
-    setNotes(newNotes)
+    dispatch(patchNote(note._id, update))
+    dispatch(toggleNoteProp(note._id, property))
     setAllNotes(newNotes)
   }
 
@@ -74,10 +67,7 @@ const Notes = ({ user, setAllNotes }) => {
         <NotesForm
           user={user}
           notes={notes}
-          setNotes={setNotes}
-          showForm={handleShowForm}
-          selectedNote={selectedNote}
-          setSelectedNote={setSelectedNote}
+          toggleShowForm={handleShowForm}
           setAllNotes={setAllNotes}
         />
       )}

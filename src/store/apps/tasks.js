@@ -31,17 +31,11 @@ const slice = createSlice({
       tasks.selectedTask = action.payload
     },
 
-    UPDATE_TASK: (tasks, action) => {
-      tasks.list.map(task =>
-        task._id === action.payload._id ? action.payload : task
-      )
-    },
-
     CLEAR_SELECTED_TASK: (tasks, action) => {
       tasks.selectedTask = null
     },
 
-    PATCH_TASK: (tasks, action) => {
+    UPDATE_TASK: (tasks, action) => {
       tasks.list.map(task =>
         task._id === action.payload._id ? action.payload : task
       )
@@ -65,9 +59,8 @@ export const {
   GET_TASKS,
   CREATE_TASK,
   SELECT_TASK,
-  UPDATE_TASK,
   CLEAR_SELECTED_TASK,
-  PATCH_TASK,
+  UPDATE_TASK,
   TOGGLE_TASK_PROP,
   DELETE_TASK,
 } = slice.actions

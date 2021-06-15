@@ -1,8 +1,13 @@
 import Joi from 'joi-browser'
+import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { getSubjects } from '../../services/subjectsService'
 import { getResources } from '../../services/resourcesService'
-import { getNote, saveNote } from '../../services/notesService'
+import {
+  loadNotes,
+  createNote,
+  updateNote,
+  clearSelectedNote,
+} from './../../store/apps/notesActions'
 
 class NotesForm extends Form {
   state = {
@@ -28,17 +33,12 @@ class NotesForm extends Form {
   }
 
   async componentDidMount() {
-    const { data: subjects } = await getSubjects()
-    this.setState({ subjects })
-
+    const { subjects, selectedNote } = this.props
     const { data: resources } = await getResources()
-    this.setState({ resources })
+    this.setState({ subjects, resources })
 
-    const { selectedNote, setSelectedNote } = this.props
     if (selectedNote) {
-      const { data: note } = await getNote(selectedNote._id)
-      this.setState({ data: this.mapToViewModel(note) })
-      setSelectedNote(null)
+      this.setState({ data: this.mapToViewModel(selectedNote) })
     }
   }
 
@@ -51,8 +51,6 @@ class NotesForm extends Form {
         title: note.title,
         content: note.content,
         url: note.url,
-        // starred: note.starred,
-        // isPublic: note.isPublic,
       }
 
     return {
@@ -61,8 +59,6 @@ class NotesForm extends Form {
       title: note.title,
       content: note.content,
       url: note.url,
-      // starred: note.starred,
-      // isPublic: note.isPublic,
     }
   }
 
@@ -70,23 +66,28 @@ class NotesForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    let updatedNotes = [...this.props.notes]
-    const tempNote = updatedNotes.find(n => n._id === data._id)
-    const index = updatedNotes.indexOf(tempNote)
+    const {
+      notes,
+      loadNotes,
+      createNote,
+      updateNote,
+      selectedNote,
+      clearSelectedNote,
+    } = this.props
 
-    if (tempNote) {
-      data.starred = tempNote.starred
-      data.isPublic = tempNote.isPublic
+    if (selectedNote) {
+      data.starred = selectedNote.starred
+      data.isPublic = selectedNote.isPublic
+      updateNote(data)
+      clearSelectedNote()
+    } else {
+      createNote(data)
     }
 
-    const { data: note } = await saveNote(data)
+    loadNotes()
 
-    tempNote
-      ? (updatedNotes[index] = note)
-      : (updatedNotes = [note, ...updatedNotes])
-
-    this.props.setNotes(updatedNotes)
-    this.props.setAllNotes(updatedNotes)
+    this.props.toggleShowForm()
+    this.props.setAllNotes(notes)
     this.setState({
       data: {
         subjectId: '',
@@ -96,7 +97,6 @@ class NotesForm extends Form {
         url: '',
       },
     })
-    this.props.showForm()
   }
 
   render() {
@@ -113,4 +113,17 @@ class NotesForm extends Form {
   }
 }
 
-export default NotesForm
+const mapStateToProps = state => ({
+  notes: state.apps.notes.list,
+  subjects: state.apps.subjects.list,
+  selectedNote: state.apps.notes.selectedNote,
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadNotes: () => dispatch(loadNotes),
+  createNote: note => dispatch(createNote(note)),
+  updateNote: note => dispatch(updateNote(note)),
+  clearSelectedNote: () => dispatch(clearSelectedNote()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotesForm)

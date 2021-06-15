@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import Form from './../../common/Form'
 import { getResources } from './../../services/resourcesService'
 import {
-  saveTask,
-  updateTask,
   loadTasks,
+  createTask,
+  updateTask,
   clearSelectedTask,
 } from '../../store/apps/tasksActions'
 
@@ -74,10 +74,10 @@ class TasksForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      saveTask,
-      updateTask,
-      loadTasks,
       tasks,
+      saveTask,
+      loadTasks,
+      updateTask,
       selectedTask,
       clearSelectedTask,
     } = this.props
@@ -121,15 +121,15 @@ class TasksForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  subjects: state.apps.subjects.list,
   tasks: state.apps.tasks.list,
+  subjects: state.apps.subjects.list,
   selectedTask: state.apps.tasks.selectedTask,
 })
 
 const mapDispatchToProps = dispatch => ({
-  saveTask: task => dispatch(saveTask(task)),
-  updateTask: task => dispatch(updateTask(task)),
   loadTasks: () => dispatch(loadTasks()),
+  createTask: task => dispatch(createTask(task)),
+  updateTask: task => dispatch(updateTask(task)),
   clearSelectedTask: () => dispatch(clearSelectedTask()),
 })
 

@@ -23,7 +23,7 @@ export const loadTasks = () => async (dispatch, getState) => {
   }
 }
 
-export const saveTask = task => async dispatch => {
+export const createTask = task => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, task)
 
@@ -58,7 +58,7 @@ export const patchTask = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
-    dispatch(actions.PATCH_TASK(data))
+    dispatch(actions.UPDATE_TASK(data))
   } catch (error) {
     console.log(error)
   }

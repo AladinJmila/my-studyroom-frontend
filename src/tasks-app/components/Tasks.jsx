@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   loadTasks,
   patchTask,
-  toggleTaskProp,
   deleteTask,
+  toggleTaskProp,
   setSelectedTask,
 } from '../../store/apps/tasksActions'
 import _ from 'lodash'
@@ -24,17 +24,14 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
   const tasks = useSelector(state => state.apps.tasks.list)
   const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(loadTasks())
     setAllTasks(tasks)
   }, [])
 
-  const handleDelete = async task => {
+  const handleDelete = task => {
     dispatch(deleteTask(task._id))
     dispatch(loadTasks())
-    // setAllTasks(task)
-
-    await deleteTask(task._id)
   }
 
   const handleTaskSelect = task => {
@@ -46,7 +43,7 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
     setSortTarget(sortTarget)
   }
 
-  const handleToggleProp = async (task, property) => {
+  const handleToggleProp = (task, property) => {
     const newTasks = [...tasks]
     const index = newTasks.indexOf(task)
     const taskToUpdate = { ...newTasks[index] }

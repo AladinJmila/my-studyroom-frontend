@@ -25,7 +25,7 @@ export const loadSubjects = () => async (dispatch, getState) => {
   }
 }
 
-export const saveSubject = subject => async dispatch => {
+export const createSubject = subject => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, subject)
 

@@ -1,7 +1,7 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { saveSubject } from '../../store/apps/subjectsActions'
+import { createSubject } from '../../store/apps/subjectsActions'
 
 class SubjectsForm extends Form {
   state = {
@@ -34,7 +34,7 @@ class SubjectsForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    this.props.saveSubject(data)
+    this.props.createSubject(data)
     this.props.toggleShowForm()
     this.setState({ data: { name: '', userId: '' } })
   }
@@ -54,7 +54,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  saveSubject: subject => dispatch(saveSubject(subject)),
+  createSubject: subject => dispatch(createSubject(subject)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectsForm)
