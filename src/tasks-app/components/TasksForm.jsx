@@ -1,8 +1,13 @@
 import Joi from 'joi-browser'
+import { connect } from 'react-redux'
 import Form from './../../common/Form'
-import { getSubjects } from './../../services/subjectsService'
-import { getTask, saveTask } from './../../services/tasksService'
 import { getResources } from './../../services/resourcesService'
+import {
+  saveTask,
+  updateTask,
+  loadTasks,
+  clearSelectedTask,
+} from '../../store/tasksActions'
 
 class TasksForm extends Form {
   state = {
@@ -36,14 +41,11 @@ class TasksForm extends Form {
   }
 
   async componentDidMount() {
-    const { data: subjects } = await getSubjects()
+    const { subjects, selectedTask } = this.props
     const { data: resources } = await getResources()
     this.setState({ subjects, resources })
-    const { selectedTask, setSelectedTask } = this.props
     if (selectedTask) {
-      const { data: task } = await getTask(selectedTask._id)
-      this.setState({ data: this.mapToViewModel(task) })
-      setSelectedTask(null)
+      this.setState({ data: this.mapToViewModel(selectedTask) })
     }
   }
 
@@ -67,27 +69,32 @@ class TasksForm extends Form {
     }
   }
 
-  doSubmit = async () => {
+  doSubmit = () => {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    let updatedTasks = [...this.props.tasks]
-    const tempTask = updatedTasks.find(t => t._id === data._id)
-    const index = updatedTasks.indexOf(tempTask)
+    const {
+      saveTask,
+      updateTask,
+      loadTasks,
+      tasks,
+      selectedTask,
+      clearSelectedTask,
+    } = this.props
 
-    if (tempTask) {
-      data.isChecked = tempTask.isChecked
-      data.isPublic = tempTask.isPublic
+    if (selectedTask) {
+      data.isChecked = selectedTask.isChecked
+      data.isPublic = selectedTask.isPublic
+      updateTask(data)
+      clearSelectedTask()
+    } else {
+      saveTask(data)
     }
 
-    const { data: task } = await saveTask(data)
+    loadTasks()
 
-    tempTask
-      ? (updatedTasks[index] = task)
-      : (updatedTasks = [task, ...this.props.tasks])
-
-    this.props.setTasks(updatedTasks)
-    this.props.setAllTasks(updatedTasks)
+    this.props.setAllTasks(tasks)
+    this.props.toggleShowForm()
     this.setState({
       data: {
         subjectId: '',
@@ -97,7 +104,6 @@ class TasksForm extends Form {
         repeat: '',
       },
     })
-    this.props.showForm()
   }
 
   render() {
@@ -114,4 +120,17 @@ class TasksForm extends Form {
   }
 }
 
-export default TasksForm
+const mapStateToProps = state => ({
+  subjects: state.entities.subjects.list,
+  tasks: state.entities.tasks.list,
+  selectedTask: state.entities.tasks.selectedTask,
+})
+
+const mapDispatchToProps = dispatch => ({
+  saveTask: task => dispatch(saveTask(task)),
+  updateTask: task => dispatch(updateTask(task)),
+  loadTasks: () => dispatch(loadTasks()),
+  clearSelectedTask: () => dispatch(clearSelectedTask()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TasksForm)

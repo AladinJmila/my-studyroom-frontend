@@ -1,6 +1,7 @@
 import Joi from 'joi-browser'
+import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { getSubject, saveSubject } from './../../services/subjectsService'
+import { saveSubject } from '../../store/subjectsActions'
 
 class SubjectsForm extends Form {
   state = {
@@ -14,9 +15,12 @@ class SubjectsForm extends Form {
   }
 
   async componentDidMount() {
-    const { selectedSubject, setSelectedSubject } = this.props
+    const { subjects, selectedSubject, setSelectedSubject } = this.props
     if (selectedSubject) {
-      const { data: subject } = await getSubject(selectedSubject._id)
+      const subject = subjects.find(
+        subject => subject._id === selectedSubject._id
+      )
+      // const { data: subject } = await getSubject(selectedSubject._id)
       this.setState({ data: this.mapToViewModel(subject) })
       setSelectedSubject(null)
     }
@@ -26,18 +30,12 @@ class SubjectsForm extends Form {
     return { name: subject.name }
   }
 
-  doSubmit = async () => {
+  doSubmit = () => {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    const { data: subject } = await saveSubject(data)
-
-    let updatedSubjects = [...this.props.subjects]
-    updatedSubjects.shift()
-    updatedSubjects.push(subject)
-
-    this.props.setSubjects(updatedSubjects)
-    this.props.updateSubjects()
+    this.props.saveSubject(data)
+    this.props.toggleShowForm()
     this.setState({ data: { name: '', userId: '' } })
   }
 
@@ -51,4 +49,12 @@ class SubjectsForm extends Form {
   }
 }
 
-export default SubjectsForm
+const mapStateToProps = state => ({
+  subjects: state.entities.subjects.list,
+})
+
+const mapDispatchToProps = dispatch => ({
+  saveSubject: subject => dispatch(saveSubject(subject)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectsForm)

@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { getNotes, deleteNote, saveNote } from '../../services/notesService'
 import HeaderCard from '../../common/HeaderCard'
 import NotesForm from './NotesForm'
 import NotesCard from './NotesCard'
 
-const Notes = ({ user, selectedSubject, setAllNotes }) => {
+const Notes = ({ user, setAllNotes }) => {
   const [notes, setNotes] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [selectedNote, setSelectedNote] = useState()
+
+  const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
   useEffect(async () => {
     const { data: notes } = await getNotes()

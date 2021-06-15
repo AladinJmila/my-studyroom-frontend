@@ -8,7 +8,6 @@ import DataColumn from './DataColumn'
 
 const AppsData = ({
   user,
-  selectedSubject,
   allTasks,
   setAllTasks,
   allResources,
@@ -38,7 +37,6 @@ const AppsData = ({
       data: (
         <Tasks
           user={user}
-          selectedSubject={selectedSubject}
           setAllTasks={setAllTasks}
           setSortedTasks={setSortedTasks}
         />
@@ -50,13 +48,7 @@ const AppsData = ({
       count: allResources.length,
       show: showResources,
       setShow: setShowResources,
-      data: (
-        <Resources
-          user={user}
-          selectedSubject={selectedSubject}
-          setAllResources={setAllResources}
-        />
-      ),
+      data: <Resources user={user} setAllResources={setAllResources} />,
     },
     {
       name: 'Notes',
@@ -64,13 +56,7 @@ const AppsData = ({
       count: allNotes.length,
       show: showNotes,
       setShow: setShowNotes,
-      data: (
-        <Notes
-          user={user}
-          selectedSubject={selectedSubject}
-          setAllNotes={setAllNotes}
-        />
-      ),
+      data: <Notes user={user} setAllNotes={setAllNotes} />,
     },
     {
       name: 'Practicals',
@@ -78,13 +64,7 @@ const AppsData = ({
       count: allPracticals.length,
       show: showPracticals,
       setShow: setShowPracticals,
-      data: (
-        <Practicals
-          user={user}
-          selectedSubject={selectedSubject}
-          setAllPracticals={setAllPracticals}
-        />
-      ),
+      data: <Practicals user={user} setAllPracticals={setAllPracticals} />,
     },
   ]
 

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import {
@@ -19,7 +20,6 @@ const SubjectsCard = ({
   onSubjectSelect,
   onToggleProp,
   onDelete,
-  selectedSubject,
   allTasks,
   allResources,
   allNotes,
@@ -31,6 +31,8 @@ const SubjectsCard = ({
   const totalResources = totalResourcesPerSubject(subject, allResources)
   const totalNotes = totalNotesPerSubject(subject, allNotes)
   const totalPracticals = totalPracticalsPerSubject(subject, allPracticals)
+
+  const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
   return (
     <div

@@ -8,7 +8,7 @@ const api =
   async action => {
     if (action.type !== actions.apiGetCallBegan.type) return next(action)
 
-    const { apiEndPoint, itemId, onStart, onSuccess, onError } = action.payload
+    const { apiEndPoint, onStart, onSuccess, onError } = action.payload
 
     if (onStart) dispatch({ type: onStart })
 

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-  getSubjects,
+  loadSubjects,
+  patchSubject,
+  toggleSubjectProp,
   deleteSubject,
-  saveSubject,
-} from '../../services/subjectsService'
+} from '../../store/subjectsActions'
+import { setSelectedSubject } from '../../store/ui'
 import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
@@ -11,56 +14,41 @@ import SubjectsForm from './SubjectsForm'
 
 const Subjects = ({
   user,
-  setSelectedSubject,
   selectedSubject,
   allTasks,
   allResources,
   allNotes,
   allPracticals,
 }) => {
-  const [subjects, setSubjects] = useState([])
   const [showForm, setShowForm] = useState(false)
-
   const allSubjects = { key: 'key', name: 'All Subjects' }
+  const dispatch = useDispatch()
+  const subjects = useSelector(state => state.entities.subjects.list)
 
-  useEffect(async () => {
-    let isMounted = true
-    const { data } = await getSubjects()
-
-    const subjects = [allSubjects, ...data]
-    if (isMounted) setSubjects(subjects)
-
-    return () => {
-      isMounted = false
-    }
+  useEffect(() => {
+    dispatch(loadSubjects())
   }, [])
 
-  const handleDelete = async subject => {
-    const updatedSubjects = subjects.filter(s => s._id !== subject._id)
-    setSubjects(updatedSubjects)
-
-    await deleteSubject(subject._id)
+  const handleDelete = subject => {
+    dispatch(deleteSubject(subject._id))
   }
 
-  const handleToggleProp = async (subject, property) => {
+  const handleToggleProp = (subject, property) => {
     const newSubjects = [...subjects]
     const index = newSubjects.indexOf(subject)
-    newSubjects[index][property] = !newSubjects[index][property]
+    const subjectToUpdate = { ...newSubjects[index] }
+    subjectToUpdate[property] = !subjectToUpdate[property]
+    const update = { [property]: subjectToUpdate[property] }
 
-    const updatedSubject = { ...newSubjects[index] }
-    delete updatedSubject.__v
-
-    await saveSubject(updatedSubject)
-
-    setSubjects(newSubjects)
+    dispatch(patchSubject(subject._id, update))
+    dispatch(toggleSubjectProp(subject._id, property))
   }
 
   const handleSubjectSelect = subject => {
-    setSelectedSubject(subject)
+    dispatch(setSelectedSubject(subject))
   }
 
   const handleSubjectEditSelect = subject => {
-    setSelectedSubject(subject)
     handleShowForm()
   }
 
@@ -93,10 +81,8 @@ const Subjects = ({
         <SubjectsForm
           user={user}
           subjects={sorted}
-          setSubjects={setSubjects}
-          updateSubjects={handleShowForm}
+          toggleShowForm={handleShowForm}
           selectedSubject={selectedSubject}
-          setSelectedSubject={setSelectedSubject}
         />
       )}
       {sorted.map(subject => (
@@ -108,7 +94,6 @@ const Subjects = ({
           onToggleProp={handleToggleProp}
           onDelete={handleDelete}
           onEdit={handleSubjectEditSelect}
-          selectedSubject={selectedSubject}
           allTasks={allTasks}
           allResources={allResources}
           allNotes={allNotes}

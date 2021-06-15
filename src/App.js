@@ -1,5 +1,7 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Provider } from 'react-redux'
+import store from './store/configureStore'
 import Shell from './components/Shell'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
@@ -19,7 +21,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <Provider store={store}>
       <NavBar user={user} />
       <Switch>
         <Route path='/register' component={RegisterForm}></Route>
@@ -35,7 +37,7 @@ function App() {
         <Redirect from='/' to='/shell' />
         <Redirect to='/not-found' />
       </Switch>
-    </>
+    </Provider>
   )
 }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import {
   getPracticals,
   deletePractical,
@@ -8,10 +9,12 @@ import HeaderCard from '../../common/HeaderCard'
 import PracticalsForm from './PracticalsForm'
 import PracticalsCard from './PracticalsCard'
 
-const Practicals = ({ user, selectedSubject, setAllPracticals }) => {
+const Practicals = ({ user, setAllPracticals }) => {
   const [practicals, setPracticals] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [selectedPractical, setSelectedPractical] = useState()
+
+  const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
   useEffect(async () => {
     const { data: practicals } = await getPracticals()

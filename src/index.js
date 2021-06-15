@@ -4,13 +4,11 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import logger from './services/logService'
-import store from './store/configureStore'
-import { addSubject, loadSubjects, deleteSubject } from './store/subjects'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
 
-store.dispatch(deleteSubject('60c475e4b0f7f533804ac10d'))
+// store.dispatch(deleteSubject('60c475e4b0f7f533804ac10d'))
 
 // store.dispatch(
 //   addSubject({

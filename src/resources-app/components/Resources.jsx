@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import {
   deleteResource,
   getResources,
@@ -10,7 +11,7 @@ import HeaderCard from '../../common/HeaderCard'
 import ResourcesForm from './ResourcesForm'
 import ResourcesCard from './ResourcesCard'
 
-function Resources({ user, selectedSubject, setAllResources }) {
+function Resources({ user, setAllResources }) {
   const [resources, setResources] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [selectedResource, setSelectedResource] = useState()
@@ -18,6 +19,8 @@ function Resources({ user, selectedSubject, setAllResources }) {
     path: 'initial',
     order: 'asc',
   })
+
+  const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
   useEffect(async () => {
     const { data: resources } = await getResources()

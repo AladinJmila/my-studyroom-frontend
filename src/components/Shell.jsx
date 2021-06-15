@@ -3,7 +3,6 @@ import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
 
 function Shell({ user }) {
-  const [selectedSubject, setSelectedSubject] = useState()
   const [allTasks, setAllTasks] = useState([])
   const [allResources, setAllResources] = useState([])
   const [allNotes, setAllNotes] = useState([])
@@ -21,8 +20,6 @@ function Shell({ user }) {
         <h2>Subjects</h2>
         <Subjects
           user={user}
-          setSelectedSubject={setSelectedSubject}
-          selectedSubject={selectedSubject}
           setOrderedData={setOrderedData}
           // setUpdateUi={setUpdateUi}
           // updateUi={updateUi}
@@ -35,7 +32,6 @@ function Shell({ user }) {
       </div>
       <AppsData
         user={user}
-        selectedSubject={selectedSubject}
         allTasks={allTasks}
         setAllTasks={setAllTasks}
         allResources={allResources}
