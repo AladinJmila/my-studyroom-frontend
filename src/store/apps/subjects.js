@@ -54,36 +54,3 @@ export const {
   DELETE_SUBJECT,
 } = slice.actions
 export default slice.reducer
-
-// Action Creators
-
-// export const loadSubjects = () => (dispatch, getState) => {
-//   const { lastFetch } = getState().entities.subjects
-
-//   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
-//   if (diffInMinutes < 10) return
-
-//   dispatch(
-//     apiGetCallBegan({
-//       apiEndPoint,
-//       onStart: subjectsRequested.type,
-//       onSuccess: subjectsReceived.type,
-//       onError: subjectsRequestFailed.type,
-//     })
-//   )
-// }
-
-// export const addSubject = subject =>
-//   apiSaveCallBegan({
-//     apiEndPoint,
-//     data: subject,
-//     // onSuccess: subjectAdded.type,
-//   })
-
-// export const deleteSubject = subjectId =>
-//   apiDeleteCallBegan({
-//     apiEndPoint,
-//     itemId: subjectId,
-//     // onSuccess: subjectDeleted.type,
-//   })
-// Selector

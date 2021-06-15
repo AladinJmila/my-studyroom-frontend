@@ -1,6 +1,6 @@
 import moment from 'moment'
-import httpService from './services/httpService'
-import { getCurrentUser } from './services/authService'
+import httpService from '../services/httpService'
+import { getCurrentUser } from '../services/authService'
 import * as actions from './tasks'
 
 const apiEndPoint = '/tasks'

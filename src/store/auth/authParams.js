@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getCurrentUser } from '../services/authService'
 
 const slice = createSlice({
-  name: 'auth',
+  name: 'authParams',
   initialState: {},
   reducers: {
     SET_USER: (store, action) => {

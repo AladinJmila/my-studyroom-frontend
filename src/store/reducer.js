@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import entitiesReducer from './entities'
-import uiReducer from './ui'
-import authReducer from './auth'
+import appsReducer from './apps/appsReducer'
+import uiReducer from './ui/uiParams'
+import authReducer from './auth/authParams'
 
 export default combineReducers({
-  entities: entitiesReducer,
+  apps: appsReducer,
   ui: uiReducer,
   auth: authReducer,
 })

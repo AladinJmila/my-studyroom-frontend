@@ -5,8 +5,8 @@ import {
   patchSubject,
   toggleSubjectProp,
   deleteSubject,
-} from '../../store/subjectsActions'
-import { setSelectedSubject } from '../../store/ui'
+} from '../../store/apps/subjectsActions'
+import { setSelectedSubject } from '../../store/ui/uiParams'
 import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
@@ -23,7 +23,7 @@ const Subjects = ({
   const [showForm, setShowForm] = useState(false)
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
-  const subjects = useSelector(state => state.entities.subjects.list)
+  const subjects = useSelector(state => state.apps.subjects.list)
 
   useEffect(() => {
     dispatch(loadSubjects())

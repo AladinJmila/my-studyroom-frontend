@@ -6,7 +6,7 @@ import {
   toggleTaskProp,
   deleteTask,
   setSelectedTask,
-} from '../../store/tasksActions'
+} from '../../store/apps/tasksActions'
 import _ from 'lodash'
 import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
@@ -21,7 +21,7 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
   })
 
   const dispatch = useDispatch()
-  const tasks = useSelector(state => state.entities.tasks.list)
+  const tasks = useSelector(state => state.apps.tasks.list)
   const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
   useEffect(async () => {

@@ -1,6 +1,6 @@
 import moment from 'moment'
-import httpService from './services/httpService'
-import { getCurrentUser } from '../services/authService'
+import httpService from '../services/httpService'
+import { getCurrentUser } from '../../services/authService'
 import * as actions from './subjects'
 
 const apiEndPoint = '/subjects'
@@ -9,10 +9,10 @@ const user = getCurrentUser()
 if (user) userid = user._id
 
 export const loadSubjects = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().entities.subjects
+  // const { lastFetch } = getState().apps.subjects
 
-  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
-  if (diffInMinutes < 10) return
+  // const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
+  // if (diffInMinutes < 10) return
 
   try {
     const { data } = await httpService.get(apiEndPoint, {

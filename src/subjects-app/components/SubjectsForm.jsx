@@ -1,7 +1,7 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { saveSubject } from '../../store/subjectsActions'
+import { saveSubject } from '../../store/apps/subjectsActions'
 
 class SubjectsForm extends Form {
   state = {
@@ -50,7 +50,7 @@ class SubjectsForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  subjects: state.entities.subjects.list,
+  subjects: state.apps.subjects.list,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -7,7 +7,7 @@ import {
   updateTask,
   loadTasks,
   clearSelectedTask,
-} from '../../store/tasksActions'
+} from '../../store/apps/tasksActions'
 
 class TasksForm extends Form {
   state = {
@@ -121,9 +121,9 @@ class TasksForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  subjects: state.entities.subjects.list,
-  tasks: state.entities.tasks.list,
-  selectedTask: state.entities.tasks.selectedTask,
+  subjects: state.apps.subjects.list,
+  tasks: state.apps.tasks.list,
+  selectedTask: state.apps.tasks.selectedTask,
 })
 
 const mapDispatchToProps = dispatch => ({
