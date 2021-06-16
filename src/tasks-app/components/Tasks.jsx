@@ -22,7 +22,9 @@ const Tasks = ({ user, setSortedTasks }) => {
 
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.apps.tasks.list)
-  const selectedSubject = useSelector(state => state.ui.selectedSubject)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
 
   useEffect(() => {
     dispatch(loadTasks())

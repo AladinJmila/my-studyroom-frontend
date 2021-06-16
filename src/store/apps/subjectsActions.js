@@ -35,6 +35,10 @@ export const createSubject = subject => async dispatch => {
   }
 }
 
+export const setSelectedSubject = subject => dispatch => {
+  dispatch(actions.SELECT_SUBJECT(subject))
+}
+
 export const patchSubject = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)

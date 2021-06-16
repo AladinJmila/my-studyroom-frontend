@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   loadSubjects,
   patchSubject,
-  toggleSubjectProp,
   deleteSubject,
+  toggleSubjectProp,
+  setSelectedSubject,
 } from '../../store/apps/subjectsActions'
-import { setSelectedSubject } from '../../store/ui/uiParams'
 import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
 
-const Subjects = ({ user, selectedSubject }) => {
+const Subjects = ({ user }) => {
   const [showForm, setShowForm] = useState(false)
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
@@ -75,7 +75,6 @@ const Subjects = ({ user, selectedSubject }) => {
           user={user}
           subjects={sorted}
           toggleShowForm={handleShowForm}
-          selectedSubject={selectedSubject}
         />
       )}
       {sorted.map(subject => (

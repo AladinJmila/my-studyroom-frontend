@@ -51,6 +51,7 @@ class SubjectsForm extends Form {
 
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
+  selectedSubject: state.apps.subjects.selectedSubject,
 })
 
 const mapDispatchToProps = dispatch => ({

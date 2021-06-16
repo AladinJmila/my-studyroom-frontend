@@ -22,7 +22,9 @@ function Resources({ user }) {
 
   const dispatch = useDispatch()
   const resources = useSelector(state => state.apps.resources.list)
-  const selectedSubject = useSelector(state => state.ui.selectedSubject)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
 
   useEffect(() => {
     dispatch(loadResources())

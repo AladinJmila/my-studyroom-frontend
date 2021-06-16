@@ -16,7 +16,9 @@ const Notes = ({ user }) => {
 
   const dispatch = useDispatch()
   const notes = useSelector(state => state.apps.notes.list)
-  const selectedSubject = useSelector(state => state.ui.selectedSubject)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
 
   useEffect(() => {
     dispatch(loadNotes())

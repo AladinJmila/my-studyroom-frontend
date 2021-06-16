@@ -6,6 +6,7 @@ const slice = createSlice({
     list: [],
     loading: false,
     lastFetch: null,
+    selectedSubject: null,
   },
   reducers: {
     REQUEST_SUBJECTS: (subjects, action) => {
@@ -24,6 +25,10 @@ const slice = createSlice({
 
     CREATE_SUBJECT: (subjects, action) => {
       subjects.list.push(action.payload)
+    },
+
+    SELECT_SUBJECT: (uiParams, action) => {
+      uiParams.selectedSubject = action.payload
     },
 
     PATCH_SUBJECT: (subjects, action) => {
@@ -47,6 +52,7 @@ const slice = createSlice({
 export const {
   GET_SUBJECTS,
   CREATE_SUBJECT,
+  SELECT_SUBJECT,
   PATCH_SUBJECT,
   TOGGLE_SUBJECT_PROP,
   DELETE_SUBJECT,

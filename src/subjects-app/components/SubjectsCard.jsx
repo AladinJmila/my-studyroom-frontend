@@ -33,7 +33,9 @@ const SubjectsCard = ({
   const totalNotes = totalNotesPerSubject(subject, allNotes)
   const totalPracticals = totalPracticalsPerSubject(subject, allPracticals)
 
-  const selectedSubject = useSelector(state => state.ui.selectedSubject)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
 
   return (
     <div

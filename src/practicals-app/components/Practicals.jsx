@@ -16,7 +16,9 @@ const Practicals = ({ user }) => {
 
   const dispatch = useDispatch()
   const practicals = useSelector(state => state.apps.practicals.list)
-  const selectedSubject = useSelector(state => state.ui.selectedSubject)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
 
   useEffect(() => {
     dispatch(loadPracticals())
