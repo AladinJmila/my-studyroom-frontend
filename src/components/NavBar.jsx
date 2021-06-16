@@ -1,6 +1,9 @@
 import { Link, NavLink } from 'react-router-dom'
+import { getCurrentUser } from '../services/authService'
 
-function NavBar({ user }) {
+function NavBar() {
+  const user = getCurrentUser()
+
   return (
     <div>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>

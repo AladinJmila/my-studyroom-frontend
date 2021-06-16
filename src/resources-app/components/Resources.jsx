@@ -13,7 +13,7 @@ import {
   toggleResourceProp,
 } from './../../store/apps/resourcesActions'
 
-function Resources({ user }) {
+function Resources() {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
@@ -25,6 +25,7 @@ function Resources({ user }) {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
+  const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadResources())

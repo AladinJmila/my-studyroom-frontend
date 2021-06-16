@@ -11,7 +11,7 @@ import {
   setSelectedPractical,
 } from './../../store/apps/practicalsActions'
 
-const Practicals = ({ user }) => {
+const Practicals = () => {
   const [showForm, setShowForm] = useState(false)
 
   const dispatch = useDispatch()
@@ -19,6 +19,7 @@ const Practicals = ({ user }) => {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
+  const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadPracticals())

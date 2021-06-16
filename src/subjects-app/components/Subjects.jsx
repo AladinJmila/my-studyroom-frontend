@@ -12,11 +12,12 @@ import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
 
-const Subjects = ({ user }) => {
+const Subjects = () => {
   const [showForm, setShowForm] = useState(false)
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
   const subjects = useSelector(state => state.apps.subjects.list)
+  const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadSubjects())

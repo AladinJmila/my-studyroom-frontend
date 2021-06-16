@@ -13,7 +13,7 @@ import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
 
-const Tasks = ({ user, setSortedTasks }) => {
+const Tasks = ({ setSortedTasks }) => {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
@@ -25,6 +25,7 @@ const Tasks = ({ user, setSortedTasks }) => {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
+  const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadTasks())

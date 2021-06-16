@@ -11,7 +11,7 @@ import {
   setSelectedNote,
 } from './../../store/apps/notesActions'
 
-const Notes = ({ user }) => {
+const Notes = () => {
   const [showForm, setShowForm] = useState(false)
 
   const dispatch = useDispatch()
@@ -19,6 +19,7 @@ const Notes = ({ user }) => {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
+  const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadNotes())

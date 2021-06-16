@@ -7,7 +7,7 @@ import Practicals from '../../practicals-app/components/Practicals'
 import DataColumn from './DataColumn'
 import { useSelector } from 'react-redux'
 
-const AppsData = ({ user }) => {
+const AppsData = () => {
   const [showPracticals, setShowPracticals] = useState(true)
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
@@ -28,7 +28,7 @@ const AppsData = ({ user }) => {
       sortedCount: sortedTasks,
       setSortedCount: setSortedTasks,
       setShow: setShowTasks,
-      data: <Tasks user={user} setSortedTasks={setSortedTasks} />,
+      data: <Tasks setSortedTasks={setSortedTasks} />,
     },
     {
       name: 'Resources',
@@ -36,7 +36,7 @@ const AppsData = ({ user }) => {
       count: allResources.length,
       show: showResources,
       setShow: setShowResources,
-      data: <Resources user={user} />,
+      data: <Resources />,
     },
     {
       name: 'Notes',
@@ -44,7 +44,7 @@ const AppsData = ({ user }) => {
       count: allNotes.length,
       show: showNotes,
       setShow: setShowNotes,
-      data: <Notes user={user} />,
+      data: <Notes />,
     },
     {
       name: 'Practicals',
@@ -52,7 +52,7 @@ const AppsData = ({ user }) => {
       count: allPracticals.length,
       show: showPracticals,
       setShow: setShowPracticals,
-      data: <Practicals user={user} />,
+      data: <Practicals />,
     },
   ]
 

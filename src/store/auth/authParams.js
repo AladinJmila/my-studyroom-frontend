@@ -3,7 +3,9 @@ import { getCurrentUser } from '../services/authService'
 
 const slice = createSlice({
   name: 'authParams',
-  initialState: {},
+  initialState: {
+    user: null,
+  },
   reducers: {
     SET_USER: (store, action) => {
       store.user = action.payload
@@ -15,8 +17,7 @@ export const { SET_USER } = slice.actions
 export default slice.reducer
 
 // Action Creators
-export const setCurrentUser = () => dispatch => {
-  const user = getCurrentUser()
+export const setCurrentUser = user => dispatch => {
   dispatch(SET_USER(user))
 }
 
