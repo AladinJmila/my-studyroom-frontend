@@ -120,7 +120,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadNotes: () => dispatch(loadNotes),
+  loadNotes: () => dispatch(loadNotes()),
   createNote: note => dispatch(createNote(note)),
   updateNote: note => dispatch(updateNote(note)),
   clearSelectedNote: () => dispatch(clearSelectedNote()),

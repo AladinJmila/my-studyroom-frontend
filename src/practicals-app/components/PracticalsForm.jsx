@@ -1,7 +1,12 @@
 import Joi from 'joi-browser'
+import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { getSubjects } from '../../services/subjectsService'
-import { getPractical, savePractical } from '../../services/practicalsService'
+import {
+  createPractical,
+  loadPracticals,
+  updatePractical,
+  clearSelectedPractical,
+} from './../../store/apps/practicalsActions'
 
 class PracticalForm extends Form {
   state = {
@@ -28,13 +33,11 @@ class PracticalForm extends Form {
   }
 
   async componentDidMount() {
-    const { data: subjects } = await getSubjects()
+    const { subjects, selectedPractical } = this.props
     this.setState({ subjects })
-    const { selectedPractical, setSelectedPractical } = this.props
+
     if (selectedPractical) {
-      const { data: practical } = await getPractical(selectedPractical._id)
-      this.setState({ data: this.mapToViewModel(practical) })
-      setSelectedPractical(null)
+      this.setState({ data: this.mapToViewModel(selectedPractical) })
     }
   }
 
@@ -54,22 +57,27 @@ class PracticalForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    let updatedPracticals = [...this.props.practicals]
-    const tempPractical = updatedPracticals.find(p => p._id === data._id)
-    const index = updatedPracticals.indexOf(tempPractical)
+    const {
+      practicals,
+      loadPracticals,
+      createPractical,
+      updatePractical,
+      selectedPractical,
+      clearSelectedPractical,
+    } = this.props
 
-    if (tempPractical) {
-      data.isPublic = tempPractical.isPublic
+    if (selectedPractical) {
+      data.isPublic = selectedPractical.isPublic
+      updatePractical(data)
+      clearSelectedPractical()
+    } else {
+      createPractical(data)
     }
 
-    const { data: practical } = await savePractical(data)
+    loadPracticals()
 
-    tempPractical
-      ? (updatedPracticals[index] = practical)
-      : (updatedPracticals = [practical, ...this.props.practicals])
-
-    this.props.setPracticals(updatedPracticals)
-    this.props.setAllPracticals(updatedPracticals)
+    this.props.toggleShowForm()
+    this.props.setAllPracticals(practicals)
     this.setState({
       data: {
         subjectId: '',
@@ -80,7 +88,6 @@ class PracticalForm extends Form {
         url: '',
       },
     })
-    this.props.showForm()
   }
 
   render() {
@@ -98,4 +105,17 @@ class PracticalForm extends Form {
   }
 }
 
-export default PracticalForm
+const mapStateToProps = state => ({
+  practical: state.apps.practicals.list,
+  subjects: state.apps.subjects.list,
+  selectedPractical: state.apps.practicals.selectedPractical,
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadPracticals: () => dispatch(loadPracticals()),
+  createPractical: practical => dispatch(createPractical(practical)),
+  updatePractical: practical => dispatch(updatePractical(practical)),
+  clearSelectedPractical: () => dispatch(clearSelectedPractical),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PracticalForm)

@@ -1,54 +1,47 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import {
-  getPracticals,
-  deletePractical,
-  savePractical,
-} from '../../services/practicalsService'
+import { useDispatch, useSelector } from 'react-redux'
 import HeaderCard from '../../common/HeaderCard'
 import PracticalsForm from './PracticalsForm'
 import PracticalsCard from './PracticalsCard'
+import {
+  loadPracticals,
+  patchPractical,
+  deletePractical,
+  togglePracticalProp,
+  setSelectedPractical,
+} from './../../store/apps/practicalsActions'
 
 const Practicals = ({ user, setAllPracticals }) => {
-  const [practicals, setPracticals] = useState([])
   const [showForm, setShowForm] = useState(false)
-  const [selectedPractical, setSelectedPractical] = useState()
 
+  const dispatch = useDispatch()
+  const practicals = useSelector(state => state.apps.practicals.list)
   const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
-  useEffect(async () => {
-    const { data: practicals } = await getPracticals()
-    setPracticals(practicals)
+  useEffect(() => {
+    dispatch(loadPracticals())
     setAllPracticals(practicals)
   }, [])
 
-  const handleDelete = async practical => {
-    const updatedPracticals = practicals.filter(p => p._id !== practical._id)
-    setPracticals(updatedPracticals)
-    setAllPracticals(updatedPracticals)
-
-    await deletePractical(practical._id)
+  const handleDelete = practical => {
+    dispatch(deletePractical(practical._id))
+    dispatch(loadPracticals())
   }
 
   const handlePracticalSelect = practical => {
-    setSelectedPractical(practical)
+    dispatch(setSelectedPractical(practical))
     handleShowForm()
   }
 
-  const handleToggleProp = async (practical, property) => {
-    const newPracticals = [...practicals]
-    const index = newPracticals.indexOf(practical)
-    newPracticals[index][property] = !newPracticals[index][property]
+  const handleToggleProp = (practical, property) => {
+    const index = practicals.indexOf(practical)
+    const practicalToUpdate = { ...practicals[index] }
+    practicalToUpdate[property] = !practicalToUpdate[property]
+    const update = { [property]: practicalToUpdate[property] }
 
-    const updatedPractical = { ...newPracticals[index] }
-    updatedPractical.subjectId = updatedPractical.subject._id
-    delete updatedPractical.subject
-    delete updatedPractical.__v
-
-    await savePractical(updatedPractical)
-
-    setPracticals(newPracticals)
-    setAllPracticals(newPracticals)
+    dispatch(patchPractical(practical._id, update))
+    dispatch(togglePracticalProp(practical._id, property))
+    setAllPracticals(practicals)
   }
 
   const handleShowForm = () => {
@@ -73,10 +66,7 @@ const Practicals = ({ user, setAllPracticals }) => {
         <PracticalsForm
           user={user}
           practicals={practicals}
-          setPracticals={setPracticals}
-          showForm={handleShowForm}
-          selectedPractical={selectedPractical}
-          setSelectedPractical={setSelectedPractical}
+          toggleShowForm={handleShowForm}
           setAllPracticals={setAllPracticals}
         />
       )}
