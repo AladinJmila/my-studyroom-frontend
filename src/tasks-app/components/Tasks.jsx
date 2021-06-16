@@ -44,15 +44,14 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
   }
 
   const handleToggleProp = (task, property) => {
-    const newTasks = [...tasks]
-    const index = newTasks.indexOf(task)
-    const taskToUpdate = { ...newTasks[index] }
+    const index = tasks.indexOf(task)
+    const taskToUpdate = { ...tasks[index] }
     taskToUpdate[property] = !taskToUpdate[property]
     const update = { [property]: taskToUpdate[property] }
 
     dispatch(patchTask(task._id, update))
     dispatch(toggleTaskProp(task._id, property))
-    setAllTasks(newTasks)
+    setAllTasks(tasks)
   }
 
   const handleShowForm = () => {

@@ -41,8 +41,7 @@ class TasksForm extends Form {
   }
 
   async componentDidMount() {
-    const { subjects, selectedTask } = this.props
-    const { data: resources } = await getResources()
+    const { subjects, resources, selectedTask } = this.props
     this.setState({ subjects, resources })
     if (selectedTask) {
       this.setState({ data: this.mapToViewModel(selectedTask) })
@@ -75,7 +74,7 @@ class TasksForm extends Form {
 
     const {
       tasks,
-      saveTask,
+      createTask,
       loadTasks,
       updateTask,
       selectedTask,
@@ -88,7 +87,7 @@ class TasksForm extends Form {
       updateTask(data)
       clearSelectedTask()
     } else {
-      saveTask(data)
+      createTask(data)
     }
 
     loadTasks()
@@ -123,6 +122,7 @@ class TasksForm extends Form {
 const mapStateToProps = state => ({
   tasks: state.apps.tasks.list,
   subjects: state.apps.subjects.list,
+  resources: state.apps.resources.list,
   selectedTask: state.apps.tasks.selectedTask,
 })
 

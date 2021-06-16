@@ -45,8 +45,6 @@ const slice = createSlice({
 })
 
 export const {
-  REQUEST_SUBJECTS,
-  REQUEST_SBUJECTS_FAIL,
   GET_SUBJECTS,
   CREATE_SUBJECT,
   PATCH_SUBJECT,

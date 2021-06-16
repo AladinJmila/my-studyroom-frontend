@@ -1,7 +1,12 @@
 import Joi from 'joi-browser'
+import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { getSubjects } from '../../services/subjectsService'
-import { getResource, saveResource } from '../../services/resourcesService'
+import {
+  loadResources,
+  createResource,
+  updateResource,
+  clearSelectedResource,
+} from '../../store/apps/resourcesActions'
 
 class ResourcesForm extends Form {
   state = {
@@ -25,14 +30,11 @@ class ResourcesForm extends Form {
   }
 
   async componentDidMount() {
-    const { data: subjects } = await getSubjects()
+    const { subjects, selectedResource } = this.props
     this.setState({ subjects })
 
-    const { selectedResource, setSelectedResource } = this.props
     if (selectedResource) {
-      const { data: resource } = await getResource(selectedResource._id)
-      this.setState({ data: this.mapToViewModel(resource) })
-      setSelectedResource(null)
+      this.setState({ data: this.mapToViewModel(selectedResource) })
     }
   }
 
@@ -50,23 +52,28 @@ class ResourcesForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    let updatedResources = [...this.props.resources]
-    const tempResource = updatedResources.find(r => r._id === data._id)
-    const index = updatedResources.indexOf(tempResource)
+    const {
+      resources,
+      loadResources,
+      createResource,
+      updateResource,
+      selectedResource,
+      clearSelectedResource,
+    } = this.props
 
-    if (tempResource) {
-      data.status = tempResource.status
-      data.isPublic = tempResource.isPublic
+    if (selectedResource) {
+      data.status = selectedResource.status
+      data.isPublic = selectedResource.isPublic
+      updateResource(data)
+      clearSelectedResource()
+    } else {
+      createResource(data)
     }
 
-    const { data: resource } = await saveResource(data)
+    loadResources()
 
-    tempResource
-      ? (updatedResources[index] = resource)
-      : (updatedResources = [resource, ...this.props.resources])
-
-    this.props.setResources(updatedResources)
-    this.props.setAllResources(updatedResources)
+    this.props.toggleShowForm()
+    this.props.setAllResources(resources)
     this.setState({
       data: {
         subjectId: '',
@@ -74,7 +81,6 @@ class ResourcesForm extends Form {
         url: '',
       },
     })
-    this.props.showForm()
   }
 
   render() {
@@ -89,4 +95,17 @@ class ResourcesForm extends Form {
   }
 }
 
-export default ResourcesForm
+const mapStateToProps = state => ({
+  resources: state.apps.resources.list,
+  subjects: state.apps.subjects.list,
+  selectedResource: state.apps.resources.selectedResource,
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadResources: () => dispatch(loadResources),
+  createResource: resource => dispatch(createResource(resource)),
+  updateResource: resource => dispatch(updateResource(resource)),
+  clearSelectedResource: () => dispatch(clearSelectedResource()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResourcesForm)

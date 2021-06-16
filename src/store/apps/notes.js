@@ -24,7 +24,7 @@ const slice = createSlice({
     },
 
     CREATE_NOTE: (notes, action) => {
-      notes.list.push(action.payload)
+      notes.list.unshift(action.payload)
     },
 
     SELECT_NOTE: (notes, action) => {
@@ -54,8 +54,6 @@ const slice = createSlice({
 })
 
 export const {
-  REQUEST_NOTES,
-  REQUEST_NOTES_FAIL,
   GET_NOTES,
   CREATE_NOTE,
   SELECT_NOTE,

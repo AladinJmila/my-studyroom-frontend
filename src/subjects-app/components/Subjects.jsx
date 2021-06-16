@@ -35,9 +35,8 @@ const Subjects = ({
   }
 
   const handleToggleProp = (subject, property) => {
-    const newSubjects = [...subjects]
-    const index = newSubjects.indexOf(subject)
-    const subjectToUpdate = { ...newSubjects[index] }
+    const index = subjects.indexOf(subject)
+    const subjectToUpdate = { ...subjects[index] }
     subjectToUpdate[property] = !subjectToUpdate[property]
     const update = { [property]: subjectToUpdate[property] }
 

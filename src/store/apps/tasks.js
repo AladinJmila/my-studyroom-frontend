@@ -24,7 +24,7 @@ const slice = createSlice({
     },
 
     CREATE_TASK: (tasks, action) => {
-      tasks.list.push(action.payload)
+      tasks.list.unshift(action.payload)
     },
 
     SELECT_TASK: (tasks, action) => {
@@ -54,8 +54,6 @@ const slice = createSlice({
 })
 
 export const {
-  REQUEST_TASKS,
-  REQUEST_TASKS_FAIL,
   GET_TASKS,
   CREATE_TASK,
   SELECT_TASK,

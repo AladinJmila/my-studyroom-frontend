@@ -33,8 +33,7 @@ class NotesForm extends Form {
   }
 
   async componentDidMount() {
-    const { subjects, selectedNote } = this.props
-    const { data: resources } = await getResources()
+    const { subjects, resources, selectedNote } = this.props
     this.setState({ subjects, resources })
 
     if (selectedNote) {
@@ -116,6 +115,7 @@ class NotesForm extends Form {
 const mapStateToProps = state => ({
   notes: state.apps.notes.list,
   subjects: state.apps.subjects.list,
+  resources: state.apps.resources.list,
   selectedNote: state.apps.notes.selectedNote,
 })
 

@@ -1,43 +1,42 @@
 import _ from 'lodash'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import {
-  deleteResource,
-  getResources,
-  saveResource,
-} from './../../services/resourcesService'
+import { useDispatch, useSelector } from 'react-redux'
+import { saveResource } from './../../services/resourcesService'
 import SortResources from './SortResources'
 import HeaderCard from '../../common/HeaderCard'
 import ResourcesForm from './ResourcesForm'
 import ResourcesCard from './ResourcesCard'
+import {
+  loadResources,
+  patchResource,
+  deleteResource,
+  setSelectedResource,
+  toggleResourceProp,
+} from './../../store/apps/resourcesActions'
 
 function Resources({ user, setAllResources }) {
-  const [resources, setResources] = useState([])
   const [showForm, setShowForm] = useState(false)
-  const [selectedResource, setSelectedResource] = useState()
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
     order: 'asc',
   })
 
+  const dispatch = useDispatch()
+  const resources = useSelector(state => state.apps.resources.list)
   const selectedSubject = useSelector(state => state.ui.selectedSubject)
 
-  useEffect(async () => {
-    const { data: resources } = await getResources()
-    setResources(resources)
+  useEffect(() => {
+    dispatch(loadResources())
     setAllResources(resources)
   }, [])
 
-  const handleDelete = async resource => {
-    const updatedResources = resources.filter(r => r._id !== resource._id)
-    setResources(updatedResources)
-    setAllResources(updatedResources)
-
-    await deleteResource(resource._id)
+  const handleDelete = resource => {
+    dispatch(deleteResource(resource._id))
+    dispatch(loadResources())
   }
 
   const handleResourceSelect = resource => {
-    setSelectedResource(resource)
+    dispatch(setSelectedResource(resource))
     handleShowForm()
   }
 
@@ -73,23 +72,17 @@ function Resources({ user, setAllResources }) {
     }
     const index = newResources.indexOf(resource)
     newResources[index].status = { cardStatus, cardClass, bodyClass }
-    setResources(newResources)
   }
 
-  const handleToggleProp = async (resource, property) => {
-    const newResources = [...resources]
-    const index = newResources.indexOf(resource)
-    newResources[index][property] = !newResources[index][property]
+  const handleToggleProp = (resource, property) => {
+    const index = resources.indexOf(resource)
+    const resourceToUpdate = { ...resources[index] }
+    resourceToUpdate[property] = !resourceToUpdate[property]
+    const update = { [property]: resourceToUpdate[property] }
 
-    const updatedResource = { ...newResources[index] }
-    updatedResource.subjectId = updatedResource.subject._id
-    delete updatedResource.subject
-    delete updatedResource.__v
-
-    await saveResource(updatedResource)
-
-    setResources(newResources)
-    setAllResources(newResources)
+    dispatch(patchResource(resource._id, update))
+    dispatch(toggleResourceProp(resource._id, property))
+    setAllResources(resources)
   }
 
   const handleShowForm = () => {
@@ -116,10 +109,7 @@ function Resources({ user, setAllResources }) {
         <ResourcesForm
           user={user}
           resources={resources}
-          setResources={setResources}
-          showForm={handleShowForm}
-          selectedResource={selectedResource}
-          setSelectedResource={setSelectedResource}
+          toggleShowForm={handleShowForm}
           setAllResources={setAllResources}
         />
       )}

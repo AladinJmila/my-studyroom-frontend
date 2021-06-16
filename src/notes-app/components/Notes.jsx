@@ -34,15 +34,14 @@ const Notes = ({ user, setAllNotes }) => {
   }
 
   const handleToggleProp = (note, property) => {
-    const newNotes = [...notes]
-    const index = newNotes.indexOf(note)
+    const index = notes.indexOf(note)
     const noteToUpdate = { ...notes[index] }
     noteToUpdate[property] = !noteToUpdate[index]
     const update = { [property]: noteToUpdate[property] }
 
     dispatch(patchNote(note._id, update))
     dispatch(toggleNoteProp(note._id, property))
-    setAllNotes(newNotes)
+    setAllNotes(notes)
   }
 
   const handleShowForm = () => {
