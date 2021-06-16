@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { saveResource } from './../../services/resourcesService'
 import SortResources from './SortResources'
 import HeaderCard from '../../common/HeaderCard'
 import ResourcesForm from './ResourcesForm'
@@ -14,7 +13,7 @@ import {
   toggleResourceProp,
 } from './../../store/apps/resourcesActions'
 
-function Resources({ user, setAllResources }) {
+function Resources({ user }) {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
@@ -27,7 +26,6 @@ function Resources({ user, setAllResources }) {
 
   useEffect(() => {
     dispatch(loadResources())
-    setAllResources(resources)
   }, [])
 
   const handleDelete = resource => {
@@ -82,7 +80,6 @@ function Resources({ user, setAllResources }) {
 
     dispatch(patchResource(resource._id, update))
     dispatch(toggleResourceProp(resource._id, property))
-    setAllResources(resources)
   }
 
   const handleShowForm = () => {
@@ -110,7 +107,6 @@ function Resources({ user, setAllResources }) {
           user={user}
           resources={resources}
           toggleShowForm={handleShowForm}
-          setAllResources={setAllResources}
         />
       )}
       <table className='table'>

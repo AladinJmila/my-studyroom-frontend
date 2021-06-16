@@ -1,7 +1,6 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from './../../common/Form'
-import { getResources } from './../../services/resourcesService'
 import {
   loadTasks,
   createTask,
@@ -73,7 +72,6 @@ class TasksForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      tasks,
       createTask,
       loadTasks,
       updateTask,
@@ -92,7 +90,6 @@ class TasksForm extends Form {
 
     loadTasks()
 
-    this.props.setAllTasks(tasks)
     this.props.toggleShowForm()
     this.setState({
       data: {
@@ -120,7 +117,6 @@ class TasksForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  tasks: state.apps.tasks.list,
   subjects: state.apps.subjects.list,
   resources: state.apps.resources.list,
   selectedTask: state.apps.tasks.selectedTask,

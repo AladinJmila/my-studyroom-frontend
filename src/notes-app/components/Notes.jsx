@@ -11,7 +11,7 @@ import {
   setSelectedNote,
 } from './../../store/apps/notesActions'
 
-const Notes = ({ user, setAllNotes }) => {
+const Notes = ({ user }) => {
   const [showForm, setShowForm] = useState(false)
 
   const dispatch = useDispatch()
@@ -20,7 +20,6 @@ const Notes = ({ user, setAllNotes }) => {
 
   useEffect(() => {
     dispatch(loadNotes())
-    setAllNotes(notes)
   }, [])
 
   const handleDelete = note => {
@@ -41,7 +40,6 @@ const Notes = ({ user, setAllNotes }) => {
 
     dispatch(patchNote(note._id, update))
     dispatch(toggleNoteProp(note._id, property))
-    setAllNotes(notes)
   }
 
   const handleShowForm = () => {
@@ -63,12 +61,7 @@ const Notes = ({ user, setAllNotes }) => {
         showForm={showForm}
       />
       {showForm && (
-        <NotesForm
-          user={user}
-          notes={notes}
-          toggleShowForm={handleShowForm}
-          setAllNotes={setAllNotes}
-        />
+        <NotesForm user={user} notes={notes} toggleShowForm={handleShowForm} />
       )}
       {flitered.map(note => (
         <NotesCard

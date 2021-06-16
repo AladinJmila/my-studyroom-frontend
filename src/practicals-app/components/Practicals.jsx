@@ -11,7 +11,7 @@ import {
   setSelectedPractical,
 } from './../../store/apps/practicalsActions'
 
-const Practicals = ({ user, setAllPracticals }) => {
+const Practicals = ({ user }) => {
   const [showForm, setShowForm] = useState(false)
 
   const dispatch = useDispatch()
@@ -20,7 +20,6 @@ const Practicals = ({ user, setAllPracticals }) => {
 
   useEffect(() => {
     dispatch(loadPracticals())
-    setAllPracticals(practicals)
   }, [])
 
   const handleDelete = practical => {
@@ -41,7 +40,6 @@ const Practicals = ({ user, setAllPracticals }) => {
 
     dispatch(patchPractical(practical._id, update))
     dispatch(togglePracticalProp(practical._id, property))
-    setAllPracticals(practicals)
   }
 
   const handleShowForm = () => {
@@ -67,7 +65,6 @@ const Practicals = ({ user, setAllPracticals }) => {
           user={user}
           practicals={practicals}
           toggleShowForm={handleShowForm}
-          setAllPracticals={setAllPracticals}
         />
       )}
       {filtered.map(practical => (

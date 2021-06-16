@@ -12,14 +12,7 @@ import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
 
-const Subjects = ({
-  user,
-  selectedSubject,
-  allTasks,
-  allResources,
-  allNotes,
-  allPracticals,
-}) => {
+const Subjects = ({ user, selectedSubject }) => {
   const [showForm, setShowForm] = useState(false)
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
@@ -94,10 +87,6 @@ const Subjects = ({
           onToggleProp={handleToggleProp}
           onDelete={handleDelete}
           onEdit={handleSubjectEditSelect}
-          allTasks={allTasks}
-          allResources={allResources}
-          allNotes={allNotes}
-          allPracticals={allPracticals}
           allSubjects={allSubjects}
         />
       ))}

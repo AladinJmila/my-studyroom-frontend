@@ -53,7 +53,6 @@ class ResourcesForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      resources,
       loadResources,
       createResource,
       updateResource,
@@ -73,7 +72,6 @@ class ResourcesForm extends Form {
     loadResources()
 
     this.props.toggleShowForm()
-    this.props.setAllResources(resources)
     this.setState({
       data: {
         subjectId: '',
@@ -96,7 +94,6 @@ class ResourcesForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  resources: state.apps.resources.list,
   subjects: state.apps.subjects.list,
   selectedResource: state.apps.resources.selectedResource,
 })

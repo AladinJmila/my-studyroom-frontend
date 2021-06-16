@@ -1,7 +1,6 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
-import { getResources } from '../../services/resourcesService'
 import {
   loadNotes,
   createNote,
@@ -66,7 +65,6 @@ class NotesForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      notes,
       loadNotes,
       createNote,
       updateNote,
@@ -86,7 +84,6 @@ class NotesForm extends Form {
     loadNotes()
 
     this.props.toggleShowForm()
-    this.props.setAllNotes(notes)
     this.setState({
       data: {
         subjectId: '',
@@ -113,7 +110,6 @@ class NotesForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  notes: state.apps.notes.list,
   subjects: state.apps.subjects.list,
   resources: state.apps.resources.list,
   selectedNote: state.apps.notes.selectedNote,

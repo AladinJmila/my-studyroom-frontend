@@ -3,13 +3,7 @@ import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
 
 function Shell({ user }) {
-  const [allTasks, setAllTasks] = useState([])
-  const [allResources, setAllResources] = useState([])
-  const [allNotes, setAllNotes] = useState([])
-  const [allPracticals, setAllPracticals] = useState([])
   const [orderedData, setOrderedData] = useState([])
-  // const [appsData, setAppsData] = useState([])
-  // const [updateUi, setUpdateUi] = useState(false)
 
   return (
     <main className='row pl-2 mr-2 pt-3'>
@@ -21,26 +15,10 @@ function Shell({ user }) {
         <Subjects
           user={user}
           setOrderedData={setOrderedData}
-          // setUpdateUi={setUpdateUi}
-          // updateUi={updateUi}
           orderedData={orderedData}
-          allTasks={allTasks}
-          allResources={allResources}
-          allNotes={allNotes}
-          allPracticals={allPracticals}
         />
       </div>
-      <AppsData
-        user={user}
-        allTasks={allTasks}
-        setAllTasks={setAllTasks}
-        allResources={allResources}
-        setAllResources={setAllResources}
-        allNotes={allNotes}
-        setAllNotes={setAllNotes}
-        allPracticals={allPracticals}
-        setAllPracticals={setAllPracticals}
-      />
+      <AppsData user={user} />
     </main>
   )
 }

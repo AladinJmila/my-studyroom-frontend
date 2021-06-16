@@ -58,7 +58,6 @@ class PracticalForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      practicals,
       loadPracticals,
       createPractical,
       updatePractical,
@@ -77,7 +76,6 @@ class PracticalForm extends Form {
     loadPracticals()
 
     this.props.toggleShowForm()
-    this.props.setAllPracticals(practicals)
     this.setState({
       data: {
         subjectId: '',
@@ -106,7 +104,6 @@ class PracticalForm extends Form {
 }
 
 const mapStateToProps = state => ({
-  practical: state.apps.practicals.list,
   subjects: state.apps.subjects.list,
   selectedPractical: state.apps.practicals.selectedPractical,
 })

@@ -5,25 +5,19 @@ import Tasks from '../../tasks-app/components/Tasks'
 import Resources from '../../resources-app/components/Resources'
 import Practicals from '../../practicals-app/components/Practicals'
 import DataColumn from './DataColumn'
+import { useSelector } from 'react-redux'
 
-const AppsData = ({
-  user,
-  allTasks,
-  setAllTasks,
-  allResources,
-  setAllResources,
-  allNotes,
-  setAllNotes,
-  allPracticals,
-  setAllPracticals,
-}) => {
+const AppsData = ({ user }) => {
   const [showPracticals, setShowPracticals] = useState(true)
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
   const [showTasks, setShowTasks] = useState(true)
   const [sortedTasks, setSortedTasks] = useState(1)
 
-  // const barColor = 'linear-gradient(#80eeff, #0c616e)'
+  const allTasks = useSelector(state => state.apps.tasks.list)
+  const allResources = useSelector(state => state.apps.resources.list)
+  const allNotes = useSelector(state => state.apps.notes.list)
+  const allPracticals = useSelector(state => state.apps.practicals.list)
 
   const appsDataArray = [
     {
@@ -34,13 +28,7 @@ const AppsData = ({
       sortedCount: sortedTasks,
       setSortedCount: setSortedTasks,
       setShow: setShowTasks,
-      data: (
-        <Tasks
-          user={user}
-          setAllTasks={setAllTasks}
-          setSortedTasks={setSortedTasks}
-        />
-      ),
+      data: <Tasks user={user} setSortedTasks={setSortedTasks} />,
     },
     {
       name: 'Resources',
@@ -48,7 +36,7 @@ const AppsData = ({
       count: allResources.length,
       show: showResources,
       setShow: setShowResources,
-      data: <Resources user={user} setAllResources={setAllResources} />,
+      data: <Resources user={user} />,
     },
     {
       name: 'Notes',
@@ -56,7 +44,7 @@ const AppsData = ({
       count: allNotes.length,
       show: showNotes,
       setShow: setShowNotes,
-      data: <Notes user={user} setAllNotes={setAllNotes} />,
+      data: <Notes user={user} />,
     },
     {
       name: 'Practicals',
@@ -64,7 +52,7 @@ const AppsData = ({
       count: allPracticals.length,
       show: showPracticals,
       setShow: setShowPracticals,
-      data: <Practicals user={user} setAllPracticals={setAllPracticals} />,
+      data: <Practicals user={user} />,
     },
   ]
 

@@ -13,7 +13,7 @@ import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
 
-const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
+const Tasks = ({ user, setSortedTasks }) => {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
@@ -26,7 +26,6 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
 
   useEffect(() => {
     dispatch(loadTasks())
-    setAllTasks(tasks)
   }, [])
 
   const handleDelete = task => {
@@ -51,7 +50,6 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
 
     dispatch(patchTask(task._id, update))
     dispatch(toggleTaskProp(task._id, property))
-    setAllTasks(tasks)
   }
 
   const handleShowForm = () => {
@@ -80,12 +78,7 @@ const Tasks = ({ user, setAllTasks, setSortedTasks }) => {
         showForm={showForm}
       />
       {showForm && (
-        <TasksForm
-          user={user}
-          tasks={tasks}
-          toggleShowForm={handleShowForm}
-          setAllTasks={setAllTasks}
-        />
+        <TasksForm user={user} tasks={tasks} toggleShowForm={handleShowForm} />
       )}
       <table className='table'>
         <SortTasks sortTarget={sortTarget} onSort={onSort} />

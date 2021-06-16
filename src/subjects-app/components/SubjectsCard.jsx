@@ -20,11 +20,12 @@ const SubjectsCard = ({
   onSubjectSelect,
   onToggleProp,
   onDelete,
-  allTasks,
-  allResources,
-  allNotes,
-  allPracticals,
 }) => {
+  const allTasks = useSelector(state => state.apps.tasks.list)
+  const allResources = useSelector(state => state.apps.resources.list)
+  const allNotes = useSelector(state => state.apps.notes.list)
+  const allPracticals = useSelector(state => state.apps.practicals.list)
+
   const percentage = 0
   const tasksPrecentage = calculatePercentage(subject, allTasks)
   const totalTasks = totalTasksPerSubject(subject, allTasks)
