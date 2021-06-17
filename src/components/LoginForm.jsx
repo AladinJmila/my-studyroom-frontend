@@ -1,6 +1,6 @@
 import Joi from 'joi-browser'
 import Form from '../common/Form'
-import { login } from '../services/authService'
+import { login } from '../store/services/authService'
 
 class LoginForm extends Form {
   state = {

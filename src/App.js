@@ -1,6 +1,6 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './store/configureStore'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import Shell from './components/Shell'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
@@ -8,11 +8,20 @@ import Logout from './components/Logout'
 import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import NavBar from './components/NavBar'
+import { getCurrentUser } from './store/services/authService'
+import { setCurrentUser } from './store/auth/authParams'
 import './App.css'
 
 function App() {
+  const user = getCurrentUser()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setCurrentUser(user))
+  }, [])
+
   return (
-    <Provider store={store}>
+    <>
       <NavBar />
       <Switch>
         <Route path='/register' component={RegisterForm}></Route>
@@ -24,7 +33,7 @@ function App() {
         <Redirect from='/' to='/shell' />
         <Redirect to='/not-found' />
       </Switch>
-    </Provider>
+    </>
   )
 }
 

@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCurrentUser } from '../services/authService'
 
 const slice = createSlice({
   name: 'authParams',
   initialState: {
+    users: [],
     user: null,
   },
   reducers: {
+    CREATE_USER: (users, action) => {},
+
     SET_USER: (store, action) => {
       store.user = action.payload
     },

@@ -1,7 +1,7 @@
 import Joi from 'joi-browser'
 import Form from '../common/Form'
-import { register } from '../services/userService'
-import { loginWithJwt } from '../services/authService'
+import { register } from '../store/services/userService'
+import { loginWithJwt } from '../store/services/authService'
 
 class RegisterForm extends Form {
   state = {

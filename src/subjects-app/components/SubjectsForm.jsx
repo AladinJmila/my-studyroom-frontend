@@ -14,21 +14,19 @@ class SubjectsForm extends Form {
     userId: Joi.string().allow(''),
   }
 
-  async componentDidMount() {
-    const { subjects, selectedSubject, setSelectedSubject } = this.props
-    if (selectedSubject) {
-      const subject = subjects.find(
-        subject => subject._id === selectedSubject._id
-      )
-      // const { data: subject } = await getSubject(selectedSubject._id)
-      this.setState({ data: this.mapToViewModel(subject) })
-      setSelectedSubject(null)
-    }
-  }
+  // componentDidMount() {
+  //   const { subjects, selectedSubject } = this.props
+  //   if (selectedSubject) {
+  //     const subject = subjects.find(
+  //       subject => subject._id === selectedSubject._id
+  //     )
+  //     this.setState({ data: this.mapToViewModel(subject) })
+  //   }
+  // }
 
-  mapToViewModel = subject => {
-    return { name: subject.name }
-  }
+  // mapToViewModel = subject => {
+  //   return { name: subject.name }
+  // }
 
   doSubmit = () => {
     const data = { ...this.state.data }

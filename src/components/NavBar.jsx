@@ -1,8 +1,8 @@
 import { Link, NavLink } from 'react-router-dom'
-import { getCurrentUser } from '../services/authService'
+import { useSelector } from 'react-redux'
 
 function NavBar() {
-  const user = getCurrentUser()
+  const user = useSelector(state => state.auth.user)
 
   return (
     <div>

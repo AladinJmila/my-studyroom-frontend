@@ -1,19 +1,9 @@
-import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
-import { getCurrentUser } from '../services/authService'
-import { setCurrentUser } from '../store/auth/authParams'
 
 function Shell() {
   const [orderedData, setOrderedData] = useState([])
-
-  const user = getCurrentUser()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(setCurrentUser(user))
-  }, [])
 
   return (
     <main className='row pl-2 mr-2 pt-3'>
