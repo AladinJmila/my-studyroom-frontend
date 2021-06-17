@@ -27,7 +27,6 @@ const Practicals = () => {
 
   const handleDelete = practical => {
     dispatch(deletePractical(practical._id))
-    dispatch(loadPracticals())
   }
 
   const handlePracticalSelect = practical => {

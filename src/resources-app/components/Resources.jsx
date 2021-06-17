@@ -33,7 +33,6 @@ function Resources() {
 
   const handleDelete = resource => {
     dispatch(deleteResource(resource._id))
-    dispatch(loadResources())
   }
 
   const handleResourceSelect = resource => {

@@ -24,6 +24,7 @@ export const createNote = note => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, note)
 
     dispatch(actions.CREATE_NOTE(data))
+    dispatch(loadNotes())
   } catch (error) {
     console.log(error)
   }
@@ -41,6 +42,7 @@ export const updateNote = note => async dispatch => {
     const { data } = await httpService.put(`${apiEndPoint}/${note._id}`, body)
 
     dispatch(actions.UPDATE_NOTE(data))
+    dispatch(loadNotes())
   } catch (error) {
     console.log(error)
   }
@@ -55,6 +57,7 @@ export const patchNote = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.UPDATE_NOTE(data))
+    dispatch(loadNotes())
   } catch (error) {
     console.log(error)
   }
@@ -69,6 +72,7 @@ export const deleteNote = id => async dispatch => {
     await httpService.delete(`${apiEndPoint}/${id}`)
 
     dispatch(actions.DELETE_NOTE(id))
+    dispatch(loadNotes())
   } catch (error) {
     console.log(error)
   }

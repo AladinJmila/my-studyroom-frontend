@@ -30,6 +30,7 @@ export const createSubject = subject => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, subject)
 
     dispatch(actions.CREATE_SUBJECT(data))
+    dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }
@@ -44,6 +45,7 @@ export const patchSubject = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.PATCH_SUBJECT(data))
+    dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }
@@ -58,6 +60,7 @@ export const deleteSubject = id => async dispatch => {
     await httpService.delete(`${apiEndPoint}/${id}`)
 
     dispatch(actions.DELETE_SUBJECT(id))
+    dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }

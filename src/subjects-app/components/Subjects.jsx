@@ -25,7 +25,6 @@ const Subjects = () => {
 
   const handleDelete = subject => {
     dispatch(deleteSubject(subject._id))
-    dispatch(loadSubjects())
   }
 
   const handleToggleProp = (subject, property) => {

@@ -2,7 +2,6 @@ import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
 import {
-  loadNotes,
   createNote,
   updateNote,
   clearSelectedNote,
@@ -64,13 +63,8 @@ class NotesForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    const {
-      loadNotes,
-      createNote,
-      updateNote,
-      selectedNote,
-      clearSelectedNote,
-    } = this.props
+    const { createNote, updateNote, selectedNote, clearSelectedNote } =
+      this.props
 
     if (selectedNote) {
       data.starred = selectedNote.starred
@@ -80,8 +74,6 @@ class NotesForm extends Form {
     } else {
       createNote(data)
     }
-
-    loadNotes()
 
     this.props.toggleShowForm()
     this.setState({
@@ -116,7 +108,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadNotes: () => dispatch(loadNotes()),
   createNote: note => dispatch(createNote(note)),
   updateNote: note => dispatch(updateNote(note)),
   clearSelectedNote: () => dispatch(clearSelectedNote()),

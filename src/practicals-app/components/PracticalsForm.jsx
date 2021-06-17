@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Form from '../../common/Form'
 import {
   createPractical,
-  loadPracticals,
   updatePractical,
   clearSelectedPractical,
 } from './../../store/apps/practicalsActions'
@@ -58,7 +57,6 @@ class PracticalForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      loadPracticals,
       createPractical,
       updatePractical,
       selectedPractical,
@@ -72,8 +70,6 @@ class PracticalForm extends Form {
     } else {
       createPractical(data)
     }
-
-    loadPracticals()
 
     this.props.toggleShowForm()
     this.setState({
@@ -109,7 +105,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadPracticals: () => dispatch(loadPracticals()),
   createPractical: practical => dispatch(createPractical(practical)),
   updatePractical: practical => dispatch(updatePractical(practical)),
   clearSelectedPractical: () => dispatch(clearSelectedPractical),

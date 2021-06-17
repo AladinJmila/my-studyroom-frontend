@@ -2,7 +2,6 @@ import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from './../../common/Form'
 import {
-  loadTasks,
   createTask,
   updateTask,
   clearSelectedTask,
@@ -71,13 +70,8 @@ class TasksForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    const {
-      createTask,
-      loadTasks,
-      updateTask,
-      selectedTask,
-      clearSelectedTask,
-    } = this.props
+    const { createTask, updateTask, selectedTask, clearSelectedTask } =
+      this.props
 
     if (selectedTask) {
       data.isChecked = selectedTask.isChecked
@@ -87,8 +81,6 @@ class TasksForm extends Form {
     } else {
       createTask(data)
     }
-
-    loadTasks()
 
     this.props.toggleShowForm()
     this.setState({
@@ -123,7 +115,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadTasks: () => dispatch(loadTasks()),
   createTask: task => dispatch(createTask(task)),
   updateTask: task => dispatch(updateTask(task)),
   clearSelectedTask: () => dispatch(clearSelectedTask()),

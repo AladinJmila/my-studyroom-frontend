@@ -23,6 +23,7 @@ export const createPractical = practical => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, practical)
 
     dispatch(actions.CREATE_PRACTICAL(data))
+    dispatch(loadPracticals())
   } catch (error) {
     console.log(error)
   }
@@ -40,6 +41,7 @@ export const updatePractical = practical => async dispatch => {
     const { data } = httpService.put(`${apiEndPoint}/${practical._id}`, body)
 
     dispatch(actions.UPDATE_PRACTICAL(data))
+    dispatch(loadPracticals())
   } catch (error) {
     console.log(error)
   }
@@ -52,7 +54,9 @@ export const clearSelectedPractical = () => dispatch => {
 export const patchPractical = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
+
     dispatch(actions.UPDATE_PRACTICAL(data))
+    dispatch(loadPracticals())
   } catch (error) {
     console.log(error)
   }
@@ -67,6 +71,7 @@ export const deletePractical = id => async dispatch => {
     await httpService.delete(`${apiEndPoint}/${id}`)
 
     dispatch(actions.DELETE_PRACTICAL(id))
+    dispatch(loadPracticals())
   } catch (error) {
     console.log()
   }

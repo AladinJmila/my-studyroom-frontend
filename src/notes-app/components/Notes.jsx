@@ -27,7 +27,6 @@ const Notes = () => {
 
   const handleDelete = note => {
     dispatch(deleteNote(note._id))
-    dispatch(loadNotes())
   }
 
   const handleNoteSelect = note => {

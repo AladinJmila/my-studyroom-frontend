@@ -13,7 +13,7 @@ import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
 
-const Tasks = ({ setSortedTasks }) => {
+const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
@@ -33,7 +33,6 @@ const Tasks = ({ setSortedTasks }) => {
 
   const handleDelete = task => {
     dispatch(deleteTask(task._id))
-    dispatch(loadTasks())
   }
 
   const handleTaskSelect = task => {
@@ -66,9 +65,6 @@ const Tasks = ({ setSortedTasks }) => {
 
   const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
   const checked = sorted.filter(t => t.isChecked === true)
-
-  // setSortedTasks(sorted.length)
-  // console.log(sorted.length)
 
   return (
     <>

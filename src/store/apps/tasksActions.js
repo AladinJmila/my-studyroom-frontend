@@ -28,6 +28,7 @@ export const createTask = task => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, task)
 
     dispatch(actions.CREATE_TASK(data))
+    dispatch(loadTasks())
   } catch (error) {
     console.log(error)
   }
@@ -45,6 +46,7 @@ export const updateTask = task => async dispatch => {
     const { data } = await httpService.put(`${apiEndPoint}/${task._id}`, body)
 
     dispatch(actions.UPDATE_TASK(data))
+    dispatch(loadTasks())
   } catch (error) {
     console.log(error)
   }
@@ -59,6 +61,7 @@ export const patchTask = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.UPDATE_TASK(data))
+    dispatch(loadTasks())
   } catch (error) {
     console.log(error)
   }
@@ -73,6 +76,7 @@ export const deleteTask = id => async dispatch => {
     await httpService.delete(`${apiEndPoint}/${id}`)
 
     dispatch(actions.DELETE_TASK(id))
+    dispatch(loadTasks())
   } catch (error) {
     console.log(error)
   }

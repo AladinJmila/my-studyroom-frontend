@@ -2,7 +2,6 @@ import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
 import {
-  loadResources,
   createResource,
   updateResource,
   clearSelectedResource,
@@ -53,7 +52,6 @@ class ResourcesForm extends Form {
     data.userId = this.props.user._id
 
     const {
-      loadResources,
       createResource,
       updateResource,
       selectedResource,
@@ -68,8 +66,6 @@ class ResourcesForm extends Form {
     } else {
       createResource(data)
     }
-
-    loadResources()
 
     this.props.toggleShowForm()
     this.setState({
@@ -99,7 +95,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadResources: () => dispatch(loadResources),
   createResource: resource => dispatch(createResource(resource)),
   updateResource: resource => dispatch(updateResource(resource)),
   clearSelectedResource: () => dispatch(clearSelectedResource()),

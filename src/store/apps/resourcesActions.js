@@ -23,6 +23,7 @@ export const createResource = resource => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, resource)
 
     dispatch(actions.CREATE_RESOURCE(data))
+    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
@@ -43,6 +44,7 @@ export const updateResource = resource => async dispatch => {
     )
 
     dispatch(actions.UPDATE_RESOURCE(data))
+    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
@@ -57,6 +59,7 @@ export const patchResource = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.UPDATE_RESOURCE(data))
+    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
@@ -67,7 +70,12 @@ export const toggleResourceProp = (id, property) => dispatch => {
 }
 
 export const deleteResource = id => async dispatch => {
-  await httpService.delete(`${apiEndPoint}/${id}`)
+  try {
+    await httpService.delete(`${apiEndPoint}/${id}`)
 
-  dispatch(actions.DELETE_RESOURCE(id))
+    dispatch(actions.DELETE_RESOURCE(id))
+    dispatch(loadResources())
+  } catch (error) {
+    console.log(error)
+  }
 }

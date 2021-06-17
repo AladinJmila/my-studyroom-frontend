@@ -25,10 +25,8 @@ const AppsData = () => {
       icon: 'paw',
       count: allTasks.length,
       show: showTasks,
-      sortedCount: sortedTasks,
-      setSortedCount: setSortedTasks,
       setShow: setShowTasks,
-      data: <Tasks setSortedTasks={setSortedTasks} />,
+      data: <Tasks />,
     },
     {
       name: 'Resources',
