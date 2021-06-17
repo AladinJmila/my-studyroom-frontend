@@ -41,17 +41,12 @@ const Subjects = () => {
     dispatch(setSelectedSubject(subject))
   }
 
-  const handleSubjectEditSelect = subject => {
-    handleShowForm()
-  }
-
   const handleShowForm = () => {
     setShowForm(showForm ? false : true)
   }
 
   const sortSubjects = () => {
     let data = [...subjects]
-    delete data[0]
     let pinnedSubjects = data.filter(s => s.isPinned)
     pinnedSubjects = _.orderBy(pinnedSubjects, ['name'], ['asc'])
     let notPinnedSubjects = data.filter(s => !s.isPinned)
@@ -85,7 +80,6 @@ const Subjects = () => {
           onSubjectSelect={handleSubjectSelect}
           onToggleProp={handleToggleProp}
           onDelete={handleDelete}
-          onEdit={handleSubjectEditSelect}
           allSubjects={allSubjects}
         />
       ))}
