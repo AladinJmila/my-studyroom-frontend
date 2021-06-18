@@ -21,7 +21,6 @@ export function saveSubject(subject) {
     delete body._id
     return httpService.put(`${apiEndPoint}/${subject._id}`, body)
   }
-  console.log(subject)
   return httpService.post(apiEndPoint, subject)
 }
 

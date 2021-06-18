@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import {
@@ -13,6 +13,12 @@ import {
   mainContentStyle,
 } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
+import {
+  setTasksPerSubject,
+  setNotesPerSubject,
+  setResourcesPerSubject,
+  setPracticalsPerSubject,
+} from './../../store/ui/uiParams'
 
 const SubjectsCard = ({
   user,
@@ -25,13 +31,22 @@ const SubjectsCard = ({
   const allResources = useSelector(state => state.apps.resources.list)
   const allNotes = useSelector(state => state.apps.notes.list)
   const allPracticals = useSelector(state => state.apps.practicals.list)
+  const dispatch = useDispatch()
 
   const percentage = 0
   const tasksPrecentage = calculatePercentage(subject, allTasks)
+
   const totalTasks = totalTasksPerSubject(subject, allTasks)
-  const totalResources = totalResourcesPerSubject(subject, allResources)
+  dispatch(setTasksPerSubject(subject.name, totalTasks))
+
   const totalNotes = totalNotesPerSubject(subject, allNotes)
+  dispatch(setNotesPerSubject(subject.name, totalNotes))
+
+  const totalResources = totalResourcesPerSubject(subject, allResources)
+  dispatch(setResourcesPerSubject(subject.name, totalResources))
+
   const totalPracticals = totalPracticalsPerSubject(subject, allPracticals)
+  dispatch(setPracticalsPerSubject(subject.name, totalPracticals))
 
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
@@ -115,6 +130,11 @@ const SubjectsCard = ({
           {user && (
             <a href='#' className='card-link' onClick={() => onDelete(subject)}>
               delete
+            </a>
+          )}
+          {!user && (
+            <a href='#' className='card-link'>
+              {subject.userName}
             </a>
           )}
           {subject.name !== 'All Subjects' && user && (

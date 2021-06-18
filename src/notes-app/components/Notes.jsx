@@ -9,6 +9,7 @@ import {
   deleteNote,
   toggleNoteProp,
   setSelectedNote,
+  setFilteredNotes,
 } from './../../store/apps/notesActions'
 
 const Notes = () => {
@@ -48,16 +49,19 @@ const Notes = () => {
     setShowForm(showForm ? false : true)
   }
 
-  const flitered =
+  const filtered =
     selectedSubject && selectedSubject._id
       ? notes.filter(n => n.subject._id === selectedSubject._id)
       : notes
+
+  dispatch(setFilteredNotes(filtered))
+  // if (selectedSubject) dispatch(setFilteredNotes(filtered))
 
   return (
     <>
       <HeaderCard
         user={user}
-        count={flitered.length}
+        count={filtered.length}
         item='Notes'
         onClick={handleShowForm}
         showForm={showForm}
@@ -65,7 +69,7 @@ const Notes = () => {
       {showForm && (
         <NotesForm user={user} notes={notes} toggleShowForm={handleShowForm} />
       )}
-      {flitered.map(note => (
+      {filtered.map(note => (
         <NotesCard
           user={user}
           key={note._id}

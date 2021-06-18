@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import _ from 'lodash'
 import Notes from '../../notes-app/components/Notes'
 import Tasks from '../../tasks-app/components/Tasks'
@@ -12,18 +12,27 @@ const AppsData = () => {
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
   const [showTasks, setShowTasks] = useState(true)
-  const [sortedTasks, setSortedTasks] = useState(1)
 
-  const allTasks = useSelector(state => state.apps.tasks.list)
-  const allResources = useSelector(state => state.apps.resources.list)
-  const allNotes = useSelector(state => state.apps.notes.list)
-  const allPracticals = useSelector(state => state.apps.practicals.list)
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
+
+  useEffect(() => {}, [])
+  const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'
+  const tasksCount = useSelector(state => state.ui.tasksPerSubject[subjectName])
+  const notesCount = useSelector(state => state.ui.notesPerSubject[subjectName])
+  const resourcesCount = useSelector(
+    state => state.ui.resourcesPerSubject[subjectName]
+  )
+  const practicalsCount = useSelector(
+    state => state.ui.practicalsPerSubject[subjectName]
+  )
 
   const appsDataArray = [
     {
       name: 'Tasks',
       icon: 'paw',
-      count: allTasks.length,
+      count: tasksCount,
       show: showTasks,
       setShow: setShowTasks,
       data: <Tasks />,
@@ -31,7 +40,7 @@ const AppsData = () => {
     {
       name: 'Resources',
       icon: 'circle',
-      count: allResources.length,
+      count: resourcesCount,
       show: showResources,
       setShow: setShowResources,
       data: <Resources />,
@@ -39,7 +48,7 @@ const AppsData = () => {
     {
       name: 'Notes',
       icon: 'certificate',
-      count: allNotes.length,
+      count: notesCount,
       show: showNotes,
       setShow: setShowNotes,
       data: <Notes />,
@@ -47,7 +56,7 @@ const AppsData = () => {
     {
       name: 'Practicals',
       icon: 'asterisk',
-      count: allPracticals.length,
+      count: practicalsCount,
       show: showPracticals,
       setShow: setShowPracticals,
       data: <Practicals />,
@@ -65,9 +74,10 @@ const AppsData = () => {
           name={item.name}
           icon={item.icon}
           show={item.show}
+          count={item.count}
           setShow={item.setShow}
-          sortedCount={item.sortedCount}
-          setSortedCount={item.setSortedCount}
+          // sortedCount={item.sortedCount}
+          // setSortedCount={item.setSortedCount}
         />
       ))}
       <div

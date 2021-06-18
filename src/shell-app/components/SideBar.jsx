@@ -1,9 +1,16 @@
-const SideBar = ({ name, icon, show, setShow }) => {
+import { useEffect } from 'react'
+
+const SideBar = ({ name, icon, show, count, setShow }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
   }
-  const minWidth = show ? 30 : 120
+  const minWidth = show ? 40 : 120
+
+  useEffect(() => {
+    // if (!count) setShow(false)
+    !count ? setShow(false) : setShow(true)
+  }, [count])
 
   return (
     <div
@@ -11,8 +18,11 @@ const SideBar = ({ name, icon, show, setShow }) => {
       style={{
         minWidth: minWidth,
         maxWidth: 120,
+        cursor: 'pointer',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        borderRadius: 10,
       }}
+      onClick={handleToggleColumn}
     >
       <i
         className={
@@ -22,8 +32,6 @@ const SideBar = ({ name, icon, show, setShow }) => {
       ></i>
       <br />
       <i
-        style={{ cursor: 'pointer' }}
-        onClick={handleToggleColumn}
         className={
           show
             ? 'fa fa-angle-double-left fa-2x mt-4 ml-1'
@@ -31,7 +39,14 @@ const SideBar = ({ name, icon, show, setShow }) => {
         }
         aria-hidden='true'
       ></i>
-      {!show && <h2 className='rotate-90'>{name}</h2>}
+      {!show && (
+        <div>
+          <h2 className='rotate-90' style={{ textAlign: 'left' }}>
+            {name}
+          </h2>
+          <h3 style={{ textAlign: 'center', marginTop: 70 }}>{count}</h3>
+        </div>
+      )}
     </div>
   )
 }

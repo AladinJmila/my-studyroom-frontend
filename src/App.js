@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Shell from './components/Shell'
 import RegisterForm from './components/RegisterForm'
@@ -15,6 +15,8 @@ import './App.css'
 function App() {
   const user = getCurrentUser()
   const dispatch = useDispatch()
+  // const filteredNotes = useSelector(state => state.apps.notes.filtered.length)
+  // console.log(filteredNotes)
 
   useEffect(() => {
     dispatch(setCurrentUser(user))

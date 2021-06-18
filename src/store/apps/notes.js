@@ -4,6 +4,7 @@ const slice = createSlice({
   name: 'notes',
   initialState: {
     list: [],
+    filtered: [],
     loading: false,
     lastFetch: null,
     selectedNote: null,
@@ -50,6 +51,10 @@ const slice = createSlice({
     DELETE_NOTE: (notes, action) => {
       notes.list.filter(note => note._id !== action.payload)
     },
+
+    FILTER_NOTES: (notes, action) => {
+      notes.filtered = action.payload
+    },
   },
 })
 
@@ -61,5 +66,6 @@ export const {
   UPDATE_NOTE,
   TOGGLE_NOTE_PROP,
   DELETE_NOTE,
+  FILTER_NOTES,
 } = slice.actions
 export default slice.reducer

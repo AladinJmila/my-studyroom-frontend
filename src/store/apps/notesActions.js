@@ -19,7 +19,6 @@ export const loadNotes = () => async dispatch => {
 }
 
 export const createNote = note => async dispatch => {
-  console.log(note)
   try {
     const { data } = await httpService.post(apiEndPoint, note)
 
@@ -76,4 +75,8 @@ export const deleteNote = id => async dispatch => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const setFilteredNotes = filtered => dispatch => {
+  dispatch(actions.FILTER_NOTES(filtered))
 }

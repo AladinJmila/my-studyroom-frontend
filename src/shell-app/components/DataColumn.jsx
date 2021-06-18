@@ -1,23 +1,6 @@
 import SideBar from './SideBar'
 
-const DataColumn = ({
-  name,
-  data,
-  color,
-  icon,
-  show,
-  sortedCount,
-  setSortedCount,
-  setShow,
-}) => {
-  // if (sortedCount) {
-  //   setShow(true)
-  // } else {
-  //   setShow(false)
-  //   // setSortedCount(1)
-  // }
-  // sortedCount ? setShow(true) : setShow(false)
-  // console.log(sortedCount)
+const DataColumn = ({ name, data, color, icon, show, count, setShow }) => {
   return (
     <div style={{ padding: '0 0 0 0' }} className='data-column col'>
       <SideBar
@@ -25,6 +8,7 @@ const DataColumn = ({
         color={color}
         icon={icon}
         show={show}
+        count={count}
         setShow={setShow}
       />
       {show && (

@@ -73,6 +73,6 @@ export const deletePractical = id => async dispatch => {
     dispatch(actions.DELETE_PRACTICAL(id))
     dispatch(loadPracticals())
   } catch (error) {
-    console.log()
+    console.log(error)
   }
 }
