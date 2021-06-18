@@ -83,8 +83,8 @@ class ResourcesForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects,
-          this.props.selectedSubject
+          this.state.subjects
+          // this.props.selectedSubject
         )}
         {this.renderInput('content', 'Resource')}
         {this.renderInput('url', 'URL')}

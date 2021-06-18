@@ -90,8 +90,8 @@ class PracticalForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects,
-          this.props.selectedSubject
+          this.state.subjects
+          // this.props.selectedSubject
         )}
         {this.renderTextArea('about', 'About', 3)}
         {this.renderTextArea('cause', 'Cause', 4)}

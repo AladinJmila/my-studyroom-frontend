@@ -100,8 +100,8 @@ class TasksForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects,
-          this.props.selectedSubject
+          this.state.subjects
+          // this.props.selectedSubject
         )}
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
         {this.renderInput('content', 'Task')}
