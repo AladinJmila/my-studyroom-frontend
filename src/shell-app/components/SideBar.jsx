@@ -5,19 +5,18 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
     show = show ? false : true
     setShow(show)
   }
-  const minWidth = show ? 40 : 120
+  const minWidth = show ? 40 : 160
 
   useEffect(() => {
-    // if (!count) setShow(false)
     !count ? setShow(false) : setShow(true)
   }, [count])
 
   return (
     <div
-      className='float-left side-bar mr-2'
+      className='float-left side-bar mr-4 center'
       style={{
         minWidth: minWidth,
-        maxWidth: 120,
+        maxWidth: 160,
         cursor: 'pointer',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         borderRadius: 10,
@@ -26,7 +25,7 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
     >
       <i
         className={
-          show ? `fa fa-${icon} fa-2x mt-2` : `fa fa-${icon} fa-4x mt-2 ml-4`
+          show ? `fa fa-${icon} fa-2x mt-2` : `fa fa-${icon} fa-4x mt-2`
         }
         aria-hidden='true'
       ></i>
@@ -34,14 +33,20 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
       <i
         className={
           show
-            ? 'fa fa-angle-double-left fa-2x mt-4 ml-1'
-            : 'fa fa-angle-double-right fa-2x mt-1 ml-5'
+            ? 'fa fa-angle-double-left fa-2x mt-4 '
+            : 'fa fa-angle-double-right fa-2x mt-5 '
         }
         aria-hidden='true'
       ></i>
       {!show && (
         <div>
-          <h2 className='rotate-90' style={{ textAlign: 'left' }}>
+          <h2
+            className='rotate-90'
+            style={{
+              textAlign: 'left',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {name}
           </h2>
           <h3 style={{ textAlign: 'center', marginTop: 70 }}>{count}</h3>

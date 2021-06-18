@@ -6,12 +6,18 @@ import Resources from '../../resources-app/components/Resources'
 import Practicals from '../../practicals-app/components/Practicals'
 import DataColumn from './DataColumn'
 import { useSelector } from 'react-redux'
+import AudioNotes from './../../audio-notes-app/components/AudioNotes'
+import VisualNotes from './../../visual-notes-app/components/VisualNotes'
+import Schedules from './../../schedules-app/Schedules'
 
 const AppsData = () => {
   const [showPracticals, setShowPracticals] = useState(true)
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
   const [showTasks, setShowTasks] = useState(true)
+  const [showAudioNotes, setShowAudioNotes] = useState(true)
+  const [showVisualNotes, setShowVisualNotes] = useState(true)
+  const [showSchedules, setShowSchedules] = useState(true)
 
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
@@ -31,7 +37,7 @@ const AppsData = () => {
   const appsDataArray = [
     {
       name: 'Tasks',
-      icon: 'paw',
+      icon: 'rebel',
       count: tasksCount,
       show: showTasks,
       setShow: setShowTasks,
@@ -60,6 +66,30 @@ const AppsData = () => {
       show: showPracticals,
       setShow: setShowPracticals,
       data: <Practicals />,
+    },
+    {
+      name: 'Audio-Notes (planned)',
+      icon: 'sun-o',
+      count: 0,
+      show: showAudioNotes,
+      setShow: setShowAudioNotes,
+      data: <AudioNotes />,
+    },
+    {
+      name: 'Visual-Notes (planned)',
+      icon: 'first-order',
+      count: 0,
+      show: showVisualNotes,
+      setShow: setShowVisualNotes,
+      data: <VisualNotes />,
+    },
+    {
+      name: 'Schedules (planned)',
+      icon: 'snowflake-o',
+      count: 0,
+      show: showSchedules,
+      setShow: setShowSchedules,
+      data: <Schedules />,
     },
   ]
 

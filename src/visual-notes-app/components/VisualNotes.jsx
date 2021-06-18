@@ -1,7 +1,7 @@
 const VisualNotes = () => {
   return (
     <>
-      <h1>Visual Notes</h1>
+      <h2></h2>
     </>
   )
 }
