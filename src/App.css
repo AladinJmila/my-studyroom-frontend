@@ -43,6 +43,13 @@ body {
   text-align: center;
 }
 
+.image-cropper {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 400px;
+  width: auto;
+}
+
 ::-webkit-scrollbar {
   width: 8px; /* for vertical scrollbars */
   height: 8px; /* for horizontal scrollbars */

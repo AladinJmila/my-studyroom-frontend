@@ -8,6 +8,7 @@ import Logout from './components/Logout'
 import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import NavBar from './components/NavBar'
+import About from './components/About'
 import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
 import './App.css'
@@ -30,6 +31,7 @@ function App() {
         <Route path='/login' component={LoginForm}></Route>
         <Route path='/logout' component={Logout}></Route>
         <Route path='/profile' component={Profile}></Route>
+        <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
         <Route path='/shell' exact component={Shell}></Route>
         <Redirect from='/' to='/shell' />
