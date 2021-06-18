@@ -50,6 +50,14 @@ body {
   width: auto;
 }
 
+.center {
+  text-align: center;
+  margin: auto;
+  width: 50%;
+  /* border: 5px solid #ffff00; */
+  padding: 10px;
+}
+
 ::-webkit-scrollbar {
   width: 8px; /* for vertical scrollbars */
   height: 8px; /* for horizontal scrollbars */
