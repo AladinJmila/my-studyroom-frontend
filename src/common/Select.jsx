@@ -1,13 +1,23 @@
-const Select = ({ name, label, options, error, ...rest }) => {
+const Select = ({ name, label, options, defaultSelected, error, ...rest }) => {
   return (
     <div className='form-group'>
       <label htmlFor={name}>{label}</label>
       <select name={name} id={name} {...rest} className='form-control'>
-        <option value=''></option>
+        <option
+          value={
+            defaultSelected?.name === 'All Subjects'
+              ? ''
+              : defaultSelected?._id || defaultSelected?.key
+          }
+        >
+          {defaultSelected?.name === 'All Subjects'
+            ? ''
+            : defaultSelected?.name || defaultSelected?.content}
+        </option>
         {options.map(option => (
           <option
-            key={option.id || option._id || option.key}
-            value={option.id || option._id || option.name || option.content}
+            key={option._id || option.key}
+            value={option._id || option.name || option.content}
           >
             {option.name || option.content}
           </option>

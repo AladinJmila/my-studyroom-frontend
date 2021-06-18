@@ -97,7 +97,12 @@ class TasksForm extends Form {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        {this.renderSelect('subjectId', 'Subject', this.state.subjects)}
+        {this.renderSelect(
+          'subjectId',
+          'Subject',
+          this.state.subjects,
+          this.props.selectedSubject
+        )}
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
         {this.renderInput('content', 'Task')}
         {this.renderInput('url', 'URL')}
@@ -110,6 +115,7 @@ class TasksForm extends Form {
 
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
+  selectedSubject: state.apps.subjects.selectedSubject,
   resources: state.apps.resources.list,
   selectedTask: state.apps.tasks.selectedTask,
 })

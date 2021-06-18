@@ -5,6 +5,7 @@ import {
   resourceStatusRevise,
   cardBackgroundStudy,
   cardBackgroundRevise,
+  resourceStatusReset,
 } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
@@ -80,6 +81,14 @@ const ResourcesCard = ({
                   style={resourceStatusRevise}
                   title='Revise'
                   onClick={() => onToggleStatus(resource, 'Revise')}
+                ></div>
+              </div>
+              <div className='col'>
+                <div
+                  className='center'
+                  style={resourceStatusReset}
+                  title='Reset'
+                  onClick={() => onToggleStatus(resource, 'Reset')}
                 ></div>
               </div>
             </>

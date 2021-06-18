@@ -32,3 +32,12 @@ export const resourceStatusRevise = {
 export const cardBackgroundRevise = {
   backgroundColor: 'rgba(255, 162, 48, 0.4)',
 }
+
+export const resourceStatusReset = {
+  height: 15,
+  width: 15,
+  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  border: 'solid 1px rgba(0, 0, 0, 0.7)',
+  borderRadius: 5,
+  cursor: 'pointer',
+}

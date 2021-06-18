@@ -48,10 +48,8 @@ function Resources() {
   const handleToggleStatus = (resource, status) => {
     const index = resources.indexOf(resource)
     const resourceToUpdate = { ...resources[index] }
-    console.log(resourceToUpdate)
     resourceToUpdate.status = !resourceToUpdate.status ? status : ''
     const update = { status }
-    console.log(resourceToUpdate)
 
     dispatch(patchResource(resource._id, update))
     dispatch(toggleResourceStatus(resource._id, status))

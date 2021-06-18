@@ -87,7 +87,12 @@ class PracticalForm extends Form {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        {this.renderSelect('subjectId', 'Subject', this.state.subjects)}
+        {this.renderSelect(
+          'subjectId',
+          'Subject',
+          this.state.subjects,
+          this.props.selectedSubject
+        )}
         {this.renderTextArea('about', 'About', 3)}
         {this.renderTextArea('cause', 'Cause', 4)}
         {this.renderTextArea('solution', 'Solution', 6)}
@@ -101,6 +106,7 @@ class PracticalForm extends Form {
 
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
+  selectedSubject: state.apps.subjects.selectedSubject,
   selectedPractical: state.apps.practicals.selectedPractical,
 })
 
