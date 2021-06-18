@@ -11,6 +11,7 @@ import {
   deleteResource,
   setSelectedResource,
   toggleResourceProp,
+  toggleResourceStatus,
 } from './../../store/apps/resourcesActions'
 
 function Resources() {
@@ -44,34 +45,16 @@ function Resources() {
     setSortTarget(sortTarget)
   }
 
-  const handleStatus = (resource, status) => {
-    const newResources = [...resources]
+  const handleToggleStatus = (resource, status) => {
+    const index = resources.indexOf(resource)
+    const resourceToUpdate = { ...resources[index] }
+    console.log(resourceToUpdate)
+    resourceToUpdate.status = !resourceToUpdate.status ? status : ''
+    const update = { status }
+    console.log(resourceToUpdate)
 
-    let cardStatus = ''
-    let cardClass = ''
-    let bodyClass = ''
-
-    switch (status) {
-      case 'initialize': {
-        cardStatus = 'initialize'
-        cardClass = 'card mb-1'
-        bodyClass = 'card-body'
-        break
-      }
-      case 'inProgress': {
-        cardStatus = 'inProgress'
-        cardClass = 'card border-primary mb-1'
-        bodyClass = 'card-body text-primary'
-        break
-      }
-      case 'completed': {
-        cardStatus = 'completed'
-        cardClass = 'card border-success mb-1'
-        bodyClass = 'card-body text-success'
-      }
-    }
-    const index = newResources.indexOf(resource)
-    newResources[index].status = { cardStatus, cardClass, bodyClass }
+    dispatch(patchResource(resource._id, update))
+    dispatch(toggleResourceStatus(resource._id, status))
   }
 
   const handleToggleProp = (resource, property) => {
@@ -122,7 +105,7 @@ function Resources() {
           onToggleProp={handleToggleProp}
           onDelete={handleDelete}
           onEdit={handleResourceSelect}
-          onSetStatus={handleStatus}
+          onToggleStatus={handleToggleStatus}
         />
       ))}
     </>

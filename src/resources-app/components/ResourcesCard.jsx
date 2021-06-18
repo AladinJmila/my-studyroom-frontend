@@ -1,6 +1,10 @@
 import {
   backgroundOpacity,
   mainContentStyle,
+  resourceStatusStudy,
+  resourceStatusRevise,
+  cardBackgroundStudy,
+  cardBackgroundRevise,
 } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
@@ -10,13 +14,23 @@ const ResourcesCard = ({
   onToggleProp,
   onEdit,
   onDelete,
-  onSetStatus,
+  onToggleStatus,
 }) => {
+  let backgroundColor
+  switch (resource.status) {
+    case 'Study':
+      backgroundColor = cardBackgroundStudy
+      break
+    case 'Revise':
+      backgroundColor = cardBackgroundRevise
+      break
+    default:
+      backgroundColor = backgroundOpacity
+  }
+
   return (
-    <div style={backgroundOpacity} className='card mb-1'>
-      <div
-        className={resource.status ? resource.status.bodyClass : 'card-body'}
-      >
+    <div style={backgroundColor} className='card mb-1'>
+      <div className='card-body'>
         <h6 className='card-subtitle mb-2'>
           {user && (
             <i
@@ -50,30 +64,26 @@ const ResourcesCard = ({
               />
             </div>
           )}
-          <div className='col'>
-            <i
-              onClick={() => onSetStatus(resource, 'initialize')}
-              className='fa fa-circle'
-              style={{ cursor: 'pointer', color: '#000' }}
-              aria-hidden='true'
-            ></i>
-          </div>
-          <div className='col'>
-            <i
-              onClick={() => onSetStatus(resource, 'inProgress')}
-              className='fa fa-circle'
-              style={{ cursor: 'pointer', color: '#007BFF' }}
-              aria-hidden='true'
-            ></i>
-          </div>
-          <div className='col'>
-            <i
-              onClick={() => onSetStatus(resource, 'completed')}
-              className='fa fa-circle'
-              style={{ cursor: 'pointer', color: '#28A745' }}
-              aria-hidden='true'
-            ></i>
-          </div>
+          {user && (
+            <>
+              <div className='col'>
+                <div
+                  className='center'
+                  style={resourceStatusStudy}
+                  title='Study'
+                  onClick={() => onToggleStatus(resource, 'Study')}
+                ></div>
+              </div>
+              <div className='col'>
+                <div
+                  className='center'
+                  style={resourceStatusRevise}
+                  title='Revise'
+                  onClick={() => onToggleStatus(resource, 'Revise')}
+                ></div>
+              </div>
+            </>
+          )}
           <div className='col'>
             <a
               className='card-link float-right'
