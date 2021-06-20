@@ -9,12 +9,12 @@ const ToggleSideTab = ({ show, setShow, label }) => {
     setShow(show)
   }
   return (
-    <div className='side-tab' style={backgroundOpacity}>
-      <i
-        onClick={() => handleToggleTab()}
-        className={classes}
-        aria-hidden='true'
-      ></i>
+    <div
+      onClick={() => handleToggleTab()}
+      className='side-tab'
+      style={backgroundOpacity}
+    >
+      <i className={classes} aria-hidden='true'></i>
       <h5 className='rotate-label-90'>{label}</h5>
     </div>
   )

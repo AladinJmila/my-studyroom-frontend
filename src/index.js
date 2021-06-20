@@ -7,8 +7,10 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import logger from './services/logService'
 import './index.css'
-import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 logger.init()
 

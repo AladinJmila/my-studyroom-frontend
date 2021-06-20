@@ -84,7 +84,7 @@ body {
   padding: 10px;
 }
 
-@media only screen and (max-width: 500px) {
+/* @media only screen and (max-width: 500px) {
   .cell {
     margin: 0;
     min-width: 340px;
@@ -94,14 +94,14 @@ body {
 
   .subjects {
     padding-right: 0;
-    /* display: none; */
+    display: none;
     min-width: 300px;
   }
 
   .side-bar {
     height: 100%;
   }
-}
+} */
 
 ::-webkit-scrollbar {
   width: 8px; /* for vertical scrollbars */

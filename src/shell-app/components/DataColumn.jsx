@@ -1,5 +1,17 @@
 import SideBar from './SideBar'
 
+const containerStyles = {
+  margin: '5px 10px',
+  minWidth: 500,
+  maxWidth: 600,
+  display: 'inline-block',
+}
+
+if (window.innerWidth < 500) {
+  containerStyles.minWidth = window.innerWidth - 20
+  containerStyles.maxWidth = window.innerWidth
+}
+
 const DataColumn = ({ name, data, color, icon, show, count, setShow }) => {
   return (
     <div style={{ padding: '0 0 0 0' }} className='data-column col'>
@@ -12,7 +24,7 @@ const DataColumn = ({ name, data, color, icon, show, count, setShow }) => {
         setShow={setShow}
       />
       {show && (
-        <div className='cell y-scroll'>
+        <div style={containerStyles} className='y-scroll'>
           <h2>{name}</h2>
           {data}
         </div>

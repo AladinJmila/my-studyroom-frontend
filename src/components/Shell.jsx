@@ -15,12 +15,6 @@ function Shell() {
 
   subjectsStyle.display = showSubjects ? 'block' : 'none'
 
-  // if (window.innerWidth < 500) {
-  //   // subjectsStyle.display = 'none'
-  //   subjectsStyle.minWidth = 340
-  //   subjectsStyle.display = showSubjects ? 'block' : 'none'
-  // }
-
   return (
     <main className='row pl-2 mr-2 pt-3'>
       <ToggleSideTab
