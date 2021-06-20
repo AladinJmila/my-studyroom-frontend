@@ -8,7 +8,7 @@ const containerStyles = {
 }
 
 if (window.innerWidth < 500) {
-  containerStyles.minWidth = window.innerWidth - 20
+  containerStyles.minWidth = window.innerWidth - 35
   containerStyles.maxWidth = window.innerWidth
 }
 
