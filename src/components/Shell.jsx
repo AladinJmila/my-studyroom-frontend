@@ -16,7 +16,7 @@ function Shell() {
   subjectsStyle.display = showSubjects ? 'block' : 'none'
 
   return (
-    <main className='row pl-2 mr-2 pt-3'>
+    <main className='row pl-2 mr-2 pt-3 flex-nowrap'>
       <ToggleSideTab
         label='Subjects'
         show={showSubjects}
@@ -28,7 +28,7 @@ function Shell() {
           <Subjects setOrderedData={setOrderedData} orderedData={orderedData} />
         </div>
       </div>
-      <AppsData />
+      <AppsData className='position-static' />
     </main>
   )
 }
