@@ -1,18 +1,38 @@
 import { useState } from 'react'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
+import ToggleSideTab from './../common/ToggleSideTab'
 
 function Shell() {
   const [orderedData, setOrderedData] = useState([])
+  const [showSubjects, setShowSubjects] = useState(true)
+
+  const subjectsStyle = {
+    paddingRight: '0',
+    minWidth: 300,
+    display: 'block',
+  }
+
+  subjectsStyle.display = showSubjects ? 'block' : 'none'
+
+  // if (window.innerWidth < 500) {
+  //   // subjectsStyle.display = 'none'
+  //   subjectsStyle.minWidth = 340
+  //   subjectsStyle.display = showSubjects ? 'block' : 'none'
+  // }
 
   return (
     <main className='row pl-2 mr-2 pt-3'>
-      <div
-        style={{ paddingRight: '0', minWidth: 300 }}
-        className='col-2 y-scroll'
-      >
+      <ToggleSideTab
+        label='Subjects'
+        show={showSubjects}
+        setShow={setShowSubjects}
+      />
+      <div style={subjectsStyle} className='col-2 y-scroll subjects'>
         <h2>Subjects</h2>
-        <Subjects setOrderedData={setOrderedData} orderedData={orderedData} />
+        <div>
+          <Subjects setOrderedData={setOrderedData} orderedData={orderedData} />
+        </div>
       </div>
       <AppsData />
     </main>

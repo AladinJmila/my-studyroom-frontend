@@ -22,10 +22,15 @@ body {
 }
 
 .cell {
-  margin: 5px;
+  margin: 5px 10px;
   min-width: 500px;
   max-width: 600px;
   display: inline-block;
+}
+
+.subjects {
+  padding-right: 0;
+  min-width: 300px;
 }
 
 .data-column {
@@ -37,9 +42,30 @@ body {
   display: inline-block;
 }
 
-.rotate-90 {
+.rotate-title-90 {
   -webkit-transform: rotate(-90deg);
   margin-top: 400px;
+  text-align: center;
+}
+
+/* Side tab */
+
+.side-tab {
+  min-height: 130px;
+  max-width: 33px;
+  margin: 142px 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 5;
+  /* border: solid rgba(255, 255, 255, 0.6); */
+  position: absolute;
+  position: -webkit-sticky;
+}
+
+.rotate-label-90 {
+  -webkit-transform: rotate(-90deg);
+  margin-top: 50px;
+  vertical-align: middle;
   text-align: center;
 }
 
@@ -56,6 +82,25 @@ body {
   width: 50%;
   /* border: 5px solid #ffff00; */
   padding: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .cell {
+    margin: 0;
+    min-width: 340px;
+    max-width: 400px;
+    display: inline-block;
+  }
+
+  .subjects {
+    padding-right: 0;
+    /* display: none; */
+    min-width: 300px;
+  }
+
+  .side-bar {
+    height: 100%;
+  }
 }
 
 ::-webkit-scrollbar {

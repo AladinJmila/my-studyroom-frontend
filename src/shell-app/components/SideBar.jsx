@@ -5,7 +5,24 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
     show = show ? false : true
     setShow(show)
   }
-  const minWidth = show ? 40 : 160
+
+  let minWidth
+
+  const styles = {
+    minWidth: minWidth,
+    maxWidth: 160,
+    cursor: 'pointer',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 10,
+    margin: '0 5px',
+  }
+
+  if (window.innerWidth < 500 && count) {
+    styles.margin = 0
+    styles.display = 'none'
+  } else {
+    styles.minWidth = show ? 40 : 160
+  }
 
   useEffect(() => {
     !count ? setShow(false) : setShow(true)
@@ -13,14 +30,8 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
 
   return (
     <div
-      className='float-left side-bar mr-4 center'
-      style={{
-        minWidth: minWidth,
-        maxWidth: 160,
-        cursor: 'pointer',
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        borderRadius: 10,
-      }}
+      className='float-left side-bar center'
+      style={styles}
       onClick={handleToggleColumn}
     >
       <i
@@ -41,7 +52,7 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
       {!show && (
         <div>
           <h2
-            className='rotate-90'
+            className='rotate-title-90'
             style={{
               textAlign: 'left',
               whiteSpace: 'nowrap',
