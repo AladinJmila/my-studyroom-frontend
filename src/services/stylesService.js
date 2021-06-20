@@ -1,5 +1,11 @@
 export const backgroundOpacity = { backgroundColor: 'rgba(255, 255, 255, 0.6)' }
 
+export const aboutStyles = {
+  backgroundColor: 'rgba(255, 255, 255, 0.6)',
+  borderRadius: 20,
+  fontSize: 17,
+}
+
 export const mainContentStyle = {
   backgroundColor: 'rgba(255, 255, 255, 0.7)',
   borderRadius: 5,
