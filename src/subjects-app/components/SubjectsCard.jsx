@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import {
-  calculatePercentage,
+  calculateTasksPercentage,
+  calculateResourcesPercentage,
   totalTasksPerSubject,
   totalResourcesPerSubject,
   totalNotesPerSubject,
@@ -28,14 +29,22 @@ const SubjectsCard = ({
   onDelete,
 }) => {
   const allTasks = useSelector(state => state.apps.tasks.list)
+  const filteredAllTasks =
+    subject && subject._id
+      ? allTasks.filter(t => t.subject._id === subject._id)
+      : allTasks
+  const checkedTasks = filteredAllTasks.filter(t => t.isChecked)
+
   const allResources = useSelector(state => state.apps.resources.list)
   const allNotes = useSelector(state => state.apps.notes.list)
   const allPracticals = useSelector(state => state.apps.practicals.list)
   const dispatch = useDispatch()
 
-  const percentage = 0
-  let tasksPercentage = calculatePercentage(subject, allTasks)
+  let tasksPercentage = calculateTasksPercentage(subject, allTasks)
   tasksPercentage = !tasksPercentage ? 0 : tasksPercentage
+
+  let resourcesPercentage = calculateResourcesPercentage(subject, allResources)
+  resourcesPercentage = !resourcesPercentage ? 0 : resourcesPercentage
 
   const totalTasks = totalTasksPerSubject(subject, allTasks)
   dispatch(setTasksPerSubject(subject.name, totalTasks))
@@ -66,14 +75,6 @@ const SubjectsCard = ({
     >
       <div className='card-body'>
         <h5 className='card-title'>
-          {/* {subject.name !== 'All Subjects' && user && (
-            <i
-              className='fa fa-pencil mr-3'
-              style={{ cursor: 'pointer' }}
-              aria-hidden='true'
-              onClick={() => onEdit(subject)}
-            ></i>
-          )} */}
           {subject.name}{' '}
           {subject.name !== 'All Subjects' && user && (
             <i
@@ -88,18 +89,19 @@ const SubjectsCard = ({
             ></i>
           )}
         </h5>
-
-        {/* <h6 className='card-subtitle mb-2 text-muted'>PlaceHolder</h6> */}
         <div className='row mt-3'>
-          <div className='col'>
+          <div className='col text-center'>
             <CircularProgressbar
               value={tasksPercentage}
               text={`${tasksPercentage}%`}
             />
-            <h5 className='ml-4 mt-2'>Tasks</h5>
+            <h5 className='mt-2'>Tasks</h5>
           </div>
-          <div className='col'>
-            <CircularProgressbar value={percentage} text={`${percentage}%`} />
+          <div className='col text-center'>
+            <CircularProgressbar
+              value={resourcesPercentage}
+              text={`${resourcesPercentage}%`}
+            />
             <h5 className='mt-2'>Resources</h5>
           </div>
         </div>
@@ -107,7 +109,11 @@ const SubjectsCard = ({
         <div className='font-weight-bold' style={mainContentStyle}>
           {Boolean(totalTasks) && (
             <p style={{ margin: 2 }}>
-              Tasks: <span className='float-right'>{totalTasks}</span>
+              Tasks:{' '}
+              <span className='float-right'>
+                {totalTasks}
+                {Boolean(checkedTasks.length) && '/' + checkedTasks.length}
+              </span>
             </p>
           )}
           {Boolean(totalNotes) && (

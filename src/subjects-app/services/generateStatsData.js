@@ -1,4 +1,4 @@
-export const calculatePercentage = (subject, allTasks) => {
+export const calculateTasksPercentage = (subject, allTasks) => {
   const checked = allTasks.filter(t => t.isChecked === true)
 
   if (subject.name === 'All Subjects') {
@@ -10,6 +10,27 @@ export const calculatePercentage = (subject, allTasks) => {
   )
   return (
     Math.round((checkedSubjectTasks.length / subjectTasks.length) * 100) || 0
+  )
+}
+
+export const calculateResourcesPercentage = (subject, allResources) => {
+  const consumed = allResources.filter(
+    r => r.status === 'Study' || r.status === 'Revise'
+  )
+
+  if (subject.name === 'All Subjects') {
+    return Math.round((consumed.length / allResources.length) * 100)
+  }
+  const subjectResources = allResources.filter(
+    r => r.subject.name === subject.name
+  )
+  const consumedSubjectResources = consumed.filter(
+    r => r.subject.name === subject.name
+  )
+  return (
+    Math.round(
+      (consumedSubjectResources.length / subjectResources.length) * 100
+    ) || 0
   )
 }
 

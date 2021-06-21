@@ -1,13 +1,13 @@
 import { backgroundOpacity } from './../services/stylesService'
 
-const HeaderCard = ({ user, count, outOfCount, item, onClick, showForm }) => {
+const HeaderCard = ({ user, count, item, onClick, showForm }) => {
   return (
     // sticky-top
     <div style={backgroundOpacity} className='card mb-3'>
       <div className='card-body'>
         <h6 className='float-left'>
           Showing {count}
-          {Boolean(outOfCount) && '/' + outOfCount} <b>{item}</b>.
+          <b>{item}</b>
         </h6>
         {user && (
           <button

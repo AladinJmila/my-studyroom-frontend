@@ -1,6 +1,6 @@
 const Check = ({ isChecked, onCheck }) => {
-  let classes = 'fa fa-lg fa-circle-thin'
-  if (isChecked) classes = 'fa fa-lg fa-check-circle'
+  let classes = 'fa fa-lg fa-circle-thin mt-2'
+  if (isChecked) classes = 'fa fa-lg fa-check-circle mt-2'
   return (
     <i
       onClick={onCheck}

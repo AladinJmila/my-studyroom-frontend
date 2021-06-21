@@ -69,14 +69,12 @@ const Tasks = () => {
       : tasks
 
   const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
-  const checked = sorted.filter(t => t.isChecked === true)
 
   return (
     <>
       <HeaderCard
         user={user}
         count={sorted.length}
-        outOfCount={checked.length}
         item='Tasks'
         onClick={handleShowForm}
         showForm={showForm}

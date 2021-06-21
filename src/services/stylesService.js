@@ -16,7 +16,7 @@ export const mainContentStyle = {
 export const resourceStatusStudy = {
   height: 15,
   width: 15,
-  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  backgroundColor: 'rgba(0, 0, 0, 0.1)',
   border: 'solid 1px rgba(0, 0, 0, 0.7)',
   borderRadius: 5,
   cursor: 'pointer',
@@ -29,7 +29,7 @@ export const cardBackgroundStudy = {
 export const resourceStatusRevise = {
   height: 15,
   width: 15,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.3)',
   border: 'solid 1px rgba(0, 0, 0, 0.7)',
   borderRadius: 5,
   cursor: 'pointer',
@@ -42,7 +42,7 @@ export const cardBackgroundRevise = {
 export const resourceStatusReset = {
   height: 15,
   width: 15,
-  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  backgroundColor: 'rgba(255, 255, 255, 0.5)',
   border: 'solid 1px rgba(0, 0, 0, 0.7)',
   borderRadius: 5,
   cursor: 'pointer',

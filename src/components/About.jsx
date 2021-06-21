@@ -20,8 +20,8 @@ const About = () => {
         <p>
           My long awaited wish is to be able to convert my ideas into practical
           solutions. Although architecture can be a great form of expression, it
-          is quite expensive and it hasn’t worked out well for me so far. I
-          needed an alternative and programming was the next candidate. <br />{' '}
+          is quite expensive and it has not worked out well for me so far. I
+          needed an alternative and programming was the next candidate. <br />
           Throughout my learning journey, I used various tools to keep track of
           my progress, resources, notes etc... and few others to structure my
           study. I needed a central repository where all my learning tools could
@@ -36,7 +36,7 @@ const About = () => {
           well for me, for it to have a chance to work for others. I was already
           asked by people I know to share my learning experience, because they
           were also taking a step into the world of programming. However, the
-          lack of a central resource made it impractical and I wasn’t able to
+          lack of a central resource made it impractical and I was not able to
           provide the help I desired. So, I am hoping to do that with the help
           of this app for my future learning journeys and provide the tool for
           others to do the same if they so desire.
@@ -44,10 +44,10 @@ const About = () => {
         <h3 className='mt-4'>Upcoming features</h3>
         <p>
           Although there are a lot of great videos and tutorials that inspired
-          my current learning approach, as far as I’ve seen, they all lacked a
+          my current learning approach, as far as I have seen, they all lacked a
           centralized tool that would help put in practice their advice and
           techniques. I do not claim that I will be providing ”The Tool”, but
-          rather a prototype that I’m hoping to refine over time with the help
+          rather a prototype that I am hoping to refine over time with the help
           of users input, and equip it with enough flexibility so it can be
           shaped to meet the unique needs of individuals.
         </p>
