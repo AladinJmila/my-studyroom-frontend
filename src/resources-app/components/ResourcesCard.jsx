@@ -70,6 +70,14 @@ const ResourcesCard = ({
               <div className='col'>
                 <div
                   className='center'
+                  style={resourceStatusReset}
+                  title='Reset'
+                  onClick={() => onToggleStatus(resource, 'Reset')}
+                ></div>
+              </div>
+              <div className='col'>
+                <div
+                  className='center'
                   style={resourceStatusStudy}
                   title='Study'
                   onClick={() => onToggleStatus(resource, 'Study')}
@@ -81,14 +89,6 @@ const ResourcesCard = ({
                   style={resourceStatusRevise}
                   title='Revise'
                   onClick={() => onToggleStatus(resource, 'Revise')}
-                ></div>
-              </div>
-              <div className='col'>
-                <div
-                  className='center'
-                  style={resourceStatusReset}
-                  title='Reset'
-                  onClick={() => onToggleStatus(resource, 'Reset')}
                 ></div>
               </div>
             </>

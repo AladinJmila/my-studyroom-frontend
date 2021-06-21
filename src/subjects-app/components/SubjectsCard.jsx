@@ -34,7 +34,8 @@ const SubjectsCard = ({
   const dispatch = useDispatch()
 
   const percentage = 0
-  const tasksPrecentage = calculatePercentage(subject, allTasks)
+  let tasksPercentage = calculatePercentage(subject, allTasks)
+  tasksPercentage = !tasksPercentage ? 0 : tasksPercentage
 
   const totalTasks = totalTasksPerSubject(subject, allTasks)
   dispatch(setTasksPerSubject(subject.name, totalTasks))
@@ -92,8 +93,8 @@ const SubjectsCard = ({
         <div className='row mt-3'>
           <div className='col'>
             <CircularProgressbar
-              value={tasksPrecentage}
-              text={`${tasksPrecentage}%`}
+              value={tasksPercentage}
+              text={`${tasksPercentage}%`}
             />
             <h5 className='ml-4 mt-2'>Tasks</h5>
           </div>
