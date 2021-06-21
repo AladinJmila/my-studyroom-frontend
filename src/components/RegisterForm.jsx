@@ -18,10 +18,10 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       const response = await register(this.state.data)
-      setTimeout(() => {
-        loginWithJwt(response.headers['x-auth-token'])
-        window.location('/')
-      }, 1000)
+
+      await loginWithJwt(response.headers['x-auth-token'])
+      window.location = '/'
+      // window.location('/')
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const errors = { ...this.state.errors }
@@ -39,7 +39,7 @@ class RegisterForm extends Form {
         <form onSubmit={this.handleSubmit}>
           {this.renderInput('username', 'Username')}
           {this.renderInput('email', 'Email')}
-          {this.renderInput('password', 'Password')}
+          {this.renderInput('password', 'Password', 'password')}
           {this.renderButton('Register')}
         </form>
       </div>
