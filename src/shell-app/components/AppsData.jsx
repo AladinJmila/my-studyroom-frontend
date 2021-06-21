@@ -96,7 +96,7 @@ const AppsData = () => {
   const SortedAppsData = _.orderBy(appsDataArray, ['count'], ['desc'])
 
   return (
-    <div className='col scrolling-wrapper'>
+    <div style={{ padding: '0 0 0 5px' }} className='col scrolling-wrapper'>
       {SortedAppsData.map(item => (
         <DataColumn
           key={item.name}
@@ -111,7 +111,12 @@ const AppsData = () => {
         />
       ))}
       <div
-        style={{ minWidth: 30, backgroundColor: 'rgba(255, 255, 255, 0.7)' }}
+        style={{
+          minWidth: 47,
+          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          borderRadius: 10,
+          margin: '0 5px',
+        }}
       ></div>
     </div>
   )
