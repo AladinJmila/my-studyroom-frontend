@@ -20,6 +20,7 @@ class RegisterForm extends Form {
       const response = await register(this.state.data)
       loginWithJwt(response.headers['x-auth-token'])
       window.location('/')
+      this.props.history.push('/')
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const errors = { ...this.state.errors }

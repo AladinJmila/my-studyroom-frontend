@@ -25,7 +25,7 @@ const DataColumn = ({ name, data, color, icon, show, count, setShow }) => {
       />
       {show && (
         <div style={containerStyles} className='y-scroll'>
-          <h2>{name}</h2>
+          <h2 className='sticky-top'>{name}</h2>
           {data}
         </div>
       )}

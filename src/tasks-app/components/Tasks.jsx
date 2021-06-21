@@ -35,9 +35,14 @@ const Tasks = () => {
     dispatch(deleteTask(task._id))
   }
 
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const handleTaskSelect = task => {
     dispatch(setSelectedTask(task))
     handleShowForm()
+    scrollTop()
   }
 
   const onSort = sortTarget => {

@@ -3,9 +3,9 @@ import image from '../static/images/AlaeddineJmila.jpg'
 
 const About = () => {
   return (
-    <div className='container full-height center'>
+    <div className='container full-height text-center'>
       <div style={aboutStyles} className='mt-3 mb-4 p-3'>
-        <h3>Intro</h3>
+        <h3>Introduction</h3>
         <p>
           I spent the last year learning programming with a hope of combining
           this new skill with my previous architectural experience to bring my
@@ -53,7 +53,7 @@ const About = () => {
         </p>
       </div>
       <hr />
-      <footer className='center'>
+      <footer className='text-center'>
         <h5>
           Created by: <b>Alaeddine Jmila</b>
         </h5>
