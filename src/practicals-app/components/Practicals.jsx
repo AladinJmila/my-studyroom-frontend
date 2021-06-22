@@ -10,6 +10,7 @@ import {
   togglePracticalProp,
   setSelectedPractical,
 } from './../../store/apps/practicalsActions'
+import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Practicals = () => {
   const [showForm, setShowForm] = useState(false)
@@ -55,20 +56,22 @@ const Practicals = () => {
 
   return (
     <>
-      <HeaderCard
-        user={user}
-        count={filtered.length}
-        item='Practicals'
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      {showForm && (
-        <PracticalsForm
+      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+        <HeaderCard
           user={user}
-          practicals={practicals}
-          toggleShowForm={handleShowForm}
+          count={filtered.length}
+          item='Practicals'
+          onClick={handleShowForm}
+          showForm={showForm}
         />
-      )}
+        {showForm && (
+          <PracticalsForm
+            user={user}
+            practicals={practicals}
+            toggleShowForm={handleShowForm}
+          />
+        )}
+      </div>
       {filtered.map(practical => (
         <PracticalsCard
           user={user}

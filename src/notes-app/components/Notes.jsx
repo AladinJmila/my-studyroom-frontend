@@ -11,6 +11,7 @@ import {
   setSelectedNote,
   // setFilteredNotes,
 } from './../../store/apps/notesActions'
+import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Notes = () => {
   const [showForm, setShowForm] = useState(false)
@@ -54,21 +55,24 @@ const Notes = () => {
       ? notes.filter(n => n.subject._id === selectedSubject._id)
       : notes
 
-  // dispatch(setFilteredNotes(filtered))
-  // if (selectedSubject) dispatch(setFilteredNotes(filtered))
-
   return (
     <>
-      <HeaderCard
-        user={user}
-        count={filtered.length}
-        item='Notes'
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      {showForm && (
-        <NotesForm user={user} notes={notes} toggleShowForm={handleShowForm} />
-      )}
+      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+        <HeaderCard
+          user={user}
+          count={filtered.length}
+          item='Notes'
+          onClick={handleShowForm}
+          showForm={showForm}
+        />
+        {showForm && (
+          <NotesForm
+            user={user}
+            notes={notes}
+            toggleShowForm={handleShowForm}
+          />
+        )}
+      </div>
       {filtered.map(note => (
         <NotesCard
           user={user}

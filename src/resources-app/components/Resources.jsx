@@ -13,6 +13,7 @@ import {
   toggleResourceProp,
   toggleResourceStatus,
 } from './../../store/apps/resourcesActions'
+import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 function Resources() {
   const [showForm, setShowForm] = useState(false)
@@ -78,23 +79,25 @@ function Resources() {
 
   return (
     <>
-      <HeaderCard
-        user={user}
-        count={sorted.length}
-        item='Resources'
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      {showForm && (
-        <ResourcesForm
+      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+        <HeaderCard
           user={user}
-          resources={resources}
-          toggleShowForm={handleShowForm}
+          count={sorted.length}
+          item='Resources'
+          onClick={handleShowForm}
+          showForm={showForm}
         />
-      )}
-      <table className='table'>
-        <SortResources onSort={onSort} sortTarget={sortTarget} />
-      </table>
+        {showForm && (
+          <ResourcesForm
+            user={user}
+            resources={resources}
+            toggleShowForm={handleShowForm}
+          />
+        )}
+        <table className='table'>
+          <SortResources onSort={onSort} sortTarget={sortTarget} />
+        </table>
+      </div>
       {sorted.map(resource => (
         <ResourcesCard
           user={user}

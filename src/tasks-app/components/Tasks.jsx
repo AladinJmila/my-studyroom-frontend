@@ -12,6 +12,7 @@ import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
+import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
@@ -72,19 +73,25 @@ const Tasks = () => {
 
   return (
     <>
-      <HeaderCard
-        user={user}
-        count={sorted.length}
-        item='Tasks'
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      {showForm && (
-        <TasksForm user={user} tasks={tasks} toggleShowForm={handleShowForm} />
-      )}
-      <table className='table'>
-        <SortTasks sortTarget={sortTarget} onSort={onSort} />
-      </table>
+      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+        <HeaderCard
+          user={user}
+          count={sorted.length}
+          item='Tasks'
+          onClick={handleShowForm}
+          showForm={showForm}
+        />
+        {showForm && (
+          <TasksForm
+            user={user}
+            tasks={tasks}
+            toggleShowForm={handleShowForm}
+          />
+        )}
+        <table className='table'>
+          <SortTasks sortTarget={sortTarget} onSort={onSort} />
+        </table>
+      </div>
       <>
         {sorted.map(task => (
           <TasksCard

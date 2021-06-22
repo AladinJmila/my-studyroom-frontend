@@ -80,3 +80,9 @@ export const appColumnsTitle = {
   marginBottom: 10,
   border: '1px solid rgb(52, 58, 64)',
 }
+
+export const appsHeaderAndFormStyle = {
+  backgroundImage: 'inherit',
+  // backgroundImage: 'linear-gradient(#697a7C, #5dcdde)',
+  overflowY: 'auto',
+}

@@ -24,7 +24,8 @@ function Shell() {
         setShow={setShowSubjects}
       />
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>
-        <h2 style={appColumnsTitle} className='sticky-top'>
+        <h2>
+          {/* <h2 style={appColumnsTitle} className='sticky-top'> */}
           Subjects
         </h2>
         <div>
