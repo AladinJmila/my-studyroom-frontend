@@ -9,7 +9,7 @@ import {
   deleteNote,
   toggleNoteProp,
   setSelectedNote,
-  setFilteredNotes,
+  // setFilteredNotes,
 } from './../../store/apps/notesActions'
 
 const Notes = () => {
@@ -54,7 +54,7 @@ const Notes = () => {
       ? notes.filter(n => n.subject._id === selectedSubject._id)
       : notes
 
-  dispatch(setFilteredNotes(filtered))
+  // dispatch(setFilteredNotes(filtered))
   // if (selectedSubject) dispatch(setFilteredNotes(filtered))
 
   return (

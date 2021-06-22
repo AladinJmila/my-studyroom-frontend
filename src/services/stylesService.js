@@ -49,9 +49,9 @@ export const resourceStatusReset = {
 }
 
 export const appColumnsTitle = {
-  backgroundColor: 'rgba(52, 58, 64)',
+  backgroundColor: 'rgba(211, 214, 214)',
   borderRadius: 10,
   padding: '5px 10px',
   marginBottom: 10,
-  color: 'white',
+  border: '1px solid rgb(52, 58, 64)',
 }

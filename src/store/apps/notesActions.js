@@ -77,6 +77,6 @@ export const deleteNote = id => async dispatch => {
   }
 }
 
-export const setFilteredNotes = filtered => dispatch => {
-  dispatch(actions.FILTER_NOTES(filtered))
-}
+// export const setFilteredNotes = filtered => dispatch => {
+//   dispatch(actions.FILTER_NOTES(filtered))
+// }

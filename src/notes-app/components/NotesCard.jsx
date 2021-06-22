@@ -46,14 +46,13 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               />
             </div>
           )}
-          <div className='col'>
+          <div className='col text-center'>
             <Star
               className='yellow'
               onStar={() => onToggleProp(note, 'starred')}
               starred={note.starred}
             />
           </div>
-          <div className='col '></div>
           <div className='col'>
             {note.url && (
               <a

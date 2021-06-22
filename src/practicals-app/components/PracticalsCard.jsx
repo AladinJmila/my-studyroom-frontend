@@ -57,23 +57,27 @@ const PracticalsCard = ({
             </>
           )}
         </div>
-        <div>
-          {user && (
-            <Toggle
-              toggled={practical.isPublic}
-              onToggle={() => onToggleProp(practical, 'isPublic')}
-            />
-          )}
-          {practical.url && (
-            <a
-              className='card-link float-right'
-              href={practical.url}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <i className='fa fa-external-link' aria-hidden='true'></i>
-            </a>
-          )}
+        <div className='row'>
+          <div className='col'>
+            {user && (
+              <Toggle
+                toggled={practical.isPublic}
+                onToggle={() => onToggleProp(practical, 'isPublic')}
+              />
+            )}
+          </div>
+          <div className='col'>
+            {practical.url && (
+              <a
+                className='card-link float-right'
+                href={practical.url}
+                target='_blank'
+                rel='noreferrer'
+              >
+                <i className='fa fa-external-link' aria-hidden='true'></i>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>

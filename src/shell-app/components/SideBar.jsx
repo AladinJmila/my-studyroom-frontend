@@ -15,6 +15,7 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
     margin: '0 5px',
+    border: '1px solid rgb(52, 58, 64)',
   }
 
   if (window.innerWidth < 500 && count) {
