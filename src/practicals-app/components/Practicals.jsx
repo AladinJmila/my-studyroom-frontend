@@ -10,7 +10,6 @@ import {
   togglePracticalProp,
   setSelectedPractical,
 } from './../../store/apps/practicalsActions'
-import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Practicals = () => {
   const [showForm, setShowForm] = useState(false)
@@ -56,7 +55,7 @@ const Practicals = () => {
 
   return (
     <>
-      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+      <div className='sticky-top'>
         <HeaderCard
           user={user}
           count={filtered.length}

@@ -12,7 +12,6 @@ import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
-import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
@@ -73,7 +72,7 @@ const Tasks = () => {
 
   return (
     <>
-      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+      <div className='sticky-top'>
         <HeaderCard
           user={user}
           count={sorted.length}

@@ -1,5 +1,7 @@
 export const backgroundOpacity = { backgroundColor: 'rgba(255, 255, 255, 0.6)' }
 
+export const headerBackground = { backgroundColor: 'rgb(195, 204, 205)' }
+
 export const aboutStyles = {
   backgroundColor: 'rgba(255, 255, 255, 0.6)',
   borderRadius: 20,
@@ -81,8 +83,7 @@ export const appColumnsTitle = {
   border: '1px solid rgb(52, 58, 64)',
 }
 
-export const appsHeaderAndFormStyle = {
-  backgroundImage: 'inherit',
-  // backgroundImage: 'linear-gradient(#697a7C, #5dcdde)',
+export const appsFormStyle = {
+  backgroundImage: 'linear-gradient(#697a7C, #62a9b4)',
   overflowY: 'auto',
 }

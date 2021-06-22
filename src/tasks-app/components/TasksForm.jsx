@@ -6,6 +6,7 @@ import {
   updateTask,
   clearSelectedTask,
 } from '../../store/apps/tasksActions'
+import { appsFormStyle } from '../../services/stylesService'
 
 class TasksForm extends Form {
   state = {
@@ -96,7 +97,7 @@ class TasksForm extends Form {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} style={appsFormStyle}>
         {this.renderSelect(
           'subjectId',
           'Subject',

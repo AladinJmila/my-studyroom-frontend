@@ -11,7 +11,6 @@ import {
   setSelectedNote,
   // setFilteredNotes,
 } from './../../store/apps/notesActions'
-import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 const Notes = () => {
   const [showForm, setShowForm] = useState(false)
@@ -57,7 +56,7 @@ const Notes = () => {
 
   return (
     <>
-      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+      <div className='sticky-top'>
         <HeaderCard
           user={user}
           count={filtered.length}

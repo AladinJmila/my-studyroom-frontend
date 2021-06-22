@@ -13,7 +13,6 @@ import {
   toggleResourceProp,
   toggleResourceStatus,
 } from './../../store/apps/resourcesActions'
-import { appsHeaderAndFormStyle } from '../../services/stylesService'
 
 function Resources() {
   const [showForm, setShowForm] = useState(false)
@@ -79,7 +78,7 @@ function Resources() {
 
   return (
     <>
-      <div className='sticky-top' style={appsHeaderAndFormStyle}>
+      <div className='sticky-top'>
         <HeaderCard
           user={user}
           count={sorted.length}

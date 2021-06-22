@@ -1,4 +1,4 @@
-import { backgroundOpacity } from './../../services/stylesService'
+import { headerBackground } from './../../services/stylesService'
 
 const columns = [
   {
@@ -40,7 +40,7 @@ const SortTasks = ({ onSort, sortTarget }) => {
     onSort(newSortTarget)
   }
   return (
-    <thead style={backgroundOpacity}>
+    <thead style={headerBackground}>
       <tr>
         {columns.map(column => (
           <th

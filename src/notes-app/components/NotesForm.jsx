@@ -1,6 +1,7 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
+import { appsFormStyle } from '../../services/stylesService'
 import {
   createNote,
   updateNote,
@@ -89,7 +90,7 @@ class NotesForm extends Form {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} style={appsFormStyle}>
         {this.renderSelect(
           'subjectId',
           'Subject',

@@ -1,4 +1,4 @@
-import { backgroundOpacity } from './../../services/stylesService'
+import { headerBackground } from './../../services/stylesService'
 
 const SortResources = ({ sortTarget, onSort }) => {
   const targets = [
@@ -33,7 +33,7 @@ const SortResources = ({ sortTarget, onSort }) => {
   }
 
   return (
-    <thead style={backgroundOpacity}>
+    <thead style={headerBackground}>
       <tr>
         {targets.map(target => (
           <th

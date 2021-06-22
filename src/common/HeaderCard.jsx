@@ -1,9 +1,9 @@
-import { backgroundOpacity } from './../services/stylesService'
+import { headerBackground } from './../services/stylesService'
 
 const HeaderCard = ({ user, count, item, onClick, showForm }) => {
   return (
     // sticky-top
-    <div style={backgroundOpacity} className='card mb-3'>
+    <div style={headerBackground} className='card mb-3'>
       <div className='card-body'>
         <h6 className='float-left'>
           Showing {count} <b>{' ' + item}</b>
