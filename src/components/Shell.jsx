@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
 import ToggleSideTab from './../common/ToggleSideTab'
+import { appColumnsTitle } from './../services/stylesService'
 
 function Shell() {
   const [orderedData, setOrderedData] = useState([])
@@ -23,7 +24,9 @@ function Shell() {
         setShow={setShowSubjects}
       />
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>
-        <h2>Subjects</h2>
+        <h2 style={appColumnsTitle} className='sticky-top'>
+          Subjects
+        </h2>
         <div>
           <Subjects setOrderedData={setOrderedData} orderedData={orderedData} />
         </div>

@@ -47,3 +47,11 @@ export const resourceStatusReset = {
   borderRadius: 5,
   cursor: 'pointer',
 }
+
+export const appColumnsTitle = {
+  backgroundColor: 'rgba(210, 210, 210)',
+  display: 'inline-block',
+  borderRadius: 10,
+  padding: '5px 10px',
+  marginBottom: 5,
+}

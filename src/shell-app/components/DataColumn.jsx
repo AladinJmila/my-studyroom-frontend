@@ -1,4 +1,5 @@
 import SideBar from './SideBar'
+import { appColumnsTitle } from './../../services/stylesService'
 
 const containerStyles = {
   margin: '5px 10px',
@@ -25,7 +26,9 @@ const DataColumn = ({ name, data, color, icon, show, count, setShow }) => {
       />
       {show && (
         <div style={containerStyles} className='y-scroll'>
-          <h2 className='sticky-top'>{name}</h2>
+          <h2 style={appColumnsTitle} className='sticky-top'>
+            {name}
+          </h2>
           {data}
         </div>
       )}

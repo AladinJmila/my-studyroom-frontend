@@ -6,8 +6,7 @@ const HeaderCard = ({ user, count, item, onClick, showForm }) => {
     <div style={backgroundOpacity} className='card mb-3'>
       <div className='card-body'>
         <h6 className='float-left'>
-          Showing {count}
-          <b>{item}</b>
+          Showing {count} <b>{' ' + item}</b>
         </h6>
         {user && (
           <button

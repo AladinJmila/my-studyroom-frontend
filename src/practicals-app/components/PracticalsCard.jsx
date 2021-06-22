@@ -58,10 +58,12 @@ const PracticalsCard = ({
           )}
         </div>
         <div>
-          <Toggle
-            toggled={practical.isPublic}
-            onToggle={() => onToggleProp(practical, 'isPublic')}
-          />
+          {user && (
+            <Toggle
+              toggled={practical.isPublic}
+              onToggle={() => onToggleProp(practical, 'isPublic')}
+            />
+          )}
           {practical.url && (
             <a
               className='card-link float-right'

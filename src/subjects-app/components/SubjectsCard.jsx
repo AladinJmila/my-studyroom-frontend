@@ -111,8 +111,8 @@ const SubjectsCard = ({
             <p style={{ margin: 2 }}>
               Tasks:{' '}
               <span className='float-right'>
+                {Boolean(checkedTasks.length) && checkedTasks.length + '/'}
                 {totalTasks}
-                {Boolean(checkedTasks.length) && '/' + checkedTasks.length}
               </span>
             </p>
           )}

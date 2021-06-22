@@ -8,7 +8,10 @@ function NavBar() {
     <div>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
         <Link className='navbar-brand' to='/shell'>
-          My StudyRoom
+          My StudyRoom{' '}
+          <small>
+            <i>beta</i>
+          </small>
         </Link>
         <button
           className='navbar-toggler'
