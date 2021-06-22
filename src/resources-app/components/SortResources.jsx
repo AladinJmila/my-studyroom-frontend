@@ -10,13 +10,11 @@ const SortResources = ({ sortTarget, onSort }) => {
         </div>
       ),
     },
-    { key: 'hollow1' },
-    { key: 'hollow2' },
-    { key: 'hollow3' },
+
     {
-      path: 'status.cardStatus',
+      path: 'status',
       label: (
-        <div style={{ cursor: 'pointer' }}>
+        <div style={{ cursor: 'pointer' }} className='float-right'>
           <i className='fa fa-sort' aria-hidden='true'></i> Status
         </div>
       ),

@@ -20,7 +20,7 @@ const columns = [
   {
     path: 'repeat',
     label: (
-      <div style={{ cursor: 'pointer' }}>
+      <div style={{ cursor: 'pointer' }} className='float-right'>
         <i className='fa fa-sort' aria-hidden='true'></i>{' '}
         <i className='fa fa-repeat' aria-hidden='true'></i>
       </div>
