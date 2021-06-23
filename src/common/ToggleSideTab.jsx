@@ -8,6 +8,7 @@ const ToggleSideTab = ({ show, setShow, label }) => {
     show = show ? false : true
     setShow(show)
   }
+
   return (
     <div
       onClick={() => handleToggleTab()}

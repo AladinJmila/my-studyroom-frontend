@@ -1,4 +1,4 @@
-import { headerBackground } from './../../services/stylesService'
+import { headersStyle } from './../../services/stylesService'
 
 const SortResources = ({ sortTarget, onSort }) => {
   const targets = [
@@ -33,10 +33,11 @@ const SortResources = ({ sortTarget, onSort }) => {
   }
 
   return (
-    <thead style={headerBackground}>
+    <thead>
       <tr>
         {targets.map(target => (
           <th
+            style={headersStyle}
             key={target.path || target.key}
             onClick={() => handleSort(target.path)}
           >

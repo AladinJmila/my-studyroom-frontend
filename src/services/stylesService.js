@@ -1,6 +1,9 @@
 export const backgroundOpacity = { backgroundColor: 'rgba(255, 255, 255, 0.6)' }
 
-export const headerBackground = { backgroundColor: 'rgb(195, 204, 205)' }
+export const headersStyle = {
+  backgroundColor: 'rgb(195, 204, 205)',
+  border: 'none',
+}
 
 export const aboutStyles = {
   backgroundColor: 'rgba(255, 255, 255, 0.6)',
@@ -84,6 +87,6 @@ export const appColumnsTitle = {
 }
 
 export const appsFormStyle = {
-  backgroundImage: 'linear-gradient(#697a7C, #62a9b4)',
+  backgroundImage: 'linear-gradient(#678387, #62a9b4)',
   overflowY: 'auto',
 }

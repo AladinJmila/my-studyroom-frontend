@@ -1,4 +1,4 @@
-import { headerBackground } from './../../services/stylesService'
+import { headersStyle } from './../../services/stylesService'
 
 const columns = [
   {
@@ -39,11 +39,13 @@ const SortTasks = ({ onSort, sortTarget }) => {
     }
     onSort(newSortTarget)
   }
+
   return (
-    <thead style={headerBackground}>
+    <thead>
       <tr>
         {columns.map(column => (
           <th
+            style={headersStyle}
             key={column.path || column.key}
             onClick={() => handleSort(column.path)}
           >
