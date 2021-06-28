@@ -27,7 +27,7 @@ const Tasks = () => {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
-  const loading = useSelector(state => state.apps.tasks.loading)
+  // const loading = useSelector(state => state.apps.tasks.loading)
   const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
@@ -79,43 +79,43 @@ const Tasks = () => {
 
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <div className='center-spinner'>
           <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
         </div>
-      ) : (
-        <>
-          <div className='sticky-top'>
-            <HeaderCard
+      ) : ( */}
+      <>
+        <div className='sticky-top'>
+          <HeaderCard
+            user={user}
+            count={sorted.length}
+            item='Tasks'
+            onClick={handleShowForm}
+            showForm={showForm}
+          />
+          {showForm && (
+            <TasksForm
               user={user}
-              count={sorted.length}
-              item='Tasks'
-              onClick={handleShowForm}
-              showForm={showForm}
+              tasks={tasks}
+              toggleShowForm={handleShowForm}
             />
-            {showForm && (
-              <TasksForm
-                user={user}
-                tasks={tasks}
-                toggleShowForm={handleShowForm}
-              />
-            )}
-            <table className='table'>
-              <SortTasks sortTarget={sortTarget} onSort={onSort} />
-            </table>
-          </div>
-          {sorted.map(task => (
-            <TasksCard
-              key={task._id}
-              user={user}
-              task={task}
-              onToggleProp={handleToggleProp}
-              onDelete={handleDelete}
-              onEdit={handleTaskSelect}
-            />
-          ))}
-        </>
-      )}
+          )}
+          <table className='table'>
+            <SortTasks sortTarget={sortTarget} onSort={onSort} />
+          </table>
+        </div>
+        {sorted.map(task => (
+          <TasksCard
+            key={task._id}
+            user={user}
+            task={task}
+            onToggleProp={handleToggleProp}
+            onDelete={handleDelete}
+            onEdit={handleTaskSelect}
+          />
+        ))}
+      </>
+      {/* )} */}
     </>
   )
 }
