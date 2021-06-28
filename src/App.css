@@ -84,6 +84,14 @@ body {
   padding: 10px;
 }
 
+.center-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  /* border: 3px solid green; */
+}
+
 /* @media only screen and (max-width: 500px) {
   .cell {
     margin: 0;

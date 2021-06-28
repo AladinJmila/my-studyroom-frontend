@@ -12,9 +12,11 @@ import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
     order: 'asc',
@@ -25,10 +27,15 @@ const Tasks = () => {
   const selectedSubject = useSelector(
     state => state.apps.subjects.selectedSubject
   )
+  const loading = useSelector(state => state.apps.tasks.loading)
   const user = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(loadTasks())
+    // setLoading(true)
+    // setTimeout(() => {
+    //   setLoading(false)
+    // }, 2000)
   }, [])
 
   const handleDelete = task => {
@@ -72,37 +79,43 @@ const Tasks = () => {
 
   return (
     <>
-      <div className='sticky-top'>
-        <HeaderCard
-          user={user}
-          count={sorted.length}
-          item='Tasks'
-          onClick={handleShowForm}
-          showForm={showForm}
-        />
-        {showForm && (
-          <TasksForm
-            user={user}
-            tasks={tasks}
-            toggleShowForm={handleShowForm}
-          />
-        )}
-        <table className='table'>
-          <SortTasks sortTarget={sortTarget} onSort={onSort} />
-        </table>
-      </div>
-      <>
-        {sorted.map(task => (
-          <TasksCard
-            key={task._id}
-            user={user}
-            task={task}
-            onToggleProp={handleToggleProp}
-            onDelete={handleDelete}
-            onEdit={handleTaskSelect}
-          />
-        ))}
-      </>
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          <div className='sticky-top'>
+            <HeaderCard
+              user={user}
+              count={sorted.length}
+              item='Tasks'
+              onClick={handleShowForm}
+              showForm={showForm}
+            />
+            {showForm && (
+              <TasksForm
+                user={user}
+                tasks={tasks}
+                toggleShowForm={handleShowForm}
+              />
+            )}
+            <table className='table'>
+              <SortTasks sortTarget={sortTarget} onSort={onSort} />
+            </table>
+          </div>
+          {sorted.map(task => (
+            <TasksCard
+              key={task._id}
+              user={user}
+              task={task}
+              onToggleProp={handleToggleProp}
+              onDelete={handleDelete}
+              onEdit={handleTaskSelect}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }

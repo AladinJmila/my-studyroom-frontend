@@ -46,6 +46,10 @@ const SubjectsCard = ({
   const allPracticals = useSelector(state => state.apps.practicals.list)
   const dispatch = useDispatch()
 
+  const selectedSubject = useSelector(
+    state => state.apps.subjects.selectedSubject
+  )
+
   let tasksPercentage = calculateTasksPercentage(subject, allTasks)
   tasksPercentage = !tasksPercentage ? 0 : tasksPercentage
 
@@ -63,10 +67,6 @@ const SubjectsCard = ({
 
   const totalPracticals = totalPracticalsPerSubject(subject, allPracticals)
   dispatch(setPracticalsPerSubject(subject.name, totalPracticals))
-
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
 
   return (
     <div

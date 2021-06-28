@@ -54,6 +54,7 @@ const slice = createSlice({
 })
 
 export const {
+  REQUEST_TASKS,
   GET_TASKS,
   CREATE_TASK,
   SELECT_TASK,

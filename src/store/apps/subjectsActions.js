@@ -19,6 +19,7 @@ export const loadSubjects = () => async (dispatch, getState) => {
       headers: { userid },
     })
 
+    dispatch(actions.REQUEST_SUBJECTS())
     dispatch(actions.GET_SUBJECTS(data))
   } catch (error) {
     console.log(error)

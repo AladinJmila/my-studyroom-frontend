@@ -17,6 +17,7 @@ export const loadTasks = () => async (dispatch, getState) => {
   try {
     const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
 
+    dispatch(actions.REQUEST_TASKS())
     dispatch(actions.GET_TASKS(data))
   } catch (error) {
     console.log(error)

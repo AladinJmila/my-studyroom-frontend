@@ -13,7 +13,7 @@ const slice = createSlice({
       subjects.loading = true
     },
 
-    REQUEST_SBUJECTS_FAIL: (subjects, action) => {
+    REQUEST_SUBJECTS_FAIL: (subjects, action) => {
       subjects.loading = false
     },
 
@@ -50,6 +50,7 @@ const slice = createSlice({
 })
 
 export const {
+  REQUEST_SUBJECTS,
   GET_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
