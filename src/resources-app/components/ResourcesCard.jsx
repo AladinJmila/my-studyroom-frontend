@@ -1,37 +1,15 @@
 import {
-  backgroundOpacity,
   mainContentStyle,
-  resourceStatusStudy,
-  resourceStatusRevise,
-  cardBackgroundStudy,
-  cardBackgroundRevise,
-  resourceStatusReset,
+  checkedResourceStyle,
+  cardsBody,
 } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
+import Check from './../../common/Check'
 
-const ResourcesCard = ({
-  user,
-  resource,
-  onToggleProp,
-  onEdit,
-  onDelete,
-  onToggleStatus,
-}) => {
-  let backgroundColor
-  switch (resource.status) {
-    case 'Study':
-      backgroundColor = cardBackgroundStudy
-      break
-    case 'Revise':
-      backgroundColor = cardBackgroundRevise
-      break
-    default:
-      backgroundColor = backgroundOpacity
-  }
-
+const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
   return (
-    <div style={backgroundColor} className='card mb-1'>
-      <div className='card-body'>
+    <div style={cardsBody} className='card mb-1'>
+      <div className='p-3'>
         <h6 className='card-subtitle mb-2'>
           {user && (
             <i
@@ -53,46 +31,37 @@ const ResourcesCard = ({
             )}
           </div>
         </h6>
-        <p className='card-text' style={mainContentStyle}>
-          {resource.content}
-        </p>
+        <div className='card-title float-left mr-2'>
+          {user && (
+            <>
+              <Check
+                onCheck={() => onToggleProp(resource, 'isChecked')}
+                isChecked={resource.isChecked}
+              />
+            </>
+          )}
+        </div>{' '}
+        {resource.isChecked ? (
+          <p className='mb-2' style={checkedResourceStyle}>
+            {resource.content}
+          </p>
+        ) : (
+          <p className='mb-2' style={mainContentStyle}>
+            {resource.content}
+          </p>
+        )}
         <div className='row'>
           {user && (
             <div className='col'>
-              <Toggle
-                toggled={resource.isPublic}
-                onToggle={() => onToggleProp(resource, 'isPublic')}
-              />
+              <div className='float-left ml-0 pl-0'>
+                <Toggle
+                  toggled={resource.isPublic}
+                  onToggle={() => onToggleProp(resource, 'isPublic')}
+                />
+              </div>
             </div>
           )}
-          {user && (
-            <>
-              <div className='col'>
-                <div
-                  className='center'
-                  style={resourceStatusReset}
-                  title='Reset'
-                  onClick={() => onToggleStatus(resource, 'Reset')}
-                ></div>
-              </div>
-              <div className='col'>
-                <div
-                  className='center'
-                  style={resourceStatusStudy}
-                  title='Study'
-                  onClick={() => onToggleStatus(resource, 'Study')}
-                ></div>
-              </div>
-              <div className='col'>
-                <div
-                  className='center'
-                  style={resourceStatusRevise}
-                  title='Revise'
-                  onClick={() => onToggleStatus(resource, 'Revise')}
-                ></div>
-              </div>
-            </>
-          )}
+
           <div className='col'>
             <a
               className='card-link float-right'

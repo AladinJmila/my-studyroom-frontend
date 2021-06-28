@@ -9,7 +9,6 @@ import {
   deleteNote,
   toggleNoteProp,
   setSelectedNote,
-  // setFilteredNotes,
 } from './../../store/apps/notesActions'
 
 const Notes = () => {
@@ -38,7 +37,7 @@ const Notes = () => {
   const handleToggleProp = (note, property) => {
     const index = notes.indexOf(note)
     const noteToUpdate = { ...notes[index] }
-    noteToUpdate[property] = !noteToUpdate[index]
+    noteToUpdate[property] = !noteToUpdate[property]
     const update = { [property]: noteToUpdate[property] }
 
     dispatch(patchNote(note._id, update))

@@ -36,6 +36,12 @@ const SubjectsCard = ({
   const checkedTasks = filteredAllTasks.filter(t => t.isChecked)
 
   const allResources = useSelector(state => state.apps.resources.list)
+  const filteredAllResources =
+    subject && subject._id
+      ? allResources.filter(r => r.subject._id === subject._id)
+      : allResources
+  const checkedResources = filteredAllResources.filter(r => r.isChecked)
+
   const allNotes = useSelector(state => state.apps.notes.list)
   const allPracticals = useSelector(state => state.apps.practicals.list)
   const dispatch = useDispatch()
@@ -109,7 +115,7 @@ const SubjectsCard = ({
         <div className='font-weight-bold' style={mainContentStyle}>
           {Boolean(totalTasks) && (
             <p style={{ margin: 2 }}>
-              Tasks:{' '}
+              Tasks:
               <span className='float-right'>
                 {Boolean(checkedTasks.length) && checkedTasks.length + '/'}
                 {totalTasks}
@@ -123,7 +129,12 @@ const SubjectsCard = ({
           )}
           {Boolean(totalResources) && (
             <p style={{ margin: 2 }}>
-              Resources: <span className='float-right'>{totalResources}</span>
+              Resources:
+              <span className='float-right'>
+                {Boolean(checkedResources.length) &&
+                  checkedResources.length + '/'}
+                {totalResources}
+              </span>
             </p>
           )}
           {Boolean(totalPracticals) && (

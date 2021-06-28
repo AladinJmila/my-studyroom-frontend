@@ -1,14 +1,11 @@
 import Star from '../../common/Star'
-import {
-  backgroundOpacity,
-  mainContentStyle,
-} from './../../services/stylesService'
+import { cardsBody, mainContentStyle } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   return (
-    <div style={backgroundOpacity} className='card mb-1'>
-      <div className='card-body'>
+    <div style={cardsBody} className='card mb-1'>
+      <div className='p-3'>
         <h6 className='card-title'>
           {user && (
             <i

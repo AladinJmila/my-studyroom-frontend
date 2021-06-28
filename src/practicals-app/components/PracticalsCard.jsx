@@ -1,7 +1,4 @@
-import {
-  backgroundOpacity,
-  mainContentStyle,
-} from './../../services/stylesService'
+import { cardsBody, mainContentStyle } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
 const PracticalsCard = ({
@@ -12,8 +9,8 @@ const PracticalsCard = ({
   onEdit,
 }) => {
   return (
-    <div style={backgroundOpacity} className='card mb-1'>
-      <div className='card-body'>
+    <div style={cardsBody} className='card mb-1'>
+      <div className='p-3'>
         <h6 className='card-title'>
           {user && (
             <i
@@ -36,24 +33,34 @@ const PracticalsCard = ({
         <div>
           {practical.about && (
             <>
-              <h6>About:</h6> <p style={mainContentStyle}>{practical.about}</p>
+              <h6>About:</h6>{' '}
+              <p className='mb-3' style={mainContentStyle}>
+                {practical.about}
+              </p>
             </>
           )}
           {practical.cause && (
             <>
-              <h6>Cause:</h6> <p style={mainContentStyle}>{practical.cause}</p>
+              <h6>Cause:</h6>{' '}
+              <p className='mb-3' style={mainContentStyle}>
+                {practical.cause}
+              </p>
             </>
           )}
           {practical.solution && (
             <>
               <h6>Solution:</h6>{' '}
-              <p style={mainContentStyle}>{practical.solution}</p>
+              <p className='mb-3' style={mainContentStyle}>
+                {practical.solution}
+              </p>
             </>
           )}
           {practical.lesson && (
             <>
               <h6>Lesson:</h6>{' '}
-              <p style={mainContentStyle}>{practical.lesson}</p>
+              <p className='mb-3' style={mainContentStyle}>
+                {practical.lesson}
+              </p>
             </>
           )}
         </div>

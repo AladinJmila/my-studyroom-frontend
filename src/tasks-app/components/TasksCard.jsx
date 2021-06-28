@@ -1,14 +1,15 @@
 import Check from '../../common/Check'
 import {
-  backgroundOpacity,
+  backgrounOpacity,
+  cardsBody,
   mainContentStyle,
 } from './../../services/stylesService'
 import Toggle from './../../common/Toggle'
 
-const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete, onCheck }) => {
+const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
   return (
-    <div style={backgroundOpacity} className='card mb-1'>
-      <div className='card-body'>
+    <div style={cardsBody} className='card mb-1'>
+      <div className='p-3'>
         <h6 className='card-subtitle mb-2'>
           {user && (
             <i
@@ -45,11 +46,11 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete, onCheck }) => {
             )}
           </div>{' '}
           {task.isChecked ? (
-            <p className='card-text' style={mainContentStyle}>
+            <p className='mb-2' style={mainContentStyle}>
               <s>{task.content}</s>
             </p>
           ) : (
-            <p className='card-text' style={mainContentStyle}>
+            <p className='mb-2' style={mainContentStyle}>
               {task.content}
             </p>
           )}
