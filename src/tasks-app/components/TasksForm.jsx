@@ -107,7 +107,7 @@ class TasksForm extends Form {
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
         {this.renderInput('content', 'Task')}
         {this.renderInput('url', 'URL')}
-        {this.renderSelect('repeat', 'Repeat', this.frequency)}
+        {/* {this.renderSelect('repeat', 'Repeat', this.frequency)} */}
         {this.renderButton('Save', 'btn btn-block btn-dark mb-3')}
       </form>
     )

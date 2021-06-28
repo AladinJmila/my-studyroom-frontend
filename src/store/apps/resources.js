@@ -50,12 +50,6 @@ const slice = createSlice({
     DELETE_RESOURCE: (resources, action) => {
       resources.list.filter(resource => resource._id !== action.payload)
     },
-
-    TOGGLE_RESOURCE_STATUS: (resources, action) => {
-      const { id, status } = action.payload
-      const index = resources.list.findIndex(resource => resource._id === id)
-      resources.list[index].status = !resources.list[index].status ? status : ''
-    },
   },
 })
 

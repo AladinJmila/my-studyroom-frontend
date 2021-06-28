@@ -79,7 +79,3 @@ export const deleteResource = id => async dispatch => {
     console.log(error)
   }
 }
-
-export const toggleResourceStatus = (id, status) => dispatch => {
-  dispatch(actions.TOGGLE_RESOURCE_STATUS({ id, status }))
-}

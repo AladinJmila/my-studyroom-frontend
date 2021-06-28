@@ -14,7 +14,6 @@ class ResourcesForm extends Form {
       subjectId: '',
       content: '',
       url: '',
-      status: '',
     },
     subjects: [],
     errors: {},
@@ -23,10 +22,8 @@ class ResourcesForm extends Form {
   schema = {
     _id: [Joi.number(), Joi.string()],
     subjectId: Joi.string().required().label('Subject'),
-    resourceId: Joi.string().allow(''),
     content: Joi.string().required().label('Resource'),
     url: Joi.string().required().label('URL'),
-    status: Joi.string().allow(''),
   }
 
   async componentDidMount() {
@@ -44,7 +41,6 @@ class ResourcesForm extends Form {
       subjectId: resource.subject._id,
       content: resource.content,
       url: resource.url,
-      status: resource.status,
     }
   }
 
@@ -60,7 +56,7 @@ class ResourcesForm extends Form {
     } = this.props
 
     if (selectedResource) {
-      data.status = selectedResource.status
+      data.isChecked = selectedResource.isChecked
       data.isPublic = selectedResource.isPublic
       updateResource(data)
       clearSelectedResource()

@@ -45,16 +45,6 @@ function Resources() {
     setSortTarget(sortTarget)
   }
 
-  const handleToggleStatus = (resource, status) => {
-    const index = resources.indexOf(resource)
-    const resourceToUpdate = { ...resources[index] }
-    resourceToUpdate.status = !resourceToUpdate.status ? status : ''
-    const update = { status }
-
-    dispatch(patchResource(resource._id, update))
-    dispatch(toggleResourceStatus(resource._id, status))
-  }
-
   const handleToggleProp = (resource, property) => {
     const index = resources.indexOf(resource)
     const resourceToUpdate = { ...resources[index] }
@@ -105,7 +95,6 @@ function Resources() {
           onToggleProp={handleToggleProp}
           onDelete={handleDelete}
           onEdit={handleResourceSelect}
-          onToggleStatus={handleToggleStatus}
         />
       ))}
     </>
