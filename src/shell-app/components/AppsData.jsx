@@ -19,9 +19,7 @@ const AppsData = () => {
   const [showVisualNotes, setShowVisualNotes] = useState(true)
   const [showSchedules, setShowSchedules] = useState(true)
 
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
 
   useEffect(() => {}, [])
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'

@@ -4,10 +4,11 @@ import { getCurrentUser } from '../services/authService'
 import * as actions from './tasks'
 import config from '../../config.json'
 
-const loadingInterval = Number(config.loadingInternal)
 const apiEndPoint = '/tasks'
 let userid
 const user = getCurrentUser()
+const loadingInterval = Number(config.loadingInterval)
+
 if (user) userid = user._id
 
 export const loadTasks = () => async (dispatch, getState) => {

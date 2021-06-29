@@ -5,6 +5,7 @@ import HeaderCard from '../../common/HeaderCard'
 import NotesForm from './NotesForm'
 import SortNotes from './SortNotes'
 import NotesCard from './NotesCard'
+import { BeatLoader } from 'react-spinners'
 import {
   loadNotes,
   patchNote,
@@ -22,10 +23,9 @@ const Notes = () => {
 
   const dispatch = useDispatch()
   const notes = useSelector(state => state.apps.notes.list)
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
-  const user = useSelector(state => state.auth.user)
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const { user } = useSelector(state => state.auth)
+  const { loading } = useSelector(state => state.apps.notes)
 
   useEffect(() => {
     dispatch(loadNotes())
@@ -86,16 +86,26 @@ const Notes = () => {
           <SortNotes sortTarget={sortTarget} onSort={onSort} />
         </table>
       </div>
-      {sorted.map(note => (
-        <NotesCard
-          user={user}
-          key={note._id}
-          note={note}
-          onDelete={handleDelete}
-          onEdit={handleNoteSelect}
-          onToggleProp={handleToggleProp}
-        />
-      ))}
+
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          {' '}
+          {sorted.map(note => (
+            <NotesCard
+              user={user}
+              key={note._id}
+              note={note}
+              onDelete={handleDelete}
+              onEdit={handleNoteSelect}
+              onToggleProp={handleToggleProp}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }

@@ -5,7 +5,7 @@ import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
-import BeatLoader from 'react-spinners/BeatLoader'
+import { BeatLoader } from 'react-spinners'
 import {
   loadTasks,
   patchTask,
@@ -23,11 +23,9 @@ const Tasks = () => {
 
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.apps.tasks.list)
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
-  const loading = useSelector(state => state.apps.tasks.loading)
-  const user = useSelector(state => state.auth.user)
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const { user } = useSelector(state => state.auth)
+  const { loading } = useSelector(state => state.apps.tasks)
 
   useEffect(() => {
     dispatch(loadTasks())

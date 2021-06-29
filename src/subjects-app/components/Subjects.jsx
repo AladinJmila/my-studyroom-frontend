@@ -11,7 +11,7 @@ import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
-import BeatLoader from 'react-spinners/BeatLoader'
+import { BeatLoader } from 'react-spinners'
 
 const Subjects = () => {
   const [showForm, setShowForm] = useState(false)
@@ -19,8 +19,8 @@ const Subjects = () => {
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
   const subjects = useSelector(state => state.apps.subjects.list)
-  const user = useSelector(state => state.auth.user)
-  const loading = useSelector(state => state.apps.subjects.loading)
+  const { user } = useSelector(state => state.auth)
+  const { loading } = useSelector(state => state.apps.subjects)
 
   useEffect(() => {
     dispatch(loadSubjects())

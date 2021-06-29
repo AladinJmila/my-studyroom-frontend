@@ -2,17 +2,20 @@ import moment from 'moment'
 import httpService from '../services/httpService'
 import { getCurrentUser } from '../../services/authService'
 import * as actions from './subjects'
+import config from '../../config.json'
 
 const apiEndPoint = '/subjects'
 let userid
 const user = getCurrentUser()
+const loadingInterval = Number(config.loadingInterval)
+
 if (user) userid = user._id
 
 export const loadSubjects = () => async (dispatch, getState) => {
-  // const { lastFetch } = getState().apps.subjects
+  const { lastFetch } = getState().apps.subjects
 
-  // const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
-  // if (diffInMinutes < 10) return
+  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
+  if (diffInMinutes < loadingInterval) return
 
   try {
     dispatch(actions.REQUEST_SUBJECTS())
@@ -31,7 +34,6 @@ export const createSubject = subject => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, subject)
 
     dispatch(actions.CREATE_SUBJECT(data))
-    // dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }
@@ -45,8 +47,7 @@ export const patchSubject = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
-    dispatch(actions.PATCH_SUBJECT(data))
-    // dispatch(loadSubjects())
+    dispatch(actions.UPDATE_SUBJECT(data))
   } catch (error) {
     console.log(error)
   }

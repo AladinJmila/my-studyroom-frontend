@@ -5,13 +5,13 @@ import SortResources from './SortResources'
 import HeaderCard from '../../common/HeaderCard'
 import ResourcesForm from './ResourcesForm'
 import ResourcesCard from './ResourcesCard'
+import { BeatLoader } from 'react-spinners'
 import {
   loadResources,
   patchResource,
   deleteResource,
   setSelectedResource,
   toggleResourceProp,
-  toggleResourceStatus,
 } from './../../store/apps/resourcesActions'
 
 function Resources() {
@@ -23,10 +23,9 @@ function Resources() {
 
   const dispatch = useDispatch()
   const resources = useSelector(state => state.apps.resources.list)
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
-  const user = useSelector(state => state.auth.user)
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const { user } = useSelector(state => state.auth)
+  const { loading } = useSelector(state => state.apps.resources)
 
   useEffect(() => {
     dispatch(loadResources())
@@ -87,16 +86,24 @@ function Resources() {
           <SortResources onSort={onSort} sortTarget={sortTarget} />
         </table>
       </div>
-      {sorted.map(resource => (
-        <ResourcesCard
-          user={user}
-          key={resource._id}
-          resource={resource}
-          onToggleProp={handleToggleProp}
-          onDelete={handleDelete}
-          onEdit={handleResourceSelect}
-        />
-      ))}
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          {sorted.map(resource => (
+            <ResourcesCard
+              user={user}
+              key={resource._id}
+              resource={resource}
+              onToggleProp={handleToggleProp}
+              onDelete={handleDelete}
+              onEdit={handleResourceSelect}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }

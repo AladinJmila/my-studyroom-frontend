@@ -2,19 +2,30 @@ import moment from 'moment'
 import httpService from '../services/httpService'
 import { getCurrentUser } from '../services/authService'
 import * as actions from './resources'
+import config from '../../config.json'
 
 const apiEndPoint = '/resources'
 let userid
 const user = getCurrentUser()
+const loadingInterval = Number(config.loadingInterval)
+
 if (user) userid = user._id
 
-export const loadResources = () => async dispatch => {
+export const loadResources = () => async (dispatch, getState) => {
+  const { lastFetch } = getState().apps.resources
+
+  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
+  if (diffInMinutes < loadingInterval) return
+
   try {
+    dispatch(actions.REQUEST_RESOURCES)
+
     const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
 
     dispatch(actions.GET_RESOURCES(data))
   } catch (error) {
     console.log(error)
+    dispatch(actions.REQUEST_RESOURCES_FAIL())
   }
 }
 

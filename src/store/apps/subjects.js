@@ -31,10 +31,9 @@ const slice = createSlice({
       uiParams.selectedSubject = action.payload
     },
 
-    PATCH_SUBJECT: (subjects, action) => {
-      subjects.list.map(subject =>
-        subject._id === action.payload._id ? action.payload : subject
-      )
+    UPDATE_SUBJECT: (subjects, action) => {
+      const index = subjects.list.findIndex(s => s._id === action.payload._id)
+      subjects.list[index] = action.payload
     },
 
     TOGGLE_SUBJECT_PROP: (subjects, action) => {
@@ -56,7 +55,7 @@ export const {
   GET_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
-  PATCH_SUBJECT,
+  UPDATE_SUBJECT,
   TOGGLE_SUBJECT_PROP,
   DELETE_SUBJECT,
 } = slice.actions

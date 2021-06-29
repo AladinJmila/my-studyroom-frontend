@@ -2,19 +2,30 @@ import moment from 'moment'
 import httpService from '../services/httpService'
 import { getCurrentUser } from '../services/authService'
 import * as actions from './practicals'
+import config from '../../config.json'
 
 const apiEndPoint = '/practicals'
 let userid
 const user = getCurrentUser()
+const loadingInterval = Number(config.loadingInterval)
+
 if (user) userid = user._id
 
-export const loadPracticals = () => async dispatch => {
+export const loadPracticals = () => async (dispatch, getState) => {
+  const { lastFetch } = getState().apps.practicals
+
+  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
+  if (diffInMinutes < loadingInterval) return
+
   try {
+    dispatch(actions.REQUEST_PRACTICALS())
+
     const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
 
     dispatch(actions.GET_PRACTICALS(data))
   } catch (error) {
     console.log(error)
+    dispatch(actions.REQUEST_PRACTICALS_FAIL())
   }
 }
 

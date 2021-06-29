@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import HeaderCard from '../../common/HeaderCard'
 import PracticalsForm from './PracticalsForm'
 import PracticalsCard from './PracticalsCard'
+import { BeatLoader } from 'react-spinners'
 import {
   loadPracticals,
   patchPractical,
@@ -16,10 +17,9 @@ const Practicals = () => {
 
   const dispatch = useDispatch()
   const practicals = useSelector(state => state.apps.practicals.list)
-  const selectedSubject = useSelector(
-    state => state.apps.subjects.selectedSubject
-  )
-  const user = useSelector(state => state.auth.user)
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const { user } = useSelector(state => state.auth)
+  const { loading } = useSelector(state => state.apps.practicals)
 
   useEffect(() => {
     dispatch(loadPracticals())
@@ -71,16 +71,24 @@ const Practicals = () => {
           />
         )}
       </div>
-      {filtered.map(practical => (
-        <PracticalsCard
-          user={user}
-          key={practical._id}
-          practical={practical}
-          onDelete={handleDelete}
-          onEdit={handlePracticalSelect}
-          onToggleProp={handleToggleProp}
-        />
-      ))}
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          {filtered.map(practical => (
+            <PracticalsCard
+              user={user}
+              key={practical._id}
+              practical={practical}
+              onDelete={handleDelete}
+              onEdit={handlePracticalSelect}
+              onToggleProp={handleToggleProp}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }
