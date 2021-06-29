@@ -15,11 +15,11 @@ export const loadSubjects = () => async (dispatch, getState) => {
   // if (diffInMinutes < 10) return
 
   try {
+    dispatch(actions.REQUEST_SUBJECTS())
     const { data } = await httpService.get(apiEndPoint, {
       headers: { userid },
     })
 
-    dispatch(actions.REQUEST_SUBJECTS())
     dispatch(actions.GET_SUBJECTS(data))
   } catch (error) {
     console.log(error)
@@ -31,7 +31,7 @@ export const createSubject = subject => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, subject)
 
     dispatch(actions.CREATE_SUBJECT(data))
-    dispatch(loadSubjects())
+    // dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }
@@ -46,7 +46,7 @@ export const patchSubject = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.PATCH_SUBJECT(data))
-    dispatch(loadSubjects())
+    // dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
   }

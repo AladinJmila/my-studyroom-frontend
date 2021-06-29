@@ -44,13 +44,15 @@ const slice = createSlice({
     },
 
     DELETE_SUBJECT: (subjects, action) => {
-      subjects.list.filter(subject => subject._id !== action.payload)
+      const index = subjects.list.findIndex(s => s._id === action.payload)
+      subjects.list.splice(index, 1)
     },
   },
 })
 
 export const {
   REQUEST_SUBJECTS,
+  REQUEST_SUBJECTS_FAIL,
   GET_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,

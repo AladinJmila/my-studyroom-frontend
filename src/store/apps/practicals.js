@@ -36,9 +36,8 @@ const slice = createSlice({
     },
 
     UPDATE_PRACTICAL: (practicals, action) => {
-      practicals.list.map(practical =>
-        practical._id === action.payload._id ? action.payload : practical
-      )
+      const index = practicals.list.findIndex(p => p._id === action.payload._id)
+      practicals.list[index] = action.payload
     },
 
     TOGGLE_PRACTICAL_PROP: (practicals, action) => {
@@ -48,12 +47,15 @@ const slice = createSlice({
     },
 
     DELETE_PRACTICAL: (practicals, action) => {
-      practicals.list.filter(practical => practical._id !== action.payload)
+      const index = practicals.list.findIndex(p => p._id === action.payload)
+      practicals.list.splice(index, 1)
     },
   },
 })
 
 export const {
+  REQUEST_PRACTICALS,
+  REQUEST_PRACTICALS_FAIL,
   GET_PRACTICALS,
   CREATE_PRACTICAL,
   SELECT_PRACTICAL,

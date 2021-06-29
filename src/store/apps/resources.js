@@ -36,9 +36,8 @@ const slice = createSlice({
     },
 
     UPDATE_RESOURCE: (resources, action) => {
-      resources.list.map(resource =>
-        resource._id === action.payload._id ? action.payload : resource
-      )
+      const index = resources.list.findIndex(r => r._id === action.payload._id)
+      resources.list[index] = action.payload
     },
 
     TOGGLE_RESOURCE_PROP: (resources, action) => {
@@ -48,12 +47,15 @@ const slice = createSlice({
     },
 
     DELETE_RESOURCE: (resources, action) => {
-      resources.list.filter(resource => resource._id !== action.payload)
+      const index = resources.list.findIndex(r => r._id === action.payload)
+      resources.list.splice(index, 1)
     },
   },
 })
 
 export const {
+  REQUEST_RESOURCES,
+  REQUEST_RESOURCES_FAIL,
   GET_RESOURCES,
   CREATE_RESOURCE,
   SELECT_RESOURCE,

@@ -37,9 +37,8 @@ const slice = createSlice({
     },
 
     UPDATE_NOTE: (notes, action) => {
-      notes.list.map(note =>
-        note._id === action.payload._id ? action.payload : note
-      )
+      const index = notes.list.findIndex(n => n._id === action.payload._id)
+      notes.list[index] = action.payload
     },
 
     TOGGLE_NOTE_PROP: (notes, action) => {
@@ -49,7 +48,8 @@ const slice = createSlice({
     },
 
     DELETE_NOTE: (notes, action) => {
-      notes.list.filter(note => note._id !== action.payload)
+      const index = notes.list.findIndex(n => n._id === action.payload)
+      notes.list.splice(index, 1)
     },
 
     FILTER_NOTES: (notes, action) => {
@@ -59,6 +59,8 @@ const slice = createSlice({
 })
 
 export const {
+  REQUEST_NOTES,
+  REQUEST_NOTES_FAIL,
   GET_NOTES,
   CREATE_NOTE,
   SELECT_NOTE,

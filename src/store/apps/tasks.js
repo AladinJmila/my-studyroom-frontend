@@ -36,9 +36,8 @@ const slice = createSlice({
     },
 
     UPDATE_TASK: (tasks, action) => {
-      tasks.list.map(task =>
-        task._id === action.payload._id ? action.payload : task
-      )
+      const index = tasks.list.findIndex(t => t._id === action.payload._id)
+      tasks.list[index] = action.payload
     },
 
     TOGGLE_TASK_PROP: (tasks, action) => {
@@ -48,13 +47,15 @@ const slice = createSlice({
     },
 
     DELETE_TASK: (tasks, action) => {
-      tasks.list.filter(task => task._id !== action.payload)
+      const index = tasks.list.findIndex(t => t._id === action.payload)
+      tasks.list.splice(index, 1)
     },
   },
 })
 
 export const {
   REQUEST_TASKS,
+  REQUEST_TASKS_FAIL,
   GET_TASKS,
   CREATE_TASK,
   SELECT_TASK,

@@ -15,20 +15,15 @@ import BeatLoader from 'react-spinners/BeatLoader'
 
 const Subjects = () => {
   const [showForm, setShowForm] = useState(false)
-  // const [loading, setLoading] = useState(false)
 
   const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
   const subjects = useSelector(state => state.apps.subjects.list)
   const user = useSelector(state => state.auth.user)
-  // const loading = useSelector(state => state.apps.subjects.loading)
+  const loading = useSelector(state => state.apps.subjects.loading)
 
   useEffect(() => {
     dispatch(loadSubjects())
-    // setLoading(true)
-    // setTimeout(() => {
-    //   setLoading(false)
-    // }, 2000)
   }, [dispatch])
 
   const handleDelete = subject => {
@@ -66,40 +61,39 @@ const Subjects = () => {
 
   return (
     <>
-      {/* {loading ? (
-        <div className='center-spinner'>
-          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
-        </div>
-      ) : ( */}
-      <>
-        <HeaderCard
+      <HeaderCard
+        user={user}
+        count={sorted.length - 1}
+        item='Subjects'
+        onClick={handleShowForm}
+        showForm={showForm}
+      />
+      {showForm && (
+        <SubjectsForm
           user={user}
-          count={sorted.length - 1}
-          item='Subjects'
-          onClick={handleShowForm}
-          showForm={showForm}
+          subjects={sorted}
+          toggleShowForm={handleShowForm}
         />
-        {showForm && (
-          <SubjectsForm
-            user={user}
-            subjects={sorted}
-            toggleShowForm={handleShowForm}
-          />
-        )}
-
-        {sorted.map(subject => (
-          <SubjectsCard
-            key={subject._id || subject.key}
-            user={user}
-            subject={subject}
-            onSubjectSelect={handleSubjectSelect}
-            onToggleProp={handleToggleProp}
-            onDelete={handleDelete}
-            allSubjects={allSubjects}
-          />
-        ))}
-      </>
-      {/* )} */}
+      )}
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#6A7475'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          {sorted.map(subject => (
+            <SubjectsCard
+              key={subject._id || subject.key}
+              user={user}
+              subject={subject}
+              onSubjectSelect={handleSubjectSelect}
+              onToggleProp={handleToggleProp}
+              onDelete={handleDelete}
+              allSubjects={allSubjects}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }
