@@ -74,7 +74,7 @@ const SubjectsCard = ({
       style={backgroundOpacity}
       className={
         (!selectedSubject && subject.name === 'All Subjects') ||
-        selectedSubject === subject
+        selectedSubject?.name === subject.name
           ? 'card text-white bg-dark mb-1 opacity'
           : 'card mb-1 opacity'
       }

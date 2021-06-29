@@ -15,7 +15,6 @@ class TasksForm extends Form {
       resourceId: '',
       content: '',
       url: '',
-      repeat: '',
     },
     subjects: [],
     resources: [],
@@ -36,7 +35,6 @@ class TasksForm extends Form {
     content: Joi.string().required().label('Task'),
     url: Joi.string().label('URL').allow(''),
     sessions: Joi.number().label('Sessions').allow(''),
-    repeat: Joi.string().label('Repeat').allow(''),
   }
 
   async componentDidMount() {
@@ -55,7 +53,6 @@ class TasksForm extends Form {
         resourceId: task.resource._id,
         content: task.content,
         url: task.url,
-        repeat: task.repeat,
       }
 
     return {
@@ -63,7 +60,6 @@ class TasksForm extends Form {
       subjectId: task.subject._id,
       content: task.content,
       url: task.url,
-      repeat: task.repeat,
     }
   }
 
@@ -90,7 +86,6 @@ class TasksForm extends Form {
         resourceId: '',
         content: '',
         url: '',
-        repeat: '',
       },
     })
   }
@@ -107,7 +102,6 @@ class TasksForm extends Form {
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
         {this.renderInput('content', 'Task')}
         {this.renderInput('url', 'URL')}
-        {/* {this.renderSelect('repeat', 'Repeat', this.frequency)} */}
         {this.renderButton('Save', 'btn btn-block btn-dark mb-3')}
       </form>
     )

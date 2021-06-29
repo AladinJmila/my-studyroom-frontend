@@ -64,12 +64,6 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
               />
             )}
           </div>
-          {task.repeat && (
-            <div className='col'>
-              <i className='fa fa-repeat' aria-hidden='true'></i> :{' '}
-              {task.repeat}
-            </div>
-          )}
           <div className='col'>
             {task.url && (
               <a
