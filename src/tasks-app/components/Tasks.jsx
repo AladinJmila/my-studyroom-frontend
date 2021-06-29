@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import _ from 'lodash'
+import SortTasks from './SortTasks'
+import HeaderCard from '../../common/HeaderCard'
+import TasksForm from './TasksForm'
+import TasksCard from './TasksCard'
+import BeatLoader from 'react-spinners/BeatLoader'
 import {
   loadTasks,
   patchTask,
@@ -7,12 +13,6 @@ import {
   toggleTaskProp,
   setSelectedTask,
 } from '../../store/apps/tasksActions'
-import _ from 'lodash'
-import SortTasks from './SortTasks'
-import HeaderCard from '../../common/HeaderCard'
-import TasksForm from './TasksForm'
-import TasksCard from './TasksCard'
-import BeatLoader from 'react-spinners/BeatLoader'
 
 const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
@@ -42,14 +42,9 @@ const Tasks = () => {
     dispatch(deleteTask(task._id))
   }
 
-  const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   const handleTaskSelect = task => {
     dispatch(setSelectedTask(task))
     handleShowForm()
-    scrollTop()
   }
 
   const onSort = sortTarget => {

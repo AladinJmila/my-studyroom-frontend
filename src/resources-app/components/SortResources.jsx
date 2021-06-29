@@ -3,19 +3,18 @@ import { headersStyle } from './../../services/stylesService'
 const SortResources = ({ sortTarget, onSort }) => {
   const targets = [
     {
-      path: 'subject.name',
+      path: 'isChecked',
       label: (
         <div style={{ cursor: 'pointer' }}>
-          <i className='fa fa-sort' aria-hidden='true'></i> Subject
+          <i className='fa fa-sort' aria-hidden='true'></i> Checked
         </div>
       ),
     },
-
     {
-      path: 'status',
+      path: 'subject.name',
       label: (
         <div style={{ cursor: 'pointer' }} className='float-right'>
-          <i className='fa fa-sort' aria-hidden='true'></i> Status
+          <i className='fa fa-sort' aria-hidden='true'></i> Subject
         </div>
       ),
     },

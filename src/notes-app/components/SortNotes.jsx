@@ -1,11 +1,11 @@
-import { headersStyle } from './../../services/stylesService'
+import { headersStyle } from '../../services/stylesService'
 
 const columns = [
   {
-    path: 'isChecked',
+    path: 'starred',
     label: (
       <div style={{ cursor: 'pointer' }}>
-        <i className='fa fa-sort' aria-hidden='true'></i> Checked
+        <i className='fa fa-sort' aria-hidden='true'></i> Starred
       </div>
     ),
   },
@@ -19,7 +19,7 @@ const columns = [
   },
 ]
 
-const SortTasks = ({ onSort, sortTarget }) => {
+const SortNotes = ({ onSort, sortTarget }) => {
   const handleSort = path => {
     const newSortTarget = { ...sortTarget }
     if (newSortTarget.path === path)
@@ -48,4 +48,4 @@ const SortTasks = ({ onSort, sortTarget }) => {
   )
 }
 
-export default SortTasks
+export default SortNotes

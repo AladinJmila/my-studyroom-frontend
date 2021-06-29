@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import NotesForm from './NotesForm'
+import SortNotes from './SortNotes'
 import NotesCard from './NotesCard'
 import {
   loadNotes,
@@ -13,6 +15,10 @@ import {
 
 const Notes = () => {
   const [showForm, setShowForm] = useState(false)
+  const [sortTarget, setSortTarget] = useState({
+    path: 'initial',
+    order: 'asc',
+  })
 
   const dispatch = useDispatch()
   const notes = useSelector(state => state.apps.notes.list)
@@ -34,6 +40,10 @@ const Notes = () => {
     handleShowForm()
   }
 
+  const onSort = sortTarget => {
+    setSortTarget(sortTarget)
+  }
+
   const handleToggleProp = (note, property) => {
     const index = notes.indexOf(note)
     const noteToUpdate = { ...notes[index] }
@@ -53,12 +63,14 @@ const Notes = () => {
       ? notes.filter(n => n.subject._id === selectedSubject._id)
       : notes
 
+  const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
+
   return (
     <>
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={filtered.length}
+          count={sorted.length}
           item='Notes'
           onClick={handleShowForm}
           showForm={showForm}
@@ -70,8 +82,11 @@ const Notes = () => {
             toggleShowForm={handleShowForm}
           />
         )}
+        <table className='table'>
+          <SortNotes sortTarget={sortTarget} onSort={onSort} />
+        </table>
       </div>
-      {filtered.map(note => (
+      {sorted.map(note => (
         <NotesCard
           user={user}
           key={note._id}
