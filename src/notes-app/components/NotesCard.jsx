@@ -31,7 +31,10 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             {note.resource.content}
           </p>
         )}
-        <p className='card-text' style={mainContentStyle}>
+        <p
+          className='card-text'
+          style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
+        >
           {note.content}
         </p>
         <div className='row'>
