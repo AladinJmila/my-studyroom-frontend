@@ -2,8 +2,7 @@ import { headersStyle } from './../services/stylesService'
 
 const HeaderCard = ({ user, count, item, onClick, showForm }) => {
   return (
-    // sticky-top
-    <div style={headersStyle} className='card mb-3'>
+    <div style={headersStyle} className='card mb-3 sticky-top'>
       <div className='card-body'>
         <h6 className='float-left'>
           Showing {count} <b>{' ' + item}</b>

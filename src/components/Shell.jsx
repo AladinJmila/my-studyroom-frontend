@@ -1,12 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
-import ToggleSideTab from './../common/ToggleSideTab'
+import VerticalNavBar from '../shell-app/components/VerticalNavBar'
 
 function Shell() {
   const [orderedData, setOrderedData] = useState([])
   const [showSubjects, setShowSubjects] = useState(true)
+  const [tasksRef, setTasksRef] = useState()
+  const [resourcesRef, setResourcesRef] = useState()
+  const [notesRef, setNotesRef] = useState()
+  const [practicalsRef, setPracticalsRef] = useState()
+  const [audioNotesRef, setAudioNotesRef] = useState()
+  const [visualNotesRef, setVisualNotesRef] = useState()
+  const [schedulesRef, setSchedulesRef] = useState()
+  const [appsDataRef, setAppsDataRef] = useState()
 
   const subjectsStyle = {
     paddingRight: '0',
@@ -18,21 +26,34 @@ function Shell() {
 
   return (
     <main className='row pl-2 mr-1 pt-3 flex-nowrap'>
-      <ToggleSideTab
-        label='Subjects'
-        show={showSubjects}
-        setShow={setShowSubjects}
-      />
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>
-        <h2>
-          {/* <h2 style={appColumnsTitle} className='sticky-top'> */}
-          Subjects
-        </h2>
+        <h2>Subjects</h2>
         <div>
-          <Subjects setOrderedData={setOrderedData} orderedData={orderedData} />
+          <Subjects appsDataRef={appsDataRef} />
         </div>
       </div>
-      <AppsData className='position-static' />
+      <VerticalNavBar
+        showSubjects={showSubjects}
+        setShowSubjects={setShowSubjects}
+        tasksRef={tasksRef}
+        resourcesRef={resourcesRef}
+        notesRef={notesRef}
+        practicalsRef={practicalsRef}
+        audioNotesRef={audioNotesRef}
+        visualNotesRef={visualNotesRef}
+        schedulesRef={schedulesRef}
+      />
+      <AppsData
+        className='position-static'
+        setTasksRef={setTasksRef}
+        setResourcesRef={setResourcesRef}
+        setNotesRef={setNotesRef}
+        setPracticalsRef={setPracticalsRef}
+        setAudioNotesRef={setAudioNotesRef}
+        setVisualNotesRef={setVisualNotesRef}
+        setSchedulesRef={setSchedulesRef}
+        setAppsDataRef={setAppsDataRef}
+      />
     </main>
   )
 }

@@ -9,6 +9,7 @@ const slice = createSlice({
     notesPerSubject: {},
     resourcesPerSubject: {},
     practicalsPerSubject: {},
+    navigationRefs: {},
   },
   reducers: {
     TASKS_PER_SUBJECT: (state, action) => {
@@ -30,6 +31,12 @@ const slice = createSlice({
       const { subjectName, list } = action.payload
       state.practicalsPerSubject[subjectName] = list
     },
+
+    NAVIGATION_REFS: (state, action) => {
+      const { refName, refValue } = action.payload
+      // console.log(refValue)
+      state.navigationRefs[refName] = refValue
+    },
   },
 })
 
@@ -38,6 +45,7 @@ export const {
   NOTES_PER_SUBJECT,
   RESOURCES_PER_SUBJECT,
   PRACTICALS_PER_SUBJECT,
+  NAVIGATION_REFS,
 } = slice.actions
 export default slice.reducer
 
@@ -57,4 +65,8 @@ export const setResourcesPerSubject = (subjectName, list) => dispatch => {
 
 export const setPracticalsPerSubject = (subjectName, list) => dispatch => {
   dispatch(PRACTICALS_PER_SUBJECT({ subjectName, list }))
+}
+
+export const setNavigationRefs = (refName, refValue) => dispatch => {
+  dispatch(NAVIGATION_REFS({ refName, refValue }))
 }

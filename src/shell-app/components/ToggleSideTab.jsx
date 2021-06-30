@@ -1,4 +1,4 @@
-import { backgroundOpacity } from '../services/stylesService'
+import { backgroundOpacity } from '../../services/stylesService'
 
 const ToggleSideTab = ({ show, setShow, label }) => {
   let classes = 'fa fa-angle-double-right fa-2x ml-2'

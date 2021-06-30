@@ -1,16 +1,25 @@
-import { useEffect, useState } from 'react'
 import _ from 'lodash'
+import { useEffect, useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import Notes from '../../notes-app/components/Notes'
 import Tasks from '../../tasks-app/components/Tasks'
 import Resources from '../../resources-app/components/Resources'
 import Practicals from '../../practicals-app/components/Practicals'
 import DataColumn from './DataColumn'
-import { useSelector } from 'react-redux'
 import AudioNotes from './../../audio-notes-app/components/AudioNotes'
 import VisualNotes from './../../visual-notes-app/components/VisualNotes'
 import Schedules from './../../schedules-app/Schedules'
 
-const AppsData = () => {
+const AppsData = ({
+  setTasksRef,
+  setResourcesRef,
+  setNotesRef,
+  setPracticalsRef,
+  setAudioNotesRef,
+  setVisualNotesRef,
+  setSchedulesRef,
+  setAppsDataRef,
+}) => {
   const [showPracticals, setShowPracticals] = useState(true)
   const [showResources, setShowResources] = useState(true)
   const [showNotes, setShowNotes] = useState(true)
@@ -21,7 +30,6 @@ const AppsData = () => {
 
   const { selectedSubject } = useSelector(state => state.apps.subjects)
 
-  useEffect(() => {}, [])
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'
   const tasksCount = useSelector(state => state.ui.tasksPerSubject[subjectName])
   const notesCount = useSelector(state => state.ui.notesPerSubject[subjectName])
@@ -32,6 +40,11 @@ const AppsData = () => {
     state => state.ui.practicalsPerSubject[subjectName]
   )
 
+  const appsDataRef = useRef()
+  useEffect(() => {
+    setAppsDataRef(appsDataRef)
+  }, [])
+
   const appsDataArray = [
     {
       name: 'Tasks',
@@ -39,6 +52,7 @@ const AppsData = () => {
       count: tasksCount,
       show: showTasks,
       setShow: setShowTasks,
+      setRef: setTasksRef,
       data: <Tasks />,
     },
     {
@@ -47,6 +61,7 @@ const AppsData = () => {
       count: resourcesCount,
       show: showResources,
       setShow: setShowResources,
+      setRef: setResourcesRef,
       data: <Resources />,
     },
     {
@@ -55,6 +70,7 @@ const AppsData = () => {
       count: notesCount,
       show: showNotes,
       setShow: setShowNotes,
+      setRef: setNotesRef,
       data: <Notes />,
     },
     {
@@ -63,6 +79,7 @@ const AppsData = () => {
       count: practicalsCount,
       show: showPracticals,
       setShow: setShowPracticals,
+      setRef: setPracticalsRef,
       data: <Practicals />,
     },
     {
@@ -71,6 +88,7 @@ const AppsData = () => {
       count: 0,
       show: showAudioNotes,
       setShow: setShowAudioNotes,
+      setRef: setAudioNotesRef,
       data: <AudioNotes />,
     },
     {
@@ -79,6 +97,7 @@ const AppsData = () => {
       count: 0,
       show: showVisualNotes,
       setShow: setShowVisualNotes,
+      setRef: setVisualNotesRef,
       data: <VisualNotes />,
     },
     {
@@ -87,6 +106,7 @@ const AppsData = () => {
       count: 0,
       show: showSchedules,
       setShow: setShowSchedules,
+      setRef: setSchedulesRef,
       data: <Schedules />,
     },
   ]
@@ -94,7 +114,8 @@ const AppsData = () => {
   const SortedAppsData = _.orderBy(appsDataArray, ['count'], ['desc'])
 
   return (
-    <div style={{ padding: '0 0 0 5px' }} className='col scrolling-wrapper'>
+    <div style={{ padding: 0 }} className='col scrolling-wrapper'>
+      <div ref={appsDataRef}></div>
       {SortedAppsData.map(item => (
         <DataColumn
           key={item.name}
@@ -104,8 +125,7 @@ const AppsData = () => {
           show={item.show}
           count={item.count}
           setShow={item.setShow}
-          // sortedCount={item.sortedCount}
-          // setSortedCount={item.setSortedCount}
+          setRef={item.setRef}
         />
       ))}
       <div

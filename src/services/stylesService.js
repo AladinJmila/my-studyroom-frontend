@@ -31,14 +31,6 @@ export const checkedResourceStyle = {
   padding: 4,
 }
 
-export const appColumnsTitle = {
-  backgroundColor: 'rgba(211, 215, 216)',
-  borderRadius: 10,
-  padding: '5px 10px',
-  marginBottom: 10,
-  border: '1px solid rgb(52, 58, 64)',
-}
-
 export const appsFormStyle = {
   backgroundImage: 'linear-gradient(#678387, #62a9b4)',
   overflowY: 'auto',

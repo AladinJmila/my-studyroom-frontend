@@ -13,7 +13,7 @@ import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
 import { BeatLoader } from 'react-spinners'
 
-const Subjects = () => {
+const Subjects = ({ appsDataRef }) => {
   const [showForm, setShowForm] = useState(false)
 
   const allSubjects = { key: 'key', name: 'All Subjects' }
@@ -42,6 +42,11 @@ const Subjects = () => {
 
   const handleSubjectSelect = subject => {
     dispatch(setSelectedSubject(subject))
+    appsDataRef.current.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'start',
+    })
   }
 
   const handleShowForm = () => {
