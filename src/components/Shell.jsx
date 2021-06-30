@@ -1,11 +1,9 @@
-import { useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useState } from 'react'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsData from '../shell-app/components/AppsData'
 import VerticalNavBar from '../shell-app/components/VerticalNavBar'
 
 function Shell() {
-  const [orderedData, setOrderedData] = useState([])
   const [showSubjects, setShowSubjects] = useState(true)
   const [tasksRef, setTasksRef] = useState()
   const [resourcesRef, setResourcesRef] = useState()
@@ -18,7 +16,7 @@ function Shell() {
 
   const subjectsStyle = {
     paddingRight: '0',
-    minWidth: 300,
+    minWidth: 330,
     display: 'block',
   }
 

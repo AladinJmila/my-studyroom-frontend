@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   loadSubjects,
@@ -21,6 +21,7 @@ const Subjects = ({ appsDataRef }) => {
   const subjects = useSelector(state => state.apps.subjects.list)
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.subjects)
+  const subjectsRef = useRef()
 
   useEffect(() => {
     dispatch(loadSubjects())
@@ -45,7 +46,11 @@ const Subjects = ({ appsDataRef }) => {
     appsDataRef.current.scrollIntoView({
       behavior: 'smooth',
       inline: 'start',
-      block: 'start',
+    })
+    subjectsRef.current.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
     })
   }
 
@@ -65,7 +70,7 @@ const Subjects = ({ appsDataRef }) => {
   const sorted = sortSubjects()
 
   return (
-    <>
+    <div ref={subjectsRef}>
       <HeaderCard
         user={user}
         count={sorted.length - 1}
@@ -99,7 +104,7 @@ const Subjects = ({ appsDataRef }) => {
           ))}
         </>
       )}
-    </>
+    </div>
   )
 }
 

@@ -13,10 +13,11 @@ const VerticalNavBar = ({
   schedulesRef,
 }) => {
   const styles = {
-    maxWidth: 60,
+    maxWidth: 50,
     backgroundColor: 'rgba(52, 58, 64, 0.9)',
     borderRadius: '0 10px 10px 0',
-    margin: '0',
+    margin: 0,
+    padding: 10,
   }
 
   useEffect(() => {}, [])
