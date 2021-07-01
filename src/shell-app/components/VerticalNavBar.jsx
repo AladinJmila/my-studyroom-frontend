@@ -1,5 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import ToggleSideTab from './ToggleSideTab'
+import iconTSI from '../../static/images/icons/T-S-I.png'
+import iconRSI from '../../static/images/icons/R-S-I.png'
+import iconNSI from '../../static/images/icons/N-S-I.png'
+import iconPSI from '../../static/images/icons/P-S-I.png'
+import iconASI from '../../static/images/icons/A-S-I.png'
+import iconVSI from '../../static/images/icons/V-S-I.png'
+import iconSSI from '../../static/images/icons/S-S-I.png'
 
 const VerticalNavBar = ({
   showSubjects,
@@ -21,8 +28,6 @@ const VerticalNavBar = ({
   }
 
   useEffect(() => {}, [])
-
-  // const { tasksRef } = useSelector(state => state.ui.navigationRefs)
 
   const navigateToTasks = () => {
     tasksRef.current.scrollIntoView({ behavior: 'smooth', inline: 'center' })
@@ -80,41 +85,41 @@ const VerticalNavBar = ({
         show={showSubjects}
         setShow={setShowSubjects}
       />
-      <i
+      <img
         className='v-bar-icon fa fa-rebel fa-2x mt-4'
         onClick={navigateToTasks}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconTSI}
+      />
+      <img
         className='v-bar-icon fa fa-circle fa-2x mt-2'
         onClick={navigateToResources}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconRSI}
+      />
+      <img
         className='v-bar-icon fa fa-certificate fa-2x mt-2'
         onClick={navigateToNotes}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconNSI}
+      />
+      <img
         className='v-bar-icon fa fa-asterisk fa-2x mt-2'
         onClick={navigateToPracticals}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconPSI}
+      />
+      <img
         className='v-bar-icon fa fa-sun-o fa-2x mt-2'
         onClick={navigateToAudioNotes}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconASI}
+      />
+      <img
         className='v-bar-icon fa fa-first-order fa-2x mt-2'
         onClick={navigateToVisualNotes}
-        aria-hidden='true'
-      ></i>
-      <i
+        src={iconVSI}
+      />
+      <img
         className='v-bar-icon fa fa-snowflake-o fa-2x mt-2 mb-5'
         onClick={navigateToSchedules}
-        aria-hidden='true'
-      ></i>
+        src={iconSSI}
+      />
     </div>
   )
 }

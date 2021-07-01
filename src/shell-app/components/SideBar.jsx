@@ -1,10 +1,60 @@
 import { useEffect } from 'react'
+import iconTB from '../../static/images/icons/T-B.png'
+import iconTS from '../../static/images/icons/T-S.png'
+import iconRB from '../../static/images/icons/R-B.png'
+import iconRS from '../../static/images/icons/R-S.png'
+import iconNB from '../../static/images/icons/N-M.png'
+import iconNS from '../../static/images/icons/N-S.png'
+import iconPB from '../../static/images/icons/P-B.png'
+import iconPS from '../../static/images/icons/P-S.png'
+import iconAB from '../../static/images/icons/A-B.png'
+import iconAS from '../../static/images/icons/A-S.png'
+import iconVB from '../../static/images/icons/V-B.png'
+import iconVS from '../../static/images/icons/V-S.png'
+import iconSB from '../../static/images/icons/S-M.png'
+import iconSS from '../../static/images/icons/S-S.png'
 
-const SideBar = ({ name, icon, show, count, setShow }) => {
+const SideBar = ({ name, show, count, setShow }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
   }
+
+  let bigIcon
+  let smallIcon
+
+  switch (name) {
+    case 'Tasks':
+      bigIcon = iconTB
+      smallIcon = iconTS
+      break
+    case 'Resources':
+      bigIcon = iconRB
+      smallIcon = iconRS
+      break
+    case 'Notes':
+      bigIcon = iconNB
+      smallIcon = iconNS
+      break
+    case 'Practicals':
+      bigIcon = iconPB
+      smallIcon = iconPS
+      break
+    case 'Audio-Notes (planned)':
+      bigIcon = iconAB
+      smallIcon = iconAS
+      break
+    case 'Visual-Notes (planned)':
+      bigIcon = iconVB
+      smallIcon = iconVS
+      break
+    case 'Schedules (planned)':
+      bigIcon = iconSB
+      smallIcon = iconSS
+      break
+  }
+
+  console.log(bigIcon)
 
   let minWidth
 
@@ -15,7 +65,8 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
     margin: '0 5px',
-    // border: '1px solid rgb(52, 58, 64)',
+    padding: '10px 5px',
+    positon: 'relative',
   }
 
   if (window.innerWidth < 500 && count) {
@@ -31,27 +82,27 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
 
   return (
     <div
-      className='float-left side-bar center'
+      className='float-left side-bar center relative'
       style={styles}
       onClick={handleToggleColumn}
     >
-      <i
-        className={
-          show ? `fa fa-${icon} fa-2x mt-2` : `fa fa-${icon} fa-4x mt-2`
-        }
-        aria-hidden='true'
-      ></i>
+      {show ? (
+        <img className='s-bar-small-icon' src={smallIcon} />
+      ) : (
+        <img className='s-bar-big-icon' src={bigIcon} />
+      )}
       <br />
       <i
         className={
           show
             ? 'fa fa-angle-double-left fa-2x mt-4 '
-            : 'fa fa-angle-double-right fa-2x mt-5 '
+            : 'fa fa-angle-double-right fa-2x mt-4 '
         }
         aria-hidden='true'
       ></i>
       {!show && (
         <div>
+          <div className='total-items-side-bar'>{count}</div>
           <h2
             className='rotate-title-90'
             style={{
@@ -61,7 +112,6 @@ const SideBar = ({ name, icon, show, count, setShow }) => {
           >
             {name}
           </h2>
-          <h3 style={{ textAlign: 'center', marginTop: 70 }}>{count}</h3>
         </div>
       )}
     </div>

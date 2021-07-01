@@ -43,15 +43,17 @@ const Subjects = ({ appsDataRef }) => {
 
   const handleSubjectSelect = subject => {
     dispatch(setSelectedSubject(subject))
-    appsDataRef.current.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start',
-    })
     subjectsRef.current.scrollIntoView({
       behavior: 'smooth',
       inline: 'start',
       block: 'nearest',
     })
+    setTimeout(() => {
+      appsDataRef.current.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'start',
+      })
+    }, 100)
   }
 
   const handleShowForm = () => {

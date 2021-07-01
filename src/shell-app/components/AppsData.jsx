@@ -48,7 +48,6 @@ const AppsData = ({
   const appsDataArray = [
     {
       name: 'Tasks',
-      icon: 'rebel',
       count: tasksCount,
       show: showTasks,
       setShow: setShowTasks,
@@ -57,7 +56,6 @@ const AppsData = ({
     },
     {
       name: 'Resources',
-      icon: 'circle',
       count: resourcesCount,
       show: showResources,
       setShow: setShowResources,
@@ -66,7 +64,6 @@ const AppsData = ({
     },
     {
       name: 'Notes',
-      icon: 'certificate',
       count: notesCount,
       show: showNotes,
       setShow: setShowNotes,
@@ -75,7 +72,6 @@ const AppsData = ({
     },
     {
       name: 'Practicals',
-      icon: 'asterisk',
       count: practicalsCount,
       show: showPracticals,
       setShow: setShowPracticals,
@@ -84,7 +80,6 @@ const AppsData = ({
     },
     {
       name: 'Audio-Notes (planned)',
-      icon: 'sun-o',
       count: 0,
       show: showAudioNotes,
       setShow: setShowAudioNotes,
@@ -93,7 +88,6 @@ const AppsData = ({
     },
     {
       name: 'Visual-Notes (planned)',
-      icon: 'first-order',
       count: 0,
       show: showVisualNotes,
       setShow: setShowVisualNotes,
@@ -102,7 +96,6 @@ const AppsData = ({
     },
     {
       name: 'Schedules (planned)',
-      icon: 'snowflake-o',
       count: 0,
       show: showSchedules,
       setShow: setShowSchedules,
@@ -121,7 +114,6 @@ const AppsData = ({
           key={item.name}
           data={item.data}
           name={item.name}
-          icon={item.icon}
           show={item.show}
           count={item.count}
           setShow={item.setShow}
