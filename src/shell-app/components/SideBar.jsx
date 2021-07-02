@@ -54,8 +54,6 @@ const SideBar = ({ name, show, count, setShow }) => {
       break
   }
 
-  console.log(bigIcon)
-
   let minWidth
 
   const styles = {

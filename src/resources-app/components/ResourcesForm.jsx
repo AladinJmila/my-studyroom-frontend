@@ -26,7 +26,15 @@ class ResourcesForm extends Form {
     url: Joi.string().required().label('URL'),
   }
 
+  newAppsFormStyle
+  setFormHeight() {
+    this.newAppsFormStyle = { ...appsFormStyle }
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+  }
+
   async componentDidMount() {
+    this.setFormHeight()
+
     const { subjects, selectedResource } = this.props
     this.setState({ subjects })
 
@@ -76,7 +84,7 @@ class ResourcesForm extends Form {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={appsFormStyle}>
+      <form onSubmit={this.handleSubmit} style={this.newAppsFormStyle}>
         {this.renderSelect(
           'subjectId',
           'Subject',

@@ -31,7 +31,15 @@ class NotesForm extends Form {
     url: Joi.string().label('URL').allow(''),
   }
 
+  newAppsFormStyle
+  setFormHeight() {
+    this.newAppsFormStyle = { ...appsFormStyle }
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+  }
+
   async componentDidMount() {
+    this.setFormHeight()
+
     const { subjects, resources, selectedNote } = this.props
     this.setState({ subjects, resources })
 
@@ -90,7 +98,7 @@ class NotesForm extends Form {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={appsFormStyle}>
+      <form onSubmit={this.handleSubmit} style={this.newAppsFormStyle}>
         {this.renderSelect(
           'subjectId',
           'Subject',

@@ -37,7 +37,15 @@ class TasksForm extends Form {
     sessions: Joi.number().label('Sessions').allow(''),
   }
 
+  newAppsFormStyle
+  setFormHeight() {
+    this.newAppsFormStyle = { ...appsFormStyle }
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+  }
+
   async componentDidMount() {
+    this.setFormHeight()
+
     const { subjects, resources, selectedTask } = this.props
     this.setState({ subjects, resources })
     if (selectedTask) {
@@ -92,7 +100,7 @@ class TasksForm extends Form {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={appsFormStyle}>
+      <form onSubmit={this.handleSubmit} style={this.newAppsFormStyle}>
         {this.renderSelect(
           'subjectId',
           'Subject',
