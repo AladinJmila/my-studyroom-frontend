@@ -53,6 +53,32 @@ export const patchSubject = (id, update) => async dispatch => {
   }
 }
 
+export const updateSubjectCheckedItemsCount =
+  (subjectId, itemName, value) => dispatch => {
+    dispatch(
+      actions.UPDATE_SUBJECT_CHECKED_ITEMS_COUNT({ subjectId, itemName, value })
+    )
+  }
+
+export const updateSubjectItemsCount =
+  (subjectId, itemName, operation) => dispatch => {
+    // if (item?.isChecked === true)
+    //   dispatch(
+    //     actions.UPDATE_SUBJECT_CHECKED_ITEMS_COUNT({
+    //       subjectId,
+    //       itemName,
+    //       value: item,
+    //     })
+    //   )
+    dispatch(
+      actions.UPDATE_SUBJECT_ITEMS_COUNT({
+        subjectId,
+        itemName,
+        operation,
+      })
+    )
+  }
+
 export const toggleSubjectProp = (id, property) => dispatch => {
   dispatch(actions.TOGGLE_SUBJECT_PROP({ id, property }))
 }

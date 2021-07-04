@@ -36,9 +36,25 @@ const slice = createSlice({
       subjects.list[index] = action.payload
     },
 
+    UPDATE_SUBJECT_CHECKED_ITEMS_COUNT: (subjects, action) => {
+      const { subjectId, itemName, value } = action.payload
+      const index = subjects.list.findIndex(s => s._id === subjectId)
+      value.isChecked
+        ? subjects.list[index][`numberOfChecked${itemName}`]++
+        : subjects.list[index][`numberOfChecked${itemName}`]--
+    },
+
+    UPDATE_SUBJECT_ITEMS_COUNT: (subjects, action) => {
+      const { subjectId, itemName, operation } = action.payload
+      const index = subjects.list.findIndex(s => s._id === subjectId)
+      operation === 'create'
+        ? subjects.list[index][`numberOf${itemName}`]++
+        : subjects.list[index][`numberOf${itemName}`]--
+    },
+
     TOGGLE_SUBJECT_PROP: (subjects, action) => {
       const { id, property } = action.payload
-      const index = subjects.list.findIndex(subject => subject._id === id)
+      const index = subjects.list.findIndex(s => s._id === id)
       subjects.list[index][property] = !subjects.list[index][property]
     },
 
@@ -56,6 +72,8 @@ export const {
   CREATE_SUBJECT,
   SELECT_SUBJECT,
   UPDATE_SUBJECT,
+  UPDATE_SUBJECT_CHECKED_ITEMS_COUNT,
+  UPDATE_SUBJECT_ITEMS_COUNT,
   TOGGLE_SUBJECT_PROP,
   DELETE_SUBJECT,
 } = slice.actions

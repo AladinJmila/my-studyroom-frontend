@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import NotesForm from './NotesForm'
-import SortNotes from './SortNotes'
 import NotesCard from './NotesCard'
+import SortCard from '../../common/SortCard'
 import { BeatLoader } from 'react-spinners'
 import {
   loadNotes,
@@ -13,6 +13,10 @@ import {
   toggleNoteProp,
   setSelectedNote,
 } from './../../store/apps/notesActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectCheckedItemsCount,
+} from './../../store/apps/subjectsActions'
 
 const Notes = () => {
   const [showForm, setShowForm] = useState(false)
@@ -33,6 +37,7 @@ const Notes = () => {
 
   const handleDelete = note => {
     dispatch(deleteNote(note._id))
+    dispatch(updateSubjectItemsCount(note.subject._id, 'Notes', 'delete'))
   }
 
   const handleNoteSelect = note => {
@@ -52,6 +57,10 @@ const Notes = () => {
 
     dispatch(patchNote(note._id, update))
     dispatch(toggleNoteProp(note._id, property))
+    if (property === 'isChecked')
+      dispatch(
+        updateSubjectCheckedItemsCount(note.subject._id, 'Notes', update)
+      )
   }
 
   const handleShowForm = () => {
@@ -82,9 +91,7 @@ const Notes = () => {
             toggleShowForm={handleShowForm}
           />
         )}
-        <table className='table'>
-          <SortNotes sortTarget={sortTarget} onSort={onSort} />
-        </table>
+        <SortCard sortTarget={sortTarget} onSort={onSort} checkedName='Noted' />
       </div>
 
       {loading ? (

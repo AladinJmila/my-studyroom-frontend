@@ -1,12 +1,13 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import Form from './../../common/Form'
+import { appsFormStyle } from '../../services/stylesService'
 import {
   createTask,
   updateTask,
   clearSelectedTask,
 } from '../../store/apps/tasksActions'
-import { appsFormStyle } from '../../services/stylesService'
+import { updateSubjectItemsCount } from '../../store/apps/subjectsActions'
 
 class TasksForm extends Form {
   state = {
@@ -75,8 +76,13 @@ class TasksForm extends Form {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 
-    const { createTask, updateTask, selectedTask, clearSelectedTask } =
-      this.props
+    const {
+      createTask,
+      updateTask,
+      selectedTask,
+      clearSelectedTask,
+      updateSubjectItemsCount,
+    } = this.props
 
     if (selectedTask) {
       data.isChecked = selectedTask.isChecked
@@ -85,6 +91,7 @@ class TasksForm extends Form {
       clearSelectedTask()
     } else {
       createTask(data)
+      updateSubjectItemsCount(data.subjectId, 'Tasks', 'create')
     }
 
     this.props.toggleShowForm()
@@ -127,6 +134,8 @@ const mapDispatchToProps = dispatch => ({
   createTask: task => dispatch(createTask(task)),
   updateTask: task => dispatch(updateTask(task)),
   clearSelectedTask: () => dispatch(clearSelectedTask()),
+  updateSubjectItemsCount: (id, property, operation) =>
+    dispatch(updateSubjectItemsCount(id, property, operation)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksForm)

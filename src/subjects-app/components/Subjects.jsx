@@ -1,5 +1,7 @@
+import _ from 'lodash'
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BeatLoader } from 'react-spinners'
 import {
   loadSubjects,
   patchSubject,
@@ -7,31 +9,41 @@ import {
   toggleSubjectProp,
   setSelectedSubject,
 } from '../../store/apps/subjectsActions'
-import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
 import SubjectsForm from './SubjectsForm'
-import { BeatLoader } from 'react-spinners'
+import SubjectsSortCard from './SubjectsSortCard'
+import generateAllSubjects from '../services/generateAllSubjects'
 
 const Subjects = ({ appsDataRef }) => {
   const [showForm, setShowForm] = useState(false)
+  const [sortTarget, setSortTarget] = useState({
+    path: 'starred',
+    order: 'desc',
+  })
 
-  const allSubjects = { key: 'key', name: 'All Subjects' }
   const dispatch = useDispatch()
   const subjects = useSelector(state => state.apps.subjects.list)
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.subjects)
   const subjectsRef = useRef()
 
+  const allSubjects = generateAllSubjects(subjects)
+
   useEffect(() => {
     dispatch(loadSubjects())
-  }, [dispatch])
+  }, [])
 
   const handleDelete = subject => {
     dispatch(deleteSubject(subject._id))
   }
 
+  const onSort = sortTarget => {
+    setSortTarget(sortTarget)
+  }
+
   const handleToggleProp = (subject, property) => {
+    console.log(subject)
     const index = subjects.indexOf(subject)
     const subjectToUpdate = { ...subjects[index] }
     subjectToUpdate[property] = !subjectToUpdate[property]
@@ -60,16 +72,8 @@ const Subjects = ({ appsDataRef }) => {
     setShowForm(showForm ? false : true)
   }
 
-  const sortSubjects = () => {
-    let data = [...subjects]
-    let pinnedSubjects = data.filter(s => s.isPinned)
-    pinnedSubjects = _.orderBy(pinnedSubjects, ['name'], ['asc'])
-    let notPinnedSubjects = data.filter(s => !s.isPinned)
-    notPinnedSubjects = _.orderBy(notPinnedSubjects, ['name'], ['asc'])
-    return [allSubjects, ...pinnedSubjects, ...notPinnedSubjects]
-  }
-
-  const sorted = sortSubjects()
+  let sorted = _.orderBy(subjects, [sortTarget.path], [sortTarget.order])
+  sorted = [allSubjects, ...sorted]
 
   return (
     <div ref={subjectsRef}>
@@ -81,12 +85,9 @@ const Subjects = ({ appsDataRef }) => {
         showForm={showForm}
       />
       {showForm && (
-        <SubjectsForm
-          user={user}
-          subjects={sorted}
-          toggleShowForm={handleShowForm}
-        />
+        <SubjectsForm subjects={sorted} toggleShowForm={handleShowForm} />
       )}
+      <SubjectsSortCard sortTarget={sortTarget} onSort={onSort} />
       {loading ? (
         <div className='center-spinner'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />

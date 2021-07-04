@@ -13,23 +13,23 @@ const slice = createSlice({
   },
   reducers: {
     TASKS_PER_SUBJECT: (state, action) => {
-      const { subjectName, list } = action.payload
-      state.tasksPerSubject[subjectName] = list
+      const { subjectName, num } = action.payload
+      state.tasksPerSubject[subjectName] = num
     },
 
     NOTES_PER_SUBJECT: (state, action) => {
-      const { subjectName, list } = action.payload
-      state.notesPerSubject[subjectName] = list
+      const { subjectName, num } = action.payload
+      state.notesPerSubject[subjectName] = num
     },
 
     RESOURCES_PER_SUBJECT: (state, action) => {
-      const { subjectName, list } = action.payload
-      state.resourcesPerSubject[subjectName] = list
+      const { subjectName, num } = action.payload
+      state.resourcesPerSubject[subjectName] = num
     },
 
     PRACTICALS_PER_SUBJECT: (state, action) => {
-      const { subjectName, list } = action.payload
-      state.practicalsPerSubject[subjectName] = list
+      const { subjectName, num } = action.payload
+      state.practicalsPerSubject[subjectName] = num
     },
 
     NAVIGATION_REFS: (state, action) => {
@@ -51,22 +51,18 @@ export default slice.reducer
 
 // Action creators
 
-export const setTasksPerSubject = (subjectName, list) => dispatch => {
-  dispatch(TASKS_PER_SUBJECT({ subjectName, list }))
+export const setTasksPerSubject = (subjectName, num) => dispatch => {
+  dispatch(TASKS_PER_SUBJECT({ subjectName, num }))
 }
 
-export const setNotesPerSubject = (subjectName, list) => dispatch => {
-  dispatch(NOTES_PER_SUBJECT({ subjectName, list }))
+export const setNotesPerSubject = (subjectName, num) => dispatch => {
+  dispatch(NOTES_PER_SUBJECT({ subjectName, num }))
 }
 
-export const setResourcesPerSubject = (subjectName, list) => dispatch => {
-  dispatch(RESOURCES_PER_SUBJECT({ subjectName, list }))
+export const setResourcesPerSubject = (subjectName, num) => dispatch => {
+  dispatch(RESOURCES_PER_SUBJECT({ subjectName, num }))
 }
 
-export const setPracticalsPerSubject = (subjectName, list) => dispatch => {
-  dispatch(PRACTICALS_PER_SUBJECT({ subjectName, list }))
-}
-
-export const setNavigationRefs = (refName, refValue) => dispatch => {
-  dispatch(NAVIGATION_REFS({ refName, refValue }))
+export const setPracticalsPerSubject = (subjectName, num) => dispatch => {
+  dispatch(PRACTICALS_PER_SUBJECT({ subjectName, num }))
 }

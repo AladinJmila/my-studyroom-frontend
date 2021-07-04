@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SortResources from './SortResources'
 import HeaderCard from '../../common/HeaderCard'
+import SortCard from '../../common/SortCard'
 import ResourcesForm from './ResourcesForm'
 import ResourcesCard from './ResourcesCard'
 import { BeatLoader } from 'react-spinners'
@@ -13,6 +13,10 @@ import {
   setSelectedResource,
   toggleResourceProp,
 } from './../../store/apps/resourcesActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectCheckedItemsCount,
+} from './../../store/apps/subjectsActions'
 
 function Resources() {
   const [showForm, setShowForm] = useState(false)
@@ -33,6 +37,9 @@ function Resources() {
 
   const handleDelete = resource => {
     dispatch(deleteResource(resource._id))
+    dispatch(
+      updateSubjectItemsCount(resource.subject._id, 'Resources', 'delete')
+    )
   }
 
   const handleResourceSelect = resource => {
@@ -52,6 +59,14 @@ function Resources() {
 
     dispatch(patchResource(resource._id, update))
     dispatch(toggleResourceProp(resource._id, property))
+    if (property === 'isChecked')
+      dispatch(
+        updateSubjectCheckedItemsCount(
+          resource.subject._id,
+          'Resources',
+          update
+        )
+      )
   }
 
   const handleShowForm = () => {
@@ -82,9 +97,11 @@ function Resources() {
             toggleShowForm={handleShowForm}
           />
         )}
-        <table className='table'>
-          <SortResources onSort={onSort} sortTarget={sortTarget} />
-        </table>
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Processed'
+        />
       </div>
       {loading ? (
         <div className='center-spinner'>

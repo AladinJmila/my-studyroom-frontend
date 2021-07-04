@@ -21,6 +21,14 @@ body {
   height: 100vh;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.link {
+  color: #007bff;
+}
+
 .cell {
   margin: 5px 10px;
   min-width: 500px;

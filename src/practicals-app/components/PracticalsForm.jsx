@@ -7,6 +7,7 @@ import {
   updatePractical,
   clearSelectedPractical,
 } from './../../store/apps/practicalsActions'
+import { updateSubjectItemsCount } from '../../store/apps/subjectsActions'
 
 class PracticalForm extends Form {
   state = {
@@ -70,6 +71,7 @@ class PracticalForm extends Form {
       updatePractical,
       selectedPractical,
       clearSelectedPractical,
+      updateSubjectItemsCount,
     } = this.props
 
     if (selectedPractical) {
@@ -78,6 +80,7 @@ class PracticalForm extends Form {
       clearSelectedPractical()
     } else {
       createPractical(data)
+      updateSubjectItemsCount(data.subjectId, 'Practicals', 'create')
     }
 
     this.props.toggleShowForm()
@@ -123,6 +126,8 @@ const mapDispatchToProps = dispatch => ({
   createPractical: practical => dispatch(createPractical(practical)),
   updatePractical: practical => dispatch(updatePractical(practical)),
   clearSelectedPractical: () => dispatch(clearSelectedPractical),
+  updateSubjectItemsCount: (id, property, operation) =>
+    dispatch(updateSubjectItemsCount(id, property, operation)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PracticalForm)

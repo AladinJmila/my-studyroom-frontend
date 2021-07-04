@@ -1,71 +1,70 @@
+import {
+  cardsBody,
+  checkedStyle,
+  mainContentStyle,
+} from './../../services/stylesService'
+import Check from './../../common/Check'
 import Star from '../../common/Star'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
-import Toggle from './../../common/Toggle'
+import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   return (
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
-        <h6 className='card-title'>
-          {user && (
-            <i
-              className='fa fa-pencil mr-3'
-              style={{ cursor: 'pointer' }}
-              aria-hidden='true'
-              onClick={() => onEdit(note)}
-            ></i>
+        <div className='d-flex flex-row justify-content-between '>
+          {note.url ? (
+            <h6 className='card-subtitle mb-2 link'>
+              {note.title}{' '}
+              {note.starred && <Star className='yellow' starred={true} />}
+            </h6>
+          ) : (
+            <h6 className='card-subtitle mb-2'>
+              {note.title}{' '}
+              {note.starred && <Star className='yellow' starred={true} />}
+            </h6>
           )}
-          {note.title}
-          {user && (
-            <i
-              onClick={() => onDelete(note)}
-              style={{ cursor: 'pointer' }}
-              className='fa fa-times float-right'
-              aria-hidden='true'
-            ></i>
-          )}
-        </h6>
+          <div className='card-link float-right'>
+            {user && (
+              <CardEllipsisMenu
+                item={note}
+                onEdit={onEdit}
+                onToggleProp={onToggleProp}
+                onDelete={onDelete}
+              />
+            )}
+          </div>
+        </div>
         <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>
         {note.resource && (
           <p className='card-subtitle mb-2 text-muted'>
             {note.resource.content}
           </p>
         )}
-        <p
-          className='card-text'
-          style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
-        >
-          {note.content}
-        </p>
-        <div className='row'>
-          {user && (
-            <div className='col'>
-              <Toggle
-                toggled={note.isPublic}
-                onToggle={() => onToggleProp(note, 'isPublic')}
+        <>
+          <div className='card-title float-left mr-2'>
+            {user && (
+              <Check
+                onCheck={() => onToggleProp(note, 'isChecked')}
+                isChecked={note.isChecked}
               />
-            </div>
-          )}
-          <div className='col text-center'>
-            <Star
-              className='yellow'
-              onStar={() => onToggleProp(note, 'starred')}
-              starred={note.starred}
-            />
-          </div>
-          <div className='col'>
-            {note.url && (
-              <a
-                href={note.url}
-                rel='noreferrer'
-                target='_blank'
-                className='card-link float-right'
-              >
-                <i className='fa fa-external-link' aria-hidden='true'></i>
-              </a>
             )}
-          </div>
-        </div>
+          </div>{' '}
+          {note.isChecked ? (
+            <p
+              className='mb-2'
+              style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
+            >
+              {note.content}
+            </p>
+          ) : (
+            <p
+              className='mb-2'
+              style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
+            >
+              {note.content}
+            </p>
+          )}
+        </>
       </div>
     </div>
   )

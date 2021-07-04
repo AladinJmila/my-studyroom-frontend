@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import PracticalsForm from './PracticalsForm'
+import SortCard from '../../common/SortCard'
 import PracticalsCard from './PracticalsCard'
 import { BeatLoader } from 'react-spinners'
 import {
@@ -11,9 +13,17 @@ import {
   togglePracticalProp,
   setSelectedPractical,
 } from './../../store/apps/practicalsActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectCheckedItemsCount,
+} from './../../store/apps/subjectsActions'
 
 const Practicals = () => {
   const [showForm, setShowForm] = useState(false)
+  const [sortTarget, setSortTarget] = useState({
+    path: 'initial',
+    order: 'asc',
+  })
 
   const dispatch = useDispatch()
   const practicals = useSelector(state => state.apps.practicals.list)
@@ -27,11 +37,18 @@ const Practicals = () => {
 
   const handleDelete = practical => {
     dispatch(deletePractical(practical._id))
+    dispatch(
+      updateSubjectItemsCount(practical.subject._id, 'Practicals', 'delete')
+    )
   }
 
   const handlePracticalSelect = practical => {
     dispatch(setSelectedPractical(practical))
     handleShowForm()
+  }
+
+  const onSort = sortTarget => {
+    setSortTarget(sortTarget)
   }
 
   const handleToggleProp = (practical, property) => {
@@ -42,6 +59,14 @@ const Practicals = () => {
 
     dispatch(patchPractical(practical._id, update))
     dispatch(togglePracticalProp(practical._id, property))
+    if (property === 'isChecked')
+      dispatch(
+        updateSubjectCheckedItemsCount(
+          practical.subject._id,
+          'Practicals',
+          update
+        )
+      )
   }
 
   const handleShowForm = () => {
@@ -53,12 +78,14 @@ const Practicals = () => {
       ? practicals.filter(m => m.subject._id === selectedSubject._id)
       : practicals
 
+  const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
+
   return (
     <>
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={filtered.length}
+          count={sorted.length}
           item='Practicals'
           onClick={handleShowForm}
           showForm={showForm}
@@ -70,6 +97,11 @@ const Practicals = () => {
             toggleShowForm={handleShowForm}
           />
         )}
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Practiced'
+        />
       </div>
       {loading ? (
         <div className='center-spinner'>
@@ -77,7 +109,7 @@ const Practicals = () => {
         </div>
       ) : (
         <>
-          {filtered.map(practical => (
+          {sorted.map(practical => (
             <PracticalsCard
               user={user}
               key={practical._id}

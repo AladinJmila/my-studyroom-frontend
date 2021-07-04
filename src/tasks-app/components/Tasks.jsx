@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _ from 'lodash'
-import SortTasks from './SortTasks'
 import HeaderCard from '../../common/HeaderCard'
+import SortCard from '../../common/SortCard'
 import TasksForm from './TasksForm'
 import TasksCard from './TasksCard'
 import { BeatLoader } from 'react-spinners'
@@ -13,6 +13,10 @@ import {
   toggleTaskProp,
   setSelectedTask,
 } from '../../store/apps/tasksActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectCheckedItemsCount,
+} from './../../store/apps/subjectsActions'
 
 const Tasks = () => {
   const [showForm, setShowForm] = useState(false)
@@ -33,6 +37,7 @@ const Tasks = () => {
 
   const handleDelete = task => {
     dispatch(deleteTask(task._id))
+    dispatch(updateSubjectItemsCount(task.subject._id, 'Tasks', 'delete'))
   }
 
   const handleTaskSelect = task => {
@@ -52,6 +57,10 @@ const Tasks = () => {
 
     dispatch(patchTask(task._id, update))
     dispatch(toggleTaskProp(task._id, property))
+    if (property === 'isChecked')
+      dispatch(
+        updateSubjectCheckedItemsCount(task.subject._id, 'Tasks', update)
+      )
   }
 
   const handleShowForm = () => {
@@ -82,9 +91,11 @@ const Tasks = () => {
             toggleShowForm={handleShowForm}
           />
         )}
-        <table className='table'>
-          <SortTasks sortTarget={sortTarget} onSort={onSort} />
-        </table>
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Checked'
+        />
       </div>
       {loading ? (
         <div className='center-spinner'>

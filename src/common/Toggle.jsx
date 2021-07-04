@@ -1,6 +1,6 @@
 const Toggle = ({ toggled, onToggle }) => {
-  let classes = 'ml-2 fa fa-lg fa-toggle-off'
-  if (toggled) classes = 'ml-2 fa fa-lg fa-toggle-on'
+  let classes = 'ml-2 fa  fa-toggle-off'
+  if (toggled) classes = 'ml-2 fa  fa-toggle-on'
   return (
     <i
       onClick={onToggle}

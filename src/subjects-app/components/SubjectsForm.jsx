@@ -5,14 +5,12 @@ import { createSubject } from '../../store/apps/subjectsActions'
 
 class SubjectsForm extends Form {
   state = {
-    data: { name: '', userId: '', userName: '' },
+    data: { name: '' },
     errors: {},
   }
 
   schema = {
     name: Joi.string().required().label('Subject'),
-    userId: Joi.string().allow(''),
-    userName: Joi.string().allow(''),
   }
 
   // componentDidMount() {
@@ -30,13 +28,9 @@ class SubjectsForm extends Form {
   // }
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.userId = this.props.user._id
-    data.userName = this.props.user.name
-
-    this.props.createSubject(data)
+    this.props.createSubject(this.state.data)
     this.props.toggleShowForm()
-    this.setState({ data: { name: '', userId: '' } })
+    this.setState({ data: { name: '' } })
   }
 
   render() {

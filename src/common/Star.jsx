@@ -1,15 +1,11 @@
 const Star = ({ starred, onStar }) => {
-  let classes = 'fa fa-lg fa-star'
+  let classes = 'fa fa-star'
   if (!starred) classes += '-o'
   return (
     <i
       onClick={onStar}
       className={classes}
-      style={
-        starred
-          ? { cursor: 'pointer', color: '#ffda33' }
-          : { cursor: 'pointer' }
-      }
+      style={starred ? { color: '#ffe563' } : { color: 'inherit' }}
       aria-hidden='true'
     ></i>
   )
