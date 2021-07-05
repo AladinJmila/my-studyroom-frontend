@@ -28,6 +28,11 @@ function Resources() {
   const dispatch = useDispatch()
   const resources = useSelector(state => state.apps.resources.list)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const numOfResources = useSelector(
+    state =>
+      state.ui.resourcesPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.resourcesPerSubject['All Subjects']
+  )
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.resources)
 
@@ -37,9 +42,7 @@ function Resources() {
 
   const handleDelete = resource => {
     dispatch(deleteResource(resource._id))
-    dispatch(
-      updateSubjectItemsCount(resource.subject._id, 'Resources', 'delete')
-    )
+    dispatch(updateSubjectItemsCount(resource, 'Resources', 'delete'))
   }
 
   const handleResourceSelect = resource => {
@@ -85,7 +88,7 @@ function Resources() {
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={sorted.length}
+          count={numOfResources}
           item='Resources'
           onClick={handleShowForm}
           showForm={showForm}

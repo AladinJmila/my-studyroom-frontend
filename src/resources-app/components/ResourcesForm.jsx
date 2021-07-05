@@ -72,7 +72,7 @@ class ResourcesForm extends Form {
       clearSelectedResource()
     } else {
       createResource(data)
-      updateSubjectItemsCount(data.subjectId, 'Resources', 'create')
+      updateSubjectItemsCount(data, 'Resources', 'create')
     }
 
     this.props.toggleShowForm()

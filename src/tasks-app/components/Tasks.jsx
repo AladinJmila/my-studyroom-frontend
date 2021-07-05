@@ -28,6 +28,11 @@ const Tasks = () => {
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.apps.tasks.list)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const numOfTasks = useSelector(
+    state =>
+      state.ui.tasksPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.tasksPerSubject['All Subjects']
+  )
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.tasks)
 
@@ -37,7 +42,7 @@ const Tasks = () => {
 
   const handleDelete = task => {
     dispatch(deleteTask(task._id))
-    dispatch(updateSubjectItemsCount(task.subject._id, 'Tasks', 'delete'))
+    dispatch(updateSubjectItemsCount(task, 'Tasks', 'delete'))
   }
 
   const handleTaskSelect = task => {
@@ -79,7 +84,7 @@ const Tasks = () => {
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={sorted.length}
+          count={numOfTasks}
           item='Tasks'
           onClick={handleShowForm}
           showForm={showForm}

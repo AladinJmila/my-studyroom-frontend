@@ -61,18 +61,10 @@ export const updateSubjectCheckedItemsCount =
   }
 
 export const updateSubjectItemsCount =
-  (subjectId, itemName, operation) => dispatch => {
-    // if (item?.isChecked === true)
-    //   dispatch(
-    //     actions.UPDATE_SUBJECT_CHECKED_ITEMS_COUNT({
-    //       subjectId,
-    //       itemName,
-    //       value: item,
-    //     })
-    //   )
+  (item, itemName, operation) => dispatch => {
     dispatch(
       actions.UPDATE_SUBJECT_ITEMS_COUNT({
-        subjectId,
+        item,
         itemName,
         operation,
       })

@@ -28,6 +28,11 @@ const Notes = () => {
   const dispatch = useDispatch()
   const notes = useSelector(state => state.apps.notes.list)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const numOfNotes = useSelector(
+    state =>
+      state.ui.notesPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.notesPerSubject['All Subjects']
+  )
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.notes)
 
@@ -37,7 +42,7 @@ const Notes = () => {
 
   const handleDelete = note => {
     dispatch(deleteNote(note._id))
-    dispatch(updateSubjectItemsCount(note.subject._id, 'Notes', 'delete'))
+    dispatch(updateSubjectItemsCount(note, 'Notes', 'delete'))
   }
 
   const handleNoteSelect = note => {
@@ -79,7 +84,7 @@ const Notes = () => {
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={sorted.length}
+          count={numOfNotes}
           item='Notes'
           onClick={handleShowForm}
           showForm={showForm}

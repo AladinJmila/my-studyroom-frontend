@@ -45,11 +45,16 @@ const slice = createSlice({
     },
 
     UPDATE_SUBJECT_ITEMS_COUNT: (subjects, action) => {
-      const { subjectId, itemName, operation } = action.payload
-      const index = subjects.list.findIndex(s => s._id === subjectId)
-      operation === 'create'
-        ? subjects.list[index][`numberOf${itemName}`]++
-        : subjects.list[index][`numberOf${itemName}`]--
+      const { item, itemName, operation } = action.payload
+      const index = subjects.list.findIndex(
+        s => s._id === item?.subject?._id || item.subjectId
+      )
+      if (operation === 'create') {
+        subjects.list[index][`numberOf${itemName}`]++
+      } else if (operation === 'delete') {
+        if (item.isChecked) subjects.list[index][`numberOfChecked${itemName}`]--
+        subjects.list[index][`numberOf${itemName}`]--
+      }
     },
 
     TOGGLE_SUBJECT_PROP: (subjects, action) => {

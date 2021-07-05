@@ -80,7 +80,7 @@ class PracticalForm extends Form {
       clearSelectedPractical()
     } else {
       createPractical(data)
-      updateSubjectItemsCount(data.subjectId, 'Practicals', 'create')
+      updateSubjectItemsCount(data, 'Practicals', 'create')
     }
 
     this.props.toggleShowForm()

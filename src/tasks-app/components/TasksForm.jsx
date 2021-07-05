@@ -22,13 +22,6 @@ class TasksForm extends Form {
     errors: {},
   }
 
-  frequency = [
-    { key: 1, name: 'once' },
-    { key: 2, name: 'daily' },
-    { key: 3, name: 'weekly' },
-    { key: 4, name: 'monthly' },
-  ]
-
   schema = {
     _id: [Joi.number(), Joi.string()],
     subjectId: Joi.string().label('Subject'),
@@ -91,7 +84,7 @@ class TasksForm extends Form {
       clearSelectedTask()
     } else {
       createTask(data)
-      updateSubjectItemsCount(data.subjectId, 'Tasks', 'create')
+      updateSubjectItemsCount(data, 'Tasks', 'create')
     }
 
     this.props.toggleShowForm()

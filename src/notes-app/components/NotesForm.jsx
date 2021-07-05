@@ -90,7 +90,7 @@ class NotesForm extends Form {
       clearSelectedNote()
     } else {
       createNote(data)
-      updateSubjectItemsCount(data.subjectId, 'Notes', 'create')
+      updateSubjectItemsCount(data, 'Notes', 'create')
     }
 
     this.props.toggleShowForm()

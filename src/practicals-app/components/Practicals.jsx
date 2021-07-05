@@ -28,6 +28,11 @@ const Practicals = () => {
   const dispatch = useDispatch()
   const practicals = useSelector(state => state.apps.practicals.list)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const numOfPracticals = useSelector(
+    state =>
+      state.ui.practicalsPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.practicalsPerSubject['All Subjects']
+  )
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.practicals)
 
@@ -37,9 +42,7 @@ const Practicals = () => {
 
   const handleDelete = practical => {
     dispatch(deletePractical(practical._id))
-    dispatch(
-      updateSubjectItemsCount(practical.subject._id, 'Practicals', 'delete')
-    )
+    dispatch(updateSubjectItemsCount(practical, 'Practicals', 'delete'))
   }
 
   const handlePracticalSelect = practical => {
@@ -85,7 +88,7 @@ const Practicals = () => {
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={sorted.length}
+          count={numOfPracticals}
           item='Practicals'
           onClick={handleShowForm}
           showForm={showForm}
