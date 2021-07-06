@@ -18,19 +18,10 @@ const PracticalsCard = ({
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
         <div className='d-flex flex-row justify-content-between '>
-          {practical.url ? (
-            <h6 className='card-subtitle mb-2'>
-              <a href={practical.url} target='_blank'>
-                {practical.subject.name}
-              </a>{' '}
-              {practical.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          ) : (
-            <h6 className='card-subtitle mb-2'>
-              {practical.subject.name}{' '}
-              {practical.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          )}
+          <h6 className='card-subtitle mb-2'>
+            {practical.subject.name}{' '}
+            {practical.starred && <Star className='yellow' starred={true} />}
+          </h6>
           <div className='card-link float-right'>
             {user && (
               <CardEllipsisMenu
