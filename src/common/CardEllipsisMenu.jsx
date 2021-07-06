@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ExternalLink from './ExternalLink'
 import Toggle from './Toggle'
 import Star from './Star'
 
@@ -44,35 +45,22 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
               ></i>
             </h6>
           </div>
-          {item.url && (
-            <div className='list-group-item list-group-item-action pointer'>
-              <h6 style={{ margin: 0, color: '#007BFF' }}>
-                Link
-                <a
-                  href={item.url}
-                  rel='noreferrer'
-                  target='_blank'
-                  className='card-link float-right'
-                >
-                  <i className='fa fa-external-link' aria-hidden='true'></i>
-                </a>
-              </h6>
-            </div>
-          )}
-          <div
-            className='list-group-item list-group-item-action pointer'
-            onClick={() => {
-              onToggleProp(item, 'isPublic')
-              handleShowMenu()
-            }}
-          >
-            <h6 style={{ margin: 0 }}>
-              Public
-              <div className='float-right'>
-                <Toggle toggled={item.isPublic} />
+          {/* {item.url && (
+            <a href={item.url} rel='noreferrer' target='_blank'>
+              <div
+                className='list-group-item list-group-item-action pointer'
+                onClick={handleShowMenu}
+              >
+                <h6 style={{ margin: 0, color: '#007BFF' }}>
+                  Link
+                  <i
+                    className='fa fa-external-link float-right mt-1'
+                    aria-hidden='true'
+                  ></i>
+                </h6>
               </div>
-            </h6>
-          </div>
+            </a>
+          )} */}
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
@@ -87,7 +75,20 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
               </div>
             </h6>
           </div>
-
+          <div
+            className='list-group-item list-group-item-action pointer'
+            onClick={() => {
+              onToggleProp(item, 'isPublic')
+              handleShowMenu()
+            }}
+          >
+            <h6 style={{ margin: 0 }}>
+              Public
+              <div className='float-right'>
+                <Toggle toggled={item.isPublic} />
+              </div>
+            </h6>
+          </div>
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => onDelete(item)}

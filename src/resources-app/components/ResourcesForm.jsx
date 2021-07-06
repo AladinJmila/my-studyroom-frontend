@@ -7,7 +7,10 @@ import {
   updateResource,
   clearSelectedResource,
 } from '../../store/apps/resourcesActions'
-import { updateSubjectItemsCount } from '../../store/apps/subjectsActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectOnEdit,
+} from '../../store/apps/subjectsActions'
 
 class ResourcesForm extends Form {
   state = {
@@ -62,13 +65,16 @@ class ResourcesForm extends Form {
       updateResource,
       selectedResource,
       clearSelectedResource,
+      updateSubjectOnEdit,
       updateSubjectItemsCount,
     } = this.props
 
     if (selectedResource) {
       data.isChecked = selectedResource.isChecked
+      data.starred = selectedResource.starred
       data.isPublic = selectedResource.isPublic
       updateResource(data)
+      updateSubjectOnEdit(selectedResource, data, 'Resources')
       clearSelectedResource()
     } else {
       createResource(data)
@@ -112,8 +118,10 @@ const mapDispatchToProps = dispatch => ({
   createResource: resource => dispatch(createResource(resource)),
   updateResource: resource => dispatch(updateResource(resource)),
   clearSelectedResource: () => dispatch(clearSelectedResource()),
-  updateSubjectItemsCount: (id, property, operation) =>
-    dispatch(updateSubjectItemsCount(id, property, operation)),
+  updateSubjectOnEdit: (itemInDb, item, itemName) =>
+    dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
+  updateSubjectItemsCount: (item, itemName, operation) =>
+    dispatch(updateSubjectItemsCount(item, itemName, operation)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResourcesForm)

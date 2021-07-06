@@ -53,6 +53,10 @@ export const patchSubject = (id, update) => async dispatch => {
   }
 }
 
+export const updateSubjectOnEdit = (itemInDb, item, itemName) => dispatch => {
+  dispatch(actions.UPDATE_SUBJECT_ON_EDIT({ itemInDb, item, itemName }))
+}
+
 export const updateSubjectCheckedItemsCount =
   (subjectId, itemName, value) => dispatch => {
     dispatch(

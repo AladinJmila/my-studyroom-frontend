@@ -12,17 +12,11 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
         <div className='d-flex flex-row justify-content-between '>
-          {resource.url ? (
-            <h6 className='card-subtitle mb-2 link'>
-              {resource.subject.name}{' '}
-              {resource.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          ) : (
-            <h6 className='card-subtitle mb-2'>
-              {resource.subject.name}{' '}
-              {resource.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          )}
+          <h6 className='card-subtitle mb-2'>
+            {resource.subject.name}
+            {resource.starred && <Star className='yellow' starred={true} />}
+          </h6>
+
           <div className='card-link float-right'>
             {user && (
               <CardEllipsisMenu
@@ -45,10 +39,30 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
         {resource.isChecked ? (
           <p className='mb-2' style={checkedStyle}>
             {resource.content}
+            <a
+              href={resource.url}
+              rel='noreferrer'
+              target='_blank'
+              className='float-right'
+            >
+              <i
+                className='fa fa-external-link'
+                aria-hidden='true'
+                style={{ color: '#d4e9ff' }}
+              ></i>
+            </a>
           </p>
         ) : (
           <p className='mb-2' style={mainContentStyle}>
             {resource.content}
+            <a
+              href={resource.url}
+              rel='noreferrer'
+              target='_blank'
+              className='float-right'
+            >
+              <i className='fa fa-external-link' aria-hidden='true'></i>
+            </a>
           </p>
         )}
       </div>

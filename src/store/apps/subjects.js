@@ -36,6 +36,23 @@ const slice = createSlice({
       subjects.list[index] = action.payload
     },
 
+    UPDATE_SUBJECT_ON_EDIT: (subjects, action) => {
+      const { itemInDb, item, itemName } = action.payload
+      if (itemInDb.subject._id !== item.subjectId) {
+        let index = subjects.list.findIndex(s => s._id === itemInDb.subject._id)
+        const prevSubject = subjects.list[index]
+        index = subjects.list.findIndex(s => s._id === item.subjectId)
+        const newSubject = subjects.list[index]
+        if (itemInDb.isChecked) {
+          prevSubject[`numberOfChecked${itemName}`]--
+          newSubject[`numberOfChecked${itemName}`]++
+        }
+
+        prevSubject[`numberOf${itemName}`]--
+        newSubject[`numberOf${itemName}`]++
+      }
+    },
+
     UPDATE_SUBJECT_CHECKED_ITEMS_COUNT: (subjects, action) => {
       const { subjectId, itemName, value } = action.payload
       const index = subjects.list.findIndex(s => s._id === subjectId)
@@ -77,6 +94,7 @@ export const {
   CREATE_SUBJECT,
   SELECT_SUBJECT,
   UPDATE_SUBJECT,
+  UPDATE_SUBJECT_ON_EDIT,
   UPDATE_SUBJECT_CHECKED_ITEMS_COUNT,
   UPDATE_SUBJECT_ITEMS_COUNT,
   TOGGLE_SUBJECT_PROP,

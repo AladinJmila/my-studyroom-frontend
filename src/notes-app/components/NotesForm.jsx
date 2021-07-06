@@ -7,7 +7,10 @@ import {
   updateNote,
   clearSelectedNote,
 } from './../../store/apps/notesActions'
-import { updateSubjectItemsCount } from '../../store/apps/subjectsActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectOnEdit,
+} from '../../store/apps/subjectsActions'
 
 class NotesForm extends Form {
   state = {
@@ -78,15 +81,17 @@ class NotesForm extends Form {
       updateNote,
       selectedNote,
       clearSelectedNote,
+      updateSubjectOnEdit,
       updateSubjectItemsCount,
     } = this.props
 
     if (selectedNote) {
+      data.isChecked = selectedNote.isChecked
       data.starred = selectedNote.starred
       data.isPublic = selectedNote.isPublic
       // if (!data.resourceId)
       updateNote(data)
-      console.log(data)
+      updateSubjectOnEdit(selectedNote, data, 'Notes')
       clearSelectedNote()
     } else {
       createNote(data)
@@ -135,8 +140,10 @@ const mapDispatchToProps = dispatch => ({
   createNote: note => dispatch(createNote(note)),
   updateNote: note => dispatch(updateNote(note)),
   clearSelectedNote: () => dispatch(clearSelectedNote()),
-  updateSubjectItemsCount: (id, property, operation) =>
-    dispatch(updateSubjectItemsCount(id, property, operation)),
+  updateSubjectOnEdit: (itemInDb, item, itemName) =>
+    dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
+  updateSubjectItemsCount: (item, itemName, operation) =>
+    dispatch(updateSubjectItemsCount(item, itemName, operation)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesForm)

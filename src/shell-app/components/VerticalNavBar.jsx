@@ -116,7 +116,7 @@ const VerticalNavBar = ({
         src={iconVSI}
       />
       <img
-        className='v-bar-icon fa fa-snowflake-o fa-2x mt-2 mb-5'
+        className='v-bar-icon fa fa-snowflake-o fa-2x mt-2'
         onClick={navigateToSchedules}
         src={iconSSI}
       />

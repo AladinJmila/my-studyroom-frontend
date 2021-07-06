@@ -42,7 +42,7 @@ const slice = createSlice({
 
     TOGGLE_PRACTICAL_PROP: (practicals, action) => {
       const { id, property } = action.payload
-      const index = practicals.list.findIndex(practical => practical._id === id)
+      const index = practicals.list.findIndex(p => p._id === id)
       practicals.list[index][property] = !practicals.list[index][property]
     },
 

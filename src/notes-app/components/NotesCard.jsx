@@ -12,17 +12,10 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
         <div className='d-flex flex-row justify-content-between '>
-          {note.url ? (
-            <h6 className='card-subtitle mb-2 link'>
-              {note.title}{' '}
-              {note.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          ) : (
-            <h6 className='card-subtitle mb-2'>
-              {note.title}{' '}
-              {note.starred && <Star className='yellow' starred={true} />}
-            </h6>
-          )}
+          <h6 className='card-subtitle mb-2'>
+            {note.title}{' '}
+            {note.starred && <Star className='yellow' starred={true} />}
+          </h6>
           <div className='card-link float-right'>
             {user && (
               <CardEllipsisMenu
@@ -55,6 +48,20 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
             >
               {note.content}
+              {note.url && (
+                <a
+                  href={note.url}
+                  rel='noreferrer'
+                  target='_blank'
+                  className='float-right'
+                >
+                  <i
+                    className='fa fa-external-link'
+                    aria-hidden='true'
+                    style={{ color: '#d4e9ff' }}
+                  ></i>
+                </a>
+              )}
             </p>
           ) : (
             <p
@@ -62,6 +69,16 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
             >
               {note.content}
+              {note.url && (
+                <a
+                  href={note.url}
+                  rel='noreferrer'
+                  target='_blank'
+                  className='float-right'
+                >
+                  <i className='fa fa-external-link' aria-hidden='true'></i>
+                </a>
+              )}
             </p>
           )}
         </>

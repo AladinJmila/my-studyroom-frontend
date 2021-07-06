@@ -125,7 +125,7 @@ const AppsData = ({
       ))}
       <div
         style={{
-          minWidth: 47,
+          minWidth: 50,
           backgroundColor: 'rgba(52, 58, 64, 0.9)',
           borderRadius: '10px 0 0 10px',
           margin: 0,

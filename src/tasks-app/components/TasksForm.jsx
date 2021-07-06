@@ -7,7 +7,10 @@ import {
   updateTask,
   clearSelectedTask,
 } from '../../store/apps/tasksActions'
-import { updateSubjectItemsCount } from '../../store/apps/subjectsActions'
+import {
+  updateSubjectItemsCount,
+  updateSubjectOnEdit,
+} from '../../store/apps/subjectsActions'
 
 class TasksForm extends Form {
   state = {
@@ -74,13 +77,16 @@ class TasksForm extends Form {
       updateTask,
       selectedTask,
       clearSelectedTask,
+      updateSubjectOnEdit,
       updateSubjectItemsCount,
     } = this.props
 
     if (selectedTask) {
       data.isChecked = selectedTask.isChecked
+      data.starred = selectedTask.starred
       data.isPublic = selectedTask.isPublic
       updateTask(data)
+      updateSubjectOnEdit(selectedTask, data, 'Tasks')
       clearSelectedTask()
     } else {
       createTask(data)
@@ -127,8 +133,10 @@ const mapDispatchToProps = dispatch => ({
   createTask: task => dispatch(createTask(task)),
   updateTask: task => dispatch(updateTask(task)),
   clearSelectedTask: () => dispatch(clearSelectedTask()),
-  updateSubjectItemsCount: (id, property, operation) =>
-    dispatch(updateSubjectItemsCount(id, property, operation)),
+  updateSubjectOnEdit: (itemInDb, item, itemName) =>
+    dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
+  updateSubjectItemsCount: (item, itemName, operation) =>
+    dispatch(updateSubjectItemsCount(item, itemName, operation)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksForm)

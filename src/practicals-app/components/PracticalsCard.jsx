@@ -16,11 +16,13 @@ const PracticalsCard = ({
 }) => {
   return (
     <div style={cardsBody} className='card mb-1'>
-      <div className='pt-3 pr-3 pl-3'>
+      <div className='p-3'>
         <div className='d-flex flex-row justify-content-between '>
           {practical.url ? (
-            <h6 className='card-subtitle mb-2 link'>
-              {practical.subject.name}{' '}
+            <h6 className='card-subtitle mb-2'>
+              <a href={practical.url} target='_blank'>
+                {practical.subject.name}
+              </a>{' '}
               {practical.starred && <Star className='yellow' starred={true} />}
             </h6>
           ) : (
@@ -49,6 +51,16 @@ const PracticalsCard = ({
               />
             )}
           </div>
+          {practical.url && (
+            <a
+              href={practical.url}
+              rel='noreferrer'
+              target='_blank'
+              className='float-right'
+            >
+              <i className='fa fa-external-link' aria-hidden='true'></i>
+            </a>
+          )}
           {practical.about && (
             <>
               <h6 className='pt-1'>About:</h6>{' '}
@@ -69,6 +81,7 @@ const PracticalsCard = ({
               )}
             </>
           )}
+
           {practical.cause && (
             <>
               <h6 className='pt-1'>Cause:</h6>{' '}
