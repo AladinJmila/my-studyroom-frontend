@@ -6,6 +6,7 @@ const containerStyles = {
   minWidth: 500,
   maxWidth: 600,
   display: 'inline-block',
+  height: '90vh',
 }
 
 if (window.innerWidth < 500) {
@@ -29,7 +30,7 @@ const DataColumn = ({
   }, [])
 
   return (
-    <div ref={ref} id={name} style={{ padding: 0 }} className='data-column col'>
+    <div ref={ref} id={name} style={{ padding: 0 }} className='data-column o-2'>
       <SideBar
         name={name}
         color={color}

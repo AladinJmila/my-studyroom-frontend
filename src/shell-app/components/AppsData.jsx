@@ -79,7 +79,7 @@ const AppsData = ({
       data: <Practicals />,
     },
     {
-      name: 'Audio-Notes (planned)',
+      name: 'AudioNotes (planned)',
       count: 0,
       show: showAudioNotes,
       setShow: setShowAudioNotes,
@@ -87,7 +87,7 @@ const AppsData = ({
       data: <AudioNotes />,
     },
     {
-      name: 'Visual-Notes (planned)',
+      name: 'VisualNotes (planned)',
       count: 0,
       show: showVisualNotes,
       setShow: setShowVisualNotes,
@@ -107,7 +107,10 @@ const AppsData = ({
   const SortedAppsData = _.orderBy(appsDataArray, ['count'], ['desc'])
 
   return (
-    <div style={{ padding: 0 }} className='col scrolling-wrapper'>
+    <div
+      style={{ padding: 0, height: '92vh' }}
+      className='col scrolling-wrapper d-flex flex-row justify-content-between'
+    >
       <div ref={appsDataRef}></div>
       {SortedAppsData.map(item => (
         <DataColumn
@@ -123,9 +126,9 @@ const AppsData = ({
       <div
         style={{
           minWidth: 47,
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
-          borderRadius: 10,
-          margin: '0 5px',
+          backgroundColor: 'rgba(52, 58, 64, 0.9)',
+          borderRadius: '10px 0 0 10px',
+          margin: 0,
         }}
       ></div>
     </div>

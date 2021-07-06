@@ -15,15 +15,19 @@ function Shell() {
   const [appsDataRef, setAppsDataRef] = useState()
 
   const subjectsStyle = {
-    paddingRight: '0',
+    paddingRight: 0,
     minWidth: 330,
     display: 'block',
+    height: '92vh',
   }
 
   subjectsStyle.display = showSubjects ? 'block' : 'none'
 
   return (
-    <main className='row pl-2 mr-1 pt-3 flex-nowrap'>
+    <main
+      className='row pl-2 pt-3 flex-nowrap'
+      style={{ marginRight: 0, height: '94vh' }}
+    >
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>
         <h2>Subjects</h2>
         <div>
