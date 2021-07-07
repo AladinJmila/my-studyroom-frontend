@@ -1,6 +1,6 @@
+import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import _ from 'lodash'
 import HeaderCard from '../../common/HeaderCard'
 import SortCard from '../../common/SortCard'
 import TasksForm from './TasksForm'

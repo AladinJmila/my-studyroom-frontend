@@ -4,6 +4,7 @@ import tasksReducer from './tasks'
 import notesReducer from './notes'
 import resourcesReducer from './resources'
 import practicalsReducer from './practicals'
+import timerReducer from './timerReducer'
 
 export default combineReducers({
   subjects: subjectsReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   notes: notesReducer,
   resources: resourcesReducer,
   practicals: practicalsReducer,
+  timer: timerReducer,
 })

@@ -34,7 +34,6 @@ export const createResource = resource => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, resource)
 
     dispatch(actions.CREATE_RESOURCE(data))
-    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
@@ -42,6 +41,10 @@ export const createResource = resource => async dispatch => {
 
 export const setSelectedResource = resource => dispatch => {
   dispatch(actions.SELECT_RESOURCE(resource))
+}
+
+export const clearSelectedResource = () => dispatch => {
+  dispatch(actions.CLEAR_SELECTED_RESOURCE())
 }
 
 export const updateResource = resource => async dispatch => {
@@ -55,14 +58,9 @@ export const updateResource = resource => async dispatch => {
     )
 
     dispatch(actions.UPDATE_RESOURCE(data))
-    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
-}
-
-export const clearSelectedResource = () => dispatch => {
-  dispatch(actions.CLEAR_SELECTED_RESOURCE())
 }
 
 export const patchResource = (id, update) => async dispatch => {
@@ -70,7 +68,6 @@ export const patchResource = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.UPDATE_RESOURCE(data))
-    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }
@@ -85,7 +82,6 @@ export const deleteResource = id => async dispatch => {
     await httpService.delete(`${apiEndPoint}/${id}`)
 
     dispatch(actions.DELETE_RESOURCE(id))
-    dispatch(loadResources())
   } catch (error) {
     console.log(error)
   }

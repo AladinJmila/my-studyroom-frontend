@@ -42,7 +42,7 @@ const slice = createSlice({
 
     TOGGLE_RESOURCE_PROP: (resources, action) => {
       const { id, property } = action.payload
-      const index = resources.list.findIndex(resource => resource._id === id)
+      const index = resources.list.findIndex(r => r._id === id)
       resources.list[index][property] = !resources.list[index][property]
     },
 
@@ -63,6 +63,5 @@ export const {
   UPDATE_RESOURCE,
   TOGGLE_RESOURCE_PROP,
   DELETE_RESOURCE,
-  TOGGLE_RESOURCE_STATUS,
 } = slice.actions
 export default slice.reducer

@@ -30,7 +30,7 @@ const DataColumn = ({
   }, [])
 
   return (
-    <div ref={ref} id={name} style={{ padding: 0 }} className='data-column o-2'>
+    <div ref={ref} id={name} style={{ padding: 0 }} className='data-column'>
       <SideBar
         name={name}
         color={color}

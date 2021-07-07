@@ -1,7 +1,7 @@
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
 import Check from '../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
+import { cardsBody, mainContentStyle } from './../../services/stylesService'
 import ExternalLink from './../../common/ExternalLink'
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
