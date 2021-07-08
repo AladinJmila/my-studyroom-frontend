@@ -1,4 +1,5 @@
 const Input = ({ label, name, error, ...rest }) => {
+  console.log({ ...rest })
   return (
     <div className='form-group'>
       <label htmlFor={name}>{label}</label>
