@@ -16,7 +16,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             {note.title}{' '}
             {note.starred && <Star className='yellow' starred={true} />}
           </h6>
-          <div className='card-link float-right'>
+          <div className='card-link float-end'>
             {user && (
               <CardEllipsisMenu
                 item={note}
@@ -34,7 +34,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           </p>
         )}
         <>
-          <div className='card-title float-left mr-2'>
+          <div className='card-title float-start me-2'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(note, 'isChecked')}
@@ -53,7 +53,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   href={note.url}
                   rel='noreferrer'
                   target='_blank'
-                  className='float-right'
+                  className='float-end'
                 >
                   <i
                     className='fa fa-external-link'
@@ -74,7 +74,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   href={note.url}
                   rel='noreferrer'
                   target='_blank'
-                  className='float-right'
+                  className='float-end'
                 >
                   <i className='fa fa-external-link' aria-hidden='true'></i>
                 </a>

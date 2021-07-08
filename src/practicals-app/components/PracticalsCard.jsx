@@ -22,7 +22,7 @@ const PracticalsCard = ({
             {practical.subject.name}{' '}
             {practical.starred && <Star className='yellow' starred={true} />}
           </h6>
-          <div className='card-link float-right'>
+          <div className='card-link float-end'>
             {user && (
               <CardEllipsisMenu
                 item={practical}
@@ -34,7 +34,7 @@ const PracticalsCard = ({
           </div>
         </div>
         <div>
-          <div className='card-title float-left mr-2 mb-1'>
+          <div className='card-title float-start me-2 mb-1'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(practical, 'isChecked')}
@@ -47,7 +47,7 @@ const PracticalsCard = ({
               href={practical.url}
               rel='noreferrer'
               target='_blank'
-              className='float-right'
+              className='float-end'
             >
               <i className='fa fa-external-link' aria-hidden='true'></i>
             </a>

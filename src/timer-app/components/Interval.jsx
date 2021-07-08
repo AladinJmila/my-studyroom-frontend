@@ -84,7 +84,7 @@ const Interval = ({ setHandleSubmit, formEvent }) => {
 
   const Input = ({ type, name, label }) => {
     return (
-      <div className='form-group col'>
+      <div className='form-group mb-3 col'>
         <label htmlFor={name}>{label}</label>
         <input
           style={{ backgroundColor: data.color, border: 'none' }}
@@ -109,7 +109,7 @@ const Interval = ({ setHandleSubmit, formEvent }) => {
 
   return (
     <form onSubmit={handleSubmit} style={intervalStyle}>
-      <div className='form-group'>
+      <div className='form-group mb-3 '>
         <label htmlFor='name'>Name</label>
         <input
           type='text'
@@ -124,8 +124,8 @@ const Interval = ({ setHandleSubmit, formEvent }) => {
         )}
       </div>
       <div className='row'>
-        <div className='form-group col'>
-          <lable htmFor='minutes'>
+        <div className='form-group mb-3  col'>
+          <lable htmlFor='minutes' calssName='form-label'>
             Minutes: <b>{data.minutes}</b>
           </lable>
           <input

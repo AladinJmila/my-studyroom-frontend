@@ -80,7 +80,7 @@ const SideBar = ({ name, show, count, setShow }) => {
 
   return (
     <div
-      className='float-left side-bar center relative'
+      className='float-start side-bar center relative'
       style={styles}
       onClick={handleToggleColumn}
     >

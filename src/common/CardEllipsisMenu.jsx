@@ -20,7 +20,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
       ></i>
       {showMenu && (
         <div
-          className='list-group float-right'
+          className='list-group float-end'
           style={{
             right: 10,
             minWidth: 100,
@@ -39,7 +39,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
             <h6 style={{ margin: 0 }}>
               Edit
               <i
-                className='fa fa-pencil float-right'
+                className='fa fa-pencil float-end'
                 style={{ cursor: 'pointer' }}
                 aria-hidden='true'
               ></i>
@@ -54,7 +54,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
                 <h6 style={{ margin: 0, color: '#007BFF' }}>
                   Link
                   <i
-                    className='fa fa-external-link float-right mt-1'
+                    className='fa fa-external-link float-end mt-1'
                     aria-hidden='true'
                   ></i>
                 </h6>
@@ -70,7 +70,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
           >
             <h6 style={{ margin: 0 }}>
               Star
-              <div className='float-right'>
+              <div className='float-end'>
                 <Star className='yellow' starred={item.starred} />
               </div>
             </h6>
@@ -84,7 +84,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
           >
             <h6 style={{ margin: 0 }}>
               Public
-              <div className='float-right'>
+              <div className='float-end'>
                 <Toggle toggled={item.isPublic} />
               </div>
             </h6>
@@ -96,7 +96,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
             <h6 style={{ margin: 0, color: 'red' }}>
               Delete
               <i
-                className='fa fa-trash-o float-right'
+                className='fa fa-trash-o float-end'
                 aria-hidden='true'
                 style={{ marginTop: 2 }}
               ></i>

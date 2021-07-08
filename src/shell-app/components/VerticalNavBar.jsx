@@ -20,13 +20,20 @@ const VerticalNavBar = ({
   schedulesRef,
 }) => {
   const styles = {
-    maxWidth: 50,
-    backgroundColor: 'rgba(52, 58, 64, 0.9)',
+    maxWidth: 55,
+    backgroundColor: '#212529',
     borderRadius: '0 10px 10px 0',
     margin: 0,
     padding: 10,
   }
 
+  const buttonStyle = {
+    boxShadow: '0px 3px 8px #aaa, inset 0px 2px 3px #fff',
+    borderRadius: '50%',
+    width: 40,
+    height: 40,
+    padding: 4,
+  }
   useEffect(() => {}, [])
 
   const navigateToTasks = () => {
@@ -77,7 +84,7 @@ const VerticalNavBar = ({
 
   return (
     <div
-      className='float-left position-sticky d-flex felx-column justify-content-around flex-wrap center pt-5 pb-5'
+      className='float-start position-sticky d-flex felx-column justify-content-around flex-wrap center pt-5 pb-5'
       style={styles}
     >
       <ToggleSideTab
@@ -85,37 +92,46 @@ const VerticalNavBar = ({
         show={showSubjects}
         setShow={setShowSubjects}
       />
+
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-rebel fa-2x mt-4'
         onClick={navigateToTasks}
         src={iconTSI}
       />
+
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-circle fa-2x mt-2'
         onClick={navigateToResources}
         src={iconRSI}
       />
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-certificate fa-2x mt-2'
         onClick={navigateToNotes}
         src={iconNSI}
       />
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-asterisk fa-2x mt-2'
         onClick={navigateToPracticals}
         src={iconPSI}
       />
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-sun-o fa-2x mt-2'
         onClick={navigateToAudioNotes}
         src={iconASI}
       />
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-first-order fa-2x mt-2'
         onClick={navigateToVisualNotes}
         src={iconVSI}
       />
       <img
+        style={buttonStyle}
         className='v-bar-icon fa fa-snowflake-o fa-2x mt-2'
         onClick={navigateToSchedules}
         src={iconSSI}

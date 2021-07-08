@@ -1,6 +1,6 @@
 const TextArea = ({ name, label, error, ...rest }) => {
   return (
-    <div className='form-group'>
+    <div className='form-group mb-3'>
       <label htmlFor={name}>{label}</label>
       <textarea
         {...rest}

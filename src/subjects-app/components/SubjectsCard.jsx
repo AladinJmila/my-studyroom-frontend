@@ -56,7 +56,7 @@ const SubjectsCard = ({
             {subject.name}{' '}
             {subject.starred && <Star className='yellow' starred={true} />}
           </h5>
-          <div className='card-link float-right'>
+          <div className='card-link float-end'>
             {user && subject.name !== 'All Subjects' && (
               <CardEllipsisMenu
                 item={subject}
@@ -88,7 +88,7 @@ const SubjectsCard = ({
           {Boolean(subject.numberOfTasks) && (
             <p style={{ margin: 2 }}>
               Tasks:
-              <span className='float-right'>
+              <span className='float-end'>
                 {Boolean(subject.numberOfCheckedTasks) &&
                   subject.numberOfCheckedTasks + '/'}
                 {subject.numberOfTasks}
@@ -98,7 +98,7 @@ const SubjectsCard = ({
           {Boolean(subject.numberOfNotes) && (
             <p style={{ margin: 2 }}>
               Notes:{' '}
-              <span className='float-right'>
+              <span className='float-end'>
                 {' '}
                 {Boolean(subject.numberOfCheckedNotes) &&
                   subject.numberOfCheckedNotes + '/'}
@@ -110,7 +110,7 @@ const SubjectsCard = ({
           {Boolean(subject.numberOfPracticals) && (
             <p style={{ margin: 2 }}>
               Practicals:{' '}
-              <span className='float-right'>
+              <span className='float-end'>
                 {' '}
                 {Boolean(subject.numberOfCheckedPracticals) &&
                   subject.numberOfCheckedPracticals + '/'}
@@ -121,7 +121,7 @@ const SubjectsCard = ({
           {Boolean(subject.numberOfResources) && (
             <p style={{ margin: 2 }}>
               Resources:
-              <span className='float-right'>
+              <span className='float-end'>
                 {Boolean(subject.numberOfCheckedResources) &&
                   subject.numberOfCheckedResources + '/'}
                 {subject.numberOfResources}

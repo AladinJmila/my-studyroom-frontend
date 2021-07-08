@@ -25,7 +25,7 @@ function Shell() {
 
   return (
     <main
-      className='row pl-2 pt-3 flex-nowrap'
+      className='row ps-2 pt-3 flex-nowrap'
       style={{ marginRight: 0, height: '94vh' }}
     >
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>

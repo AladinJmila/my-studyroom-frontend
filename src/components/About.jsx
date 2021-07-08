@@ -65,7 +65,7 @@ const About = () => {
             style={{ color: 'inherit' }}
           >
             <i
-              className='fa fa-github-square fa-2x mr-2'
+              className='fa fa-github-square fa-2x me-2'
               aria-hidden='true'
             ></i>
           </a>
@@ -77,7 +77,7 @@ const About = () => {
             style={{ color: 'inherit' }}
           >
             <i
-              className='fa fa-linkedin-square fa-2x ml-2'
+              className='fa fa-linkedin-square fa-2x ms-2'
               aria-hidden='true'
             ></i>
           </a>

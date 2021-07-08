@@ -13,7 +13,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
             {task.subject.name}{' '}
             {task.starred && <Star className='yellow' starred={true} />}
           </h6>
-          <div className='card-link float-right'>
+          <div className='card-link float-end'>
             {user && (
               <CardEllipsisMenu
                 item={task}
@@ -30,7 +30,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
           </p>
         )}
         <>
-          <div className='card-title float-left mr-2'>
+          <div className='card-title float-start me-2'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(task, 'isChecked')}
@@ -47,7 +47,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
                     href={task.url}
                     rel='noreferrer'
                     target='_blank'
-                    className='float-right'
+                    className='float-end'
                   >
                     <i className='fa fa-external-link' aria-hidden='true'></i>
                   </a>
@@ -62,7 +62,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
                   href={task.url}
                   rel='noreferrer'
                   target='_blank'
-                  className='float-right'
+                  className='float-end'
                 >
                   <i className='fa fa-external-link' aria-hidden='true'></i>
                 </a>

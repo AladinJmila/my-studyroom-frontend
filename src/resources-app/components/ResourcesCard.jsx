@@ -17,7 +17,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
             {resource.starred && <Star className='yellow' starred={true} />}
           </h6>
 
-          <div className='card-link float-right'>
+          <div className='card-link float-end'>
             {user && (
               <CardEllipsisMenu
                 item={resource}
@@ -28,7 +28,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
             )}
           </div>
         </div>
-        <div className='card-title float-left mr-2'>
+        <div className='card-title float-start me-2'>
           {user && (
             <Check
               onCheck={() => onToggleProp(resource, 'isChecked')}
@@ -43,7 +43,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
               href={resource.url}
               rel='noreferrer'
               target='_blank'
-              className='float-right'
+              className='float-end'
             >
               <i
                 className='fa fa-external-link'
@@ -59,7 +59,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
               href={resource.url}
               rel='noreferrer'
               target='_blank'
-              className='float-right'
+              className='float-end'
             >
               <i className='fa fa-external-link' aria-hidden='true'></i>
             </a>
