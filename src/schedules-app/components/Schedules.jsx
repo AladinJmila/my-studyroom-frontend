@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import HeaderCard from './../../common/HeaderCard'
 
-const VisualNotes = () => {
+const Schedules = () => {
   const [showForm, setShowForm] = useState(false)
   const { user } = useSelector(state => state.auth)
 
@@ -15,8 +15,8 @@ const VisualNotes = () => {
       <div className='sticky-top'>
         <HeaderCard
           user={user}
-          count={0}
-          item='VisualNotes'
+          count={1}
+          item='Schedules'
           onClick={handleShowForm}
           showForm={showForm}
         />
@@ -25,4 +25,4 @@ const VisualNotes = () => {
   )
 }
 
-export default VisualNotes
+export default Schedules

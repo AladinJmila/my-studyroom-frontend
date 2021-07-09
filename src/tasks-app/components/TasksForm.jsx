@@ -40,7 +40,7 @@ class TasksForm extends Form {
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setFormHeight()
 
     const { subjects, resources, selectedTask } = this.props

@@ -14,10 +14,20 @@ import iconVS from '../../static/images/icons/V-S.png'
 import iconSB from '../../static/images/icons/S-M.png'
 import iconSS from '../../static/images/icons/S-S.png'
 
-const SideBar = ({ name, show, count, setShow }) => {
+const SideBar = ({ name, show, count, setShow, itemRef }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
+  }
+
+  const navigateToItem = () => {
+    // console.log(itemRef)
+    itemRef.current.scrollIntoView({
+      behavior: 'smooth',
+      // inline: 'center',
+      // inline: 'start',
+      inline: 'end',
+    })
   }
 
   let bigIcon
@@ -82,7 +92,10 @@ const SideBar = ({ name, show, count, setShow }) => {
     <div
       className='float-start side-bar center relative'
       style={styles}
-      onClick={handleToggleColumn}
+      onClick={() => {
+        handleToggleColumn()
+        navigateToItem()
+      }}
     >
       {show ? (
         <img className='s-bar-small-icon' src={smallIcon} />

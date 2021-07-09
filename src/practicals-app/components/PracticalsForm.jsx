@@ -42,7 +42,7 @@ class PracticalForm extends Form {
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setFormHeight()
 
     const { subjects, selectedPractical } = this.props
@@ -65,7 +65,7 @@ class PracticalForm extends Form {
     }
   }
 
-  doSubmit = async () => {
+  doSubmit = () => {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 

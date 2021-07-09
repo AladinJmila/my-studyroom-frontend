@@ -6,11 +6,11 @@ import Tasks from '../../tasks-app/components/Tasks'
 import Resources from '../../resources-app/components/Resources'
 import Practicals from '../../practicals-app/components/Practicals'
 import DataColumn from './DataColumn'
-import AudioNotes from './../../audio-notes-app/components/AudioNotes'
-import VisualNotes from './../../visual-notes-app/components/VisualNotes'
-import Schedules from './../../schedules-app/Schedules'
+import AudioNotes from '../../audio-notes-app/components/AudioNotes'
+import VisualNotes from '../../visual-notes-app/components/VisualNotes'
+import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper'
 
-const AppsData = ({
+const AppsWrapper = ({
   setTasksRef,
   setResourcesRef,
   setNotesRef,
@@ -18,7 +18,7 @@ const AppsData = ({
   setAudioNotesRef,
   setVisualNotesRef,
   setSchedulesRef,
-  setAppsDataRef,
+  setAppsWrapperRef,
 }) => {
   const [showPracticals, setShowPracticals] = useState(true)
   const [showResources, setShowResources] = useState(true)
@@ -40,12 +40,12 @@ const AppsData = ({
     state => state.ui.practicalsPerSubject[subjectName]
   )
 
-  const appsDataRef = useRef()
+  const appsWrapperRef = useRef()
   useEffect(() => {
-    setAppsDataRef(appsDataRef)
+    setAppsWrapperRef(appsWrapperRef)
   }, [])
 
-  const appsDataArray = [
+  const appsWrapperArray = [
     {
       name: 'Tasks',
       count: tasksCount,
@@ -96,23 +96,23 @@ const AppsData = ({
     },
     {
       name: 'Schedules (planned)',
-      count: 0,
+      count: 1,
       show: showSchedules,
       setShow: setShowSchedules,
       setRef: setSchedulesRef,
-      data: <Schedules />,
+      data: <SchedulesWrapper />,
     },
   ]
 
-  const SortedAppsData = _.orderBy(appsDataArray, ['count'], ['desc'])
+  const SortedAppsWrapper = _.orderBy(appsWrapperArray, ['count'], ['desc'])
 
   return (
     <div
       style={{ padding: 0, height: '92vh' }}
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
-      <div ref={appsDataRef}></div>
-      {SortedAppsData.map(item => (
+      <div ref={appsWrapperRef}></div>
+      {SortedAppsWrapper.map(item => (
         <DataColumn
           key={item.name}
           data={item.data}
@@ -135,4 +135,4 @@ const AppsData = ({
   )
 }
 
-export default AppsData
+export default AppsWrapper

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Subjects from '../subjects-app/components/Subjects'
-import AppsData from '../shell-app/components/AppsData'
+import AppsWrapper from '../shell-app/components/AppsWrapper'
 import VerticalNavBar from '../shell-app/components/VerticalNavBar'
 
 function Shell() {
@@ -12,7 +12,7 @@ function Shell() {
   const [audioNotesRef, setAudioNotesRef] = useState()
   const [visualNotesRef, setVisualNotesRef] = useState()
   const [schedulesRef, setSchedulesRef] = useState()
-  const [appsDataRef, setAppsDataRef] = useState()
+  const [appsWrapperRef, setAppsWrapperRef] = useState()
 
   const subjectsStyle = {
     paddingRight: 0,
@@ -31,7 +31,7 @@ function Shell() {
       <div style={subjectsStyle} className='col-2 y-scroll subjects'>
         <h2>Subjects</h2>
         <div>
-          <Subjects appsDataRef={appsDataRef} />
+          <Subjects appsWrapperRef={appsWrapperRef} />
         </div>
       </div>
       <VerticalNavBar
@@ -45,7 +45,7 @@ function Shell() {
         visualNotesRef={visualNotesRef}
         schedulesRef={schedulesRef}
       />
-      <AppsData
+      <AppsWrapper
         className='position-static'
         setTasksRef={setTasksRef}
         setResourcesRef={setResourcesRef}
@@ -54,7 +54,7 @@ function Shell() {
         setAudioNotesRef={setAudioNotesRef}
         setVisualNotesRef={setVisualNotesRef}
         setSchedulesRef={setSchedulesRef}
-        setAppsDataRef={setAppsDataRef}
+        setAppsWrapperRef={setAppsWrapperRef}
       />
     </main>
   )

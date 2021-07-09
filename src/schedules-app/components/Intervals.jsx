@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import HeaderCard from './../../common/HeaderCard'
+import IntervalsForm from './IntervalsForm'
 
-const VisualNotes = () => {
+const Intervals = () => {
   const [showForm, setShowForm] = useState(false)
   const { user } = useSelector(state => state.auth)
 
@@ -12,17 +13,16 @@ const VisualNotes = () => {
 
   return (
     <>
-      <div className='sticky-top'>
-        <HeaderCard
-          user={user}
-          count={0}
-          item='VisualNotes'
-          onClick={handleShowForm}
-          showForm={showForm}
-        />
-      </div>
+      <HeaderCard
+        user={user}
+        count={0}
+        item='Intervals'
+        onClick={handleShowForm}
+        showForm={showForm}
+      />
+      <IntervalsForm />
     </>
   )
 }
 
-export default VisualNotes
+export default Intervals

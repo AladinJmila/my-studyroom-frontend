@@ -41,7 +41,7 @@ class NotesForm extends Form {
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setFormHeight()
 
     const { subjects, resources, selectedNote } = this.props
@@ -72,7 +72,7 @@ class NotesForm extends Form {
     }
   }
 
-  doSubmit = async () => {
+  doSubmit = () => {
     const data = { ...this.state.data }
     data.userId = this.props.user._id
 

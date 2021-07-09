@@ -38,6 +38,7 @@ const DataColumn = ({
         show={show}
         count={count}
         setShow={setShow}
+        itemRef={ref}
       />
       {show && (
         <div style={containerStyles} className='y-scroll'>

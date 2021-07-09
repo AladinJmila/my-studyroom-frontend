@@ -15,7 +15,7 @@ import SubjectsForm from './SubjectsForm'
 import SubjectsSortCard from './SubjectsSortCard'
 import generateAllSubjects from '../services/generateAllSubjects'
 
-const Subjects = ({ appsDataRef }) => {
+const Subjects = ({ appsWrapperRef }) => {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'starred',
@@ -61,7 +61,7 @@ const Subjects = ({ appsDataRef }) => {
       block: 'nearest',
     })
     setTimeout(() => {
-      appsDataRef.current.scrollIntoView({
+      appsWrapperRef.current.scrollIntoView({
         behavior: 'smooth',
         inline: 'start',
       })
