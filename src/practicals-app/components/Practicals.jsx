@@ -112,16 +112,17 @@ const Practicals = () => {
         </div>
       ) : (
         <>
-          {sorted.map(practical => (
-            <PracticalsCard
-              user={user}
-              key={practical._id}
-              practical={practical}
-              onDelete={handleDelete}
-              onEdit={handlePracticalSelect}
-              onToggleProp={handleToggleProp}
-            />
-          ))}
+          {sorted &&
+            sorted.map(practical => (
+              <PracticalsCard
+                user={user}
+                key={practical._id}
+                practical={practical}
+                onDelete={handleDelete}
+                onEdit={handlePracticalSelect}
+                onToggleProp={handleToggleProp}
+              />
+            ))}
         </>
       )}
     </>

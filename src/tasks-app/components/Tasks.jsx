@@ -108,16 +108,17 @@ const Tasks = () => {
         </div>
       ) : (
         <>
-          {sorted.map(task => (
-            <TasksCard
-              key={task._id}
-              user={user}
-              task={task}
-              onToggleProp={handleToggleProp}
-              onDelete={handleDelete}
-              onEdit={handleTaskSelect}
-            />
-          ))}
+          {sorted &&
+            sorted.map(task => (
+              <TasksCard
+                key={task._id}
+                user={user}
+                task={task}
+                onToggleProp={handleToggleProp}
+                onDelete={handleDelete}
+                onEdit={handleTaskSelect}
+              />
+            ))}
         </>
       )}
     </>

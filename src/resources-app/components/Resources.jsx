@@ -112,16 +112,17 @@ function Resources() {
         </div>
       ) : (
         <>
-          {sorted.map(resource => (
-            <ResourcesCard
-              user={user}
-              key={resource._id}
-              resource={resource}
-              onToggleProp={handleToggleProp}
-              onDelete={handleDelete}
-              onEdit={handleResourceSelect}
-            />
-          ))}
+          {sorted &&
+            sorted.map(resource => (
+              <ResourcesCard
+                user={user}
+                key={resource._id}
+                resource={resource}
+                onToggleProp={handleToggleProp}
+                onDelete={handleDelete}
+                onEdit={handleResourceSelect}
+              />
+            ))}
         </>
       )}
     </>

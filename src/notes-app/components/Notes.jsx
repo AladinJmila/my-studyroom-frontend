@@ -105,17 +105,17 @@ const Notes = () => {
         </div>
       ) : (
         <>
-          {' '}
-          {sorted.map(note => (
-            <NotesCard
-              user={user}
-              key={note._id}
-              note={note}
-              onDelete={handleDelete}
-              onEdit={handleNoteSelect}
-              onToggleProp={handleToggleProp}
-            />
-          ))}
+          {sorted &&
+            sorted.map(note => (
+              <NotesCard
+                user={user}
+                key={note._id}
+                note={note}
+                onDelete={handleDelete}
+                onEdit={handleNoteSelect}
+                onToggleProp={handleToggleProp}
+              />
+            ))}
         </>
       )}
     </>

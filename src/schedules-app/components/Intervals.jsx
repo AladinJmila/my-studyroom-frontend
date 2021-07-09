@@ -60,16 +60,17 @@ const Intervals = () => {
         <IntervalsForm user={user} toggleShowForm={handleShowForm} />
       )}
       <div style={{ ...cardsBody, padding: '5px 0', marginTop: 10 }}>
-        {intervals.map(interval => (
-          <IntervalsCard
-            user={user}
-            key={interval._id}
-            interval={interval}
-            onToggleProp={handleToggleProp}
-            onDelete={handleDelete}
-            onEdit={handleIntervalSelect}
-          />
-        ))}
+        {intervals &&
+          intervals.map(interval => (
+            <IntervalsCard
+              user={user}
+              key={interval._id}
+              interval={interval}
+              onToggleProp={handleToggleProp}
+              onDelete={handleDelete}
+              onEdit={handleIntervalSelect}
+            />
+          ))}
       </div>
     </>
   )
