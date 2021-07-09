@@ -117,7 +117,9 @@ class PracticalForm extends Form {
         {this.renderTextArea('solution', 'Solution', 6)}
         {this.renderTextArea('lesson', 'Lesson', 3)}
         {this.renderInput('url', 'URL')}
-        {this.renderButton('Save', 'btn btn-block btn-dark mb-3')}
+        <div className='d-grid gap-2'>
+          {this.renderButton('Save', 'btn btn-dark mb-2')}
+        </div>
       </form>
     )
   }

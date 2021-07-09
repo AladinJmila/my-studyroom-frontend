@@ -4,7 +4,9 @@ import tasksReducer from './tasks'
 import notesReducer from './notes'
 import resourcesReducer from './resources'
 import practicalsReducer from './practicals'
-import timerReducer from './timerReducer'
+import schedulesReducer from './schedules'
+import loopsReducer from './loops'
+import intervalsReducer from './intervals'
 
 export default combineReducers({
   subjects: subjectsReducer,
@@ -12,5 +14,7 @@ export default combineReducers({
   notes: notesReducer,
   resources: resourcesReducer,
   practicals: practicalsReducer,
-  timer: timerReducer,
+  schedules: schedulesReducer,
+  loops: loopsReducer,
+  intervals: intervalsReducer,
 })

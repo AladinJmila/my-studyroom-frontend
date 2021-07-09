@@ -11,12 +11,11 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
   return (
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
-        <div className='d-flex flex-row justify-content-between '>
+        <div className='d-flex flex-row justify-content-between'>
           <h6 className='card-subtitle mb-2'>
             {resource.subject.name}{' '}
             {resource.starred && <Star className='yellow' starred={true} />}
           </h6>
-
           <div className='card-link float-end'>
             {user && (
               <CardEllipsisMenu

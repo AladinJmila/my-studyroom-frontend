@@ -31,6 +31,14 @@ export const createInterval = interval => async dispatch => {
   }
 }
 
+export const setSelectedInterval = interval => dispatch => {
+  dispatch(actions.SELECT_INTERVAL(interval))
+}
+
+export const clearSelectedInterval = () => dispatch => {
+  dispatch(actions.CLEAR_SELECTED_INTERVAL())
+}
+
 export const updateInterval = interval => async dispatch => {
   const body = { ...interval }
   delete body._id
@@ -45,6 +53,20 @@ export const updateInterval = interval => async dispatch => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const patchInterval = (id, update) => async dispatch => {
+  try {
+    const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
+
+    dispatch(actions.UPDATE_INTERVAL(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const toggleIntervalProp = (id, property) => dispatch => {
+  dispatch(actions.TOGGLE_INTERVAL_PROP({ id, property }))
 }
 
 export const deleteInterval = id => async dispatch => {

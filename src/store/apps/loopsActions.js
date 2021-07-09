@@ -51,7 +51,7 @@ export const updateLoop = loop => async dispatch => {
   }
 }
 
-export const patchLoop = (id, update) => dispatch => {
+export const patchLoop = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 

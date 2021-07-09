@@ -116,7 +116,9 @@ class TasksForm extends Form {
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
         {this.renderInput('content', 'Task')}
         {this.renderInput('url', 'URL')}
-        {this.renderButton('Save', 'btn btn-block btn-dark mb-3')}
+        <div className='d-grid gap-2'>
+          {this.renderButton('Save', 'btn btn-dark mb-2')}
+        </div>
       </form>
     )
   }
