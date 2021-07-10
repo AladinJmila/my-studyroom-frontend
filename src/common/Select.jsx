@@ -2,8 +2,8 @@ const Select = ({ name, label, options, defaultSelected, error, ...rest }) => {
   return (
     <div className='form-group mb-3'>
       <label htmlFor={name}>{label}</label>
-      <select name={name} id={name} {...rest} className='form-control'>
-        <option
+      <select name={name} id={name} {...rest} className='form-select'>
+        {/* <option
           value={
             defaultSelected?.name === 'All Subjects'
               ? ''
@@ -14,6 +14,8 @@ const Select = ({ name, label, options, defaultSelected, error, ...rest }) => {
             ? ''
             : defaultSelected?.name || defaultSelected?.content}
         </option>
+        <option selected>Open this select menu</option> */}
+        <option value=''></option>
         {options.map(option => (
           <option
             key={option._id || option.key}

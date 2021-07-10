@@ -20,7 +20,7 @@ export const loadLoops = () => async dispatch => {
   }
 }
 
-export const createLoop = loop => dispatch => {
+export const createLoop = loop => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, loop)
 

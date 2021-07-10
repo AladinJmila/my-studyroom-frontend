@@ -94,11 +94,7 @@ function Resources() {
           showForm={showForm}
         />
         {showForm && (
-          <ResourcesForm
-            user={user}
-            resources={resources}
-            toggleShowForm={handleShowForm}
-          />
+          <ResourcesForm user={user} toggleShowForm={handleShowForm} />
         )}
         <SortCard
           sortTarget={sortTarget}

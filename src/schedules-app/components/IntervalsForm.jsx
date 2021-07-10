@@ -1,9 +1,7 @@
 import Joi from 'joi-browser'
-import { data } from 'jquery'
 import { connect } from 'react-redux'
 import Form from '../../common/Form'
 import Toggle from '../../common/Toggle'
-import { appsFormStyle } from '../../services/stylesService'
 import {
   createInterval,
   updateInterval,
@@ -53,9 +51,9 @@ class IntervalsForm extends Form {
     }
   }
 
-  handleToggleProp = () => {
+  handleToggleProp = property => {
     const data = { ...this.state.data }
-    data.signalHalf = !data.signalHalf
+    data[property] = !data[property]
 
     this.setState({ data })
   }
@@ -95,7 +93,7 @@ class IntervalsForm extends Form {
 
   intervalsFormStyle = {
     padding: 10,
-    marginBottom: 12,
+    margin: 12,
     border: '3px solid #343A40',
     borderRadius: 5,
   }
@@ -119,15 +117,15 @@ class IntervalsForm extends Form {
         <div className='row mb-2'>
           {this.renderColorInput('color', 'Color')}
           <div className='col center'>
-            <div className='float-end pt-2'>
+            <h6 className='float-end pt-2'>
               <Toggle
                 toggled={this.state.data.signalHalf}
-                onToggle={this.handleToggleProp}
+                onToggle={() => this.handleToggleProp('signalHalf')}
               />
               <label htmlFor='signalHalf' className='ms-2'>
                 Signal Half
               </label>
-            </div>
+            </h6>
           </div>
         </div>
         <div className='d-grid gap-2'>
