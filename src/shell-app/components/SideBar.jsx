@@ -65,10 +65,11 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
   }
 
   let minWidth
+  let maxWidth
 
   const styles = {
     minWidth: minWidth,
-    maxWidth: 160,
+    maxWidth: maxWidth,
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
@@ -81,7 +82,8 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
     styles.margin = 0
     styles.display = 'none'
   } else {
-    styles.minWidth = show ? 40 : 160
+    styles.minWidth = show ? 50 : 160
+    styles.maxWidth = show ? 50 : 160
   }
 
   useEffect(() => {

@@ -30,7 +30,7 @@ export const createLoop = loop => async dispatch => {
   }
 }
 
-export const selectedLoop = loop => dispatch => {
+export const setSelectedLoop = loop => dispatch => {
   dispatch(actions.SELECT_LOOP(loop))
 }
 

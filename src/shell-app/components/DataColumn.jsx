@@ -4,7 +4,7 @@ import SideBar from './SideBar'
 const containerStyles = {
   margin: '5px 10px',
   minWidth: 500,
-  maxWidth: 600,
+  maxWidth: 500,
   display: 'inline-block',
   height: '90vh',
 }

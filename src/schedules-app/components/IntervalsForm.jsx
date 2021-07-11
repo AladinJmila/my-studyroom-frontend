@@ -15,7 +15,7 @@ class IntervalsForm extends Form {
       minutes: 0,
       seconds: 0,
       numOfReps: 1,
-      color: '#EF8FA7',
+      color: '#62a9b4',
       signalHalf: false,
     },
     errors: {},
@@ -85,7 +85,7 @@ class IntervalsForm extends Form {
         minutes: 0,
         seconds: 0,
         numOfReps: 0,
-        color: '#EF8FA7',
+        color: '#62a9b4',
         signalHalf: false,
       },
     })
@@ -93,7 +93,7 @@ class IntervalsForm extends Form {
 
   intervalsFormStyle = {
     padding: 10,
-    margin: 12,
+    margin: '12px 0',
     border: '3px solid #343A40',
     borderRadius: 5,
   }

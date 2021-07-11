@@ -3,8 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cardsBody } from '../../services/stylesService'
 import HeaderCard from '../../common/HeaderCard'
 import LoopsFrom from './LoopsForm'
-import { loadLoops } from './../../store/apps/loopsActions'
-import LoopsCard from '../LoopsCard'
+import {
+  loadLoops,
+  patchLoop,
+  deleteLoop,
+  setSelectedLoop,
+  toggleLoopProp,
+} from './../../store/apps/loopsActions'
+import LoopsCard from './LoopsCard'
 
 const Loops = () => {
   const [showForm, setShowForm] = useState(false)
@@ -19,6 +25,25 @@ const Loops = () => {
     dispatch(loadLoops())
   }, [])
 
+  const handleDelete = loop => {
+    dispatch(deleteLoop(loop._id))
+  }
+
+  const handleLoopSelect = loop => {
+    dispatch(setSelectedLoop(loop))
+    handleShowForm()
+  }
+
+  const handleToggleProp = (loop, property) => {
+    const index = loops.indexOf(loop)
+    const loopToUpdate = { ...loops[index] }
+    loopToUpdate[property] = !loopToUpdate[property]
+    const update = { [property]: loopToUpdate[property] }
+
+    dispatch(patchLoop(loop._id, update))
+    dispatch(toggleLoopProp(loop._id, property))
+  }
+
   const handleShowForm = () => {
     setShowForm(showForm ? false : true)
   }
@@ -27,13 +52,13 @@ const Loops = () => {
     <>
       <HeaderCard
         user={user}
-        count={0}
+        count={loops.length}
         item='Loops'
         onClick={handleShowForm}
         showForm={showForm}
       />
       {showForm && <LoopsFrom user={user} toggleShowForm={handleShowForm} />}
-      <div style={{ ...cardsBody, padding: '5px 0', marginTop: 10 }}>
+      <div style={{ ...cardsBody, padding: '5px 0', margin: '10px 0' }}>
         {loops &&
           loops.map(loop => (
             <LoopsCard
@@ -41,6 +66,9 @@ const Loops = () => {
               key={loop._id}
               loop={loop}
               intervals={intervals}
+              onToggleProp={handleToggleProp}
+              onDelete={handleDelete}
+              onEdit={handleLoopSelect}
             />
           ))}
       </div>

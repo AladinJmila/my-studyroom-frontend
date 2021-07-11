@@ -105,49 +105,57 @@ class LoopsFrom extends Form {
     })
   }
 
+  loopsFormStyle = {
+    backgroundImage: 'linear-gradient(#678387, #62a9b4)',
+    padding: 10,
+    margin: '12px 0',
+    border: '3px solid #343A40',
+    borderRadius: 5,
+  }
+
   render() {
     return (
       <form
         className='mt-2 mb-0'
         onSubmit={this.handleSubmit}
-        style={appsFormStyle}
+        style={this.loopsFormStyle}
       >
         {this.renderInput('name', 'Name')}
+        <label htmlFor='intervalsIds'>Intervals</label>
         {this.state.data.intervalsIds.map((item, index) => (
           <div key={index} className='row'>
             <div className='col-9'>
-              <div className='form-group mb-3'>
-                <label htmlFor='intervalsIds'>Intervals</label>
-                <select
-                  name='intervalId'
-                  id='intervalId'
-                  className='form-select'
-                  onChange={e => this.handleIntervalAdd(e, index)}
-                >
-                  <option value=''></option>
-                  {this.state.intervals.map(option => (
-                    <option key={option._id} value={option._id}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                name='intervalId'
+                id='intervalId'
+                className='form-select'
+                onChange={e => this.handleIntervalAdd(e, index)}
+              >
+                <option value=''></option>
+                {this.state.intervals.map(option => (
+                  <option key={option._id} value={option._id}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
             </div>
             {this.state.data.intervalsIds.length > 1 && (
-              <input
-                value='-'
+              <button
                 type='button'
-                className='btn btn-dark ms-2 mt-4 mb-3 me-2 col-1'
+                className='btn btn-outline-dark ms-2 mt-0 mb-3 me-2 col-1'
                 onClick={() => this.handleRemoveInput(index)}
-              />
+              >
+                <i className='fa fa-minus' aria-hidden='true'></i>
+              </button>
             )}
             {this.state.data.intervalsIds.length - 1 === index && (
-              <input
-                value='+'
+              <button
                 type='button'
-                className='btn btn-dark ms-2 mt-4 mb-3 me-2 col-1'
+                className='btn btn-outline-dark ms-2 mt-0 mb-3 me-2 col-1'
                 onClick={this.handleAddInput}
-              />
+              >
+                <i className='fa fa-plus' aria-hidden='true'></i>
+              </button>
             )}
           </div>
         ))}
@@ -184,7 +192,7 @@ class LoopsFrom extends Form {
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
-        <pre>{JSON.stringify(this.state.data.intervalsIds, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(this.state.data.intervalsIds, null, 2)}</pre> */}
       </form>
     )
   }

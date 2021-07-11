@@ -1,19 +1,16 @@
 import Star from '../../common/Star'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
+import computeTotalDuration from '../servecies/computeTotalDuration'
 
 const IntervalsCard = ({ user, interval, onToggleProp, onDelete, onEdit }) => {
-  const totalDuration = () => {
-    let minutes
-    interval.minutes > 0
-      ? (minutes =
-          interval.minutes * interval.numOfReps +
-          Math.floor((interval.seconds * interval.numOfReps) / 60))
-      : (minutes = Math.floor((interval.seconds * interval.numOfReps) / 60))
-    let seconds = (interval.seconds * interval.numOfReps) % 60
-    minutes = minutes < 10 ? `0${minutes}` : `${minutes}`
-    seconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+  const result = computeTotalDuration(interval)
 
-    return `(${minutes}:${seconds})`
+  const formatDuration = () => {
+    const { minutes, seconds } = result
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+
+    return `${formattedMinutes}:${formattedSeconds}`
   }
 
   const intervalsCardStyle = {
@@ -27,7 +24,7 @@ const IntervalsCard = ({ user, interval, onToggleProp, onDelete, onEdit }) => {
       <div className='p-3'>
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='mb-0'>
-            {interval.name} {totalDuration()}{' '}
+            {interval.name} ({formatDuration()}){' '}
             {interval.starred && <Star className='yellow' starred={true} />}
           </h6>
           <div className='card-link float-end'>
