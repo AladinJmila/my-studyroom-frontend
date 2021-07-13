@@ -1,8 +1,8 @@
 import Joi from 'joi-browser'
 import { connect } from 'react-redux'
+import { produce } from 'immer'
 import Form from '../../common/Form'
 import Toggle from '../../common/Toggle'
-import { appsFormStyle } from '../../services/stylesService'
 import {
   createLoop,
   updateLoop,
@@ -60,22 +60,23 @@ class LoopsFrom extends Form {
 
   handleIntervalAdd = (e, index) => {
     const { name, value } = e.target
-    const data = { ...this.state.data }
-    data.intervalsIds[index][name] = value
+    const data = produce(this.state.data, data => {
+      data.intervalsIds[index][name] = value
+    })
     this.setState({ data })
   }
 
   handleAddInput = () => {
-    const data = { ...this.state.data }
-    data.intervalsIds = [...data.intervalsIds]
-    data.intervalsIds.push({ intervalId: '' })
+    const data = produce(this.state.data, data => {
+      data.intervalsIds.push({ intervalId: '' })
+    })
     this.setState({ data })
   }
 
   handleRemoveInput = index => {
-    const data = { ...this.state.data }
-    data.intervalsIds = [...data.intervalsIds]
-    data.intervalsIds.splice(index, 1)
+    const data = produce(this.state.data, data => {
+      data.intervalsIds.splice(index, 1)
+    })
     this.setState({ data })
   }
 

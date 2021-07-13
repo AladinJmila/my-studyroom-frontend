@@ -9,8 +9,6 @@ import {
   toggleIntervalProp,
 } from '../../store/apps/intervalsActions'
 import HeaderCard from './../../common/HeaderCard'
-import IntervalsCard from './IntervalsCard'
-import IntervalsChip from './IntervalsChip'
 import IntervalsChipCard from './IntervalsChipCard'
 import IntervalsForm from './IntervalsForm'
 
@@ -67,7 +65,6 @@ const Intervals = () => {
       >
         {intervals &&
           intervals.map(interval => (
-            // <IntervalsChip interval={interval} />
             <IntervalsChipCard
               user={user}
               key={interval._id}
@@ -76,14 +73,6 @@ const Intervals = () => {
               onDelete={handleDelete}
               onEdit={handleIntervalSelect}
             />
-            // <IntervalsCard
-            //   user={user}
-            //   key={interval._id}
-            //   interval={interval}
-            //   onToggleProp={handleToggleProp}
-            //   onDelete={handleDelete}
-            //   onEdit={handleIntervalSelect}
-            // />
           ))}
       </div>
     </>
