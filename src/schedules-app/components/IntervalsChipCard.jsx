@@ -12,28 +12,28 @@ const IntervalsCard = ({ user, interval, onToggleProp, onDelete, onEdit }) => {
   const intervalsCardStyle = {
     backgroundColor: interval.color,
     borderRadius: '0.25rem',
-    margin: 10,
+    margin: 8,
   }
 
   return (
-    <div style={intervalsCardStyle} className='card mb-1'>
-      <div className='p-3'>
-        <div className='d-flex flex-row justify-content-between'>
-          <h6 className='mb-0'>
-            {interval.name} ({formattedDuration}){' '}
-            {interval.starred && <Star className='yellow' starred={true} />}
-          </h6>
-          <div className='card-link float-end'>
+    <div style={intervalsCardStyle} className='card flex-fill mb-1'>
+      <div className='p-3 text-center'>
+        <h6 className='mb-1'>
+          {interval.name}
+          {interval.starred && <Star className='yellow' starred={true} />}
+          <div className='card-link float-end ms-2'>
             {user && (
               <CardEllipsisMenu
                 item={interval}
                 onEdit={onEdit}
                 onToggleProp={onToggleProp}
                 onDelete={onDelete}
+                vertical
               />
             )}
           </div>
-        </div>
+        </h6>
+        <h6 className='mb-0'>{formattedDuration}</h6>
       </div>
     </div>
   )

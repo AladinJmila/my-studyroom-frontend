@@ -10,6 +10,8 @@ import {
 } from '../../store/apps/intervalsActions'
 import HeaderCard from './../../common/HeaderCard'
 import IntervalsCard from './IntervalsCard'
+import IntervalsChip from './IntervalsChip'
+import IntervalsChipCard from './IntervalsChipCard'
 import IntervalsForm from './IntervalsForm'
 
 const Intervals = () => {
@@ -59,10 +61,14 @@ const Intervals = () => {
       {showForm && (
         <IntervalsForm user={user} toggleShowForm={handleShowForm} />
       )}
-      <div style={{ ...cardsBody, padding: '5px 0', marginTop: 10 }}>
+      <div
+        className='d-flex flex-wrap'
+        style={{ ...cardsBody, padding: 5, marginTop: 10 }}
+      >
         {intervals &&
           intervals.map(interval => (
-            <IntervalsCard
+            // <IntervalsChip interval={interval} />
+            <IntervalsChipCard
               user={user}
               key={interval._id}
               interval={interval}
@@ -70,6 +76,14 @@ const Intervals = () => {
               onDelete={handleDelete}
               onEdit={handleIntervalSelect}
             />
+            // <IntervalsCard
+            //   user={user}
+            //   key={interval._id}
+            //   interval={interval}
+            //   onToggleProp={handleToggleProp}
+            //   onDelete={handleDelete}
+            //   onEdit={handleIntervalSelect}
+            // />
           ))}
       </div>
     </>

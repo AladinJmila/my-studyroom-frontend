@@ -1,19 +1,26 @@
 import { useState } from 'react'
-import ExternalLink from './ExternalLink'
 import Toggle from './Toggle'
 import Star from './Star'
 
-const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
+const CardEllipsisMenu = ({
+  item,
+  onEdit,
+  onToggleProp,
+  onDelete,
+  vertical,
+}) => {
   const [showMenu, setShowMenu] = useState(false)
 
   const handleShowMenu = () => {
     showMenu ? setShowMenu(false) : setShowMenu(true)
   }
 
+  const iconClass = !vertical ? 'fa fa-lg fa-ellipsis-h' : 'fa fa-ellipsis-v'
+
   return (
     <>
       <i
-        className='fa fa-lg fa-ellipsis-h'
+        className={iconClass}
         style={{ cursor: 'pointer', verticalAlign: 'top' }}
         aria-hidden='true'
         onClick={handleShowMenu}
@@ -26,7 +33,7 @@ const CardEllipsisMenu = ({ item, onEdit, onToggleProp, onDelete }) => {
             minWidth: 100,
             position: 'absolute',
             float: 'right',
-            zIndex: 10,
+            zIndex: 2000,
           }}
         >
           <div

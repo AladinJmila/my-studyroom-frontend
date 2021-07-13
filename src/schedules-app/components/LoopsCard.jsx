@@ -1,7 +1,7 @@
 import Star from '../../common/Star'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import IntervalsChip from './IntervalsChip'
-import computeTotalDuration from '../servecies/computeTotalDuration'
+import { computeLoopDuration, formatDuration } from '../services/loopsServices'
 
 const LoopsCard = ({
   user,
@@ -11,48 +11,15 @@ const LoopsCard = ({
   onDelete,
   onEdit,
 }) => {
-  let loopIntervals = []
-
+  const loopIntervals = []
   loop.intervalsIds.forEach(item => {
     loopIntervals.push(
-      ...intervals.filter(interval => interval._id === item['intervalId'])
+      ...intervals.filter(interval => interval._id === item.intervalId)
     )
   })
 
-  let intervalsDuration = []
-  loopIntervals.forEach(interval =>
-    intervalsDuration.push(computeTotalDuration(interval))
-  )
-  // console.log(intervalsDuration)
-
-  const totalSeconds = intervalsDuration.reduce(
-    (t, { seconds }) => t + seconds,
-    0
-  )
-  let totalMinutes = intervalsDuration.reduce(
-    (t, { minutes }) => t + minutes,
-    0
-  )
-
-  let totalHours = intervalsDuration.reduce((t, { hours }) => t + hours, 0)
-
-  if (totalMinutes > 60) {
-    totalHours += Math.floor(totalMinutes / 60)
-    totalMinutes = totalMinutes % 60
-  }
-
-  const formatDuration = () => {
-    const formattedSeconds =
-      totalSeconds < 10 ? `0${totalSeconds}` : `${totalSeconds}`
-    const formattedMinutes =
-      totalMinutes < 10 ? `0${totalMinutes}` : `${totalMinutes}`
-    const formattedHours = totalHours < 10 ? `0${totalHours}` : `${totalHours}`
-
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
-  }
-
-  // console.log(totalHours)
-  // console.log(totalMinutes)
+  const loopDuration = computeLoopDuration(loopIntervals)
+  const formattedDuration = formatDuration(loopDuration)
 
   const loopsCardStyle = {
     // backgroundColor: '#e8e8e8',
@@ -65,7 +32,7 @@ const LoopsCard = ({
       <div className='p-2'>
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='mb-0'>
-            {loop.name} ({formatDuration()}){' '}
+            {loop.name} ({formattedDuration}){' '}
             {loop.starred && <Star className='yellow' starred={true} />}
           </h6>
           <div className='card-link float-end'>
@@ -81,7 +48,9 @@ const LoopsCard = ({
         </div>
         <div className='d-flex flex-row' style={{ overflow: 'auto' }}>
           {loopIntervals.map(interval => (
-            <IntervalsChip interval={interval} />
+            <>
+              <IntervalsChip key={interval._id} interval={interval} />
+            </>
           ))}
         </div>
       </div>

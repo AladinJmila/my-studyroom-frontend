@@ -67,12 +67,14 @@ class LoopsFrom extends Form {
 
   handleAddInput = () => {
     const data = { ...this.state.data }
+    data.intervalsIds = [...data.intervalsIds]
     data.intervalsIds.push({ intervalId: '' })
     this.setState({ data })
   }
 
   handleRemoveInput = index => {
     const data = { ...this.state.data }
+    data.intervalsIds = [...data.intervalsIds]
     data.intervalsIds.splice(index, 1)
     this.setState({ data })
   }
@@ -121,13 +123,14 @@ class LoopsFrom extends Form {
         style={this.loopsFormStyle}
       >
         {this.renderInput('name', 'Name')}
-        <label htmlFor='intervalsIds'>Intervals</label>
+        <label htmlFor='intervalId'>Intervals</label>
         {this.state.data.intervalsIds.map((item, index) => (
           <div key={index} className='row'>
             <div className='col-9'>
               <select
                 name='intervalId'
                 id='intervalId'
+                value={item.intervalId}
                 className='form-select'
                 onChange={e => this.handleIntervalAdd(e, index)}
               >
