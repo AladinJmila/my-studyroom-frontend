@@ -1,7 +1,11 @@
 import Star from '../../common/Star'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import IntervalsChip from './IntervalsChip'
-import { computeLoopDuration, formatDuration } from '../services/loopsServices'
+import {
+  getLoopIntervals,
+  computeLoopDuration,
+  formatDuration,
+} from '../services/loopsServices'
 
 const LoopsCard = ({
   user,
@@ -11,18 +15,12 @@ const LoopsCard = ({
   onDelete,
   onEdit,
 }) => {
-  const loopIntervals = []
-  loop.intervalsIds.forEach(item => {
-    loopIntervals.push(
-      ...intervals.filter(interval => interval._id === item.intervalId)
-    )
-  })
-
+  const loopIntervals = getLoopIntervals(loop.intervalsIds, intervals)
   const loopDuration = computeLoopDuration(loopIntervals)
   const formattedDuration = formatDuration(loopDuration)
 
   const loopsCardStyle = {
-    // backgroundColor: '#e8e8e8',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: '0.25rem',
     margin: 10,
   }
@@ -33,7 +31,7 @@ const LoopsCard = ({
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='mb-0'>
             {loop.name} ({formattedDuration}){' '}
-            {loop.starred && <Star className='yellow' starred={true} />}
+            {loop.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
             {user && (

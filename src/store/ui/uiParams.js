@@ -9,7 +9,7 @@ const slice = createSlice({
     notesPerSubject: {},
     resourcesPerSubject: {},
     practicalsPerSubject: {},
-    navigationRefs: {},
+    totalSchedules: null,
   },
   reducers: {
     TASKS_PER_SUBJECT: (state, action) => {
@@ -32,10 +32,8 @@ const slice = createSlice({
       state.practicalsPerSubject[subjectName] = num
     },
 
-    NAVIGATION_REFS: (state, action) => {
-      const { refName, refValue } = action.payload
-      // console.log(refValue)
-      state.navigationRefs[refName] = refValue
+    SET_TOTAL_SCHEDULES: (state, action) => {
+      state.totalSchedules = action.payload
     },
   },
 })
@@ -45,7 +43,7 @@ export const {
   NOTES_PER_SUBJECT,
   RESOURCES_PER_SUBJECT,
   PRACTICALS_PER_SUBJECT,
-  NAVIGATION_REFS,
+  SET_TOTAL_SCHEDULES,
 } = slice.actions
 export default slice.reducer
 
@@ -65,4 +63,8 @@ export const setResourcesPerSubject = (subjectName, num) => dispatch => {
 
 export const setPracticalsPerSubject = (subjectName, num) => dispatch => {
   dispatch(PRACTICALS_PER_SUBJECT({ subjectName, num }))
+}
+
+export const setTotalSchedules = num => dispatch => {
+  dispatch(SET_TOTAL_SCHEDULES(num))
 }

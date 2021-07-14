@@ -1,11 +1,7 @@
-import {
-  computeIntervalDuration,
-  formatDuration,
-} from '../services/intervalsServices'
+import { formatDuration } from '../services/intervalsServices'
 
 const IntervalsCard = ({ interval }) => {
-  const intervalDuration = computeIntervalDuration(interval)
-  const formattedDuration = formatDuration(intervalDuration)
+  const formattedDuration = formatDuration(interval.totalDuration)
 
   const intervalsChipStyle = {
     backgroundColor: interval.color,

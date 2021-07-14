@@ -39,6 +39,7 @@ const AppsWrapper = ({
   const practicalsCount = useSelector(
     state => state.ui.practicalsPerSubject[subjectName]
   )
+  const schedulesCount = useSelector(state => state.ui.totalSchedules)
 
   const appsWrapperRef = useRef()
   useEffect(() => {
@@ -95,8 +96,8 @@ const AppsWrapper = ({
       data: <VisualNotes />,
     },
     {
-      name: 'Schedules (planned)',
-      count: 1,
+      name: 'Schedules (inProgress)',
+      count: schedulesCount,
       show: showSchedules,
       setShow: setShowSchedules,
       setRef: setSchedulesRef,

@@ -48,6 +48,12 @@ const slice = createSlice({
       const index = loops.list.findIndex(l => l._id === action.payload)
       loops.list.splice(index, 1)
     },
+
+    ADD_TOTAL_DURATION: (loops, action) => {
+      const { id, totalDuration } = action.payload
+      const index = loops.list.findIndex(l => l._id === id)
+      loops.list[index].totalDuration = totalDuration
+    },
   },
 })
 
@@ -61,5 +67,6 @@ export const {
   UPDATE_LOOP,
   TOGGLE_LOOP_PROP,
   DELETE_LOOP,
+  ADD_TOTAL_DURATION,
 } = slice.actions
 export default slice.reducer

@@ -74,3 +74,7 @@ export const deleteLoop = id => async dispatch => {
     console.log(error)
   }
 }
+
+export const addTotalDuration = (id, totalDuration) => dispatch => {
+  dispatch(actions.ADD_TOTAL_DURATION({ id, totalDuration }))
+}

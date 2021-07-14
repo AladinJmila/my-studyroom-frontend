@@ -20,7 +20,7 @@ const PracticalsCard = ({
         <div className='d-flex flex-row justify-content-between '>
           <h6 className='card-subtitle mb-2'>
             {practical.subject.name}{' '}
-            {practical.starred && <Star className='yellow' starred={true} />}
+            {practical.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
             {user && (
@@ -34,7 +34,7 @@ const PracticalsCard = ({
           </div>
         </div>
         <div>
-          <div className='card-title float-start me-2 mb-1'>
+          <div className='float-start me-2 mb-1'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(practical, 'isChecked')}

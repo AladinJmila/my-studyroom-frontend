@@ -14,7 +14,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='card-subtitle mb-2'>
             {resource.subject.name}{' '}
-            {resource.starred && <Star className='yellow' starred={true} />}
+            {resource.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
             {user && (
@@ -27,7 +27,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
             )}
           </div>
         </div>
-        <div className='card-title float-start me-2'>
+        <div className='float-start me-2'>
           {user && (
             <Check
               onCheck={() => onToggleProp(resource, 'isChecked')}

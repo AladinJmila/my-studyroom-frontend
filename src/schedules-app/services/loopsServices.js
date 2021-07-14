@@ -1,45 +1,46 @@
-import { computeIntervalDuration } from './intervalsServices'
+export const getLoopIntervals = (intervalsIds, intervals) => {
+  const loopIntervals = []
+  intervalsIds.forEach(item => {
+    loopIntervals.push(
+      ...intervals.filter(interval => interval._id === item.intervalId)
+    )
+  })
+
+  return loopIntervals
+}
 
 export const computeLoopDuration = loopIntervals => {
   const intervalsDuration = []
   loopIntervals.forEach(interval =>
-    intervalsDuration.push(computeIntervalDuration(interval))
+    intervalsDuration.push(interval.totalDuration)
   )
 
-  let totalSeconds = intervalsDuration.reduce(
-    (t, { seconds }) => t + seconds,
-    0
-  )
-  let totalMinutes = intervalsDuration.reduce(
-    (t, { minutes }) => t + minutes,
-    0
-  )
+  let seconds = intervalsDuration.reduce((t, { seconds }) => t + seconds, 0)
+  let minutes = intervalsDuration.reduce((t, { minutes }) => t + minutes, 0)
 
-  if (totalSeconds > 60) {
-    totalMinutes += Math.floor(totalSeconds / 60)
-    totalSeconds = totalSeconds % 60
+  if (seconds >= 60) {
+    minutes += Math.floor(seconds / 60)
+    seconds = seconds % 60
   }
 
-  let totalHours = intervalsDuration.reduce((t, { hours }) => t + hours, 0)
+  let hours = intervalsDuration.reduce((t, { hours }) => t + hours, 0)
 
-  if (totalMinutes > 60) {
-    totalHours += Math.floor(totalMinutes / 60)
-    totalMinutes = totalMinutes % 60
+  if (minutes >= 60) {
+    hours += Math.floor(minutes / 60)
+    minutes = minutes % 60
   }
 
-  return { totalSeconds, totalMinutes, totalHours }
+  return { seconds, minutes, hours }
 }
 
 export const formatDuration = loopDuration => {
-  const { totalSeconds, totalMinutes, totalHours } = loopDuration
+  const { seconds, minutes, hours } = loopDuration
 
-  const formattedSeconds =
-    totalSeconds < 10 ? `0${totalSeconds}` : `${totalSeconds}`
-  const formattedMinutes =
-    totalMinutes < 10 ? `0${totalMinutes}` : `${totalMinutes}`
-  const formattedHours = totalHours < 10 ? `0${totalHours}` : `${totalHours}`
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+  const formattedHours = hours < 10 ? `0${hours}` : `${hours}`
 
-  return totalHours
+  return hours
     ? `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
     : `${formattedMinutes}:${formattedSeconds}`
 }

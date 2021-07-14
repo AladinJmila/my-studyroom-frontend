@@ -54,7 +54,7 @@ const SubjectsCard = ({
         <div className='d-flex flex-row justify-content-between '>
           <h5 className='card-title'>
             {subject.name}{' '}
-            {subject.starred && <Star className='yellow' starred={true} />}
+            {subject.starred && <Star className='yellow' starred />}
           </h5>
           <div className='card-link float-end'>
             {user && subject.name !== 'All Subjects' && (

@@ -13,8 +13,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       <div className='p-3'>
         <div className='d-flex flex-row justify-content-between '>
           <h6 className='card-subtitle mb-2'>
-            {note.title}{' '}
-            {note.starred && <Star className='yellow' starred={true} />}
+            {note.title} {note.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
             {user && (
@@ -34,7 +33,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           </p>
         )}
         <>
-          <div className='card-title float-start me-2'>
+          <div className='float-start me-2'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(note, 'isChecked')}

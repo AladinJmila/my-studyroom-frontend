@@ -62,8 +62,8 @@ const Loops = () => {
         {loops &&
           loops.map(loop => (
             <LoopsCard
-              user={user}
               key={loop._id}
+              user={user}
               loop={loop}
               intervals={intervals}
               onToggleProp={handleToggleProp}

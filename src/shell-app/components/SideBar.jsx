@@ -58,7 +58,7 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       bigIcon = iconVB
       smallIcon = iconVS
       break
-    case 'Schedules (planned)':
+    case 'Schedules (inProgress)':
       bigIcon = iconSB
       smallIcon = iconSS
       break

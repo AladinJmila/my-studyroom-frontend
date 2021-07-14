@@ -8,6 +8,10 @@ import {
   updateLoop,
   clearSelectedLoop,
 } from './../../store/apps/loopsActions'
+import {
+  getLoopIntervals,
+  computeLoopDuration,
+} from '../services/loopsServices'
 
 class LoopsFrom extends Form {
   state = {

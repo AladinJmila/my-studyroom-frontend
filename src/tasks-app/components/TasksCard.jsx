@@ -11,7 +11,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
         <div className='d-flex flex-row justify-content-between '>
           <h6 className='card-subtitle mb-2'>
             {task.subject.name}{' '}
-            {task.starred && <Star className='yellow' starred={true} />}
+            {task.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
             {user && (
@@ -30,7 +30,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
           </p>
         )}
         <>
-          <div className='card-title float-start me-2'>
+          <div className='float-start me-2'>
             {user && (
               <Check
                 onCheck={() => onToggleProp(task, 'isChecked')}
