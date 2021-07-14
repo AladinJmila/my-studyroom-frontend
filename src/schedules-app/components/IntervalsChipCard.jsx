@@ -1,10 +1,14 @@
 import Star from '../../common/Star'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
-import { formatDuration } from '../services/intervalsServices'
+import {
+  formatDetailedDuration,
+  formatDuration,
+} from '../services/intervalsServices'
 import { mainContentStyle } from '../../services/stylesService'
 
 const IntervalsCard = ({ user, interval, onToggleProp, onDelete, onEdit }) => {
   const formattedDuration = formatDuration(interval.totalDuration)
+  const formattedDetailedDuration = formatDetailedDuration(interval)
 
   const intervalsCardStyle = {
     backgroundColor: interval.color,
@@ -34,7 +38,7 @@ const IntervalsCard = ({ user, interval, onToggleProp, onDelete, onEdit }) => {
           <h6 className='mb-0'>
             {formattedDuration}{' '}
             {interval.numOfReps > 1 &&
-              `(${interval.numOfReps} x ${formattedDuration})`}
+              `(${interval.numOfReps} x ${formattedDetailedDuration})`}
           </h6>
         </div>
       </div>

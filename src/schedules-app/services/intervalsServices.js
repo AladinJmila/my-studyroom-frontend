@@ -13,3 +13,11 @@ export const formatDuration = totalDuration => {
 
   return foramtted
 }
+
+export const formatDetailedDuration = interval => {
+  const { seconds, minutes } = interval
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+
+  return `${formattedMinutes}:${formattedSeconds}`
+}

@@ -36,7 +36,6 @@ const Schedules = () => {
   }
 
   const handleToggleProp = (schedule, property) => {
-    console.log(property)
     const index = schedules.indexOf(schedule)
     const scheduleToUpdate = { ...schedules[index] }
     scheduleToUpdate[property] = !scheduleToUpdate[property]
