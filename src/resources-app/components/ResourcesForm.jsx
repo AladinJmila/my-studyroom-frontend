@@ -30,7 +30,6 @@ class ResourcesForm extends Form {
     url: Joi.string().required().label('URL'),
   }
 
-  newAppsFormStyle
   setFormHeight() {
     this.newAppsFormStyle = { ...appsFormStyle }
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250

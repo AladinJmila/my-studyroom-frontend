@@ -36,7 +36,6 @@ class PracticalForm extends Form {
     url: Joi.string().allow(''),
   }
 
-  newAppsFormStyle
   setFormHeight() {
     this.newAppsFormStyle = { ...appsFormStyle }
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250

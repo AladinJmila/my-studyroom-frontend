@@ -34,7 +34,6 @@ class TasksForm extends Form {
     sessions: Joi.number().label('Sessions').allow(''),
   }
 
-  newAppsFormStyle
   setFormHeight() {
     this.newAppsFormStyle = { ...appsFormStyle }
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250

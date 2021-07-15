@@ -35,7 +35,6 @@ class NotesForm extends Form {
     url: Joi.string().label('URL').allow(''),
   }
 
-  newAppsFormStyle
   setFormHeight() {
     this.newAppsFormStyle = { ...appsFormStyle }
     this.newAppsFormStyle.maxHeight = window.innerHeight - 250
