@@ -1,7 +1,7 @@
 import Star from '../../common/Star'
 import PlayStop from './../../common/PlayStop'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
-import { formatDuration } from '../services/schedulesService'
+import { formatDuration } from '../services/schedulesServices'
 import {
   getLoopIntervals,
   computeLoopDuration,

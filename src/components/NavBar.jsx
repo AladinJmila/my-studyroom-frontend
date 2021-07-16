@@ -15,41 +15,58 @@ function NavBar() {
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed)
 
   const testLoop = {
+    numOfReps: 3,
     intervals: [
       {
         color: '#f0c594',
         name: 'Learning Medium',
+        numOfReps: 1,
+        minutes: 30,
+        seconds: 0,
+        signalHalf: true,
         totalDuration: {
-          hours: 0,
-          minutes: 30,
           seconds: 0,
+          minutes: 30,
+          hours: 0,
         },
       },
       {
-        color: '#4c5ac8',
-        name: 'Break 7',
+        color: '#ac94f0',
+        name: 'Workout',
+        numOfReps: 6,
+        minutes: 0,
+        seconds: 5,
+        signalHalf: false,
         totalDuration: {
+          seconds: 30,
+          minutes: 0,
           hours: 0,
-          minutes: 7,
-          seconds: 0,
         },
       },
       {
         color: '#f0c594',
         name: 'Learning Medium',
+        numOfReps: 1,
+        minutes: 30,
+        seconds: 0,
+        signalHalf: true,
         totalDuration: {
-          hours: 0,
-          minutes: 30,
           seconds: 0,
+          minutes: 30,
+          hours: 0,
         },
       },
       {
         color: '#e68ea4',
         name: 'Breathing',
+        numOfReps: 1,
+        minutes: 5,
+        seconds: 0,
+        signalHalf: true,
         totalDuration: {
-          hours: 0,
-          minutes: 5,
           seconds: 0,
+          minutes: 5,
+          hours: 0,
         },
       },
     ],
@@ -69,7 +86,10 @@ function NavBar() {
             </small>
           </Link>
           <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
-            <NavBarIntervalsCard intervals={testLoop.intervals} />
+            <NavBarIntervalsCard
+              intervals={testLoop.intervals}
+              numOfReps={testLoop.numOfReps}
+            />
           </div>
           <button
             onClick={handleNavCollapse}

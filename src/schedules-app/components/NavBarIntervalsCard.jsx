@@ -1,7 +1,25 @@
 import PlayPauseStep from './../../common/PlayPauseStep'
 import { useState } from 'react'
+import { playStartBeep, computeHalfInterval } from '../services/timerServices'
+import beep from '../../static/audio/beep-07a.wav'
 
-const NavBarIntervalsCard = ({ intervals }) => {
+const myBeep = new Audio(beep)
+let trackIndex = 1
+let roundIndex = 1
+let repNum = 1
+
+const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
+  const loopLength = intervals.length
+  if (numOfReps > 1) {
+    let i = 0
+    let extendedIntervlas = []
+    while (i < numOfReps) {
+      extendedIntervlas.push(...intervals)
+      i++
+    }
+    intervals = [...extendedIntervlas]
+  }
+
   const [intervalIndex, setIntervalIndex] = useState(0)
   const [currentInterval, setCurrentInterval] = useState(
     intervals[intervalIndex]
@@ -13,11 +31,25 @@ const NavBarIntervalsCard = ({ intervals }) => {
   })
   const [interv, setInterv] = useState()
   const [play, setPlay] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  const halfInterval = computeHalfInterval(currentInterval)
+  const intervalDurationInSeconds =
+    (currentInterval.totalDuration.hours * 60 +
+      currentInterval.totalDuration.minutes) *
+      60 +
+    currentInterval.totalDuration.seconds
+  let repDurationInseconds
+  if (currentInterval.numOfReps > 1) {
+    repDurationInseconds =
+      currentInterval.minutes * 60 + currentInterval.seconds
+  }
 
   const start = () => {
     run()
     setInterv(setInterval(run, 1000))
     setPlay(true)
+    playStartBeep(time, currentInterval, 2)
   }
 
   const stop = () => {
@@ -41,6 +73,10 @@ const NavBarIntervalsCard = ({ intervals }) => {
         hours: intervals[newIntervalIndex].totalDuration.hours,
       })
       setPlay(false)
+      setProgress(0)
+      trackIndex++
+      if ((trackIndex - 1) % loopLength === 0) roundIndex++
+      repNum = 1
     }
   }
 
@@ -56,6 +92,10 @@ const NavBarIntervalsCard = ({ intervals }) => {
         hours: intervals[newIntervalIndex].totalDuration.hours,
       })
       setPlay(false)
+      setProgress(0)
+      trackIndex--
+      if (trackIndex % loopLength === 0) roundIndex--
+      repNum = 1
     }
   }
 
@@ -76,8 +116,45 @@ const NavBarIntervalsCard = ({ intervals }) => {
     if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0)
       return stop()
 
+    if (
+      currentInterval.signalHalf &&
+      updatedHours === halfInterval.hours &&
+      updatedMinutes === halfInterval.minutes &&
+      updatedSeconds === halfInterval.seconds
+    ) {
+      myBeep.play()
+    }
+
+    if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
+      let x = 0
+      myBeep.play()
+      const intervalId = setInterval(() => {
+        myBeep.play()
+        if (++x === 2) {
+          clearInterval(intervalId)
+        }
+      }, 1000)
+    }
+
     updatedSeconds--
 
+    const currentTimeInSeconds =
+      (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
+
+    const progressPercentage =
+      100 - Math.floor((currentTimeInSeconds / intervalDurationInSeconds) * 100)
+
+    if (
+      currentInterval.numOfReps > 1 &&
+      currentTimeInSeconds % repDurationInseconds === 0
+    ) {
+      if (repNum !== currentInterval.numOfReps) {
+        repNum++
+        myBeep.play()
+      }
+    }
+
+    setProgress(progressPercentage)
     setTime({
       seconds: updatedSeconds,
       minutes: updatedMinutes,
@@ -87,14 +164,33 @@ const NavBarIntervalsCard = ({ intervals }) => {
 
   const intervalsCardStyle = {
     backgroundColor: currentInterval.color,
+    position: 'relative',
     padding: '0.265rem 0.75rem',
-    margin: 20,
-    margin: 0,
+    fontFamily: 'Lucida Sans',
+    width: '100%',
+  }
+
+  const labelStyle = {
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: '0.25rem',
+    padding: '0 1rem',
+    fontSize: '1.15rem',
+    postion: 'absolute',
+    zIndex: 100,
+  }
+
+  const progressBar = {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    width: `${progress}%`,
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   }
 
   return (
-    <div style={intervalsCardStyle} className='card d-flex flex-row'>
-      <div className='ms-1'>
+    <div className='card d-flex flex-row' style={intervalsCardStyle}>
+      <div style={labelStyle}>
         <PlayPauseStep
           user
           play={play}
@@ -103,22 +199,21 @@ const NavBarIntervalsCard = ({ intervals }) => {
           onStepBackward={handleStepBackward}
         />
       </div>
-      <div
-        className='text-center flex-grow-1 ms-3 d-flex justify-content-around'
-        style={{ borderLeft: '1px solid black' }}
-      >
-        <h6 className='ms-5 mb-0 mt-0' style={{ fontSize: '1.15rem' }}>
-          {currentInterval.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+      <div className='text-center flex-grow-1 d-flex justify-content-around'>
+        <div className='mb-0 mt-0' style={labelStyle}>
+          {currentInterval.name} &nbsp;&nbsp;&nbsp;&nbsp;
           {time.hours < 10 ? `0${time.hours}` : time.hours} :&nbsp;
           {time.minutes < 10 ? `0${time.minutes}` : time.minutes} :&nbsp;
-          {time.seconds < 10 ? `0${time.seconds}` : time.seconds}
-        </h6>
-        {/* <h6 className='me-5 mb-0 mt-0' style={{ fontSize: '1.15rem' }}>
-          {time.hours < 10 ? `0${time.hours}` : time.hours} :{' '}
-          {time.minutes < 10 ? `0${time.minutes}` : time.minutes} :{' '}
-          {time.seconds < 10 ? `0${time.seconds}` : time.seconds}
-        </h6> */}
+          {time.seconds < 10 ? `0${time.seconds}` : time.seconds}&nbsp;&nbsp;
+          {currentInterval.numOfReps > 1 &&
+            `set ${repNum} of ${currentInterval.numOfReps}`}
+        </div>
       </div>
+      <div
+        className='float-end'
+        style={labelStyle}
+      >{`Round ${roundIndex} of ${numOfReps}`}</div>
+      <div className='float-start' style={progressBar}></div>
     </div>
   )
 }
