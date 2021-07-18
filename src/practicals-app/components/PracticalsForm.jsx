@@ -29,11 +29,11 @@ class PracticalForm extends Form {
   schema = {
     _id: [Joi.number(), Joi.string()],
     subjectId: Joi.string().required().label('Subject'),
-    about: Joi.string().allow(''),
-    cause: Joi.string().allow(''),
-    solution: Joi.string().allow(''),
-    lesson: Joi.string().allow(''),
-    url: Joi.string().allow(''),
+    about: Joi.string().max(500).allow('').label('About'),
+    cause: Joi.string().max(500).allow('').label('Cause'),
+    solution: Joi.string().max(500).allow('').label('Solution'),
+    lesson: Joi.string().max(500).allow('').label('Lesson'),
+    url: Joi.string().max(500).allow('').label('URL'),
   }
 
   setFormHeight() {
@@ -108,8 +108,8 @@ class PracticalForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects
-          // this.props.selectedSubject
+          this.state.subjects,
+          'required'
         )}
         {this.renderTextArea('about', 'About', 3)}
         {this.renderTextArea('cause', 'Cause', 4)}

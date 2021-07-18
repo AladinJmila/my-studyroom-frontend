@@ -39,7 +39,7 @@ const AppsWrapper = ({
   const practicalsCount = useSelector(
     state => state.ui.practicalsPerSubject[subjectName]
   )
-  const schedulesCount = useSelector(state => state.ui.totalSchedules)
+  // const schedulesCount = useSelector(state => state.ui.totalSessions)
 
   const appsWrapperRef = useRef()
   useEffect(() => {
@@ -97,7 +97,7 @@ const AppsWrapper = ({
     },
     {
       name: 'Schedules (inProgress)',
-      count: schedulesCount,
+      count: 1,
       show: showSchedules,
       setShow: setShowSchedules,
       setRef: setSchedulesRef,

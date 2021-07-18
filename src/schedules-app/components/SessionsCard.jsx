@@ -1,34 +1,34 @@
 import Star from '../../common/Star'
-import PlayStop from './../../common/PlayStop'
+import PlayStop from '../../common/PlayStop'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
-import { formatDuration } from '../services/schedulesServices'
+import { formatDuration } from '../services/sessionsServices'
 import {
   getLoopIntervals,
   computeLoopDuration,
 } from '../services/loopsServices'
 
-const SchedulesCard = ({
+const SessionsCard = ({
   user,
-  schedule,
+  session,
   intervals,
   loops,
   onToggleProp,
   onDelete,
   onEdit,
 }) => {
-  const loop = loops.filter(l => l._id === schedule.loopId)[0]
+  const loop = loops.filter(l => l._id === session.loopId)[0]
   const loopIntervals = getLoopIntervals(loop.intervalsIds, intervals)
   const loopDuration = computeLoopDuration(loopIntervals)
-  const formattedDuration = formatDuration(loopDuration, schedule.numOfReps)
+  const formattedDuration = formatDuration(loopDuration, session.numOfReps)
 
-  const schedulesCardStyle = {
+  const sessionsCardStyle = {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: '0.25rem',
     margin: 10,
   }
 
   return (
-    <div style={schedulesCardStyle} className='card mb-1'>
+    <div style={sessionsCardStyle} className='card mb-1'>
       <div className='p-2 align-items-center row'>
         {/* {user && ( */}
         <div
@@ -36,8 +36,8 @@ const SchedulesCard = ({
           style={user ? { color: '#3E98C7' } : { color: 'grey' }}
         >
           <PlayStop
-            onToggle={() => user && onToggleProp(schedule, 'play')}
-            play={schedule.play}
+            onToggle={() => user && onToggleProp(session, 'play')}
+            play={session.play}
             user={user}
           />
         </div>
@@ -45,13 +45,13 @@ const SchedulesCard = ({
         <div className='col ms-2' style={{ borderLeft: '1px solid black' }}>
           <div className='d-flex flex-row justify-content-between'>
             <h5 className='mb-2'>
-              {schedule.subject.name}{' '}
-              {schedule.starred && <Star className='yellow' starred />}
+              {session.subject.name}{' '}
+              {session.starred && <Star className='yellow' starred />}
             </h5>
             <div className='card-link float-end'>
               {user && (
                 <CardEllipsisMenu
-                  item={schedule}
+                  item={session}
                   onEdit={onEdit}
                   onToggleProp={onToggleProp}
                   onDelete={onDelete}
@@ -61,10 +61,10 @@ const SchedulesCard = ({
           </div>
           <div className='d-flex flex-row justify-content-between'>
             <h6 className='mb-2'>
-              {schedule.name} ({formattedDuration})
+              {session.name} ({formattedDuration})
             </h6>
             <h6 className='mb-2'>
-              {schedule.numOfReps && `${schedule.numOfReps} x `}
+              {session.numOfReps && `${session.numOfReps} x `}
               {loop.name}
             </h6>
           </div>
@@ -74,4 +74,4 @@ const SchedulesCard = ({
   )
 }
 
-export default SchedulesCard
+export default SessionsCard

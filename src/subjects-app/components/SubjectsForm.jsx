@@ -10,7 +10,7 @@ class SubjectsForm extends Form {
   }
 
   schema = {
-    name: Joi.string().required().label('Subject'),
+    name: Joi.string().required().max(100).label('Subject'),
   }
 
   // componentDidMount() {
@@ -37,7 +37,9 @@ class SubjectsForm extends Form {
     return (
       <form onSubmit={this.handleSubmit}>
         {this.renderInput('name', 'Subject')}
-        {this.renderButton('Save', 'btn btn-block btn-dark mb-3')}
+        <div className='d-grid gap-2'>
+          {this.renderButton('Save', 'btn btn-dark mb-2')}
+        </div>
       </form>
     )
   }

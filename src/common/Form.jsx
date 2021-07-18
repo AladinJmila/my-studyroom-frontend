@@ -61,13 +61,14 @@ class Form extends Component {
     )
   }
 
-  renderInput(name, label, type = 'text') {
+  renderInput(name, label, type = 'text', required) {
     const { data, errors } = this.state
 
     return (
       <Input
         type={type}
         label={label}
+        required={required}
         name={name}
         onChange={this.handleChange}
         value={data[name]}
@@ -76,29 +77,30 @@ class Form extends Component {
     )
   }
 
-  renderSelect(name, label, options, defaultSelected) {
+  renderSelect(name, label, options, required) {
     const { data, errors } = this.state
 
     return (
       <Select
         name={name}
         label={label}
+        required={required}
         value={data[name]}
         options={options}
         onChange={this.handleChange}
         error={errors[name]}
-        // defaultSelected={defaultSelected}
       />
     )
   }
 
-  renderTextArea(name, label, rows) {
+  renderTextArea(name, label, rows, required) {
     const { data, errors } = this.state
 
     return (
       <TextArea
-        label={label}
         name={name}
+        label={label}
+        required={required}
         rows={rows}
         onChange={this.handleChange}
         value={data[name]}

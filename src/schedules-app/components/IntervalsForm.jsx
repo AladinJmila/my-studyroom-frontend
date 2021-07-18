@@ -23,11 +23,11 @@ class IntervalsForm extends Form {
 
   schema = {
     _id: [Joi.number(), Joi.string()],
-    name: Joi.string().required().max(100),
-    minutes: Joi.number().integer().min(0).max(60),
-    seconds: Joi.number().integer().min(0).max(60),
-    numOfReps: Joi.number().integer().min(1).max(10),
-    color: Joi.string().max(50),
+    name: Joi.string().required().max(100).label('Name'),
+    minutes: Joi.number().integer().min(0).max(60).label('Minutes'),
+    seconds: Joi.number().integer().min(0).max(60).label('Seconds'),
+    numOfReps: Joi.number().integer().min(1).max(10).label('Repetitions'),
+    color: Joi.string().max(50).label('Color'),
     signalHalf: Joi.boolean(),
   }
 
@@ -108,7 +108,7 @@ class IntervalsForm extends Form {
           backgroundColor: this.state.data.color,
         }}
       >
-        {this.renderInput('name', 'Name')}
+        {this.renderInput('name', 'Name', 'text', 'required')}
         <div className='row mb-2'>
           {this.renderRange('minutes', 'Minutes:', '0', '60')}
           {this.renderRange('seconds', 'Seconds:', '0', '60')}

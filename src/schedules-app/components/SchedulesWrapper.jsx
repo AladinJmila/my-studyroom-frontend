@@ -1,11 +1,11 @@
-import Schedules from './Schedules'
+import Sessions from './Sessions'
 import Loops from './Loops'
 import Intervals from './Intervals'
 
 const SchedulesWrapper = () => {
   return (
     <>
-      <Schedules />
+      <Sessions />
       <Loops />
       <Intervals />
     </>

@@ -18,9 +18,6 @@ class LoopsFrom extends Form {
     data: {
       name: '',
       intervalsIds: [{ intervalId: '' }],
-      popup: false,
-      isMute: false,
-      autoConfirm: false,
     },
     intervals: [],
     errors: {},
@@ -28,11 +25,8 @@ class LoopsFrom extends Form {
 
   schema = {
     _id: [Joi.number(), Joi.string()],
-    name: Joi.string().required().max(100),
+    name: Joi.string().required().max(100).label('Name'),
     intervalsIds: Joi.array(),
-    popup: Joi.boolean(),
-    isMute: Joi.boolean(),
-    autoConfirm: Joi.boolean(),
   }
 
   componentDidMount() {
@@ -127,8 +121,10 @@ class LoopsFrom extends Form {
         onSubmit={this.handleSubmit}
         style={this.loopsFormStyle}
       >
-        {this.renderInput('name', 'Name')}
-        <label htmlFor='intervalId'>Intervals</label>
+        {this.renderInput('name', 'Name', 'text', 'required')}
+        <label htmlFor='intervalId'>
+          <span className='required'>*</span>Intervals
+        </label>
         {this.state.data.intervalsIds.map((item, index) => (
           <div key={index} className='row'>
             <div className='col-9'>
@@ -167,7 +163,7 @@ class LoopsFrom extends Form {
             )}
           </div>
         ))}
-
+        {/* 
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='p-2'>
             <Toggle
@@ -196,7 +192,7 @@ class LoopsFrom extends Form {
               Auto Confirm
             </label>
           </h6>
-        </div>
+        </div> */}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>

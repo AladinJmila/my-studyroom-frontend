@@ -26,8 +26,8 @@ class ResourcesForm extends Form {
   schema = {
     _id: [Joi.number(), Joi.string()],
     subjectId: Joi.string().required().label('Subject'),
-    content: Joi.string().required().label('Resource'),
-    url: Joi.string().required().label('URL'),
+    content: Joi.string().required().max(500).label('Resource'),
+    url: Joi.string().required().max(500).label('URL'),
   }
 
   setFormHeight() {
@@ -96,11 +96,11 @@ class ResourcesForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects
-          // this.props.selectedSubject
+          this.state.subjects,
+          'required'
         )}
-        {this.renderInput('content', 'Resource')}
-        {this.renderInput('url', 'URL')}
+        {this.renderInput('content', 'Resource', 'text', 'required')}
+        {this.renderInput('url', 'URL', 'text', 'required')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>

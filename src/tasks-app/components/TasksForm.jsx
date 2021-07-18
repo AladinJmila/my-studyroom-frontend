@@ -27,10 +27,10 @@ class TasksForm extends Form {
 
   schema = {
     _id: [Joi.number(), Joi.string()],
-    subjectId: Joi.string().label('Subject'),
+    subjectId: Joi.string().required().label('Subject'),
     resourceId: Joi.string().allow(''),
-    content: Joi.string().required().label('Task'),
-    url: Joi.string().label('URL').allow(''),
+    content: Joi.string().required().max(500).label('Task'),
+    url: Joi.string().max(500).allow('').label('URL'),
     sessions: Joi.number().label('Sessions').allow(''),
   }
 
@@ -109,11 +109,11 @@ class TasksForm extends Form {
         {this.renderSelect(
           'subjectId',
           'Subject',
-          this.state.subjects
-          // this.props.selectedSubject
+          this.state.subjects,
+          'required'
         )}
+        {this.renderInput('content', 'Task', 'text', 'required')}
         {this.renderSelect('resourceId', 'Resource', this.state.resources)}
-        {this.renderInput('content', 'Task')}
         {this.renderInput('url', 'URL')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}

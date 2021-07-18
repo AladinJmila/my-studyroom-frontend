@@ -1,7 +1,9 @@
-const TextArea = ({ name, label, error, ...rest }) => {
+const TextArea = ({ name, label, required, error, ...rest }) => {
   return (
     <div className='form-group mb-3'>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {required && <span className='required'>*</span>} {label}
+      </label>
       <textarea
         {...rest}
         name={name}
