@@ -2,8 +2,10 @@ import PlayPauseStep from './../../common/PlayPauseStep'
 import { useState } from 'react'
 import { playStartBeep, computeHalfInterval } from '../services/timerServices'
 import beep from '../../static/audio/beep-07a.wav'
+import beepHalf from '../../static/audio/beep-09.wav'
 
 const myBeep = new Audio(beep)
+const myHalfBeep = new Audio(beepHalf)
 let trackIndex = 1
 let roundIndex = 1
 let repNum = 1
@@ -122,7 +124,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       updatedMinutes === halfInterval.minutes &&
       updatedSeconds === halfInterval.seconds
     ) {
-      myBeep.play()
+      myHalfBeep.play()
     }
 
     if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {

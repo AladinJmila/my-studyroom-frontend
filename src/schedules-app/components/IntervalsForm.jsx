@@ -17,7 +17,7 @@ class IntervalsForm extends Form {
       seconds: 0,
       numOfReps: 1,
       color: '#62a9b4',
-      signalHalf: false,
+      signalHalf: true,
     },
     errors: {},
   }
@@ -89,7 +89,7 @@ class IntervalsForm extends Form {
         seconds: 0,
         numOfReps: 0,
         color: '#62a9b4',
-        signalHalf: false,
+        signalHalf: true,
       },
     })
   }
