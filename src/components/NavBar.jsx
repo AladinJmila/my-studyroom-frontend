@@ -6,6 +6,8 @@ import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard
 function NavBar() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true)
   const user = useSelector(state => state.auth.user)
+  const { playingLoop } = useSelector(state => state.apps.loops)
+  const { playingSession } = useSelector(state => state.apps.sessions)
   const nbspName = user?.name.split(' ').map(tag => (
     <>
       <>{tag}</>&nbsp;
@@ -13,64 +15,6 @@ function NavBar() {
   ))
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed)
-
-  const testLoop = {
-    numOfReps: 3,
-    intervals: [
-      {
-        color: '#f0c594',
-        name: 'Learning Medium',
-        numOfReps: 1,
-        minutes: 30,
-        seconds: 0,
-        signalHalf: true,
-        totalDuration: {
-          seconds: 0,
-          minutes: 30,
-          hours: 0,
-        },
-      },
-      {
-        color: '#ac94f0',
-        name: 'Workout',
-        numOfReps: 6,
-        minutes: 0,
-        seconds: 5,
-        signalHalf: false,
-        totalDuration: {
-          seconds: 30,
-          minutes: 0,
-          hours: 0,
-        },
-      },
-      {
-        color: '#f0c594',
-        name: 'Learning Medium',
-        numOfReps: 1,
-        minutes: 30,
-        seconds: 0,
-        signalHalf: true,
-        totalDuration: {
-          seconds: 0,
-          minutes: 30,
-          hours: 0,
-        },
-      },
-      {
-        color: '#e68ea4',
-        name: 'Breathing',
-        numOfReps: 1,
-        minutes: 5,
-        seconds: 0,
-        signalHalf: true,
-        totalDuration: {
-          seconds: 0,
-          minutes: 5,
-          hours: 0,
-        },
-      },
-    ],
-  }
 
   return (
     <div>
@@ -86,10 +30,12 @@ function NavBar() {
             </small>
           </Link>
           <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
-            <NavBarIntervalsCard
-              intervals={testLoop.intervals}
-              numOfReps={testLoop.numOfReps}
-            />
+            {playingSession && (
+              <NavBarIntervalsCard
+                intervals={playingLoop.intervals}
+                numOfReps={playingSession.numOfReps}
+              />
+            )}
           </div>
           <button
             onClick={handleNavCollapse}

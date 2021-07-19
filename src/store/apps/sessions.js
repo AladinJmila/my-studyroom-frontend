@@ -6,6 +6,7 @@ const slice = createSlice({
     list: [],
     loading: false,
     selectedSession: null,
+    playingSession: null,
   },
   reducers: {
     REQUEST_SESSIONS: (sessions, action) => {
@@ -33,6 +34,14 @@ const slice = createSlice({
       sessions.selectedSession = null
     },
 
+    SET_PLAYING_SESSION: (sessions, action) => {
+      sessions.playingSession = action.payload
+    },
+
+    CLEAR_PLAYING_SESSION: (sessions, action) => {
+      sessions.playingSession = null
+    },
+
     UPDATE_SESSION: (sessions, action) => {
       const index = sessions.list.findIndex(s => s._id === action.payload._id)
       sessions.list[index] = action.payload
@@ -58,6 +67,8 @@ export const {
   CREATE_SESSION,
   SELECT_SESSION,
   CLEAR_SELECTED_SESSION,
+  SET_PLAYING_SESSION,
+  CLEAR_PLAYING_SESSION,
   UPDATE_SESSION,
   TOGGLE_SESSION_PROP,
   DELETE_SESSION,

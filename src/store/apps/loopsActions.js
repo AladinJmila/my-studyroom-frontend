@@ -38,6 +38,14 @@ export const clearSelectedLoop = () => dispatch => {
   dispatch(actions.CLEAR_SELECTED_LOOP())
 }
 
+export const setPlayingLoop = loop => dispatch => {
+  dispatch(actions.SET_PLAYING_LOOP(loop))
+}
+
+export const clearPlayingLoop = () => dispatch => {
+  dispatch(actions.CLEAR_PLAYING_LOOP())
+}
+
 export const updateLoop = loop => async dispatch => {
   const body = { ...loop }
   delete body._id

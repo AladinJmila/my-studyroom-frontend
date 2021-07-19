@@ -40,6 +40,14 @@ export const clearSelectedSession = () => dispatch => {
   dispatch(actions.CLEAR_SELECTED_SESSION())
 }
 
+export const setPlayingSession = session => dispatch => {
+  dispatch(actions.SET_PLAYING_SESSION(session))
+}
+
+export const clearPlayingSession = () => dispatch => {
+  dispatch(actions.CLEAR_PLAYING_SESSION())
+}
+
 export const updateSession = session => async dispatch => {
   const body = { ...session }
   delete body._id

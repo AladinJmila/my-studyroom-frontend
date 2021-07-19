@@ -1,6 +1,6 @@
-const PlayStop = ({ user, play, onToggle }) => {
+const PlayStop = ({ user, isPlaying, onToggle }) => {
   let classes = 'fa fa-2x fa-play-circle-o'
-  if (play) classes = 'fa fa-2x fa-stop-circle-o'
+  if (isPlaying) classes = 'fa fa-2x fa-stop-circle-o'
   return (
     <i
       onClick={onToggle}

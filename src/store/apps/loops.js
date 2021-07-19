@@ -6,6 +6,7 @@ const slice = createSlice({
     list: [],
     loading: false,
     selectedLoop: null,
+    playingLoop: null,
   },
   reducers: {
     REQUEST_LOOPS: (loops, action) => {
@@ -41,6 +42,14 @@ const slice = createSlice({
       loops.selectedLoop = null
     },
 
+    SET_PLAYING_LOOP: (loops, action) => {
+      loops.playingLoop = action.payload
+    },
+
+    CLEAR_PLAYING_LOOP: (loops, action) => {
+      loops.playingLoop = null
+    },
+
     UPDATE_LOOP: (loops, action) => {
       const index = loops.list.findIndex(l => l._id === action.payload._id)
       loops.list[index] = action.payload
@@ -73,6 +82,8 @@ export const {
   CREATE_LOOP,
   SELECT_LOOP,
   CLEAR_SELECTED_LOOP,
+  SET_PLAYING_LOOP,
+  CLEAR_PLAYING_LOOP,
   UPDATE_LOOP,
   TOGGLE_LOOP_PROP,
   DELETE_LOOP,

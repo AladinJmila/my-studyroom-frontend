@@ -3,7 +3,14 @@ import PlayStop from '../../common/PlayStop'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import { formatDuration } from '../services/sessionsServices'
 
-const SessionsCard = ({ user, session, onToggleProp, onDelete, onEdit }) => {
+const SessionsCard = ({
+  user,
+  session,
+  onToggleProp,
+  onDelete,
+  onEdit,
+  onPlay,
+}) => {
   const formattedDuration = formatDuration(
     session.loop.totalDuration,
     session.numOfReps
@@ -18,18 +25,16 @@ const SessionsCard = ({ user, session, onToggleProp, onDelete, onEdit }) => {
   return (
     <div style={sessionsCardStyle} className='card mb-1'>
       <div className='p-2 align-items-center row'>
-        {/* {user && ( */}
         <div
           className='col-1'
           style={user ? { color: '#3E98C7' } : { color: 'grey' }}
         >
           <PlayStop
-            onToggle={() => user && onToggleProp(session, 'play')}
-            play={session.play}
+            onToggle={() => user && onPlay(session)}
+            isPlaying={session.isPlaying}
             user={user}
           />
         </div>
-        {/* )} */}
         <div className='col ms-2' style={{ borderLeft: '1px solid black' }}>
           <div className='d-flex flex-row justify-content-between'>
             <h5 className='mb-2'>
