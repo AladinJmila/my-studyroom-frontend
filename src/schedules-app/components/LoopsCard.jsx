@@ -1,23 +1,10 @@
 import Star from '../../common/Star'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import IntervalsChip from './IntervalsChip'
-import {
-  getLoopIntervals,
-  computeLoopDuration,
-  formatDuration,
-} from '../services/loopsServices'
+import { formatDuration } from '../services/loopsServices'
 
-const LoopsCard = ({
-  user,
-  loop,
-  intervals,
-  onToggleProp,
-  onDelete,
-  onEdit,
-}) => {
-  const loopIntervals = getLoopIntervals(loop.intervalsIds, intervals)
-  const loopDuration = computeLoopDuration(loopIntervals)
-  const formattedDuration = formatDuration(loopDuration)
+const LoopsCard = ({ user, loop, onToggleProp, onDelete, onEdit }) => {
+  const formattedDuration = formatDuration(loop.totalDuration)
 
   const loopsCardStyle = {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -45,7 +32,7 @@ const LoopsCard = ({
           </div>
         </div>
         <div className='d-flex flex-row' style={{ overflow: 'auto' }}>
-          {loopIntervals.map(interval => (
+          {loop.intervals.map(interval => (
             <>
               <IntervalsChip key={interval._id} interval={interval} />
             </>

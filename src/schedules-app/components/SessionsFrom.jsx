@@ -44,7 +44,7 @@ class SessionsForm extends Form {
       _id: session._id,
       name: session.name,
       subjectId: session.subject._id,
-      loopId: session.loopId,
+      loopId: session.loop._id,
       numOfReps: session.numOfReps,
       break: session.break,
     }

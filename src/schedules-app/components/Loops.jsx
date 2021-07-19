@@ -18,7 +18,6 @@ const Loops = () => {
   const dispatch = useDispatch()
 
   const loops = useSelector(state => state.apps.loops.list)
-  const intervals = useSelector(state => state.apps.intervals.list)
   const { user } = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -65,7 +64,6 @@ const Loops = () => {
               key={loop._id}
               user={user}
               loop={loop}
-              intervals={intervals}
               onToggleProp={handleToggleProp}
               onDelete={handleDelete}
               onEdit={handleLoopSelect}

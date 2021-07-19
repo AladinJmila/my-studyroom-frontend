@@ -18,8 +18,6 @@ const Sessions = () => {
   const dispatch = useDispatch()
 
   const sessions = useSelector(state => state.apps.sessions.list)
-  const intervals = useSelector(state => state.apps.intervals.list)
-  const loops = useSelector(state => state.apps.loops.list)
   const { user } = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -68,8 +66,6 @@ const Sessions = () => {
               key={session._id}
               user={user}
               session={session}
-              intervals={intervals}
-              loops={loops}
               onToggleProp={handleToggleProp}
               onDelete={handleDelete}
               onEdit={handleSessionSelect}

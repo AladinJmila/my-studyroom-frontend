@@ -61,6 +61,19 @@ export const patchLoop = (id, update) => async dispatch => {
   }
 }
 
+export const updateLoopsInterval = intervalId => async dispatch => {
+  try {
+    const { data } = await httpService.post(
+      `${apiEndPoint}/updateLoopsInterval`,
+      { intervalId }
+    )
+    console.log('dispatched', data)
+    dispatch(actions.UPDATE_LOOPS(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const toggleLoopProp = (id, property) => dispatch => {
   dispatch(actions.TOGGLE_LOOP_PROP({ id, property }))
 }

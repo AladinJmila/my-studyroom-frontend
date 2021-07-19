@@ -8,10 +8,6 @@ import {
   updateLoop,
   clearSelectedLoop,
 } from './../../store/apps/loopsActions'
-import {
-  getLoopIntervals,
-  computeLoopDuration,
-} from '../services/loopsServices'
 
 class LoopsFrom extends Form {
   state = {
@@ -39,13 +35,14 @@ class LoopsFrom extends Form {
   }
 
   mapToViewModel = loop => {
+    const intervalsIds = loop.intervals.map(interval => {
+      return { intervalId: interval._id }
+    })
+
     return {
       _id: loop._id,
       name: loop.name,
-      intervalsIds: loop.intervalsIds,
-      popup: loop.popup,
-      isMute: loop.isMute,
-      autoConfirm: loop.autoConfirm,
+      intervalsIds,
     }
   }
 
@@ -99,9 +96,6 @@ class LoopsFrom extends Form {
       data: {
         name: '',
         intervalsIds: [],
-        popup: false,
-        isMute: false,
-        autoConfirm: false,
       },
     })
   }

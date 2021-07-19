@@ -7,6 +7,7 @@ import {
   updateInterval,
   clearSelectedInterval,
 } from '../../store/apps/intervalsActions'
+import { updateLoopsInterval } from '../../store/apps/loopsActions'
 
 class IntervalsForm extends Form {
   state = {
@@ -66,6 +67,7 @@ class IntervalsForm extends Form {
       createInterval,
       updateInterval,
       selectedInterval,
+      updateLoopsInterval,
       clearSelectedInterval,
     } = this.props
 
@@ -73,6 +75,7 @@ class IntervalsForm extends Form {
       data.starred = selectedInterval.starred
       data.isPublic = selectedInterval.isPublic
       updateInterval(data)
+      updateLoopsInterval(selectedInterval._id)
       clearSelectedInterval()
     } else {
       createInterval(data)
@@ -143,6 +146,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createInterval: interval => dispatch(createInterval(interval)),
   updateInterval: interval => dispatch(updateInterval(interval)),
+  updateLoopsInterval: intervalId => dispatch(updateLoopsInterval(intervalId)),
   clearSelectedInterval: () => dispatch(clearSelectedInterval()),
 })
 

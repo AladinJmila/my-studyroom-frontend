@@ -99,7 +99,7 @@ class ResourcesForm extends Form {
           this.state.subjects,
           'required'
         )}
-        {this.renderInput('content', 'Resource', 'text', 'required')}
+        {this.renderInput('content', 'Title', 'text', 'required')}
         {this.renderInput('url', 'URL', 'text', 'required')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}

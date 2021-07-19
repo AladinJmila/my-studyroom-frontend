@@ -2,24 +2,12 @@ import Star from '../../common/Star'
 import PlayStop from '../../common/PlayStop'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import { formatDuration } from '../services/sessionsServices'
-import {
-  getLoopIntervals,
-  computeLoopDuration,
-} from '../services/loopsServices'
 
-const SessionsCard = ({
-  user,
-  session,
-  intervals,
-  loops,
-  onToggleProp,
-  onDelete,
-  onEdit,
-}) => {
-  const loop = loops.filter(l => l._id === session.loopId)[0]
-  const loopIntervals = getLoopIntervals(loop.intervalsIds, intervals)
-  const loopDuration = computeLoopDuration(loopIntervals)
-  const formattedDuration = formatDuration(loopDuration, session.numOfReps)
+const SessionsCard = ({ user, session, onToggleProp, onDelete, onEdit }) => {
+  const formattedDuration = formatDuration(
+    session.loop.totalDuration,
+    session.numOfReps
+  )
 
   const sessionsCardStyle = {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -65,7 +53,7 @@ const SessionsCard = ({
             </h6>
             <h6 className='mb-2'>
               {session.numOfReps && `${session.numOfReps} x `}
-              {loop.name}
+              {session.loop.name}
             </h6>
           </div>
         </div>

@@ -21,6 +21,14 @@ const slice = createSlice({
       loops.loading = false
     },
 
+    UPDATE_LOOPS: (loops, action) => {
+      action.payload.forEach(loop => {
+        const index = loops.list.findIndex(l => l._id === loop._id)
+        console.log(loop)
+        loops.list[index] = loop
+      })
+    },
+
     CREATE_LOOP: (loops, action) => {
       loops.list.unshift(action.payload)
     },
@@ -61,6 +69,7 @@ export const {
   REQUEST_LOOPS,
   REQUEST_LOOPS_FAIL,
   GET_LOOPS,
+  UPDATE_LOOPS,
   CREATE_LOOP,
   SELECT_LOOP,
   CLEAR_SELECTED_LOOP,
