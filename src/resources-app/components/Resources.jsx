@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import HeaderCard from '../../common/HeaderCard'
 import SortCard from '../../common/SortCard'
 import ResourcesForm from './ResourcesForm'
+import ResourcesYoutubeForm from './ResourcesYoutubeForm'
 import ResourcesCard from './ResourcesCard'
 import { BeatLoader } from 'react-spinners'
 import {
@@ -20,6 +21,7 @@ import {
 
 function Resources() {
   const [showForm, setShowForm] = useState(false)
+  const [showYoutubeForm, setShowYoutubeForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
     order: 'asc',
@@ -76,6 +78,10 @@ function Resources() {
     setShowForm(showForm ? false : true)
   }
 
+  const handleShowYoutubeForm = () => {
+    setShowYoutubeForm(showYoutubeForm ? false : true)
+  }
+
   const filtered =
     selectedSubject && selectedSubject._id
       ? resources.filter(r => r.subject._id === selectedSubject._id)
@@ -91,10 +97,19 @@ function Resources() {
           count={numOfResources}
           item='Resources'
           onClick={handleShowForm}
+          onYoutubeClick={handleShowYoutubeForm}
           showForm={showForm}
+          showYoutubeForm={showYoutubeForm}
+          youtube
         />
         {showForm && (
           <ResourcesForm user={user} toggleShowForm={handleShowForm} />
+        )}
+        {showYoutubeForm && (
+          <ResourcesYoutubeForm
+            user={user}
+            toggleShowForm={handleShowYoutubeForm}
+          />
         )}
         <SortCard
           sortTarget={sortTarget}

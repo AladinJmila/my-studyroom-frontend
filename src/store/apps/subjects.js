@@ -74,6 +74,12 @@ const slice = createSlice({
       }
     },
 
+    UPDATE_SUBJECT_RESOURCES_COUNT: (subjects, action) => {
+      const { subjectId, count } = action.payload
+      const index = subjects.list.findIndex(s => s._id === subjectId)
+      subjects.list[index].numberOfResources += count
+    },
+
     TOGGLE_SUBJECT_PROP: (subjects, action) => {
       const { id, property } = action.payload
       const index = subjects.list.findIndex(s => s._id === id)
@@ -97,6 +103,7 @@ export const {
   UPDATE_SUBJECT_ON_EDIT,
   UPDATE_SUBJECT_CHECKED_ITEMS_COUNT,
   UPDATE_SUBJECT_ITEMS_COUNT,
+  UPDATE_SUBJECT_RESOURCES_COUNT,
   TOGGLE_SUBJECT_PROP,
   DELETE_SUBJECT,
 } = slice.actions

@@ -1,6 +1,15 @@
 import { headersStyle } from './../services/stylesService'
 
-const HeaderCard = ({ user, count, item, onClick, showForm }) => {
+const HeaderCard = ({
+  user,
+  count,
+  item,
+  onClick,
+  showForm,
+  onYoutubeClick,
+  showYoutubeForm,
+  youtube,
+}) => {
   return (
     <div
       style={headersStyle}
@@ -9,11 +18,21 @@ const HeaderCard = ({ user, count, item, onClick, showForm }) => {
       <h6 className='p-2'>
         Showing {count} <b>{' ' + item}</b>
       </h6>
-      {user && (
-        <button onClick={onClick} className=' p-2 btn btn-outline-dark'>
-          {showForm ? 'Close' : 'Add'}
-        </button>
-      )}
+      <div>
+        {user && youtube && (
+          <button
+            onClick={onYoutubeClick}
+            className=' p-2 me-4 btn btn-outline-dark'
+          >
+            {showYoutubeForm ? 'Close' : 'YouTube'}
+          </button>
+        )}
+        {user && (
+          <button onClick={onClick} className=' p-2 btn btn-outline-dark'>
+            {showForm ? 'Close' : 'Add'}
+          </button>
+        )}
+      </div>
     </div>
   )
 }

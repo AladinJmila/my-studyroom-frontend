@@ -26,7 +26,7 @@ class ResourcesForm extends Form {
   schema = {
     _id: [Joi.number(), Joi.string()],
     subjectId: Joi.string().required().label('Subject'),
-    content: Joi.string().required().max(500).label('Resource'),
+    content: Joi.string().required().max(500).label('Title'),
     url: Joi.string().required().max(500).label('URL'),
   }
 

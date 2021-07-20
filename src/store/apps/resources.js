@@ -27,6 +27,10 @@ const slice = createSlice({
       resources.list.unshift(action.payload)
     },
 
+    CREATE_YOUTUBE_RESOURCES: (resources, action) => {
+      resources.list = [...action.payload, ...resources.list]
+    },
+
     SELECT_RESOURCE: (resources, action) => {
       resources.selectedResource = action.payload
     },
@@ -58,6 +62,7 @@ export const {
   REQUEST_RESOURCES_FAIL,
   GET_RESOURCES,
   CREATE_RESOURCE,
+  CREATE_YOUTUBE_RESOURCES,
   SELECT_RESOURCE,
   CLEAR_SELECTED_RESOURCE,
   UPDATE_RESOURCE,

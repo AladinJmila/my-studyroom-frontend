@@ -3,6 +3,7 @@ import httpService from '../services/httpService'
 import { getCurrentUser } from '../services/authService'
 import * as actions from './resources'
 import config from '../../config.json'
+import { UPDATE_SUBJECT_RESOURCES_COUNT } from './subjects'
 
 const apiEndPoint = '/resources'
 let userid
@@ -34,6 +35,25 @@ export const createResource = resource => async dispatch => {
     const { data } = await httpService.post(apiEndPoint, resource)
 
     dispatch(actions.CREATE_RESOURCE(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const createYoutubeResources = body => async dispatch => {
+  try {
+    const { data } = await httpService.post(
+      `${apiEndPoint}/youtubePlaylist`,
+      body
+    )
+
+    dispatch(actions.CREATE_YOUTUBE_RESOURCES(data))
+    dispatch(
+      UPDATE_SUBJECT_RESOURCES_COUNT({
+        subjectId: body.subjectId,
+        count: data.length,
+      })
+    )
   } catch (error) {
     console.log(error)
   }
