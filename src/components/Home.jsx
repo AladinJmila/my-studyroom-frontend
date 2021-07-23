@@ -33,12 +33,12 @@ const Home = () => {
         ))}
       </div>
 
-      <h2 className='mt-5 text-center'>Popular Courses</h2>
+      {/* <h2 className='mt-5 text-center'>Popular Courses</h2>
       <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>
         {subjects.map(subject => (
           <SubjectsCardHome key={subject._id} user={user} subject={subject} />
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

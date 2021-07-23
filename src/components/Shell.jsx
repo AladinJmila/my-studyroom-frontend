@@ -49,7 +49,6 @@ function Shell() {
         schedulesRef={schedulesRef}
       />
       <AppsWrapper
-        // className='position-static'
         selectedSubject={selectedSubject}
         setTasksRef={setTasksRef}
         setResourcesRef={setResourcesRef}

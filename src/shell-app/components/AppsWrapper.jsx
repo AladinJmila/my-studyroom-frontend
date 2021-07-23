@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, createRef } from 'react'
 import { useSelector } from 'react-redux'
 import Notes from '../../notes-app/components/Notes'
 import Tasks from '../../tasks-app/components/Tasks'
@@ -9,6 +9,7 @@ import DataColumn from './DataColumn'
 import AudioNotes from '../../audio-notes-app/components/AudioNotes'
 import VisualNotes from '../../visual-notes-app/components/VisualNotes'
 import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper'
+import AnimateReorder from '../../Effects/AnimateReorder'
 
 const AppsWrapper = ({
   selectedSubject,
@@ -112,17 +113,21 @@ const AppsWrapper = ({
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
       <div ref={appsWrapperRef}></div>
-      {sortedAppsWrapper.map(item => (
-        <DataColumn
-          key={item.name}
-          data={item.data}
-          name={item.name}
-          show={item.show}
-          count={item.count}
-          setShow={item.setShow}
-          setRef={item.setRef}
-        />
-      ))}
+      <AnimateReorder>
+        {sortedAppsWrapper.map(item => (
+          <DataColumn
+            key={item.name}
+            // id={item.name}
+            data={item.data}
+            name={item.name}
+            show={item.show}
+            count={item.count}
+            setShow={item.setShow}
+            ref={createRef()}
+            setRef={item.setRef}
+          />
+        ))}
+      </AnimateReorder>
       <div
         style={{
           minWidth: 45,

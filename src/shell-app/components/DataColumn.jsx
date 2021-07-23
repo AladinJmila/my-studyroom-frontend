@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, forwardRef } from 'react'
 import SideBar from './SideBar'
 
 const containerStyles = {
@@ -13,41 +13,33 @@ if (window.innerWidth < 500) {
   containerStyles.minWidth = window.innerWidth - 55
   containerStyles.maxWidth = window.innerWidth - 55
 }
-
-const DataColumn = ({
-  name,
-  data,
-  color,
-  icon,
-  show,
-  count,
-  setShow,
-  setRef,
-}) => {
-  const ref = useRef()
-  useEffect(() => {
-    setRef(ref)
-  }, [])
-
-  return (
-    <div ref={ref} id={name} style={{ padding: 0 }} className='data-column'>
-      <SideBar
-        name={name}
-        color={color}
-        icon={icon}
-        show={show}
-        count={count}
-        setShow={setShow}
-        itemRef={ref}
-      />
-      {show && (
-        <div style={containerStyles} className='y-scroll'>
-          <h2>{name}</h2>
-          {data}
-        </div>
-      )}
-    </div>
-  )
-}
+const DataColumn = forwardRef(
+  ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
+    const myRef = useRef()
+    useEffect(() => {
+      setRef(myRef)
+    }, [])
+    return (
+      <div ref={ref} style={{ padding: 0 }} className='data-column'>
+        <SideBar
+          name={name}
+          color={color}
+          icon={icon}
+          show={show}
+          count={count}
+          setShow={setShow}
+          itemRef={myRef}
+        />
+        <div ref={myRef}></div>
+        {show && (
+          <div style={containerStyles} className='y-scroll'>
+            <h2>{name}</h2>
+            {data}
+          </div>
+        )}
+      </div>
+    )
+  }
+)
 
 export default DataColumn
