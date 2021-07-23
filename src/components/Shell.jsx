@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Subjects from '../subjects-app/components/Subjects'
 import AppsWrapper from '../shell-app/components/AppsWrapper'
 import VerticalNavBar from '../shell-app/components/VerticalNavBar'
@@ -13,6 +14,8 @@ function Shell() {
   const [visualNotesRef, setVisualNotesRef] = useState()
   const [schedulesRef, setSchedulesRef] = useState()
   const [appsWrapperRef, setAppsWrapperRef] = useState()
+
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
 
   const subjectsStyle = {
     paddingRight: 0,
@@ -46,7 +49,8 @@ function Shell() {
         schedulesRef={schedulesRef}
       />
       <AppsWrapper
-        className='position-static'
+        // className='position-static'
+        selectedSubject={selectedSubject}
         setTasksRef={setTasksRef}
         setResourcesRef={setResourcesRef}
         setNotesRef={setNotesRef}

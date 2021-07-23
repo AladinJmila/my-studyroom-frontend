@@ -24,7 +24,7 @@ const slice = createSlice({
     },
 
     CREATE_SUBJECT: (subjects, action) => {
-      subjects.list.push(action.payload)
+      subjects.list.unshift(action.payload)
     },
 
     SELECT_SUBJECT: (uiParams, action) => {

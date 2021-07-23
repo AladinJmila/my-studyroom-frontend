@@ -38,7 +38,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
               />
             )}
           </div>{' '}
-          {task.isChecked ? (
+          {task.isChecked && user && user._id === task.userId ? (
             <p className='mb-2' style={mainContentStyle}>
               <s>
                 {task.content}{' '}

@@ -12,6 +12,7 @@ import About from './components/About'
 import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
 import './App.css'
+import Home from './components/Home'
 
 function App() {
   const user = getCurrentUser()
@@ -32,6 +33,7 @@ function App() {
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
         <Route path='/shell' exact component={Shell}></Route>
+        <Route path='/home' exact component={Home}></Route>
         <Redirect from='/' to='/shell' />
         <Redirect to='/not-found' />
       </Switch>

@@ -55,8 +55,13 @@ function NavBar() {
           >
             <ul className='navbar-nav me-auto'>
               <li className='nav-item'>
-                <NavLink className='nav-link' to='/shell'>
+                <NavLink className='nav-link' to='/home'>
                   Home
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink className='nav-link' to='/shell'>
+                  Work&nbsp;Space
                 </NavLink>
               </li>
               {!user && (

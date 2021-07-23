@@ -41,7 +41,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               />
             )}
           </div>{' '}
-          {note.isChecked ? (
+          {note.isChecked && user && user._id === note.userId ? (
             <p
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}

@@ -62,7 +62,7 @@ class ResourcesYoutubeForm extends Form {
           'required'
         )}
         {/* {this.renderInput('content', 'Title', 'text', 'required')} */}
-        {this.renderInput('url', 'URL', 'text', 'required')}
+        {this.renderInput('url', 'Playlist URL', 'text', 'required')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>

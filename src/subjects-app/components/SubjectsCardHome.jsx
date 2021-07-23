@@ -1,28 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
+import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import Star from '../../common/Star'
 import {
   backgroundOpacity,
   mainContentStyle,
-} from './../../services/stylesService'
+} from '../../services/stylesService'
 import {
   setTasksPerSubject,
   setNotesPerSubject,
   setResourcesPerSubject,
   setPracticalsPerSubject,
-} from './../../store/ui/uiParams'
-import Upvote from '../../common/Upvote'
+} from '../../store/ui/uiParams'
 
-const SubjectsCard = ({
-  user,
-  subject,
-  onSubjectSelect,
-  onToggleProp,
-  onToggleUpvote,
-  onDelete,
-}) => {
+const SubjectsCard = ({ user, subject }) => {
   const { selectedSubject } = useSelector(state => state.apps.subjects)
 
   const dispatch = useDispatch()
@@ -43,14 +35,9 @@ const SubjectsCard = ({
 
   return (
     <div
-      onClick={() => onSubjectSelect(subject)}
-      style={backgroundOpacity}
-      className={
-        (!selectedSubject && subject.name === 'All Subjects') ||
-        selectedSubject?.name === subject.name
-          ? 'card text-white bg-dark mb-1 opacity'
-          : 'card mb-1 opacity'
-      }
+      // onClick={() => onSubjectSelect(subject)}
+      style={{ ...backgroundOpacity, minWidth: 250, maxWidth: 250 }}
+      className='card mb-4'
     >
       <div className='card-body'>
         <div className='d-flex flex-row justify-content-between'>
@@ -58,7 +45,7 @@ const SubjectsCard = ({
             {subject.name}{' '}
             {subject.starred && <Star className='yellow' starred />}
           </h5>
-          <div className='card-link float-end'>
+          {/* <div className='card-link float-end'>
             {user && subject.name !== 'All Subjects' && (
               <CardEllipsisMenu
                 item={subject}
@@ -67,11 +54,11 @@ const SubjectsCard = ({
                 onDelete={onDelete}
               />
             )}
-          </div>
+          </div> */}
         </div>
 
-        <div className='d-flex flex-row justify-content-between mt-3'>
-          <div className='me-2 text-center'>
+        <div className='row mt-3'>
+          <div className='col text-center'>
             <CircularProgressbar
               value={user && user._id === subject.userId ? tasksPercentage : 0}
               text={`${
@@ -80,7 +67,7 @@ const SubjectsCard = ({
             />
             <h5 className='mt-2'>Tasks</h5>
           </div>
-          <div className='ms-2 text-center'>
+          <div className='col text-center'>
             <CircularProgressbar
               value={
                 user && user._id === subject.userId ? resourcesPercentage : 0
@@ -146,35 +133,12 @@ const SubjectsCard = ({
             </p>
           )}
         </div>
-        <div className='mt-3 d-flex flex-row justify-content-between'>
-          <div>
-            {!user && (
-              <a href='#' className='card-link'>
-                {subject.userName}
-              </a>
-            )}
-          </div>
-          <div>
-            {subject.name !== 'All Subjects' && (
-              <>
-                <h6
-                  className='me-2 '
-                  style={{
-                    display: 'inline-block',
-                    margin: 0,
-                    verticalAlign: 'top',
-                  }}
-                >
-                  {subject.upvotes.length || 0}
-                </h6>
-                <Upvote
-                  user={user}
-                  item={subject}
-                  onToggleUpvote={onToggleUpvote}
-                />
-              </>
-            )}
-          </div>
+        <div className='mt-2'>
+          {!user && (
+            <a href='#' className='card-link'>
+              {subject.userName}
+            </a>
+          )}
         </div>
       </div>
     </div>

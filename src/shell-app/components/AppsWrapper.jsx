@@ -11,6 +11,7 @@ import VisualNotes from '../../visual-notes-app/components/VisualNotes'
 import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper'
 
 const AppsWrapper = ({
+  selectedSubject,
   setTasksRef,
   setResourcesRef,
   setNotesRef,
@@ -27,8 +28,6 @@ const AppsWrapper = ({
   const [showAudioNotes, setShowAudioNotes] = useState(true)
   const [showVisualNotes, setShowVisualNotes] = useState(true)
   const [showSchedules, setShowSchedules] = useState(true)
-
-  const { selectedSubject } = useSelector(state => state.apps.subjects)
 
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'
   const tasksCount = useSelector(state => state.ui.tasksPerSubject[subjectName])
@@ -105,7 +104,7 @@ const AppsWrapper = ({
     },
   ]
 
-  const SortedAppsWrapper = _.orderBy(appsWrapperArray, ['count'], ['desc'])
+  const sortedAppsWrapper = _.orderBy(appsWrapperArray, ['count'], ['desc'])
 
   return (
     <div
@@ -113,7 +112,7 @@ const AppsWrapper = ({
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
       <div ref={appsWrapperRef}></div>
-      {SortedAppsWrapper.map(item => (
+      {sortedAppsWrapper.map(item => (
         <DataColumn
           key={item.name}
           data={item.data}

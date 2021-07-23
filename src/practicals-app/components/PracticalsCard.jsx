@@ -55,7 +55,7 @@ const PracticalsCard = ({
           {practical.about && (
             <>
               <h6 className='pt-1'>About:</h6>{' '}
-              {practical.isChecked ? (
+              {practical.isChecked && user && user._id === practical.userId ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -76,7 +76,7 @@ const PracticalsCard = ({
           {practical.cause && (
             <>
               <h6 className='pt-1'>Cause:</h6>{' '}
-              {practical.isChecked ? (
+              {practical.isChecked && user && user._id === practical.userId ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -96,7 +96,7 @@ const PracticalsCard = ({
           {practical.solution && (
             <>
               <h6 className='pt-1'>Solution:</h6>{' '}
-              {practical.isChecked ? (
+              {practical.isChecked && user && user._id === practical.userId ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -116,7 +116,7 @@ const PracticalsCard = ({
           {practical.lesson && (
             <>
               <h6 className='pt-1'>Lesson:</h6>{' '}
-              {practical.isChecked ? (
+              {practical.isChecked && user && user._id === practical.userId ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}

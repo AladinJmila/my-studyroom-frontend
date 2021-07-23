@@ -43,7 +43,6 @@ const Subjects = ({ appsWrapperRef }) => {
   }
 
   const handleToggleProp = (subject, property) => {
-    console.log(subject)
     const index = subjects.indexOf(subject)
     const subjectToUpdate = { ...subjects[index] }
     subjectToUpdate[property] = !subjectToUpdate[property]
@@ -51,6 +50,16 @@ const Subjects = ({ appsWrapperRef }) => {
 
     dispatch(patchSubject(subject._id, update))
     dispatch(toggleSubjectProp(subject._id, property))
+  }
+
+  const handleToggleUpvote = (subject, status) => {
+    const index = subjects.indexOf(subject)
+    const subjectToUpdate = { ...subjects[index] }
+    // subjectToUpdate.upvote = status
+    const update = { upvote: status }
+
+    dispatch(patchSubject(subject._id, update))
+    // dispatch(toggleSubjectProp(subject._id, 'upvote'))
   }
 
   const handleSubjectSelect = subject => {
@@ -101,6 +110,7 @@ const Subjects = ({ appsWrapperRef }) => {
               subject={subject}
               onSubjectSelect={handleSubjectSelect}
               onToggleProp={handleToggleProp}
+              onToggleUpvote={handleToggleUpvote}
               onDelete={handleDelete}
               allSubjects={allSubjects}
             />

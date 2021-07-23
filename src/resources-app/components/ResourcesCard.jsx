@@ -35,7 +35,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
             />
           )}
         </div>{' '}
-        {resource.isChecked ? (
+        {resource.isChecked && user && user._id === resource.userId ? (
           <p className='mb-2' style={checkedStyle}>
             {resource.content}
             <a
