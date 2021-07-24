@@ -27,7 +27,7 @@ const Home = () => {
       ></div>
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
-      <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>
+      <div className='pin-container'>
         {pulicSubjects.map(subject => (
           <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
         ))}

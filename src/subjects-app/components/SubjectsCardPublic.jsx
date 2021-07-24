@@ -43,11 +43,52 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
     dispatch(toggleSubjectUpvote(subject._id, user._id))
   }
 
+  const itemsToDisplay = [
+    subject.numberOfTasks,
+    subject.numberOfResources,
+    subject.numberOfNotes,
+    subject.numberOfPracticals,
+  ]
+
+  let countOfZeros = 0
+  let gridRowEnd
+  itemsToDisplay.forEach(item => {
+    if (item === 0) countOfZeros++
+  })
+
+  switch (countOfZeros) {
+    case 0:
+      gridRowEnd = 'span 38'
+      break
+    case 1:
+      gridRowEnd = 'span 35'
+      break
+    case 2:
+      gridRowEnd = 'span 33'
+      break
+    case 3:
+      gridRowEnd = 'span 30'
+      break
+    case 4:
+      gridRowEnd = 'span 27'
+      break
+
+    default:
+      gridRowEnd = 'span 39'
+      break
+  }
+
+  const cardStyle = {
+    ...backgroundOpacity,
+    gridRowEnd,
+    margin: '15px 10px',
+  }
+
   return (
     <div
       // onClick={() => onSubjectSelect(subject)}
-      style={{ ...backgroundOpacity, minWidth: 250, maxWidth: 250 }}
-      className='card mb-4'
+      style={cardStyle}
+      className='card m-2'
     >
       <div className='card-body'>
         <div className='d-flex flex-row justify-content-between'>

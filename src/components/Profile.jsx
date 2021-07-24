@@ -16,7 +16,10 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className='container full-height'>
+    <div
+      className='full-height'
+      style={{ width: '80%', position: 'absolute', left: '10%' }}
+    >
       <h2 className='mt-5 text-center'>Timeline</h2>
       <div
         className='mt-4 mb-4'
@@ -27,10 +30,11 @@ const Profile = () => {
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       ></div>
-      <div className='d-flex flex-row bd-highlight justify-content-between'>
-        <div>
+      {/* <div className='d-flex flex-row bd-highlight justify-content-between'> */}
+      <div className='row'>
+        <div className='col-6'>
           <h2 className='mt-5 text-center'>My Subjects</h2>
-          <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4 me-3 mt-4 mb-4'>
+          <div className='pin-container' style={{ height: 1100 }}>
             {subjects.map(subject => (
               <SubjectsCardPublic
                 key={subject._id}
@@ -40,9 +44,9 @@ const Profile = () => {
             ))}
           </div>
         </div>
-        <div>
+        <div className='col-6'>
           <h2 className='mt-5 text-center'>Watched Subjects</h2>
-          <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4 ms-3 mt-4 mb-4'>
+          <div className='pin-container'>
             {publicSubjects.map(subject => (
               <SubjectsCardPublic
                 key={subject._id}
