@@ -70,7 +70,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
       gridRowEnd = 'span 30'
       break
     case 4:
-      gridRowEnd = 'span 27'
+      gridRowEnd = 'span 28'
       break
 
     default:
@@ -108,8 +108,8 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
           </div> */}
         </div>
 
-        <div className='row mt-3'>
-          <div className='col text-center'>
+        <div className='d-flex flex-row justify-content-between mt-3'>
+          <div className='text-center me-1'>
             <CircularProgressbar
               value={user && user._id === subject.userId ? tasksPercentage : 0}
               text={`${
@@ -118,7 +118,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
             />
             <h5 className='mt-2'>Tasks</h5>
           </div>
-          <div className='col text-center'>
+          <div className='text-center ms-1'>
             <CircularProgressbar
               value={
                 user && user._id === subject.userId ? resourcesPercentage : 0
