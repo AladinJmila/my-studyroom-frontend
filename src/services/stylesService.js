@@ -47,6 +47,8 @@ export const checkedStyle = {
 
 export const appsFormStyle = {
   backgroundImage: 'linear-gradient(#678387, #62a9b4)',
+  // position: 'absolute',
+  // width: '100%',
   padding: 10,
   marginBottom: 12,
   border: '3px solid #343A40',

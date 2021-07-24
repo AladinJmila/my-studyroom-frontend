@@ -157,14 +157,7 @@ const SubjectsCard = ({
           <div>
             {subject.name !== 'All Subjects' && (
               <>
-                <h6
-                  className='me-2 '
-                  style={{
-                    display: 'inline-block',
-                    margin: 0,
-                    verticalAlign: 'top',
-                  }}
-                >
+                <h6 className='me-2 mb-0' style={{ display: 'inline-block' }}>
                   {subject.upvotes.length || 0}
                 </h6>
                 <Upvote

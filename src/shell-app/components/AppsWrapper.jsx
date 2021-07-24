@@ -9,7 +9,7 @@ import DataColumn from './DataColumn'
 import AudioNotes from '../../audio-notes-app/components/AudioNotes'
 import VisualNotes from '../../visual-notes-app/components/VisualNotes'
 import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper'
-import AnimateReorder from '../../Effects/AnimateReorder'
+import AnimateReorderX from '../../Effects/AnimateReorderX'
 
 const AppsWrapper = ({
   selectedSubject,
@@ -113,11 +113,10 @@ const AppsWrapper = ({
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
       <div ref={appsWrapperRef}></div>
-      <AnimateReorder>
+      <AnimateReorderX>
         {sortedAppsWrapper.map(item => (
           <DataColumn
             key={item.name}
-            // id={item.name}
             data={item.data}
             name={item.name}
             show={item.show}
@@ -127,7 +126,7 @@ const AppsWrapper = ({
             setRef={item.setRef}
           />
         ))}
-      </AnimateReorder>
+      </AnimateReorderX>
       <div
         style={{
           minWidth: 45,

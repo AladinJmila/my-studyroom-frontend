@@ -4,6 +4,7 @@ const slice = createSlice({
   name: 'subjects',
   initialState: {
     list: [],
+    public: [],
     loading: false,
     lastFetch: null,
     selectedSubject: null,
@@ -21,6 +22,11 @@ const slice = createSlice({
       subjects.list = action.payload
       subjects.loading = false
       subjects.lastFetch = Date.now()
+    },
+
+    GET_PUBLIC_SUBJECTS: (subjects, action) => {
+      subjects.public = action.payload
+      subjects.loading = false
     },
 
     CREATE_SUBJECT: (subjects, action) => {
@@ -86,6 +92,28 @@ const slice = createSlice({
       subjects.list[index][property] = !subjects.list[index][property]
     },
 
+    TOGGLE_SUBJECT_UPVOTE: (subjects, action) => {
+      const { id, userId } = action.payload
+      let index = subjects.list.findIndex(s => s._id === id)
+      console.log(index)
+      if (index === -1) {
+        index = subjects.public.findIndex(s => s._id === id)
+        const userIdIndex = subjects.public[index].upvotes.findIndex(
+          uId => uId === userId
+        )
+        userIdIndex === -1
+          ? subjects.public[index].upvotes.push(userId)
+          : subjects.public[index].upvotes.splice(userIdIndex, 1)
+      } else {
+        const userIdIndex = subjects.list[index].upvotes.findIndex(
+          uId => uId === userId
+        )
+        userIdIndex === -1
+          ? subjects.list[index].upvotes.push(userId)
+          : subjects.list[index].upvotes.splice(userIdIndex, 1)
+      }
+    },
+
     DELETE_SUBJECT: (subjects, action) => {
       const index = subjects.list.findIndex(s => s._id === action.payload)
       subjects.list.splice(index, 1)
@@ -97,6 +125,7 @@ export const {
   REQUEST_SUBJECTS,
   REQUEST_SUBJECTS_FAIL,
   GET_SUBJECTS,
+  GET_PUBLIC_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
   UPDATE_SUBJECT,
@@ -105,6 +134,7 @@ export const {
   UPDATE_SUBJECT_ITEMS_COUNT,
   UPDATE_SUBJECT_RESOURCES_COUNT,
   TOGGLE_SUBJECT_PROP,
+  TOGGLE_SUBJECT_UPVOTE,
   DELETE_SUBJECT,
 } = slice.actions
 export default slice.reducer

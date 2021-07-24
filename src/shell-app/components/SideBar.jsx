@@ -70,6 +70,7 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
   const styles = {
     minWidth: minWidth,
     maxWidth: maxWidth,
+    height: '100%',
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,

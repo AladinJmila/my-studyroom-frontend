@@ -13,10 +13,13 @@ import {
   setResourcesPerSubject,
   setPracticalsPerSubject,
 } from '../../store/ui/uiParams'
+import Upvote from '../../common/Upvote'
+import {
+  patchSubject,
+  toggleSubjectUpvote,
+} from '../../store/apps/subjectsActions'
 
-const SubjectsCard = ({ user, subject }) => {
-  const { selectedSubject } = useSelector(state => state.apps.subjects)
-
+const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
   const dispatch = useDispatch()
 
   const tasksPercentage =
@@ -32,6 +35,13 @@ const SubjectsCard = ({ user, subject }) => {
   dispatch(setNotesPerSubject(subject.name, subject.numberOfNotes))
   dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources))
   dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals))
+
+  const handleToggleUpvote = (subject, status) => {
+    const update = { upvote: status }
+
+    dispatch(patchSubject(subject._id, update))
+    dispatch(toggleSubjectUpvote(subject._id, user._id))
+  }
 
   return (
     <div
@@ -133,16 +143,28 @@ const SubjectsCard = ({ user, subject }) => {
             </p>
           )}
         </div>
-        <div className='mt-2'>
-          {!user && (
-            <a href='#' className='card-link'>
-              {subject.userName}
-            </a>
-          )}
+        <div className='mt-3 d-flex flex-row justify-content-between'>
+          <div>
+            {user && user._id !== subject.userId && (
+              <a href='#' className='card-link'>
+                {subject.userName}
+              </a>
+            )}
+          </div>
+          <div className='pb-0 mb-0'>
+            <h6 className='me-2 mb-0 ' style={{ display: 'inline-block' }}>
+              {subject.upvotes.length || 0}
+            </h6>
+            <Upvote
+              user={user}
+              item={subject}
+              onToggleUpvote={handleToggleUpvote}
+            />
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default SubjectsCard
+export default SubjectsCardPublic

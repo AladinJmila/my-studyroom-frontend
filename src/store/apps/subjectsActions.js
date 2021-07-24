@@ -29,6 +29,19 @@ export const loadSubjects = () => async (dispatch, getState) => {
   }
 }
 
+export const loadPublicSubjects = () => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_SUBJECTS())
+    const { data } = await httpService.get(`${apiEndPoint}/public`, {
+      headers: { userid },
+    })
+
+    dispatch(actions.GET_PUBLIC_SUBJECTS(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createSubject = subject => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, subject)
@@ -77,6 +90,10 @@ export const updateSubjectItemsCount =
 
 export const toggleSubjectProp = (id, property) => dispatch => {
   dispatch(actions.TOGGLE_SUBJECT_PROP({ id, property }))
+}
+
+export const toggleSubjectUpvote = (id, userId) => dispatch => {
+  dispatch(actions.TOGGLE_SUBJECT_UPVOTE({ id, userId }))
 }
 
 export const deleteSubject = id => async dispatch => {

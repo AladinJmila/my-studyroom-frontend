@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SubjectsCardHome from '../subjects-app/components/SubjectsCardHome'
-import { loadSubjects } from '../store/apps/subjectsActions'
+import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
+import { loadPublicSubjects } from '../store/apps/subjectsActions'
 
 const Home = () => {
-  const subjects = useSelector(state => state.apps.subjects.list)
+  const pulicSubjects = useSelector(state => state.apps.subjects.public)
   const { user } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadSubjects())
+    dispatch(loadPublicSubjects())
   }, [])
 
   return (
@@ -28,15 +28,15 @@ const Home = () => {
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
       <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>
-        {subjects.map(subject => (
-          <SubjectsCardHome key={subject._id} user={user} subject={subject} />
+        {pulicSubjects.map(subject => (
+          <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
         ))}
       </div>
 
       {/* <h2 className='mt-5 text-center'>Popular Courses</h2>
       <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>
         {subjects.map(subject => (
-          <SubjectsCardHome key={subject._id} user={user} subject={subject} />
+          <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
         ))}
       </div> */}
     </div>

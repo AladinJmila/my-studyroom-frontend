@@ -35,7 +35,6 @@ const AnimateReorder = ({ children }) => {
             domNode.style.transition = 'transfrom 0s'
 
             requestAnimationFrame(() => {
-              console.log('animated')
               // After the previous frame, remove the transition to play the animation
               domNode.style.transform = ''
               domNode.style.transition = 'transform 1000ms'

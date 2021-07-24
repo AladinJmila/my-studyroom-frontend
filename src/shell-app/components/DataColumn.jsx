@@ -20,23 +20,28 @@ const DataColumn = forwardRef(
       setRef(myRef)
     }, [])
     return (
-      <div ref={ref} style={{ padding: 0 }} className='data-column'>
-        <SideBar
-          name={name}
-          color={color}
-          icon={icon}
-          show={show}
-          count={count}
-          setShow={setShow}
-          itemRef={myRef}
-        />
-        <div ref={myRef}></div>
-        {show && (
-          <div style={containerStyles} className='y-scroll'>
-            <h2>{name}</h2>
-            {data}
-          </div>
-        )}
+      <div ref={myRef}>
+        <div
+          ref={ref}
+          style={{ padding: 0, height: '100%' }}
+          className='data-column'
+        >
+          <SideBar
+            name={name}
+            color={color}
+            icon={icon}
+            show={show}
+            count={count}
+            setShow={setShow}
+            itemRef={myRef}
+          />
+          {show && (
+            <div style={containerStyles} className='y-scroll'>
+              <h2>{name}</h2>
+              {data}
+            </div>
+          )}
+        </div>
       </div>
     )
   }
