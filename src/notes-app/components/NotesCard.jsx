@@ -9,6 +9,8 @@ import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
+  const showPrivateInfo = note.isChecked && user && user._id === note.creatorId
+
   return (
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
@@ -42,7 +44,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               />
             )}
           </div>{' '}
-          {note.isChecked && user && user._id === note.userId ? (
+          {showPrivateInfo ? (
             <p
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}

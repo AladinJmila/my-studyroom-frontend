@@ -41,6 +41,8 @@ const SubjectsCard = ({
   dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources))
   dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals))
 
+  const showPrivateInfo = user && user._id === subject.creatorId
+
   return (
     <div
       onClick={() => onSubjectSelect(subject)}
@@ -73,21 +75,15 @@ const SubjectsCard = ({
         <div className='d-flex flex-row justify-content-between mt-3'>
           <div className='me-2 text-center'>
             <CircularProgressbar
-              value={user && user._id === subject.userId ? tasksPercentage : 0}
-              text={`${
-                user && user._id === subject.userId ? tasksPercentage : 0
-              }%`}
+              value={showPrivateInfo ? tasksPercentage : 0}
+              text={`${showPrivateInfo ? tasksPercentage : 0}%`}
             />
             <h5 className='mt-2'>Tasks</h5>
           </div>
           <div className='ms-2 text-center'>
             <CircularProgressbar
-              value={
-                user && user._id === subject.userId ? resourcesPercentage : 0
-              }
-              text={`${
-                user && user._id === subject.userId ? resourcesPercentage : 0
-              }%`}
+              value={showPrivateInfo ? resourcesPercentage : 0}
+              text={`${showPrivateInfo ? resourcesPercentage : 0}%`}
             />
             <h5 className='mt-2'>Resources</h5>
           </div>
@@ -98,8 +94,7 @@ const SubjectsCard = ({
             <p style={{ margin: 2 }}>
               Tasks:
               <span className='float-end'>
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedTasks) &&
                   subject.numberOfCheckedTasks + '/'}
                 {subject.numberOfTasks}
@@ -111,8 +106,7 @@ const SubjectsCard = ({
               Notes:{' '}
               <span className='float-end'>
                 {' '}
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedNotes) &&
                   subject.numberOfCheckedNotes + '/'}
                 {subject.numberOfNotes}
@@ -125,8 +119,7 @@ const SubjectsCard = ({
               Practicals:{' '}
               <span className='float-end'>
                 {' '}
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedPracticals) &&
                   subject.numberOfCheckedPracticals + '/'}
                 {subject.numberOfPracticals}
@@ -137,8 +130,7 @@ const SubjectsCard = ({
             <p style={{ margin: 2 }}>
               Resources:
               <span className='float-end'>
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedResources) &&
                   subject.numberOfCheckedResources + '/'}
                 {subject.numberOfResources}

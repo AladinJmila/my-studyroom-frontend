@@ -8,6 +8,9 @@ import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 
 const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
+  const showPrivateInfo =
+    resource.isChecked && user && user._id === resource.creatorId
+
   return (
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
@@ -35,7 +38,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
             />
           )}
         </div>{' '}
-        {resource.isChecked && user && user._id === resource.userId ? (
+        {showPrivateInfo ? (
           <p className='mb-2' style={checkedStyle}>
             {resource.content}
             <a

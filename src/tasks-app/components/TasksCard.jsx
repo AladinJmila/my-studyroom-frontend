@@ -2,9 +2,10 @@ import Check from '../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
-import ExternalLink from './../../common/ExternalLink'
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
+  const showPrivateInfo = task.isChecked && user && user._id === task.creatorId
+
   return (
     <div style={cardsBody} className='card mb-1'>
       <div className='p-3'>
@@ -38,7 +39,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
               />
             )}
           </div>{' '}
-          {task.isChecked && user && user._id === task.userId ? (
+          {showPrivateInfo ? (
             <p className='mb-2' style={mainContentStyle}>
               <s>
                 {task.content}{' '}

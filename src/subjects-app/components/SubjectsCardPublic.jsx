@@ -36,6 +36,8 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
   dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources))
   dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals))
 
+  const showPrivateInfo = user && user._id === subject.creatorId
+
   const handleToggleUpvote = (subject, status) => {
     const update = { upvote: status }
 
@@ -111,21 +113,15 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
         <div className='d-flex flex-row justify-content-between mt-3'>
           <div className='text-center me-1'>
             <CircularProgressbar
-              value={user && user._id === subject.userId ? tasksPercentage : 0}
-              text={`${
-                user && user._id === subject.userId ? tasksPercentage : 0
-              }%`}
+              value={showPrivateInfo ? tasksPercentage : 0}
+              text={`${showPrivateInfo ? tasksPercentage : 0}%`}
             />
             <h5 className='mt-2'>Tasks</h5>
           </div>
           <div className='text-center ms-1'>
             <CircularProgressbar
-              value={
-                user && user._id === subject.userId ? resourcesPercentage : 0
-              }
-              text={`${
-                user && user._id === subject.userId ? resourcesPercentage : 0
-              }%`}
+              value={showPrivateInfo ? resourcesPercentage : 0}
+              text={`${showPrivateInfo ? resourcesPercentage : 0}%`}
             />
             <h5 className='mt-2'>Resources</h5>
           </div>
@@ -136,8 +132,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
             <p style={{ margin: 2 }}>
               Tasks:
               <span className='float-end'>
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedTasks) &&
                   subject.numberOfCheckedTasks + '/'}
                 {subject.numberOfTasks}
@@ -149,8 +144,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
               Notes:{' '}
               <span className='float-end'>
                 {' '}
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedNotes) &&
                   subject.numberOfCheckedNotes + '/'}
                 {subject.numberOfNotes}
@@ -163,8 +157,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
               Practicals:{' '}
               <span className='float-end'>
                 {' '}
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedPracticals) &&
                   subject.numberOfCheckedPracticals + '/'}
                 {subject.numberOfPracticals}
@@ -175,8 +168,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
             <p style={{ margin: 2 }}>
               Resources:
               <span className='float-end'>
-                {user &&
-                  user._id === subject.userId &&
+                {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedResources) &&
                   subject.numberOfCheckedResources + '/'}
                 {subject.numberOfResources}
@@ -186,7 +178,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
         </div>
         <div className='mt-3 d-flex flex-row justify-content-between'>
           <div>
-            {user && user._id !== subject.userId && (
+            {showPrivateInfo && (
               <a href='#' className='card-link'>
                 {subject.userName}
               </a>

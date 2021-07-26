@@ -2,7 +2,7 @@ const generateAllSubjects = subjects => {
   return {
     key: 'key',
     name: 'All Subjects',
-    userId: subjects[0]?.userId,
+    creatorId: subjects[0]?.creatorId,
     numberOfTasks: subjects.reduce(
       (t, { numberOfTasks }) => t + numberOfTasks,
       0

@@ -69,7 +69,7 @@ class TasksForm extends Form {
 
   doSubmit = () => {
     const data = { ...this.state.data }
-    data.userId = this.props.user._id
+    data.creatorId = this.props.user._id
 
     const {
       createTask,

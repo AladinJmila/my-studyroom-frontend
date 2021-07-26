@@ -22,13 +22,13 @@ const AppsWrapper = ({
   setSchedulesRef,
   setAppsWrapperRef,
 }) => {
-  const [showPracticals, setShowPracticals] = useState(true)
-  const [showResources, setShowResources] = useState(true)
-  const [showNotes, setShowNotes] = useState(true)
-  const [showTasks, setShowTasks] = useState(true)
-  const [showAudioNotes, setShowAudioNotes] = useState(true)
-  const [showVisualNotes, setShowVisualNotes] = useState(true)
-  const [showSchedules, setShowSchedules] = useState(true)
+  const [showPracticals, setShowPracticals] = useState(false)
+  const [showResources, setShowResources] = useState(false)
+  const [showNotes, setShowNotes] = useState(false)
+  const [showTasks, setShowTasks] = useState(false)
+  const [showAudioNotes, setShowAudioNotes] = useState(false)
+  const [showVisualNotes, setShowVisualNotes] = useState(false)
+  const [showSchedules, setShowSchedules] = useState(false)
 
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'
   const tasksCount = useSelector(state => state.ui.tasksPerSubject[subjectName])
