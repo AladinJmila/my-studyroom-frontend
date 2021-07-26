@@ -142,7 +142,7 @@ const SubjectsCard = ({
           <div>
             {!user && (
               <a href='#' className='card-link'>
-                {subject.userName}
+                {subject.creatorName}
               </a>
             )}
           </div>

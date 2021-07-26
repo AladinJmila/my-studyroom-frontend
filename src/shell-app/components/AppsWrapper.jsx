@@ -64,7 +64,7 @@ const AppsWrapper = ({
       data: <Resources />,
     },
     {
-      name: 'Notes',
+      name: 'StudyNotes',
       count: notesCount,
       show: showNotes,
       setShow: setShowNotes,
@@ -72,7 +72,7 @@ const AppsWrapper = ({
       data: <Notes />,
     },
     {
-      name: 'Practicals',
+      name: 'PracticeNotes',
       count: practicalsCount,
       show: showPracticals,
       setShow: setShowPracticals,

@@ -180,7 +180,7 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
           <div>
             {showPrivateInfo && (
               <a href='#' className='card-link'>
-                {subject.userName}
+                {subject.creatorName}
               </a>
             )}
           </div>

@@ -42,11 +42,11 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       bigIcon = iconRB
       smallIcon = iconRS
       break
-    case 'Notes':
+    case 'StudyNotes':
       bigIcon = iconNB
       smallIcon = iconNS
       break
-    case 'Practicals':
+    case 'PracticeNotes':
       bigIcon = iconPB
       smallIcon = iconPS
       break
