@@ -12,6 +12,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
         <div className='d-flex flex-row justify-content-between '>
           <h6 className='card-subtitle mb-2'>
             {task.subject.name}{' '}
+            {task.isPublic && <i style={{ color: '#3E98C7' }}>P</i>}{' '}
             {task.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>

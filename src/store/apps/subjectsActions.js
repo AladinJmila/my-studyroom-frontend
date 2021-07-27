@@ -42,6 +42,19 @@ export const loadPublicSubjects = () => async dispatch => {
   }
 }
 
+export const loadUpvotedSubjects = () => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_SUBJECTS())
+    const { data } = await httpService.get(`${apiEndPoint}/upvoted`, {
+      headers: { userid },
+    })
+
+    dispatch(actions.GET_UPVOTED_SUBJECTS(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createSubject = subject => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, subject)
@@ -61,6 +74,20 @@ export const patchSubject = (id, update) => async dispatch => {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
 
     dispatch(actions.UPDATE_SUBJECT(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const upvoteSubject = (id, update) => async dispatch => {
+  try {
+    const { data } = await httpService.patch(
+      `${apiEndPoint}/upvote/${id}`,
+      update
+    )
+
+    dispatch(actions.UPDATE_SUBJECT(data))
+    dispatch(loadUpvotedSubjects())
   } catch (error) {
     console.log(error)
   }

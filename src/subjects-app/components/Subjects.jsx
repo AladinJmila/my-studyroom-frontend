@@ -6,8 +6,10 @@ import {
   loadSubjects,
   patchSubject,
   deleteSubject,
+  upvoteSubject,
   toggleSubjectProp,
   setSelectedSubject,
+  toggleSubjectUpvote,
 } from '../../store/apps/subjectsActions'
 import HeaderCard from '../../common/HeaderCard'
 import SubjectsCard from './SubjectsCard'
@@ -53,13 +55,10 @@ const Subjects = ({ appsWrapperRef }) => {
   }
 
   const handleToggleUpvote = (subject, status) => {
-    const index = subjects.indexOf(subject)
-    const subjectToUpdate = { ...subjects[index] }
-    // subjectToUpdate.upvote = status
     const update = { upvote: status }
 
-    dispatch(patchSubject(subject._id, update))
-    // dispatch(toggleSubjectProp(subject._id, 'upvote'))
+    dispatch(upvoteSubject(subject._id, update))
+    dispatch(toggleSubjectUpvote(subject._id, user._id))
   }
 
   const handleSubjectSelect = subject => {

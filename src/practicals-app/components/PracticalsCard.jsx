@@ -23,6 +23,7 @@ const PracticalsCard = ({
         <div className='d-flex flex-row justify-content-between '>
           <h6 className='card-subtitle mb-2'>
             {practical.subject.name}{' '}
+            {practical.isPublic && <i style={{ color: '#3E98C7' }}>P</i>}{' '}
             {practical.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>

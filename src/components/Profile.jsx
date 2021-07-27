@@ -1,18 +1,21 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
-import { loadSubjects, loadPublicSubjects } from '../store/apps/subjectsActions'
+import {
+  loadSubjects,
+  loadUpvotedSubjects,
+} from '../store/apps/subjectsActions'
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
-  const publicSubjects = useSelector(state => state.apps.subjects.public)
+  const upvotedSubjects = useSelector(state => state.apps.subjects.upvoted)
   const { user } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadSubjects())
-    dispatch(loadPublicSubjects())
+    dispatch(loadUpvotedSubjects())
   }, [])
 
   return (
@@ -45,9 +48,9 @@ const Profile = () => {
           </div>
         </div>
         <div className='col-6'>
-          <h2 className='mt-5 text-center'>Watched Subjects</h2>
+          <h2 className='mt-5 text-center'>Watchlist</h2>
           <div className='pin-container'>
-            {publicSubjects.map(subject => (
+            {upvotedSubjects.map(subject => (
               <SubjectsCardPublic
                 key={subject._id}
                 user={user}

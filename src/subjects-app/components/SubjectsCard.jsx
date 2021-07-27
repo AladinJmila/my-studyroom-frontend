@@ -58,6 +58,7 @@ const SubjectsCard = ({
         <div className='d-flex flex-row justify-content-between'>
           <h5 className='card-title'>
             {subject.name}{' '}
+            {subject.isPublic && <i style={{ color: '#3E98C7' }}>P</i>}{' '}
             {subject.starred && <Star className='yellow' starred />}
           </h5>
           <div className='card-link float-end'>
@@ -101,9 +102,22 @@ const SubjectsCard = ({
               </span>
             </p>
           )}
+
+          {Boolean(subject.numberOfResources) && (
+            <p style={{ margin: 2 }}>
+              Resources:
+              <span className='float-end'>
+                {showPrivateInfo &&
+                  Boolean(subject.numberOfCheckedResources) &&
+                  subject.numberOfCheckedResources + '/'}
+                {subject.numberOfResources}
+              </span>
+            </p>
+          )}
+
           {Boolean(subject.numberOfNotes) && (
             <p style={{ margin: 2 }}>
-              Notes:{' '}
+              Study Notes:{' '}
               <span className='float-end'>
                 {' '}
                 {showPrivateInfo &&
@@ -116,24 +130,13 @@ const SubjectsCard = ({
 
           {Boolean(subject.numberOfPracticals) && (
             <p style={{ margin: 2 }}>
-              Practicals:{' '}
+              Practice Notes:{' '}
               <span className='float-end'>
                 {' '}
                 {showPrivateInfo &&
                   Boolean(subject.numberOfCheckedPracticals) &&
                   subject.numberOfCheckedPracticals + '/'}
                 {subject.numberOfPracticals}
-              </span>
-            </p>
-          )}
-          {Boolean(subject.numberOfResources) && (
-            <p style={{ margin: 2 }}>
-              Resources:
-              <span className='float-end'>
-                {showPrivateInfo &&
-                  Boolean(subject.numberOfCheckedResources) &&
-                  subject.numberOfCheckedResources + '/'}
-                {subject.numberOfResources}
               </span>
             </p>
           )}

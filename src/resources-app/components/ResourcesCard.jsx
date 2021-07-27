@@ -17,6 +17,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
         <div className='d-flex flex-row justify-content-between'>
           <h6 className='card-subtitle mb-2'>
             {resource.subject.name}{' '}
+            {resource.isPublic && <i style={{ color: '#3E98C7' }}>P</i>}{' '}
             {resource.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>

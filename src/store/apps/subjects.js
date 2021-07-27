@@ -5,6 +5,7 @@ const slice = createSlice({
   initialState: {
     list: [],
     public: [],
+    upvoted: [],
     loading: false,
     lastFetch: null,
     selectedSubject: null,
@@ -26,6 +27,11 @@ const slice = createSlice({
 
     GET_PUBLIC_SUBJECTS: (subjects, action) => {
       subjects.public = action.payload
+      subjects.loading = false
+    },
+
+    GET_UPVOTED_SUBJECTS: (subjects, action) => {
+      subjects.upvoted = action.payload
       subjects.loading = false
     },
 
@@ -52,10 +58,10 @@ const slice = createSlice({
         if (itemInDb.isChecked) {
           prevSubject[`numberOfChecked${itemName}`]--
           newSubject[`numberOfChecked${itemName}`]++
+        } else {
+          prevSubject[`numberOf${itemName}`]--
+          newSubject[`numberOf${itemName}`]++
         }
-
-        prevSubject[`numberOf${itemName}`]--
-        newSubject[`numberOf${itemName}`]++
       }
     },
 
@@ -95,7 +101,6 @@ const slice = createSlice({
     TOGGLE_SUBJECT_UPVOTE: (subjects, action) => {
       const { id, userId } = action.payload
       let index = subjects.list.findIndex(s => s._id === id)
-      console.log(index)
       if (index === -1) {
         index = subjects.public.findIndex(s => s._id === id)
         const userIdIndex = subjects.public[index].upvotes.findIndex(
@@ -126,6 +131,7 @@ export const {
   REQUEST_SUBJECTS_FAIL,
   GET_SUBJECTS,
   GET_PUBLIC_SUBJECTS,
+  GET_UPVOTED_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
   UPDATE_SUBJECT,

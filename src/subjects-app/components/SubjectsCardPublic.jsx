@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { CircularProgressbar } from 'react-circular-progressbar'
+import { useDispatch } from 'react-redux'
 import 'react-circular-progressbar/dist/styles.css'
-import CardEllipsisMenu from '../../common/CardEllipsisMenu'
 import Star from '../../common/Star'
 import {
   backgroundOpacity,
@@ -13,13 +11,15 @@ import {
   setResourcesPerSubject,
   setPracticalsPerSubject,
 } from '../../store/ui/uiParams'
-import Upvote from '../../common/Upvote'
 import {
-  patchSubject,
+  upvoteSubject,
   toggleSubjectUpvote,
 } from '../../store/apps/subjectsActions'
+import ItemsCount from './ItemsCount'
+import ProgressStats from './ProgressStats'
+import CardFooter from './CardFooter'
 
-const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
+const SubjectsCardPublic = ({ user, subject }) => {
   const dispatch = useDispatch()
 
   const tasksPercentage =
@@ -41,16 +41,23 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
   const handleToggleUpvote = (subject, status) => {
     const update = { upvote: status }
 
-    dispatch(patchSubject(subject._id, update))
+    dispatch(upvoteSubject(subject._id, update))
     dispatch(toggleSubjectUpvote(subject._id, user._id))
   }
 
-  const itemsToDisplay = [
-    subject.numberOfTasks,
-    subject.numberOfResources,
-    subject.numberOfNotes,
-    subject.numberOfPracticals,
-  ]
+  const itemsToDisplay = showPrivateInfo
+    ? [
+        subject.numberOfTasks,
+        subject.numberOfResources,
+        subject.numberOfNotes,
+        subject.numberOfPracticals,
+      ]
+    : [
+        subject.numberOfPublicTasks,
+        subject.numberOfPublicResources,
+        subject.numberOfPublicNotes,
+        subject.numberOfPublicPracticals,
+      ]
 
   let countOfZeros = 0
   let gridRowEnd
@@ -87,114 +94,60 @@ const SubjectsCardPublic = ({ user, subject, onToggleUpvote }) => {
   }
 
   return (
-    <div
-      // onClick={() => onSubjectSelect(subject)}
-      style={cardStyle}
-      className='card m-2'
-    >
+    <div style={cardStyle} className='card m-2'>
       <div className='card-body'>
         <div className='d-flex flex-row justify-content-between'>
-          <h5 className='card-title'>
+          <h5 className='card-title text-truncate'>
             {subject.name}{' '}
             {subject.starred && <Star className='yellow' starred />}
           </h5>
-          {/* <div className='card-link float-end'>
-            {user && subject.name !== 'All Subjects' && (
-              <CardEllipsisMenu
-                item={subject}
-                // onEdit={onEdit}
-                onToggleProp={onToggleProp}
-                onDelete={onDelete}
-              />
-            )}
-          </div> */}
         </div>
 
-        <div className='d-flex flex-row justify-content-between mt-3'>
-          <div className='text-center me-1'>
-            <CircularProgressbar
-              value={showPrivateInfo ? tasksPercentage : 0}
-              text={`${showPrivateInfo ? tasksPercentage : 0}%`}
-            />
-            <h5 className='mt-2'>Tasks</h5>
-          </div>
-          <div className='text-center ms-1'>
-            <CircularProgressbar
-              value={showPrivateInfo ? resourcesPercentage : 0}
-              text={`${showPrivateInfo ? resourcesPercentage : 0}%`}
-            />
-            <h5 className='mt-2'>Resources</h5>
-          </div>
-        </div>
+        <ProgressStats
+          condition={showPrivateInfo}
+          tasksPercentage={tasksPercentage}
+          resourcesPercentage={resourcesPercentage}
+        />
 
         <div className='font-weight-bold' style={mainContentStyle}>
-          {Boolean(subject.numberOfTasks) && (
-            <p style={{ margin: 2 }}>
-              Tasks:
-              <span className='float-end'>
-                {showPrivateInfo &&
-                  Boolean(subject.numberOfCheckedTasks) &&
-                  subject.numberOfCheckedTasks + '/'}
-                {subject.numberOfTasks}
-              </span>
-            </p>
-          )}
-          {Boolean(subject.numberOfNotes) && (
-            <p style={{ margin: 2 }}>
-              Notes:{' '}
-              <span className='float-end'>
-                {' '}
-                {showPrivateInfo &&
-                  Boolean(subject.numberOfCheckedNotes) &&
-                  subject.numberOfCheckedNotes + '/'}
-                {subject.numberOfNotes}
-              </span>
-            </p>
-          )}
+          <ItemsCount
+            name='Tasks'
+            condition={showPrivateInfo}
+            itemsCount={subject.numberOfTasks}
+            checkedItemsCount={subject.numberOfCheckedTasks}
+            publicItemsCount={subject.numberOfPublicTasks}
+          />
 
-          {Boolean(subject.numberOfPracticals) && (
-            <p style={{ margin: 2 }}>
-              Practicals:{' '}
-              <span className='float-end'>
-                {' '}
-                {showPrivateInfo &&
-                  Boolean(subject.numberOfCheckedPracticals) &&
-                  subject.numberOfCheckedPracticals + '/'}
-                {subject.numberOfPracticals}
-              </span>
-            </p>
-          )}
-          {Boolean(subject.numberOfResources) && (
-            <p style={{ margin: 2 }}>
-              Resources:
-              <span className='float-end'>
-                {showPrivateInfo &&
-                  Boolean(subject.numberOfCheckedResources) &&
-                  subject.numberOfCheckedResources + '/'}
-                {subject.numberOfResources}
-              </span>
-            </p>
-          )}
+          <ItemsCount
+            name='Resources'
+            condition={showPrivateInfo}
+            itemsCount={subject.numberOfResources}
+            checkedItemsCount={subject.numberOfCheckedResources}
+            publicItemsCount={subject.numberOfPublicResources}
+          />
+
+          <ItemsCount
+            name='Study Notes'
+            condition={showPrivateInfo}
+            itemsCount={subject.numberOfNotes}
+            checkedItemsCount={subject.numberOfCheckedNotes}
+            publicItemsCount={subject.numberOfPublicNotes}
+          />
+
+          <ItemsCount
+            name='Practice Notes'
+            condition={showPrivateInfo}
+            itemsCount={subject.numberOfPracticals}
+            checkedItemsCount={subject.numberOfCheckedPracticals}
+            publicItemsCount={subject.numberOfPublicPracticals}
+          />
         </div>
-        <div className='mt-3 d-flex flex-row justify-content-between'>
-          <div>
-            {showPrivateInfo && (
-              <a href='#' className='card-link'>
-                {subject.creatorName}
-              </a>
-            )}
-          </div>
-          <div className='pb-0 mb-0'>
-            <h6 className='me-2 mb-0 ' style={{ display: 'inline-block' }}>
-              {subject.upvotes.length || 0}
-            </h6>
-            <Upvote
-              user={user}
-              item={subject}
-              onToggleUpvote={handleToggleUpvote}
-            />
-          </div>
-        </div>
+
+        <CardFooter
+          user={user}
+          subject={subject}
+          onToggleUpvote={handleToggleUpvote}
+        />
       </div>
     </div>
   )
