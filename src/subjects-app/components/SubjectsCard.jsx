@@ -176,7 +176,10 @@ const SubjectsCard = ({
       </div>
       {showShareForm && (
         <div className='center-screen'>
-          <SubjectsShareForm />
+          <SubjectsShareForm
+            subject={subject}
+            toggleShowForm={handleShowShareForm}
+          />
         </div>
       )}
     </div>

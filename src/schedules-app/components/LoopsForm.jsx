@@ -156,36 +156,7 @@ class LoopsFrom extends Form {
             )}
           </div>
         ))}
-        {/* 
-        <div className='d-flex flex-row justify-content-between'>
-          <h6 className='p-2'>
-            <Toggle
-              toggled={this.state.data.popup}
-              onToggle={() => this.handleToggleProp('popup')}
-            />
-            <label htmlFor='popup' className='ms-2'>
-              PopUp
-            </label>
-          </h6>
-          <h6 className='p-2'>
-            <Toggle
-              toggled={this.state.data.isMute}
-              onToggle={() => this.handleToggleProp('isMute')}
-            />
-            <label htmlFor='isMute' className='ms-2'>
-              Mute
-            </label>
-          </h6>
-          <h6 className='p-2'>
-            <Toggle
-              toggled={this.state.data.autoConfirm}
-              onToggle={() => this.handleToggleProp('autoConfirm')}
-            />
-            <label htmlFor='autoConfirm' className='ms-2'>
-              Auto Confirm
-            </label>
-          </h6>
-        </div> */}
+
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
