@@ -88,7 +88,10 @@ const CardEllipsisMenu = ({
           {share && (
             <div
               className='list-group-item list-group-item-action pointer'
-              onClick={onToggleShareForm}
+              onClick={() => {
+                onToggleShareForm()
+                handleShowMenu()
+              }}
             >
               <h6 style={{ margin: 0 }}>
                 Share
