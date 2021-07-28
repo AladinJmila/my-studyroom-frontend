@@ -14,8 +14,7 @@ const PracticalsCard = ({
   onDelete,
   onEdit,
 }) => {
-  const showPrivateInfo =
-    practical.isChecked && user && user._id === practical.creatorId
+  const showPrivateInfo = user && user._id === practical.creatorId
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -27,7 +26,7 @@ const PracticalsCard = ({
             {practical.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
-            {user && (
+            {showPrivateInfo && (
               <CardEllipsisMenu
                 item={practical}
                 onEdit={onEdit}
@@ -39,7 +38,7 @@ const PracticalsCard = ({
         </div>
         <div>
           <div className='float-start me-2 mb-1'>
-            {user && (
+            {showPrivateInfo && (
               <Check
                 onCheck={() => onToggleProp(practical, 'isChecked')}
                 isChecked={practical.isChecked}
@@ -59,7 +58,7 @@ const PracticalsCard = ({
           {practical.about && (
             <>
               <h6 className='pt-1'>About:</h6>{' '}
-              {showPrivateInfo ? (
+              {practical.isChecked && showPrivateInfo ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -80,7 +79,7 @@ const PracticalsCard = ({
           {practical.cause && (
             <>
               <h6 className='pt-1'>Cause:</h6>{' '}
-              {showPrivateInfo ? (
+              {practical.isChecked && showPrivateInfo ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -100,7 +99,7 @@ const PracticalsCard = ({
           {practical.solution && (
             <>
               <h6 className='pt-1'>Solution:</h6>{' '}
-              {showPrivateInfo ? (
+              {practical.isChecked && showPrivateInfo ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
@@ -120,7 +119,7 @@ const PracticalsCard = ({
           {practical.lesson && (
             <>
               <h6 className='pt-1'>Lesson:</h6>{' '}
-              {showPrivateInfo ? (
+              {practical.isChecked && showPrivateInfo ? (
                 <p
                   className='mb-2'
                   style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}

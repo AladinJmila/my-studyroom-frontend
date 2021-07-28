@@ -4,7 +4,7 @@ import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
-  const showPrivateInfo = task.isChecked && user && user._id === task.creatorId
+  const showPrivateInfo = user && user._id === task.creatorId
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -16,7 +16,7 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
             {task.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
-            {user && (
+            {showPrivateInfo && (
               <CardEllipsisMenu
                 item={task}
                 onEdit={onEdit}
@@ -33,14 +33,14 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
         )}
         <>
           <div className='float-start me-2'>
-            {user && (
+            {showPrivateInfo && (
               <Check
                 onCheck={() => onToggleProp(task, 'isChecked')}
                 isChecked={task.isChecked}
               />
             )}
           </div>{' '}
-          {showPrivateInfo ? (
+          {task.isChecked && showPrivateInfo ? (
             <p className='mb-2' style={mainContentStyle}>
               <s>
                 {task.content}{' '}

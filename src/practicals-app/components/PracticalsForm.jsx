@@ -27,7 +27,7 @@ class PracticalForm extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
     about: Joi.string().max(500).allow('').label('About'),
     cause: Joi.string().max(500).allow('').label('Cause'),

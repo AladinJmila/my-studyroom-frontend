@@ -27,7 +27,7 @@ class NotesForm extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     title: Joi.string().required().max(500).label('Title'),
     subjectId: Joi.string().required().label('Subject'),
     resourceId: Joi.string().allow(''),

@@ -26,7 +26,7 @@ class TasksForm extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
     resourceId: Joi.string().allow(''),
     content: Joi.string().required().max(500).label('Task'),

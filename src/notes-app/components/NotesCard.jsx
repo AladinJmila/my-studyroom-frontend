@@ -9,7 +9,7 @@ import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
-  const showPrivateInfo = note.isChecked && user && user._id === note.creatorId
+  const showPrivateInfo = user && user._id === note.creatorId
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -21,7 +21,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             {note.starred && <Star className='yellow' starred />}
           </h6>
           <div className='card-link float-end'>
-            {user && (
+            {showPrivateInfo && (
               <CardEllipsisMenu
                 item={note}
                 onEdit={onEdit}
@@ -39,14 +39,14 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
         )}
         <>
           <div className='float-start me-2'>
-            {user && (
+            {showPrivateInfo && (
               <Check
                 onCheck={() => onToggleProp(note, 'isChecked')}
                 isChecked={note.isChecked}
               />
             )}
           </div>{' '}
-          {showPrivateInfo ? (
+          {note.isChecked && showPrivateInfo ? (
             <p
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}

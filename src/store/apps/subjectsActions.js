@@ -93,6 +93,17 @@ export const upvoteSubject = (id, update) => async dispatch => {
   }
 }
 
+export const shareSubject = (id, email, authType) => async dispatch => {
+  const body = { email, authType }
+  try {
+    const { data } = await httpService.patch(`${apiEndPoint}/share/${id}`, body)
+
+    dispatch(loadSubjects())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const updateSubjectOnEdit = (itemInDb, item, itemName) => dispatch => {
   dispatch(actions.UPDATE_SUBJECT_ON_EDIT({ itemInDb, item, itemName }))
 }

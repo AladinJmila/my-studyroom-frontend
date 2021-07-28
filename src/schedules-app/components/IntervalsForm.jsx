@@ -23,7 +23,7 @@ class IntervalsForm extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     name: Joi.string().required().max(100).label('Name'),
     minutes: Joi.number().integer().min(0).max(60).label('Minutes'),
     seconds: Joi.number().integer().min(0).max(60).label('Seconds'),

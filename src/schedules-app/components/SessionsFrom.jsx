@@ -22,7 +22,7 @@ class SessionsForm extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
     loopId: Joi.string().required().label('Loop'),
     name: Joi.string().max(100).allow('').label('Name'),

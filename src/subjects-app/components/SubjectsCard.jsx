@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
@@ -14,6 +15,7 @@ import {
   setPracticalsPerSubject,
 } from './../../store/ui/uiParams'
 import Upvote from '../../common/Upvote'
+import SubjectsShareForm from './SubjectsSahreForm'
 
 const SubjectsCard = ({
   user,
@@ -23,6 +25,7 @@ const SubjectsCard = ({
   onToggleUpvote,
   onDelete,
 }) => {
+  const [showShareForm, setShowShareForm] = useState(false)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
 
   const dispatch = useDispatch()
@@ -41,12 +44,16 @@ const SubjectsCard = ({
   dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources))
   dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals))
 
+  const handleShowShareForm = () => {
+    setShowShareForm(showShareForm ? false : true)
+  }
+
   const showPrivateInfo = user && user._id === subject.creatorId
 
   return (
     <div
       onClick={() => onSubjectSelect(subject)}
-      style={backgroundOpacity}
+      style={{ ...backgroundOpacity }}
       className={
         (!selectedSubject && subject.name === 'All Subjects') ||
         selectedSubject?.name === subject.name
@@ -62,12 +69,14 @@ const SubjectsCard = ({
             {subject.starred && <Star className='yellow' starred />}
           </h5>
           <div className='card-link float-end'>
-            {user && subject.name !== 'All Subjects' && (
+            {showPrivateInfo && subject.name !== 'All Subjects' && (
               <CardEllipsisMenu
                 item={subject}
                 // onEdit={onEdit}
                 onToggleProp={onToggleProp}
                 onDelete={onDelete}
+                share
+                onToggleShareForm={handleShowShareForm}
               />
             )}
           </div>
@@ -165,6 +174,11 @@ const SubjectsCard = ({
           </div>
         </div>
       </div>
+      {showShareForm && (
+        <div className='center-screen'>
+          <SubjectsShareForm />
+        </div>
+      )}
     </div>
   )
 }

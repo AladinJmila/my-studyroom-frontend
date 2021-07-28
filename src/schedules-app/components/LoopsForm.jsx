@@ -2,7 +2,6 @@ import Joi from 'joi-browser'
 import { connect } from 'react-redux'
 import { produce } from 'immer'
 import Form from '../../common/Form'
-import Toggle from '../../common/Toggle'
 import {
   createLoop,
   updateLoop,
@@ -20,7 +19,7 @@ class LoopsFrom extends Form {
   }
 
   schema = {
-    _id: [Joi.number(), Joi.string()],
+    _id: Joi.string(),
     name: Joi.string().required().max(100).label('Name'),
     intervalsIds: Joi.array(),
   }

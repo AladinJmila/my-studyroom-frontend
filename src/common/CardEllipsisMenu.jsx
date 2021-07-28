@@ -8,6 +8,8 @@ const CardEllipsisMenu = ({
   onToggleProp,
   onDelete,
   vertical,
+  share,
+  onToggleShareForm,
 }) => {
   const [showMenu, setShowMenu] = useState(false)
 
@@ -52,22 +54,7 @@ const CardEllipsisMenu = ({
               ></i>
             </h6>
           </div>
-          {/* {item.url && (
-            <a href={item.url} rel='noreferrer' target='_blank'>
-              <div
-                className='list-group-item list-group-item-action pointer'
-                onClick={handleShowMenu}
-              >
-                <h6 style={{ margin: 0, color: '#007BFF' }}>
-                  Link
-                  <i
-                    className='fa fa-external-link float-end mt-1'
-                    aria-hidden='true'
-                  ></i>
-                </h6>
-              </div>
-            </a>
-          )} */}
+
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
@@ -82,6 +69,7 @@ const CardEllipsisMenu = ({
               </div>
             </h6>
           </div>
+
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
@@ -96,6 +84,23 @@ const CardEllipsisMenu = ({
               </div>
             </h6>
           </div>
+
+          {share && (
+            <div
+              className='list-group-item list-group-item-action pointer'
+              onClick={onToggleShareForm}
+            >
+              <h6 style={{ margin: 0 }}>
+                Share
+                <i
+                  className='fa fa-share-alt float-end'
+                  aria-hidden='true'
+                  style={{ marginTop: 2 }}
+                ></i>
+              </h6>
+            </div>
+          )}
+
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => onDelete(item)}
