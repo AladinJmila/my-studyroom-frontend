@@ -17,6 +17,7 @@ class SubjectsShareForm extends Form {
   authOptions = [
     { _id: 'viewer', name: 'Viewer' },
     { _id: 'editor', name: 'Editor' },
+    { _id: 'unshare', name: 'Unshare' },
   ]
 
   doSubmit = () => {
