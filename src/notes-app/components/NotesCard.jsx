@@ -7,9 +7,10 @@ import {
 import Check from './../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
+import { isEditor } from './../../services/permissionsService'
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
-  const showPrivateInfo = user && user._id === note.creatorId
+  const showPrivateInfo = user && isEditor(note.subject.editors, user._id)
 
   return (
     <div style={cardsBody} className='card mb-1'>

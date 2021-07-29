@@ -6,9 +6,10 @@ import {
 import Check from './../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
+import { isEditor } from './../../services/permissionsService'
 
 const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
-  const showPrivateInfo = user && user._id === resource.creatorId
+  const showPrivateInfo = user && isEditor(resource.subject.editors, user._id)
 
   return (
     <div style={cardsBody} className='card mb-1'>

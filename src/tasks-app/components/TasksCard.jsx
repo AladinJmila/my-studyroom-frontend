@@ -2,9 +2,10 @@ import Check from '../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
+import { isEditor } from './../../services/permissionsService'
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
-  const showPrivateInfo = user && user._id === task.creatorId
+  const showPrivateInfo = user && isEditor(task.subject.editors, user._id)
 
   return (
     <div style={cardsBody} className='card mb-1'>
