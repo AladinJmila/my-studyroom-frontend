@@ -81,7 +81,7 @@ function NavBar() {
               {user && (
                 <>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/profile'>
+                    <NavLink className='nav-link' to='/my-profile'>
                       {nbspName}
                     </NavLink>
                   </li>

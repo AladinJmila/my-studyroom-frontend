@@ -34,7 +34,7 @@ function App() {
           path='/profile/:creatorName/:creatorId'
           component={ProfilePublic}
         ></Route>
-        <Route path='/profile' component={Profile}></Route>
+        <Route path='/my-profile' component={Profile}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
         <Route path='/shell' exact component={Shell}></Route>

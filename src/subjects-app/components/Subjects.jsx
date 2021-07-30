@@ -30,7 +30,7 @@ const Subjects = ({ appsWrapperRef }) => {
   const { loading } = useSelector(state => state.apps.subjects)
   const subjectsRef = useRef()
 
-  const allSubjects = generateAllSubjects(subjects)
+  const allSubjects = generateAllSubjects(user, subjects)
 
   useEffect(() => {
     dispatch(loadSubjects())
