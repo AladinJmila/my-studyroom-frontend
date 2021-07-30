@@ -1,10 +1,12 @@
+import _ from 'lodash'
+import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
 import { loadPublicSubjects } from '../store/apps/subjectsActions'
 
 const Home = () => {
-  const pulicSubjects = useSelector(state => state.apps.subjects.public)
+  const publicSubjects = useSelector(state => state.apps.subjects.public)
   const { user } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
@@ -12,6 +14,15 @@ const Home = () => {
   useEffect(() => {
     dispatch(loadPublicSubjects())
   }, [])
+
+  const tempPublicSubjects = produce(publicSubjects, list => {
+    list.forEach(s => (s.numOfUpvotes = s.upvotes.length))
+  })
+  const sortedPublicSubjects = _.orderBy(
+    tempPublicSubjects,
+    ['numOfUpvotes'],
+    ['desc']
+  )
 
   return (
     <div className='container full-height'>
@@ -28,7 +39,7 @@ const Home = () => {
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
       <div className='pin-container'>
-        {pulicSubjects.map(subject => (
+        {sortedPublicSubjects.map(subject => (
           <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
         ))}
       </div>
