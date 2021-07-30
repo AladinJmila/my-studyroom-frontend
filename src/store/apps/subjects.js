@@ -6,6 +6,8 @@ const slice = createSlice({
     list: [],
     public: [],
     upvoted: [],
+    usersPublic: {},
+    usersUpvoted: {},
     loading: false,
     lastFetch: null,
     selectedSubject: null,
@@ -30,8 +32,24 @@ const slice = createSlice({
       subjects.loading = false
     },
 
+    GET_ONE_USER_PUBLIC_SUBJECTS: (subjects, action) => {
+      const { creatorId, data } = action.payload
+      subjects.usersPublic[creatorId] = data
+      data.forEach(item => {
+        if (!subjects.public.find(s => s._id === item._id))
+          subjects.public.push(item)
+      })
+      subjects.loading = false
+    },
+
     GET_UPVOTED_SUBJECTS: (subjects, action) => {
       subjects.upvoted = action.payload
+      subjects.loading = false
+    },
+
+    GET_ONE_USER_UPVOTED_SUBJECTS: (subjects, action) => {
+      const { creatorId, data } = action.payload
+      subjects.usersUpvoted[creatorId] = data
       subjects.loading = false
     },
 
@@ -131,7 +149,9 @@ export const {
   REQUEST_SUBJECTS_FAIL,
   GET_SUBJECTS,
   GET_PUBLIC_SUBJECTS,
+  GET_ONE_USER_PUBLIC_SUBJECTS,
   GET_UPVOTED_SUBJECTS,
+  GET_ONE_USER_UPVOTED_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
   UPDATE_SUBJECT,

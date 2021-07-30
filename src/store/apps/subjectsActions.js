@@ -42,6 +42,19 @@ export const loadPublicSubjects = () => async dispatch => {
   }
 }
 
+export const loadOneUserPublicSubjects = creatorId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_SUBJECTS())
+    const { data } = await httpService.get(`${apiEndPoint}/usersPublic`, {
+      headers: { creatorid: creatorId },
+    })
+
+    dispatch(actions.GET_ONE_USER_PUBLIC_SUBJECTS({ creatorId, data }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const loadUpvotedSubjects = () => async dispatch => {
   try {
     dispatch(actions.REQUEST_SUBJECTS())
@@ -50,6 +63,19 @@ export const loadUpvotedSubjects = () => async dispatch => {
     })
 
     dispatch(actions.GET_UPVOTED_SUBJECTS(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const loadOneUserUpvotedSubjects = creatorId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_SUBJECTS())
+    const { data } = await httpService.get(`${apiEndPoint}/usersUpvoted`, {
+      headers: { creatorid: creatorId },
+    })
+
+    dispatch(actions.GET_ONE_USER_UPVOTED_SUBJECTS({ creatorId, data }))
   } catch (error) {
     console.log(error)
   }

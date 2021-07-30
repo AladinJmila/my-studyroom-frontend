@@ -6,6 +6,7 @@ import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
 import Profile from './components/Profile'
+import ProfilePublic from './components/ProfilePublic'
 import NotFound from './components/NotFound'
 import NavBar from './components/NavBar'
 import About from './components/About'
@@ -29,6 +30,10 @@ function App() {
         <Route path='/register' component={RegisterForm}></Route>
         <Route path='/login' component={LoginForm}></Route>
         <Route path='/logout' component={Logout}></Route>
+        <Route
+          path='/profile/:creatorName/:creatorId'
+          component={ProfilePublic}
+        ></Route>
         <Route path='/profile' component={Profile}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
