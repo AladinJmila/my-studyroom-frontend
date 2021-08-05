@@ -96,8 +96,8 @@ const AppsWrapper = ({
       data: <VisualNotes />,
     },
     {
-      name: 'Schedules (inProgress)',
-      count: 1,
+      name: 'Timer (inProgress)',
+      count: 0,
       show: showSchedules,
       setShow: setShowSchedules,
       setRef: setSchedulesRef,

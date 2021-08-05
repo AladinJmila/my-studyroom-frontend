@@ -24,9 +24,9 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
     // console.log(itemRef)
     itemRef.current.scrollIntoView({
       behavior: 'smooth',
-      // inline: 'center',
+      inline: 'center',
       // inline: 'start',
-      inline: 'end',
+      // inline: 'end',
     })
   }
 
@@ -58,7 +58,7 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       bigIcon = iconVB
       smallIcon = iconVS
       break
-    case 'Schedules (inProgress)':
+    case 'Timer (inProgress)':
       bigIcon = iconSB
       smallIcon = iconSS
       break
@@ -97,7 +97,11 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       style={styles}
       onClick={() => {
         handleToggleColumn()
-        navigateToItem()
+        if (show) {
+          setTimeout(() => {
+            navigateToItem()
+          }, 200)
+        }
       }}
     >
       {show ? (
@@ -116,7 +120,11 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       ></i>
       {!show && (
         <div>
-          <div className='total-items-side-bar'>{count}</div>
+          {name === 'Timer (inProgress)' ? (
+            <div className='total-items-side-bar'></div>
+          ) : (
+            <div className='total-items-side-bar'>{count}</div>
+          )}
           <h2
             className='rotate-title-90'
             style={{
