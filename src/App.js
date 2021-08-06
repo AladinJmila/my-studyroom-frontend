@@ -39,7 +39,7 @@ function App() {
         <Route path='/not-found' component={NotFound}></Route>
         <Route path='/shell' exact component={Shell}></Route>
         <Route path='/home' exact component={Home}></Route>
-        <Redirect from='/' to='/shell' />
+        <Redirect from='/' to='/home' />
         <Redirect to='/not-found' />
       </Switch>
     </>

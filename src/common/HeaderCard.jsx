@@ -24,7 +24,7 @@ const HeaderCard = ({
             onClick={onYoutubeClick}
             className=' p-2 me-4 btn btn-outline-dark'
           >
-            {showYoutubeForm ? 'Close' : 'YouTube'}
+            {showYoutubeForm ? 'Close' : 'YouTube Playlist'}
           </button>
         )}
         {user && (
