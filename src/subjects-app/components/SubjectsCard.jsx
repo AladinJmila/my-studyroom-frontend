@@ -16,7 +16,7 @@ import {
 } from './../../store/ui/uiParams'
 import Upvote from '../../common/Upvote'
 import SubjectsShareForm from './SubjectsSahreForm'
-import { isEditor } from './../../services/permissionsService'
+import { userIsEditor } from './../../services/permissionsService'
 
 const SubjectsCard = ({
   user,
@@ -51,7 +51,7 @@ const SubjectsCard = ({
 
   let checkEditor
   if (subject.name !== 'All Subjects') {
-    checkEditor = isEditor(subject.editors, user?._id)
+    checkEditor = userIsEditor(subject, user?._id)
   }
   const showPrivateInfo =
     user && (user._id === subject.creatorId || checkEditor)

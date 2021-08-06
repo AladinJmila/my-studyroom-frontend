@@ -6,7 +6,7 @@ import {
 import Check from './../../common/Check'
 import Star from '../../common/Star'
 import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import { isEditor } from './../../services/permissionsService'
+import { userIsEditor } from './../../services/permissionsService'
 
 const PracticalsCard = ({
   user,
@@ -15,7 +15,7 @@ const PracticalsCard = ({
   onDelete,
   onEdit,
 }) => {
-  const showPrivateInfo = user && isEditor(practical.subject.editors, user._id)
+  const showPrivateInfo = user && userIsEditor(practical, user._id)
 
   return (
     <div style={cardsBody} className='card mb-1'>
