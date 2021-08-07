@@ -5,6 +5,8 @@ import {
   loadSubjects,
   loadUpvotedSubjects,
 } from '../store/apps/subjectsActions'
+import plansAndProgress from '../../src/static/images/plansAndProgress.png'
+import dailyStatus from '../../src/static/images/dailyStatus.png'
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
@@ -23,8 +25,11 @@ const Profile = () => {
       className='full-height'
       style={{ width: '80%', position: 'absolute', left: '10%' }}
     >
-      <h2 className='mt-5 text-center'>Timeline</h2>
-      <div
+      <h2 className='mt-5 text-center'>Progress Tracker</h2>
+      <img src={plansAndProgress} className='mt-4' style={{ width: '100%' }} />
+      <h2 className='mt-5 text-center'>Daily Status</h2>
+      <img src={dailyStatus} className='mt-4 mb-4' style={{ width: '100%' }} />
+      {/* <div
         className='mt-4 mb-4'
         style={{
           width: '100%',
@@ -32,7 +37,7 @@ const Profile = () => {
           borderRadius: '0.25rem',
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
-      ></div>
+      ></div> */}
       {/* <div className='d-flex flex-row bd-highlight justify-content-between'> */}
       <div className='row'>
         <div className='col-6'>
