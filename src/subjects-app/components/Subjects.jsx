@@ -85,17 +85,19 @@ const Subjects = ({ appsWrapperRef }) => {
 
   return (
     <div ref={subjectsRef}>
-      <HeaderCard
-        user={user}
-        count={sorted.length - 1}
-        item='Subjects'
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      {showForm && (
-        <SubjectsForm subjects={sorted} toggleShowForm={handleShowForm} />
-      )}
-      <SubjectsSortCard sortTarget={sortTarget} onSort={onSort} />
+      <div className='sticky-top'>
+        <HeaderCard
+          user={user}
+          count={sorted.length - 1}
+          item='Subjects'
+          onClick={handleShowForm}
+          showForm={showForm}
+        />
+        {showForm && (
+          <SubjectsForm subjects={sorted} toggleShowForm={handleShowForm} />
+        )}
+        <SubjectsSortCard sortTarget={sortTarget} onSort={onSort} />
+      </div>
       {loading ? (
         <div className='center-spinner'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />

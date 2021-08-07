@@ -2,11 +2,13 @@ import _ from 'lodash'
 import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BeatLoader } from 'react-spinners'
 import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
 import { loadPublicSubjects } from '../store/apps/subjectsActions'
 
 const Home = () => {
   const publicSubjects = useSelector(state => state.apps.subjects.public)
+  const { loading } = useSelector(state => state.apps.subjects)
   const { user } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
@@ -38,11 +40,21 @@ const Home = () => {
       ></div>
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
-      <div className='pin-container'>
-        {sortedPublicSubjects.map(subject => (
-          <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
-        ))}
-      </div>
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#6A7475'} loading={loading} />
+        </div>
+      ) : (
+        <div className='pin-container'>
+          {sortedPublicSubjects.map(subject => (
+            <SubjectsCardPublic
+              key={subject._id}
+              user={user}
+              subject={subject}
+            />
+          ))}
+        </div>
+      )}
 
       {/* <h2 className='mt-5 text-center'>Popular Courses</h2>
       <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>

@@ -37,7 +37,7 @@ function App() {
         <Route path='/my-profile' component={Profile}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
-        <Route path='/shell' exact component={Shell}></Route>
+        <Route path='/workspace' exact component={Shell}></Route>
         <Route path='/home' exact component={Home}></Route>
         <Redirect from='/' to='/home' />
         <Redirect to='/not-found' />

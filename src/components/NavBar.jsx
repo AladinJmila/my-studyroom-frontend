@@ -23,7 +23,7 @@ function NavBar() {
         style={{ width: '100%' }}
       >
         <div className='container-fluid d-flex flex-row'>
-          <Link className='navbar-brand ' to='/shell'>
+          <Link className='navbar-brand ' to='/home'>
             My StudyRoom{' '}
             <small>
               <i>beta</i>
@@ -60,7 +60,7 @@ function NavBar() {
                 </NavLink>
               </li>
               <li className='nav-item'>
-                <NavLink className='nav-link' to='/shell'>
+                <NavLink className='nav-link' to='/workspace'>
                   Workspace
                 </NavLink>
               </li>
