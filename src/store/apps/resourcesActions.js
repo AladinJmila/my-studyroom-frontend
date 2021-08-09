@@ -19,7 +19,7 @@ export const loadResources = () => async (dispatch, getState) => {
   if (diffInMinutes < loadingInterval) return
 
   try {
-    dispatch(actions.REQUEST_RESOURCES)
+    dispatch(actions.REQUEST_RESOURCES())
 
     const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
 

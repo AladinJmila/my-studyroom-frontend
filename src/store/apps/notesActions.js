@@ -18,7 +18,7 @@ export const loadNotes = () => async (dispatch, getState) => {
   if (diffInMinutes < loadingInterval) return
 
   try {
-    dispatch(actions.REQUEST_NOTES)
+    dispatch(actions.REQUEST_NOTES())
 
     const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
 

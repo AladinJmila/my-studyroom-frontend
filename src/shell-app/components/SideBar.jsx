@@ -87,9 +87,11 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
     styles.maxWidth = show ? 50 : 160
   }
 
-  // useEffect(() => {
-  //   setShow(!count ? false : true)
-  // }, [count])
+  useEffect(() => {
+    if (window.innerWidth < 500 && count) {
+      setShow(!count ? false : true)
+    }
+  }, [count])
 
   return (
     <div

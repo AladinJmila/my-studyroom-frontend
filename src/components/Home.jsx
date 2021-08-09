@@ -41,7 +41,7 @@ const Home = () => {
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
       {loading ? (
-        <div className='center-spinner'>
+        <div className='center'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />
         </div>
       ) : (
