@@ -15,7 +15,7 @@ if (window.innerWidth < 500) {
   containerStyles.maxWidth = window.innerWidth - 55
 }
 const DataColumn = forwardRef(
-  ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
+  ({ name, data, color, icon, show, count, setShow }, ref) => {
     const [showScrollTop, setShowScrollTop] = useState(false)
     const myRef = useRef()
     const topRef = useRef()

@@ -136,6 +136,14 @@ body {
   width: 33px;
 }
 
+.to-top-icon {
+  border-radius: 10px;
+  height: 56px;
+  min-width: 56px;
+  padding: 4px;
+  background-color: rgb(245, 245, 245);
+}
+
 /* @media only screen and (max-width: 500px) {
   .cell {
     margin: 0;

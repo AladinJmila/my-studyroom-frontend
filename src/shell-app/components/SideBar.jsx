@@ -87,9 +87,9 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
     styles.maxWidth = show ? 50 : 160
   }
 
-  useEffect(() => {
-    !count ? setShow(false) : setShow(true)
-  }, [count])
+  // useEffect(() => {
+  //   setShow(!count ? false : true)
+  // }, [count])
 
   return (
     <div
@@ -121,7 +121,10 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       {!show && (
         <div>
           {name === 'Timer (inProgress)' ? (
-            <div className='total-items-side-bar'></div>
+            <div
+              className='total-items-side-bar'
+              style={{ visibility: 'hidden' }}
+            ></div>
           ) : (
             <div className='total-items-side-bar'>{count}</div>
           )}
