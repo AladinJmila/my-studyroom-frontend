@@ -119,7 +119,7 @@ function Resources() {
       </div>
       {loading ? (
         <div className='center-spinner'>
-          <BeatLoader size={50} color={'#3E98C7'} loading={loading} />
+          <BeatLoader size={50} color={'#6A7475'} loading={loading} />
         </div>
       ) : (
         <>

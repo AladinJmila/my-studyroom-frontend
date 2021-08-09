@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BeatLoader } from 'react-spinners'
 import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
 import {
   loadSubjects,
@@ -11,6 +12,7 @@ import dailyStatus from '../../src/static/images/dailyStatus.png'
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
   const upvotedSubjects = useSelector(state => state.apps.subjects.upvoted)
+  const { loading } = useSelector(state => state.apps.subjects)
   const { user } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
@@ -42,27 +44,39 @@ const Profile = () => {
       <div className='row'>
         <div className='col-6'>
           <h2 className='mt-5 text-center'>My Subjects</h2>
-          <div className='pin-container' style={{ height: 1100 }}>
-            {subjects.map(subject => (
-              <SubjectsCardPublic
-                key={subject._id}
-                user={user}
-                subject={subject}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <div className='center'>
+              <BeatLoader size={50} color={'#6A7475'} loading={loading} />
+            </div>
+          ) : (
+            <div className='pin-container' style={{ height: 1100 }}>
+              {subjects.map(subject => (
+                <SubjectsCardPublic
+                  key={subject._id}
+                  user={user}
+                  subject={subject}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className='col-6'>
           <h2 className='mt-5 text-center'>Watchlist</h2>
-          <div className='pin-container'>
-            {upvotedSubjects.map(subject => (
-              <SubjectsCardPublic
-                key={subject._id}
-                user={user}
-                subject={subject}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <div className='center'>
+              <BeatLoader size={50} color={'#6A7475'} loading={loading} />
+            </div>
+          ) : (
+            <div className='pin-container'>
+              {upvotedSubjects.map(subject => (
+                <SubjectsCardPublic
+                  key={subject._id}
+                  user={user}
+                  subject={subject}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
