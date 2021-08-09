@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import Subjects from '../subjects-app/components/Subjects'
 import AppsWrapper from '../shell-app/components/AppsWrapper'
 import VerticalNavBar from '../shell-app/components/VerticalNavBar'
+import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper'
 
 function Shell() {
   const [showSubjects, setShowSubjects] = useState(true)
@@ -17,26 +17,13 @@ function Shell() {
 
   const { selectedSubject } = useSelector(state => state.apps.subjects)
 
-  const subjectsStyle = {
-    paddingRight: 0,
-    minWidth: 330,
-    display: 'block',
-    height: '92vh',
-  }
-
-  subjectsStyle.display = showSubjects ? 'block' : 'none'
-
   return (
     <main
       className='row ps-2 pt-3 flex-nowrap'
       style={{ marginRight: 0, height: '94vh' }}
     >
-      <div style={subjectsStyle} className='col-2 y-scroll subjects'>
-        <h2>Subjects</h2>
-        <div>
-          <Subjects appsWrapperRef={appsWrapperRef} />
-        </div>
-      </div>
+      <SubjectsWrapper showSubjects={showSubjects} />
+
       <VerticalNavBar
         showSubjects={showSubjects}
         setShowSubjects={setShowSubjects}

@@ -102,6 +102,7 @@ const Tasks = () => {
           checkedName='Checked'
         />
       </div>
+
       {loading ? (
         <div className='center-spinner'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />

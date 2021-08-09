@@ -1,4 +1,5 @@
-import { useEffect, useRef, forwardRef } from 'react'
+import { useEffect, useState, useRef, forwardRef } from 'react'
+import ScrollTop from '../../common/ScrollTop'
 import SideBar from './SideBar'
 
 const containerStyles = {
@@ -15,10 +16,21 @@ if (window.innerWidth < 500) {
 }
 const DataColumn = forwardRef(
   ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
+    const [showScrollTop, setShowScrollTop] = useState(false)
     const myRef = useRef()
-    useEffect(() => {
-      setRef(myRef)
-    }, [])
+    const topRef = useRef()
+    const divRef = useRef()
+
+    const handleScrollTop = () => {
+      topRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    const toggleShowScrollTop = () => {
+      const div = divRef.current
+      const scrolled = div.scrollTop
+      setShowScrollTop(scrolled > 300 ? true : false)
+    }
+
     return (
       <div ref={myRef}>
         <div
@@ -36,7 +48,14 @@ const DataColumn = forwardRef(
             itemRef={myRef}
           />
           {show && (
-            <div style={containerStyles} className='y-scroll'>
+            <div
+              ref={divRef}
+              onScroll={toggleShowScrollTop}
+              style={containerStyles}
+              className='y-scroll'
+            >
+              <div ref={topRef}></div>
+              {showScrollTop && <ScrollTop onClick={handleScrollTop} />}
               <h2>{name}</h2>
               {data}
             </div>

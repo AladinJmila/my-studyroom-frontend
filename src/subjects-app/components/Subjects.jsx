@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
 import {
@@ -17,7 +17,7 @@ import SubjectsForm from './SubjectsForm'
 import SubjectsSortCard from './SubjectsSortCard'
 import generateAllSubjects from '../services/generateAllSubjects'
 
-const Subjects = ({ appsWrapperRef }) => {
+const Subjects = () => {
   const [showForm, setShowForm] = useState(false)
   const [sortTarget, setSortTarget] = useState({
     path: 'starred',
@@ -28,7 +28,6 @@ const Subjects = ({ appsWrapperRef }) => {
   const subjects = useSelector(state => state.apps.subjects.list)
   const { user } = useSelector(state => state.auth)
   const { loading } = useSelector(state => state.apps.subjects)
-  const subjectsRef = useRef()
 
   const allSubjects = generateAllSubjects(user, subjects)
 
@@ -63,17 +62,6 @@ const Subjects = ({ appsWrapperRef }) => {
 
   const handleSubjectSelect = subject => {
     dispatch(setSelectedSubject(subject))
-    subjectsRef.current.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start',
-      block: 'nearest',
-    })
-    setTimeout(() => {
-      appsWrapperRef.current.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'start',
-      })
-    }, 100)
   }
 
   const handleShowForm = () => {
@@ -84,7 +72,7 @@ const Subjects = ({ appsWrapperRef }) => {
   sorted = [allSubjects, ...sorted]
 
   return (
-    <div ref={subjectsRef}>
+    <>
       <div className='sticky-top'>
         <HeaderCard
           user={user}
@@ -118,7 +106,7 @@ const Subjects = ({ appsWrapperRef }) => {
           ))}
         </>
       )}
-    </div>
+    </>
   )
 }
 
