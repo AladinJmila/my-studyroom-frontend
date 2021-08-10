@@ -1,4 +1,5 @@
 import { divide } from 'lodash'
+import PublicResources from './PublicResources'
 import PublicTasks from './PublicTasks'
 
 const SubjectDetailsWrapper = () => {
@@ -15,7 +16,7 @@ const SubjectDetailsWrapper = () => {
       // count: pbulicTasksCount,
       // show: showTasks,
       // setShow: setShowTasks,
-      data: null,
+      data: <PublicResources />,
     },
     {
       name: 'StudyNotes',
@@ -34,10 +35,9 @@ const SubjectDetailsWrapper = () => {
   ]
   return (
     <div>
-      <h3>Subject Details Wrapper</h3>
       {subjectContentArray.map(item => (
         <div key={item.name}>
-          <div>{item.name}</div>
+          <h4>{item.name}</h4>
           <div>{item.data}</div>
         </div>
       ))}

@@ -5,7 +5,8 @@ import { loadTasks } from '../../store/apps/tasksActions'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicTasks = () => {
-  const publicTasks = useSelector(state => state.apps.tasks.list)
+  // const publicTasks = useSelector(state => state.apps.tasks.list)
+  const publicTasks = null
   const { loading } = useSelector(state => state.apps.tasks)
   const dispatch = useDispatch()
 
@@ -15,7 +16,6 @@ const PublicTasks = () => {
 
   return (
     <>
-      <h2>Public Tasks</h2>
       {loading ? (
         <div className='center'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />
