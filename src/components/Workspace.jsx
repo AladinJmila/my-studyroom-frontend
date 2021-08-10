@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import AppsWrapper from '../shell-app/components/AppsWrapper'
-import VerticalNavBar from '../shell-app/components/VerticalNavBar'
+import AppsWrapper from '../workspace-app/components/AppsWrapper'
+import VerticalNavBar from '../workspace-app/components/VerticalNavBar'
 import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper'
 
 function Workspace() {
@@ -13,7 +13,6 @@ function Workspace() {
   const [audioNotesRef, setAudioNotesRef] = useState()
   const [visualNotesRef, setVisualNotesRef] = useState()
   const [schedulesRef, setSchedulesRef] = useState()
-  const [appsWrapperRef, setAppsWrapperRef] = useState()
 
   const { selectedSubject } = useSelector(state => state.apps.subjects)
 
@@ -44,7 +43,6 @@ function Workspace() {
         setAudioNotesRef={setAudioNotesRef}
         setVisualNotesRef={setVisualNotesRef}
         setSchedulesRef={setSchedulesRef}
-        setAppsWrapperRef={setAppsWrapperRef}
       />
     </main>
   )

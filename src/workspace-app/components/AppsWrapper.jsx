@@ -20,7 +20,6 @@ const AppsWrapper = ({
   setAudioNotesRef,
   setVisualNotesRef,
   setSchedulesRef,
-  setAppsWrapperRef,
 }) => {
   const [showPracticals, setShowPracticals] = useState(false)
   const [showResources, setShowResources] = useState(false)
@@ -40,11 +39,6 @@ const AppsWrapper = ({
     state => state.ui.practicalsPerSubject[subjectName]
   )
   // const schedulesCount = useSelector(state => state.ui.totalSessions)
-
-  const appsWrapperRef = useRef()
-  useEffect(() => {
-    setAppsWrapperRef(appsWrapperRef)
-  }, [])
 
   const appsWrapperArray = [
     {
@@ -112,7 +106,7 @@ const AppsWrapper = ({
       style={{ padding: 0, height: '92vh' }}
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
-      <div ref={appsWrapperRef}></div>
+      <div></div>
       <AnimateReorderX>
         {sortedAppsWrapper.map(item => (
           <DataColumn

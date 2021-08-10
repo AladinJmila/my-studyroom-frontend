@@ -26,7 +26,7 @@ const PublicResources = () => {
             publicResources.map(resource => (
               <div style={cardsBody} className='card mb-1'>
                 <div className='p-3'>
-                  <p className='mb-2' style={mainContentStyle}>
+                  <p className='mb-0' style={mainContentStyle}>
                     {resource.content}
                     <a
                       href={resource.url}
