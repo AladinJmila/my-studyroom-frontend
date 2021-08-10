@@ -1,5 +1,6 @@
 import { divide } from 'lodash'
 import PublicNotes from './PublicNotes'
+import PublicPracticals from './PublicPracticals'
 import PublicResources from './PublicResources'
 import PublicTasks from './PublicTasks'
 
@@ -31,7 +32,7 @@ const SubjectDetailsWrapper = () => {
       // count: pbulicTasksCount,
       // show: showTasks,
       // setShow: setShowTasks,
-      data: null,
+      data: <PublicPracticals />,
     },
   ]
   return (

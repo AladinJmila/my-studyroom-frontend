@@ -5,7 +5,8 @@ import { loadNotes } from './../../store/apps/notesActions'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicNotes = () => {
-  const publicNotes = useSelector(state => state.apps.notes.list)
+  // const publicNotes = useSelector(state => state.apps.notes.list)
+  const publicNotes = null
   const { loading } = useSelector(state => state.apps.notes)
   const dispatch = useDispatch()
 
