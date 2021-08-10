@@ -32,12 +32,12 @@ class SubjectsShareForm extends Form {
 
   formStyle = {
     width: '30vw',
-    height: 190,
+    minWidth: 300,
     backgroundColor: 'white',
     border: '3px solid #343A40',
     borderRadius: 5,
     color: 'black',
-    padding: '1rem .5rem',
+    padding: '.8rem',
   }
 
   render() {
@@ -51,11 +51,11 @@ class SubjectsShareForm extends Form {
         <h5>
           Sharing "<i>{this.props.subject.name}</i>"
         </h5>
-        <div className='row'>
-          <div className='col-9'>
+        <div className='d-flex flex-nowrap'>
+          <div className='flex-fill'>
             {this.renderInput('email', 'Email', 'text', 'required')}
           </div>
-          <div className='col-3'>
+          <div className='ps-3' style={{ minWidth: 100 }}>
             {this.renderSelect(
               'authType',
               'Permission',
@@ -65,7 +65,7 @@ class SubjectsShareForm extends Form {
           </div>
         </div>
         <div className='d-grid gap-2'>
-          {this.renderButton('Share', 'btn btn-dark mb-2')}
+          {this.renderButton('Share', 'btn btn-dark')}
         </div>
       </form>
     )

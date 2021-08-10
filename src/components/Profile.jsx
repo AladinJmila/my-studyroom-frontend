@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
-import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
 import {
   loadSubjects,
   loadUpvotedSubjects,
@@ -51,7 +51,7 @@ const Profile = () => {
           ) : (
             <div className='pin-container' style={{ height: 1100 }}>
               {subjects.map(subject => (
-                <SubjectsCardPublic
+                <SubjectsCardStandalone
                   key={subject._id}
                   user={user}
                   subject={subject}
@@ -69,7 +69,7 @@ const Profile = () => {
           ) : (
             <div className='pin-container'>
               {upvotedSubjects.map(subject => (
-                <SubjectsCardPublic
+                <SubjectsCardStandalone
                   key={subject._id}
                   user={user}
                   subject={subject}

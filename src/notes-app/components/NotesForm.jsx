@@ -31,7 +31,7 @@ class NotesForm extends Form {
     title: Joi.string().required().max(500).label('Title'),
     subjectId: Joi.string().required().label('Subject'),
     resourceId: Joi.string().allow(''),
-    content: Joi.string().required().max(1000).label('Content'),
+    content: Joi.string().required().max(2000).label('Content'),
     url: Joi.string().max(500).allow('').label('URL'),
   }
 

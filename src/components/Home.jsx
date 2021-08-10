@@ -3,7 +3,7 @@ import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
-import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
 import { loadPublicSubjects } from '../store/apps/subjectsActions'
 
 const Home = () => {
@@ -47,7 +47,7 @@ const Home = () => {
       ) : (
         <div className='pin-container'>
           {sortedPublicSubjects.map(subject => (
-            <SubjectsCardPublic
+            <SubjectsCardStandalone
               key={subject._id}
               user={user}
               subject={subject}
@@ -59,7 +59,7 @@ const Home = () => {
       {/* <h2 className='mt-5 text-center'>Popular Courses</h2>
       <div className='d-flex flex-row bd-highlight justify-content-around flex-wrap p-4'>
         {subjects.map(subject => (
-          <SubjectsCardPublic key={subject._id} user={user} subject={subject} />
+          <SubjectsCardStandalone key={subject._id} user={user} subject={subject} />
         ))}
       </div> */}
     </div>

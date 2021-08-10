@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SubjectsCardPublic from '../subjects-app/components/SubjectsCardPublic'
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
 import {
   loadOneUserPublicSubjects,
   loadOneUserUpvotedSubjects,
@@ -46,7 +46,7 @@ const ProfilePublic = () => {
           <h2 className='mt-5 text-center'>My Public Subjects</h2>
           <div className='pin-container' style={{ height: 1100 }}>
             {usersPublicsubjects?.map(subject => (
-              <SubjectsCardPublic
+              <SubjectsCardStandalone
                 key={subject._id}
                 user={user}
                 subject={subject}
@@ -58,7 +58,7 @@ const ProfilePublic = () => {
           <h2 className='mt-5 text-center'>Watchlist</h2>
           <div className='pin-container'>
             {usersUpvotedSubjects?.map(subject => (
-              <SubjectsCardPublic
+              <SubjectsCardStandalone
                 key={subject._id}
                 user={user}
                 subject={subject}

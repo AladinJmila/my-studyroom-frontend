@@ -1,14 +1,10 @@
 const ScrollTop = ({ onClick }) => {
   const divStyle = {
     position: 'sticky',
-    top: window.innerHeight * 0.8,
+    top: (window.innerHeight - 110) * 0.9,
     width: '100%',
     zIndex: 2000,
     height: 0,
-  }
-
-  const iconStyle = {
-    backgroundcolor: 'white',
   }
 
   return (

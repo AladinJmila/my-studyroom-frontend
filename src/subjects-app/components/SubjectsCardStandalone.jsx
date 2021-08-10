@@ -15,11 +15,11 @@ import {
   upvoteSubject,
   toggleSubjectUpvote,
 } from '../../store/apps/subjectsActions'
-import ItemsCount from './ItemsCount'
 import ProgressStats from './ProgressStats'
-import CardFooter from './CardFooter'
+import ItemsCount from './ItemsCount'
+import SubjectsCardFooter from './SubjectsCardFooter'
 
-const SubjectsCardPublic = ({ user, subject }) => {
+const SubjectsCardStandalone = ({ user, subject }) => {
   const dispatch = useDispatch()
 
   const tasksPercentage =
@@ -143,7 +143,7 @@ const SubjectsCardPublic = ({ user, subject }) => {
           />
         </div>
 
-        <CardFooter
+        <SubjectsCardFooter
           user={user}
           subject={subject}
           onToggleUpvote={handleToggleUpvote}
@@ -153,4 +153,4 @@ const SubjectsCardPublic = ({ user, subject }) => {
   )
 }
 
-export default SubjectsCardPublic
+export default SubjectsCardStandalone

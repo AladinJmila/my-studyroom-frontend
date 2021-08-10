@@ -113,7 +113,7 @@ export const upvoteSubject = (id, update) => async dispatch => {
     )
 
     dispatch(actions.UPDATE_SUBJECT(data))
-    dispatch(loadUpvotedSubjects())
+    // dispatch(loadUpvotedSubjects())
   } catch (error) {
     console.log(error)
   }
