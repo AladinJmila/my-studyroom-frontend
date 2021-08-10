@@ -4,7 +4,7 @@ import AppsWrapper from '../shell-app/components/AppsWrapper'
 import VerticalNavBar from '../shell-app/components/VerticalNavBar'
 import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper'
 
-function Shell() {
+function Workspace() {
   const [showSubjects, setShowSubjects] = useState(true)
   const [tasksRef, setTasksRef] = useState()
   const [resourcesRef, setResourcesRef] = useState()
@@ -50,4 +50,4 @@ function Shell() {
   )
 }
 
-export default Shell
+export default Workspace

@@ -1,7 +1,7 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import Shell from './components/Shell'
+import Workspace from './components/Workspace'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
@@ -14,6 +14,7 @@ import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
 import './App.css'
 import Home from './components/Home'
+import SubjectDetails from './components/SubjectDetails'
 
 function App() {
   const user = getCurrentUser()
@@ -35,9 +36,10 @@ function App() {
           component={ProfilePublic}
         ></Route>
         <Route path='/my-profile' component={Profile}></Route>
+        <Route path='/subject/:id' component={SubjectDetails}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
-        <Route path='/workspace' exact component={Shell}></Route>
+        <Route path='/workspace' exact component={Workspace}></Route>
         <Route path='/home' exact component={Home}></Route>
         <Redirect from='/' to='/home' />
         <Redirect to='/not-found' />
