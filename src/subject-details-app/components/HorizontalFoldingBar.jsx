@@ -14,7 +14,7 @@ import iconVS from '../../static/images/icons/V-S.png'
 import iconSB from '../../static/images/icons/S-M.png'
 import iconSS from '../../static/images/icons/S-S.png'
 
-const SideBar = ({ name, show, count, setShow, itemRef }) => {
+const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
@@ -64,18 +64,18 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       break
   }
 
-  let minWidth
-  let maxWidth
+  let minHeight
+  let maxHeight
 
   const styles = {
-    minWidth: minWidth,
-    maxWidth: maxWidth,
-    height: '100%',
+    minHeight: minHeight,
+    maxHeight: maxHeight,
+    width: '100%',
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
-    margin: '0 5px',
-    padding: '10px 5px',
+    margin: '16px 0',
+    padding: 20,
     positon: 'relative',
   }
 
@@ -83,8 +83,8 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
     styles.margin = 0
     styles.display = 'none'
   } else {
-    styles.minWidth = show ? 50 : 160
-    styles.maxWidth = show ? 50 : 160
+    styles.minHeight = show ? 50 : 130
+    styles.maxHeight = show ? 50 : 130
   }
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
 
   return (
     <div
-      className='float-start side-bar center relative'
+      className='folding-bar d-flex  align-items-center'
       style={styles}
       onClick={() => {
         handleToggleColumn()
@@ -107,35 +107,31 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
       }}
     >
       {show ? (
-        <img className='s-bar-small-icon' src={smallIcon} />
+        <img className='folding-bar-small-icon float-end' src={smallIcon} />
       ) : (
-        <img className='s-bar-big-icon' src={bigIcon} />
+        <img className='folding-bar-medium-icon float-end me-4' src={bigIcon} />
       )}
       <br />
       <i
         className={
           show
-            ? 'fa fa-angle-double-left fa-2x mt-4 '
-            : 'fa fa-angle-double-right fa-2x mt-4 '
+            ? 'fa fa-angle-double-up fa-2x ms-4 me-4'
+            : 'fa fa-angle-double-down fa-2x ms-4 me-4'
         }
         aria-hidden='true'
       ></i>
       {!show && (
-        <div>
-          {name === 'Timer (inProgress)' ? (
-            <div
-              className='total-items-side-bar'
-              style={{ visibility: 'hidden' }}
-            ></div>
-          ) : (
-            <div className='total-items-side-bar'>{count}</div>
-          )}
+        <div className='grow-1 d-flex align-items-center'>
+          <div className='mt-0 ms-4 me-4 total-items-folding-bar'>{count}</div>
+
           <h2
-            className='rotate-title-90'
-            style={{
-              textAlign: 'left',
-              // whiteSpace: 'nowrap',
-            }}
+            // className='rotate-title-90'
+            style={
+              {
+                // textAlign: 'left',
+                // whiteSpace: 'nowrap',
+              }
+            }
           >
             {name}
           </h2>
@@ -145,4 +141,4 @@ const SideBar = ({ name, show, count, setShow, itemRef }) => {
   )
 }
 
-export default SideBar
+export default VerticalFoldingBar

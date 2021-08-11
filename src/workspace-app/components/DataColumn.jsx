@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, forwardRef } from 'react'
 import ScrollTop from '../../common/ScrollTop'
-import SideBar from './SideBar'
+import VerticalFoldingBar from './VerticalFoldingBar'
 
 const containerStyles = {
   margin: '5px 10px',
@@ -38,7 +38,7 @@ const DataColumn = forwardRef(
           style={{ padding: 0, height: '100%' }}
           className='data-column'
         >
-          <SideBar
+          <VerticalFoldingBar
             name={name}
             color={color}
             icon={icon}

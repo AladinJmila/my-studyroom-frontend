@@ -47,12 +47,12 @@ body {
 }
 
 /* Side bar */
-.side-bar {
+.folding-bar {
   height: 100%;
   display: inline-block;
 }
 
-.total-items-side-bar {
+.total-items-folding-bar {
   display: inline-flex;
   justify-content: center;
   font-size: 2rem;
@@ -71,15 +71,22 @@ body {
   text-align: center;
 }
 
-/* side bar big icons */
-.s-bar-big-icon {
+/* folding bar big icons */
+.folding-bar-big-icon {
   cursor: pointer;
   height: 100px;
   width: 100px;
 }
 
-/* side bar small icons */
-.s-bar-small-icon {
+/* folding bar medium icons */
+.folding-bar-medium-icon {
+  cursor: pointer;
+  height: 90px;
+  width: 90px;
+}
+
+/* folding bar small icons */
+.folding-bar-small-icon {
   cursor: pointer;
   height: 35px;
   width: 35px;
@@ -158,7 +165,7 @@ body {
     min-width: 300px;
   }
 
-  .side-bar {
+  .folding-bar {
     height: 100%;
   }
 } */
