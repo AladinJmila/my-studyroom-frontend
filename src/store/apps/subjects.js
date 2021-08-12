@@ -27,6 +27,10 @@ const slice = createSlice({
       subjects.lastFetch = Date.now()
     },
 
+    GET_SUBJECT: (subjects, action) => {
+      subjects.selectedSubject = action.payload
+    },
+
     GET_PUBLIC_SUBJECTS: (subjects, action) => {
       subjects.public = action.payload
       subjects.loading = false
@@ -57,8 +61,12 @@ const slice = createSlice({
       subjects.list.unshift(action.payload)
     },
 
-    SELECT_SUBJECT: (uiParams, action) => {
-      uiParams.selectedSubject = action.payload
+    SELECT_SUBJECT: (subjects, action) => {
+      subjects.selectedSubject = action.payload
+    },
+
+    CLEAR_SELECTED_SUBJECT: (subjects, action) => {
+      subjects.selectedSubject = null
     },
 
     UPDATE_SUBJECT: (subjects, action) => {
@@ -148,12 +156,14 @@ export const {
   REQUEST_SUBJECTS,
   REQUEST_SUBJECTS_FAIL,
   GET_SUBJECTS,
+  GET_SUBJECT,
   GET_PUBLIC_SUBJECTS,
   GET_ONE_USER_PUBLIC_SUBJECTS,
   GET_UPVOTED_SUBJECTS,
   GET_ONE_USER_UPVOTED_SUBJECTS,
   CREATE_SUBJECT,
   SELECT_SUBJECT,
+  CLEAR_SELECTED_SUBJECT,
   UPDATE_SUBJECT,
   UPDATE_SUBJECT_ON_EDIT,
   UPDATE_SUBJECT_CHECKED_ITEMS_COUNT,

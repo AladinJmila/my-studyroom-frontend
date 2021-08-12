@@ -24,7 +24,6 @@ class RegisterForm extends Form {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const errors = { ...this.state.errors }
-        console.log(error.response.data)
         errors.email = error.response.data
         this.setState({ errors })
       }

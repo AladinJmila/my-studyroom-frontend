@@ -14,20 +14,10 @@ import iconVS from '../../static/images/icons/V-S.png'
 import iconSB from '../../static/images/icons/S-M.png'
 import iconSS from '../../static/images/icons/S-S.png'
 
-const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
+const VerticalFoldingBar = ({ name, show, count, setShow }) => {
   const handleToggleColumn = () => {
     show = show ? false : true
     setShow(show)
-  }
-
-  const navigateToItem = () => {
-    // console.log(itemRef)
-    itemRef.current.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-      // inline: 'start',
-      // inline: 'end',
-    })
   }
 
   let bigIcon
@@ -64,12 +54,12 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
       break
   }
 
-  let minHeight
-  let maxHeight
+  // let minHeight
+  // let maxHeight
 
   const styles = {
-    minHeight: minHeight,
-    maxHeight: maxHeight,
+    minHeight: 100,
+    maxHeight: 100,
     width: '100%',
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -79,13 +69,13 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
     positon: 'relative',
   }
 
-  if (window.innerWidth < 500 && count) {
-    styles.margin = 0
-    styles.display = 'none'
-  } else {
-    styles.minHeight = show ? 50 : 130
-    styles.maxHeight = show ? 50 : 130
-  }
+  // if (window.innerWidth < 500 && count) {
+  //   styles.margin = 0
+  //   styles.display = 'none'
+  // } else {
+  //   styles.minHeight = show ? 50 : 130
+  //   styles.maxHeight = show ? 50 : 130
+  // }
 
   useEffect(() => {
     if (window.innerWidth < 500 && count) {
@@ -97,20 +87,13 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
     <div
       className='folding-bar d-flex  align-items-center'
       style={styles}
-      onClick={() => {
-        handleToggleColumn()
-        if (show) {
-          setTimeout(() => {
-            navigateToItem()
-          }, 200)
-        }
-      }}
+      onClick={handleToggleColumn}
     >
-      {show ? (
+      {/* {show ? (
         <img className='folding-bar-small-icon float-end' src={smallIcon} />
-      ) : (
-        <img className='folding-bar-medium-icon float-end me-4' src={bigIcon} />
-      )}
+      ) : ( */}
+      <img className='folding-bar-medium-icon float-end me-4' src={bigIcon} />
+      {/* )} */}
       <br />
       <i
         className={
@@ -120,23 +103,12 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
         }
         aria-hidden='true'
       ></i>
-      {!show && (
-        <div className='grow-1 d-flex align-items-center'>
-          <div className='mt-0 ms-4 me-4 total-items-folding-bar'>{count}</div>
-
-          <h2
-            // className='rotate-title-90'
-            style={
-              {
-                // textAlign: 'left',
-                // whiteSpace: 'nowrap',
-              }
-            }
-          >
-            {name}
-          </h2>
-        </div>
-      )}
+      {/* {!show && ( */}
+      <div className='grow-1 d-flex align-items-center'>
+        <div className='mt-0 ms-4 me-4 total-items-folding-bar'>{count}</div>
+        <h2>{name}</h2>
+      </div>
+      {/* )} */}
     </div>
   )
 }

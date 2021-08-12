@@ -54,8 +54,6 @@ class SessionsForm extends Form {
     const data = { ...this.state.data }
     data.creatorId = this.props.user._id
 
-    console.log(data)
-
     const {
       createSession,
       updateSession,

@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import 'react-circular-progressbar/dist/styles.css'
 import Star from '../../common/Star'
 import {
@@ -6,21 +7,17 @@ import {
   mainContentStyle,
 } from '../../services/stylesService'
 import {
-  setTasksPerSubject,
-  setNotesPerSubject,
-  setResourcesPerSubject,
-  setPracticalsPerSubject,
-} from '../../store/ui/uiParams'
-import {
   upvoteSubject,
   toggleSubjectUpvote,
 } from '../../store/apps/subjectsActions'
 import ProgressStats from './ProgressStats'
 import ItemsCount from './ItemsCount'
 import SubjectsCardFooter from './SubjectsCardFooter'
+import { setSelectedSubject } from './../../store/apps/subjectsActions'
 
 const SubjectsCardStandalone = ({ user, subject }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const tasksPercentage =
     Math.round((subject.numberOfCheckedTasks / subject.numberOfTasks) * 100) ||
@@ -30,11 +27,6 @@ const SubjectsCardStandalone = ({ user, subject }) => {
     Math.round(
       (subject.numberOfCheckedResources / subject.numberOfResources) * 100
     ) || 0
-
-  dispatch(setTasksPerSubject(subject.name, subject.numberOfTasks))
-  dispatch(setNotesPerSubject(subject.name, subject.numberOfNotes))
-  dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources))
-  dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals))
 
   const showPrivateInfo = user && user._id === subject.creatorId
 
@@ -87,6 +79,11 @@ const SubjectsCardStandalone = ({ user, subject }) => {
       break
   }
 
+  const handleShowSubjectDetails = () => {
+    history.push(`/subjects/${subject._id}`)
+    dispatch(setSelectedSubject(subject))
+  }
+
   const cardStyle = {
     ...backgroundOpacity,
     gridRowEnd,
@@ -99,8 +96,15 @@ const SubjectsCardStandalone = ({ user, subject }) => {
         <div className='d-flex flex-row justify-content-between'>
           <h5 className='card-title text-truncate'>
             {subject.name}{' '}
-            {subject.starred && <Star className='yellow' starred />}
+            {showPrivateInfo && subject.starred && (
+              <Star className='yellow' starred />
+            )}
           </h5>
+          <i
+            onClick={() => handleShowSubjectDetails(subject)}
+            className='fa fa-lg fa-info-circle mt-1 pointer'
+            aria-hidden='true'
+          ></i>
         </div>
 
         <ProgressStats

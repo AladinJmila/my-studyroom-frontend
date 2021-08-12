@@ -26,7 +26,6 @@ const AnimateReorder = ({ children }) => {
         const firstBox = prevBoundingBox[child.key]
         const lastBox = boundingBox[child.key]
         const changeInY = firstBox?.top - lastBox?.top
-        console.log(changeInY)
 
         if (changeInY && changeInY !== NaN) {
           requestAnimationFrame(() => {

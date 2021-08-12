@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
-import { loadTasks } from '../../store/apps/tasksActions'
+import { loadOneSubjectPublicTasks } from '../../store/apps/tasksActions'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicTasks = () => {
-  // const publicTasks = useSelector(state => state.apps.tasks.list)
-  const publicTasks = null
+  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const publicTasks = useSelector(
+    state => state.apps.tasks.subjectsPublic[subject._id]
+  )
   const { loading } = useSelector(state => state.apps.tasks)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadTasks())
+    dispatch(loadOneSubjectPublicTasks(subject._id))
   }, [])
 
   return (

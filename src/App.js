@@ -36,7 +36,7 @@ function App() {
           component={ProfilePublic}
         ></Route>
         <Route path='/my-profile' component={Profile}></Route>
-        <Route path='/subject/:id' component={SubjectDetails}></Route>
+        <Route path='/subjects/:id' component={SubjectDetails}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/not-found' component={NotFound}></Route>
         <Route path='/workspace' exact component={Workspace}></Route>

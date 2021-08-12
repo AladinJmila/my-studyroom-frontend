@@ -25,7 +25,6 @@ const slice = createSlice({
     UPDATE_LOOPS: (loops, action) => {
       action.payload.forEach(loop => {
         const index = loops.list.findIndex(l => l._id === loop._id)
-        console.log(loop)
         loops.list[index] = loop
       })
     },

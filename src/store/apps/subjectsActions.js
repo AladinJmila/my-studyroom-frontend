@@ -42,6 +42,18 @@ export const loadPublicSubjects = () => async dispatch => {
   }
 }
 
+export const loadSubject = subjectId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_SUBJECTS())
+
+    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
+
+    dispatch(actions.GET_SUBJECT(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const loadOneUserPublicSubjects = creatorId => async dispatch => {
   try {
     dispatch(actions.REQUEST_SUBJECTS())
@@ -71,6 +83,7 @@ export const loadUpvotedSubjects = () => async dispatch => {
 export const loadOneUserUpvotedSubjects = creatorId => async dispatch => {
   try {
     dispatch(actions.REQUEST_SUBJECTS())
+
     const { data } = await httpService.get(`${apiEndPoint}/usersUpvoted`, {
       headers: { creatorid: creatorId },
     })
@@ -93,6 +106,10 @@ export const createSubject = subject => async dispatch => {
 
 export const setSelectedSubject = subject => dispatch => {
   dispatch(actions.SELECT_SUBJECT(subject))
+}
+
+export const clearSelectedSubject = () => dispatch => {
+  dispatch(actions.CLEAR_SELECTED_SUBJECT())
 }
 
 export const patchSubject = (id, update) => async dispatch => {

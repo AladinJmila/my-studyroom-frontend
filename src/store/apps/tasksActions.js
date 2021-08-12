@@ -29,6 +29,18 @@ export const loadTasks = () => async (dispatch, getState) => {
   }
 }
 
+export const loadOneSubjectPublicTasks = subjectId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_TASKS())
+
+    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
+
+    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_TASKS({ subjectId, data }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createTask = task => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, task)
@@ -38,6 +50,7 @@ export const createTask = task => async dispatch => {
     console.log(error)
   }
 }
+
 export const setSelectedTask = task => dispatch => {
   dispatch(actions.SELECT_TASK(task))
 }

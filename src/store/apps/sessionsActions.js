@@ -60,7 +60,7 @@ export const updateSession = session => async dispatch => {
 
     dispatch(actions.UPDATE_SESSION(data))
   } catch (error) {
-    console.log()
+    console.log(error)
   }
 }
 

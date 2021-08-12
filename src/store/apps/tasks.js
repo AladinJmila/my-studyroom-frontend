@@ -7,6 +7,7 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     selectedTask: null,
+    subjectsPublic: {},
   },
   reducers: {
     REQUEST_TASKS: (tasks, action) => {
@@ -21,6 +22,12 @@ const slice = createSlice({
       tasks.list = action.payload
       tasks.loading = false
       tasks.lastFetch = Date.now()
+    },
+
+    GET_ONE_SUBJECT_PUBLIC_TASKS: (tasks, action) => {
+      const { subjectId, data } = action.payload
+      tasks.subjectsPublic[subjectId] = data
+      tasks.loading = false
     },
 
     CREATE_TASK: (tasks, action) => {
@@ -57,6 +64,7 @@ export const {
   REQUEST_TASKS,
   REQUEST_TASKS_FAIL,
   GET_TASKS,
+  GET_ONE_SUBJECT_PUBLIC_TASKS,
   CREATE_TASK,
   SELECT_TASK,
   CLEAR_SELECTED_TASK,

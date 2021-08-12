@@ -17,9 +17,9 @@ if (window.innerWidth < 500) {
 const DataColumn = forwardRef(
   ({ name, data, color, icon, show, count, setShow }, ref) => {
     const [showScrollTop, setShowScrollTop] = useState(false)
-    const myRef = useRef()
     const topRef = useRef()
     const divRef = useRef()
+    const myRef = useRef()
 
     const handleScrollTop = () => {
       topRef.current.scrollIntoView({ behavior: 'smooth' })
