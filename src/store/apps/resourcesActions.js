@@ -30,6 +30,18 @@ export const loadResources = () => async (dispatch, getState) => {
   }
 }
 
+export const loadOneSubjectPublicResources = subjectId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_RESOURCES())
+
+    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
+
+    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_RESOURCES({ subjectId, data }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createResource = resource => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, resource)

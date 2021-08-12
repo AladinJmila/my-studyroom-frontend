@@ -1,23 +1,25 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadResources } from './../../store/apps/resourcesActions'
+import { loadOneSubjectPublicResources } from './../../store/apps/resourcesActions'
 import { BeatLoader } from 'react-spinners'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicResources = () => {
-  // const publicResources = useSelector(state => state.apps.resources.list)
-  const publicResources = null
+  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const publicResources = useSelector(
+    state => state.apps.resources.subjectsPublic[subject._id]
+  )
   const { loading } = useSelector(state => state.apps.resources)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadResources())
+    dispatch(loadOneSubjectPublicResources(subject._id))
   }, [])
 
   return (
     <div>
       {loading ? (
-        <div className='center-spinner'>
+        <div className='center'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />
         </div>
       ) : (

@@ -7,6 +7,7 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     selectedResource: null,
+    subjectsPublic: {},
   },
   reducers: {
     REQUEST_RESOURCES: (resources, action) => {
@@ -21,6 +22,12 @@ const slice = createSlice({
       resources.list = action.payload
       resources.loading = false
       resources.lastFetch = Date.now()
+    },
+
+    GET_ONE_SUBJECT_PUBLIC_RESOURCES: (resources, action) => {
+      const { subjectId, data } = action.payload
+      resources.subjectsPublic[subjectId] = data
+      resources.loading = false
     },
 
     CREATE_RESOURCE: (resources, action) => {
@@ -61,6 +68,7 @@ export const {
   REQUEST_RESOURCES,
   REQUEST_RESOURCES_FAIL,
   GET_RESOURCES,
+  GET_ONE_SUBJECT_PUBLIC_RESOURCES,
   CREATE_RESOURCE,
   CREATE_YOUTUBE_RESOURCES,
   SELECT_RESOURCE,
