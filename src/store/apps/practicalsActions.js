@@ -29,6 +29,18 @@ export const loadPracticals = () => async (dispatch, getState) => {
   }
 }
 
+export const loadOneSubjectPublicPracticals = subjectId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_PRACTICALS())
+
+    const { data } = httpService.get(`${apiEndPoint}/${subjectId}`)
+
+    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_PRACTICALS({ subjectId, data }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createPractical = practical => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, practical)

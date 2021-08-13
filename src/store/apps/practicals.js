@@ -7,6 +7,7 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     selectedPractical: null,
+    subjectsPublic: {},
   },
   reducers: {
     REQUEST_PRACTICALS: (practicals, action) => {
@@ -21,6 +22,12 @@ const slice = createSlice({
       practicals.list = action.payload
       practicals.loading = false
       practicals.lastFetch = Date.now()
+    },
+
+    GET_ONE_SUBJECT_PUBLIC_PRACTICALS: (practicals, action) => {
+      const { subjectId, data } = action.payload
+      practicals.subjectsPublic[subjectId] = data
+      practicals.loading = false
     },
 
     CREATE_PRACTICAL: (practicals, action) => {
@@ -57,6 +64,7 @@ export const {
   REQUEST_PRACTICALS,
   REQUEST_PRACTICALS_FAIL,
   GET_PRACTICALS,
+  GET_ONE_SUBJECT_PUBLIC_PRACTICALS,
   CREATE_PRACTICAL,
   SELECT_PRACTICAL,
   CLEAR_SELECTED_PRACTICAL,

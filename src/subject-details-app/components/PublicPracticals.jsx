@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadPracticals } from './../../store/apps/practicalsActions'
+import { loadOneSubjectPublicPracticals } from './../../store/apps/practicalsActions'
 import { BeatLoader } from 'react-spinners'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicPracticals = () => {
-  // const publicPracticals = useSelector(state => state.apps.practicals.list)
-  const publicPracticals = null
+  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const publicPracticals = useSelector(
+    state => state.apps.practicals.subjectsPublic[subject._id]
+  )
   const { loading } = useSelector(state => state.apps.practicals)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadPracticals())
+    dispatch(loadOneSubjectPublicPracticals(subject._id))
   }, [])
   return (
     <div>

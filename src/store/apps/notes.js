@@ -8,6 +8,7 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     selectedNote: null,
+    subjectsPublic: {},
   },
   reducers: {
     REQUEST_NOTES: (notes, action) => {
@@ -22,6 +23,12 @@ const slice = createSlice({
       notes.list = action.payload
       notes.loading = false
       notes.lastFetch = Date.now()
+    },
+
+    GET_ONE_SUBJECT_PUBLIC_NOTES: (notes, action) => {
+      const { subjectId, data } = action.payload
+      notes.subjectsPublic[subjectId] = data
+      notes.loading = false
     },
 
     CREATE_NOTE: (notes, action) => {
@@ -62,6 +69,7 @@ export const {
   REQUEST_NOTES,
   REQUEST_NOTES_FAIL,
   GET_NOTES,
+  GET_ONE_SUBJECT_PUBLIC_NOTES,
   CREATE_NOTE,
   SELECT_NOTE,
   CLEAR_SELECTED_NOTE,

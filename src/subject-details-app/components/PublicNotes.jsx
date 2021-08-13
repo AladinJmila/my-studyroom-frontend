@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
-import { loadNotes } from './../../store/apps/notesActions'
+import { loadOneSubjectPublicNotes } from './../../store/apps/notesActions'
 import { cardsBody, mainContentStyle } from './../../services/stylesService'
 
 const PublicNotes = () => {
-  // const publicNotes = useSelector(state => state.apps.notes.list)
-  const publicNotes = null
+  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const publicNotes = useSelector(
+    state => state.apps.notes.subjectsPublic[subject._id]
+  )
   const { loading } = useSelector(state => state.apps.notes)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadNotes())
+    dispatch(loadOneSubjectPublicNotes(subject._id))
   }, [])
 
   return (

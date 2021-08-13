@@ -29,6 +29,18 @@ export const loadNotes = () => async (dispatch, getState) => {
   }
 }
 
+export const loadOneSubjectPublicNotes = subjectId => async dispatch => {
+  try {
+    dispatch(actions.REQUEST_NOTES())
+
+    const { data } = httpService.get(`${apiEndPoint}/${subjectId}`)
+
+    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_NOTES({ subjectId, data }))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const createNote = note => async dispatch => {
   try {
     const { data } = await httpService.post(apiEndPoint, note)
