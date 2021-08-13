@@ -38,6 +38,10 @@ const slice = createSlice({
       resources.list = [...action.payload, ...resources.list]
     },
 
+    CLONE_RESOURCES: (resources, action) => {
+      resources.list = [...action.payload, ...resources.list]
+    },
+
     SELECT_RESOURCE: (resources, action) => {
       resources.selectedResource = action.payload
     },
@@ -71,6 +75,7 @@ export const {
   GET_ONE_SUBJECT_PUBLIC_RESOURCES,
   CREATE_RESOURCE,
   CREATE_YOUTUBE_RESOURCES,
+  CLONE_RESOURCES,
   SELECT_RESOURCE,
   CLEAR_SELECTED_RESOURCE,
   UPDATE_RESOURCE,

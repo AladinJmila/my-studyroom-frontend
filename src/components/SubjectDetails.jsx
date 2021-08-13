@@ -3,10 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { BeatLoader } from 'react-spinners'
 import SubjectDetailsWrapper from './../subject-details-app/components/SubjectDetailsWrapper'
-import { loadSubject } from './../store/apps/subjectsActions'
+import {
+  loadSubject,
+  cloneSubject,
+  clearClonedSubject,
+  setSelectedSubject,
+} from './../store/apps/subjectsActions'
+import { cloneResources } from './../store/apps/resourcesActions'
 
 const SubjectDetails = () => {
   const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const clonedSubject = useSelector(state => state.apps.subjects.clonedSubject)
   const { loading } = useSelector(state => state.apps.subjects)
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -14,6 +21,20 @@ const SubjectDetails = () => {
   useEffect(() => {
     dispatch(loadSubject(id))
   }, [])
+
+  const handleSubjectClone = () => {
+    dispatch(cloneSubject(subject._id))
+  }
+
+  if (clonedSubject) {
+    if (clonedSubject.numberOfPublicResources !== 0)
+      dispatch(cloneResources(subject._id, clonedSubject._id))
+
+    dispatch(clearClonedSubject())
+    dispatch(setSelectedSubject(clonedSubject))
+
+    window.alert('Subject Cloned')
+  }
 
   const subjectDetails = {
     width: '100%',
@@ -34,6 +55,12 @@ const SubjectDetails = () => {
           {subject && (
             <>
               <div className='mt-4' style={subjectDetails}>
+                <i
+                  title='clone'
+                  onClick={handleSubjectClone}
+                  className='fa fa-lg fa-clone float-end pointer'
+                  aria-hidden='true'
+                ></i>
                 <h2 className='text-center'>{subject.name}</h2>
                 <h3>Creator: {subject.creatorName}</h3>
                 <h3>Upvotes: {subject.upvotes.length}</h3>

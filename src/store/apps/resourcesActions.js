@@ -71,6 +71,20 @@ export const createYoutubeResources = body => async dispatch => {
   }
 }
 
+export const cloneResources =
+  (oldSubjectId, newSubjectId) => async dispatch => {
+    try {
+      const { data } = await httpService.post(`${apiEndPoint}/clone`, {
+        oldSubjectId,
+        newSubjectId,
+      })
+
+      dispatch(actions.CLONE_RESOURCES(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 export const setSelectedResource = resource => dispatch => {
   dispatch(actions.SELECT_RESOURCE(resource))
 }

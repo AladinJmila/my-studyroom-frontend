@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useEffect, useState, useRef, createRef } from 'react'
+import { useState, createRef } from 'react'
 import { useSelector } from 'react-redux'
 import Notes from '../../notes-app/components/Notes'
 import Tasks from '../../tasks-app/components/Tasks'
@@ -38,7 +38,6 @@ const AppsWrapper = ({
   const practicalsCount = useSelector(
     state => state.ui.practicalsPerSubject[subjectName]
   )
-  // const schedulesCount = useSelector(state => state.ui.totalSessions)
 
   const appsWrapperArray = [
     {
@@ -99,7 +98,7 @@ const AppsWrapper = ({
     },
   ]
 
-  const sortedAppsWrapper = _.orderBy(appsWrapperArray, ['count'], ['desc'])
+  const sortedAppsArray = _.orderBy(appsWrapperArray, ['count'], ['desc'])
 
   return (
     <div
@@ -108,7 +107,7 @@ const AppsWrapper = ({
     >
       <div></div>
       <AnimateReorderX>
-        {sortedAppsWrapper.map(item => (
+        {sortedAppsArray.map(item => (
           <DataColumn
             key={item.name}
             data={item.data}

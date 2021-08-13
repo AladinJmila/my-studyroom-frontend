@@ -11,6 +11,7 @@ const slice = createSlice({
     loading: false,
     lastFetch: null,
     selectedSubject: null,
+    clonedSubject: null,
   },
   reducers: {
     REQUEST_SUBJECTS: (subjects, action) => {
@@ -60,6 +61,16 @@ const slice = createSlice({
 
     CREATE_SUBJECT: (subjects, action) => {
       subjects.list.unshift(action.payload)
+    },
+
+    CLONE_SUBJECT: (subjects, action) => {
+      subjects.clonedSubject = action.payload
+      subjects.list.unshift(action.payload)
+      subjects.public.unshift(action.payload)
+    },
+
+    CLEAR_CLONED_SUBJECT: (subjects, action) => {
+      subjects.clonedSubject = null
     },
 
     SELECT_SUBJECT: (subjects, action) => {
@@ -163,6 +174,8 @@ export const {
   GET_UPVOTED_SUBJECTS,
   GET_ONE_USER_UPVOTED_SUBJECTS,
   CREATE_SUBJECT,
+  CLONE_SUBJECT,
+  CLEAR_CLONED_SUBJECT,
   SELECT_SUBJECT,
   CLEAR_SELECTED_SUBJECT,
   UPDATE_SUBJECT,

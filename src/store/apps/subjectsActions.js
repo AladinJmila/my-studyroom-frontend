@@ -56,6 +56,22 @@ export const loadSubject = subjectId => async dispatch => {
   }
 }
 
+export const cloneSubject = subjectId => async dispatch => {
+  try {
+    const { data } = await httpService.post(`${apiEndPoint}/clone`, {
+      subjectId,
+    })
+
+    dispatch(actions.CLONE_SUBJECT(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const clearClonedSubject = () => dispatch => {
+  dispatch(actions.CLEAR_CLONED_SUBJECT())
+}
+
 export const loadOneUserPublicSubjects = creatorId => async dispatch => {
   try {
     dispatch(actions.REQUEST_SUBJECTS())

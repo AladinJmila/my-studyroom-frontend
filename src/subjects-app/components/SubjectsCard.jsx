@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-circular-progressbar/dist/styles.css'
 import {
@@ -28,6 +28,7 @@ const SubjectsCard = ({
 }) => {
   const [showShareForm, setShowShareForm] = useState(false)
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const cardRef = useRef()
 
   const dispatch = useDispatch()
 
@@ -49,6 +50,15 @@ const SubjectsCard = ({
     setShowShareForm(showShareForm ? false : true)
   }
 
+  useEffect(() => {
+    if (
+      subject.name !== 'All Subjects' &&
+      selectedSubject?.name === subject.name
+    ) {
+      cardRef?.current?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }
+  }, [selectedSubject])
+
   let checkEditor
   if (subject.name !== 'All Subjects') {
     checkEditor = userIsEditor(subject, user?._id)
@@ -58,6 +68,7 @@ const SubjectsCard = ({
 
   return (
     <div
+      ref={cardRef}
       onClick={() => onSubjectSelect(subject)}
       style={{ ...backgroundOpacity }}
       className={

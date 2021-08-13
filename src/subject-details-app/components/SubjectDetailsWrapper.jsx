@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { useState } from 'react'
 import PublicNotes from './PublicNotes'
 import PublicPracticals from './PublicPracticals'
@@ -41,17 +42,28 @@ const SubjectDetailsWrapper = ({ subject }) => {
       count: subject.numberOfPublicPracticals,
     },
   ]
+
+  const sortedSubjectContentArray = _.orderBy(
+    subjectContentArray,
+    ['count'],
+    ['desc']
+  )
+
   return (
     <div>
-      {subjectContentArray.map(item => (
+      {sortedSubjectContentArray.map(item => (
         <div key={item.name}>
-          <HorizontalFoldingBar
-            name={item.name}
-            show={item.show}
-            count={item.count}
-            setShow={item.setShow}
-          />
-          {item.show && <div>{item.data}</div>}
+          {Boolean(item.count) && (
+            <>
+              <HorizontalFoldingBar
+                name={item.name}
+                show={item.show}
+                count={item.count}
+                setShow={item.setShow}
+              />
+              {item.show && <div>{item.data}</div>}
+            </>
+          )}
         </div>
       ))}
     </div>
