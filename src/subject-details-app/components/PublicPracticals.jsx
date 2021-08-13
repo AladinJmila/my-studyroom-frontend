@@ -25,7 +25,7 @@ const PublicPracticals = () => {
         <>
           {publicPracticals &&
             publicPracticals.map(practical => (
-              <div style={cardsBody} className='card mb-1'>
+              <div key={practical._id} style={cardsBody} className='card mb-1'>
                 <div className='p-3'>
                   <div>
                     {practical.url && (

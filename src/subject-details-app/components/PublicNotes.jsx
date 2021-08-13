@@ -26,7 +26,7 @@ const PublicNotes = () => {
         <>
           {publicNotes &&
             publicNotes.map(note => (
-              <div style={cardsBody} className='card mb-1'>
+              <div key={note._id} style={cardsBody} className='card mb-1'>
                 <div className='p-3'>
                   {note.resource && (
                     <p className='card-subtitle mb-2 text-muted'>

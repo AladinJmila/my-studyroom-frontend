@@ -29,6 +29,7 @@ const slice = createSlice({
 
     GET_SUBJECT: (subjects, action) => {
       subjects.selectedSubject = action.payload
+      subjects.loading = false
     },
 
     GET_PUBLIC_SUBJECTS: (subjects, action) => {

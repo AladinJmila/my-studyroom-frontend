@@ -33,7 +33,7 @@ export const loadOneSubjectPublicNotes = subjectId => async dispatch => {
   try {
     dispatch(actions.REQUEST_NOTES())
 
-    const { data } = httpService.get(`${apiEndPoint}/${subjectId}`)
+    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
 
     dispatch(actions.GET_ONE_SUBJECT_PUBLIC_NOTES({ subjectId, data }))
   } catch (error) {

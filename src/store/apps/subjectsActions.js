@@ -46,7 +46,9 @@ export const loadSubject = subjectId => async dispatch => {
   try {
     dispatch(actions.REQUEST_SUBJECTS())
 
-    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
+    const { data } = await httpService.get(
+      `${apiEndPoint}/details/${subjectId}`
+    )
 
     dispatch(actions.GET_SUBJECT(data))
   } catch (error) {

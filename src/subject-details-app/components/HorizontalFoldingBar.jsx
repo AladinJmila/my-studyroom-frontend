@@ -66,7 +66,6 @@ const VerticalFoldingBar = ({ name, show, count, setShow }) => {
     borderRadius: 10,
     margin: '16px 0',
     padding: 20,
-    positon: 'relative',
   }
 
   // if (window.innerWidth < 500 && count) {

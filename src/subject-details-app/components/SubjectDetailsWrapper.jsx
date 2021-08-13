@@ -1,24 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PublicNotes from './PublicNotes'
 import PublicPracticals from './PublicPracticals'
 import PublicResources from './PublicResources'
 import PublicTasks from './PublicTasks'
 import HorizontalFoldingBar from './HorizontalFoldingBar'
-import { useDispatch, useSelector } from 'react-redux'
-// import { loadSubject } from './../../store/apps/subjectsActions'
 
-const SubjectDetailsWrapper = ({ subjectId }) => {
+const SubjectDetailsWrapper = ({ subject }) => {
   const [showPracticals, setShowPracticals] = useState(false)
   const [showResources, setShowResources] = useState(false)
   const [showNotes, setShowNotes] = useState(false)
   const [showTasks, setShowTasks] = useState(false)
-
-  const dispatch = useDispatch()
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
-
-  // useEffect(() => {
-  //   dispatch(loadSubject(subjectId))
-  // }, [])
 
   const subjectContentArray = [
     {
