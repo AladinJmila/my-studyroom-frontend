@@ -34,6 +34,10 @@ const slice = createSlice({
       practicals.list.unshift(action.payload)
     },
 
+    CLONE_PRACTICALS: (practicals, action) => {
+      practicals.list = [...action.payload, ...practicals.list]
+    },
+
     SELECT_PRACTICAL: (practicals, action) => {
       practicals.selectedPractical = action.payload
     },
@@ -66,6 +70,7 @@ export const {
   GET_PRACTICALS,
   GET_ONE_SUBJECT_PUBLIC_PRACTICALS,
   CREATE_PRACTICAL,
+  CLONE_PRACTICALS,
   SELECT_PRACTICAL,
   CLEAR_SELECTED_PRACTICAL,
   UPDATE_PRACTICAL,

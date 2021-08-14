@@ -52,6 +52,20 @@ export const createPractical = practical => async dispatch => {
   }
 }
 
+export const clonePracticals =
+  (oldSubjectId, newSubjectId) => async dispatch => {
+    try {
+      const { data } = await httpService.post(`${apiEndPoint}/clone`, {
+        oldSubjectId,
+        newSubjectId,
+      })
+
+      dispatch(actions.CLONE_PRACTICALS(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 export const setSelectedPractical = practical => dispatch => {
   dispatch(actions.SELECT_PRACTICAL(practical))
 }

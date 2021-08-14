@@ -34,6 +34,10 @@ const slice = createSlice({
       tasks.list.unshift(action.payload)
     },
 
+    CLONE_TASK: (tasks, action) => {
+      tasks.list = [...action.payload, ...tasks.list]
+    },
+
     SELECT_TASK: (tasks, action) => {
       tasks.selectedTask = action.payload
     },
@@ -66,6 +70,7 @@ export const {
   GET_TASKS,
   GET_ONE_SUBJECT_PUBLIC_TASKS,
   CREATE_TASK,
+  CLONE_TASK,
   SELECT_TASK,
   CLEAR_SELECTED_TASK,
   UPDATE_TASK,

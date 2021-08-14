@@ -35,6 +35,10 @@ const slice = createSlice({
       notes.list.unshift(action.payload)
     },
 
+    CLONE_NOTES: (notes, action) => {
+      notes.list = [...action.payload, ...notes.list]
+    },
+
     SELECT_NOTE: (notes, action) => {
       notes.selectedNote = action.payload
     },
@@ -71,6 +75,7 @@ export const {
   GET_NOTES,
   GET_ONE_SUBJECT_PUBLIC_NOTES,
   CREATE_NOTE,
+  CLONE_NOTES,
   SELECT_NOTE,
   CLEAR_SELECTED_NOTE,
   UPDATE_NOTE,

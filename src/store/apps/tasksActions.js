@@ -51,6 +51,19 @@ export const createTask = task => async dispatch => {
   }
 }
 
+export const cloneTasks = (oldSubjectId, newSubjectId) => async dispatch => {
+  try {
+    const { data } = await httpService.post(`${apiEndPoint}/clone`, {
+      oldSubjectId,
+      newSubjectId,
+    })
+
+    dispatch(actions.CLONE_TASK(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const setSelectedTask = task => dispatch => {
   dispatch(actions.SELECT_TASK(task))
 }

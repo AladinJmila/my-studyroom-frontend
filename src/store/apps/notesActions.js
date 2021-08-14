@@ -52,6 +52,19 @@ export const createNote = note => async dispatch => {
   }
 }
 
+export const cloneNotes = (oldSubjectId, newSubjectId) => async dispatch => {
+  try {
+    const { data } = await httpService.post(`${apiEndPoint}/clone`, {
+      oldSubjectId,
+      newSubjectId,
+    })
+
+    dispatch(actions.CLONE_NOTES(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const setSelectedNote = note => dispatch => {
   dispatch(actions.SELECT_NOTE(note))
 }

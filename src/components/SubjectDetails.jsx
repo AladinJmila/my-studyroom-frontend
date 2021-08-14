@@ -10,6 +10,9 @@ import {
   setSelectedSubject,
 } from './../store/apps/subjectsActions'
 import { cloneResources } from './../store/apps/resourcesActions'
+import { cloneNotes } from '../store/apps/notesActions'
+import { clonePracticals } from '../store/apps/practicalsActions'
+import { cloneTasks } from '../store/apps/tasksActions'
 
 const SubjectDetails = () => {
   const subject = useSelector(state => state.apps.subjects.selectedSubject)
@@ -29,6 +32,15 @@ const SubjectDetails = () => {
   if (clonedSubject) {
     if (clonedSubject.numberOfPublicResources !== 0)
       dispatch(cloneResources(subject._id, clonedSubject._id))
+
+    if (clonedSubject.numberOfPublicNotes !== 0)
+      dispatch(cloneNotes(subject._id, clonedSubject._id))
+
+    if (clonedSubject.numberOfPublicPracticals !== 0)
+      dispatch(clonePracticals(subject._id, clonedSubject._id))
+
+    if (clonedSubject.numberOfPulbicTasks !== 0)
+      dispatch(cloneTasks(subject._id, clonedSubject._id))
 
     dispatch(clearClonedSubject())
     dispatch(setSelectedSubject(clonedSubject))
