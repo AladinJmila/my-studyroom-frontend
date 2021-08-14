@@ -43,12 +43,38 @@ class NotesForm extends Form {
   componentDidMount() {
     this.setFormHeight()
 
-    const { subjects, resources, selectedNote } = this.props
+    const { subjects, resources, selectedNote, selectedSubject } = this.props
     this.setState({ subjects, resources })
+
+    if (selectedSubject)
+      this.setStateOnSubjectSelect(selectedSubject, resources)
 
     if (selectedNote) {
       this.setState({ data: this.mapToViewModel(selectedNote) })
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { resources, selectedSubject } = this.props
+    if (prevProps.selectedSubject !== selectedSubject)
+      this.setStateOnSubjectSelect(selectedSubject, resources)
+  }
+
+  setStateOnSubjectSelect = (selectedSubject, resources) => {
+    const filteredResources = resources.filter(
+      r => r.subject._id === selectedSubject._id
+    )
+
+    this.setState({
+      resources: filteredResources,
+      data: {
+        subjectId: selectedSubject._id,
+        resourceId: '',
+        title: '',
+        content: '',
+        url: '',
+      },
+    })
   }
 
   mapToViewModel = note => {

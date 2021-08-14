@@ -44,12 +44,32 @@ class PracticalForm extends Form {
   componentDidMount() {
     this.setFormHeight()
 
-    const { subjects, selectedPractical } = this.props
+    const { subjects, selectedPractical, selectedSubject } = this.props
     this.setState({ subjects })
+
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
 
     if (selectedPractical) {
       this.setState({ data: this.mapToViewModel(selectedPractical) })
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedSubject !== this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject)
+  }
+
+  setStateOnSubjectSelect = selectedSubject => {
+    this.setState({
+      data: {
+        subjectId: selectedSubject._id,
+        about: '',
+        cause: '',
+        solution: '',
+        lesson: '',
+        url: '',
+      },
+    })
   }
 
   mapToViewModel = practical => {

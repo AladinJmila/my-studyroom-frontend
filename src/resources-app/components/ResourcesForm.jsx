@@ -38,12 +38,29 @@ class ResourcesForm extends Form {
   componentDidMount() {
     this.setFormHeight()
 
-    const { subjects, selectedResource } = this.props
+    const { subjects, selectedResource, selectedSubject } = this.props
     this.setState({ subjects })
+
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
 
     if (selectedResource) {
       this.setState({ data: this.mapToViewModel(selectedResource) })
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedSubject !== this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject)
+  }
+
+  setStateOnSubjectSelect = selectedSubject => {
+    this.setState({
+      data: {
+        subjectId: selectedSubject._id,
+        content: '',
+        url: '',
+      },
+    })
   }
 
   mapToViewModel = resource => {

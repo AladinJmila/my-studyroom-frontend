@@ -42,11 +42,35 @@ class TasksForm extends Form {
   componentDidMount() {
     this.setFormHeight()
 
-    const { subjects, resources, selectedTask } = this.props
+    const { subjects, resources, selectedTask, selectedSubject } = this.props
     this.setState({ subjects, resources })
-    if (selectedTask) {
-      this.setState({ data: this.mapToViewModel(selectedTask) })
-    }
+
+    if (selectedSubject)
+      this.setStateOnSubjectSelect(selectedSubject, resources)
+
+    if (selectedTask) this.setState({ data: this.mapToViewModel(selectedTask) })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { resources, selectedSubject } = this.props
+    if (prevProps.selectedSubject !== selectedSubject)
+      this.setStateOnSubjectSelect(selectedSubject, resources)
+  }
+
+  setStateOnSubjectSelect = (selectedSubject, resources) => {
+    const filteredResources = resources.filter(
+      r => r.subject._id === selectedSubject._id
+    )
+
+    this.setState({
+      resources: filteredResources,
+      data: {
+        subjectId: selectedSubject._id,
+        resourceId: '',
+        content: '',
+        url: '',
+      },
+    })
   }
 
   mapToViewModel = task => {
