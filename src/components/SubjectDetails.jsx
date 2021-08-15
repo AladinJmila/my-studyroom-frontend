@@ -44,8 +44,6 @@ const SubjectDetails = () => {
 
     dispatch(clearClonedSubject())
     dispatch(setSelectedSubject(clonedSubject))
-
-    window.alert('Subject Cloned')
   }
 
   const subjectDetails = {

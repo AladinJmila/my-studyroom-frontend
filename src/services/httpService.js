@@ -1,5 +1,6 @@
 import logger from './logService'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
@@ -12,7 +13,7 @@ axios.interceptors.response.use(null, error => {
   if (!expectedError) {
     logger.log(error)
     console.log('Logging the error', error)
-    alert('An unexpected error occurred.')
+    toast.error('An unexpected error occurred.')
   }
 
   return Promise.reject(error)

@@ -36,7 +36,7 @@ const Subjects = () => {
   }, [])
 
   const handleDelete = subject => {
-    dispatch(deleteSubject(subject._id))
+    dispatch(deleteSubject(subject))
   }
 
   const onSort = sortTarget => {

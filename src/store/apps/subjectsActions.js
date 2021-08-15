@@ -3,6 +3,7 @@ import httpService from '../services/httpService'
 import { getCurrentUser } from '../../services/authService'
 import * as actions from './subjects'
 import config from '../../config.json'
+import { toast } from 'react-toastify'
 
 const apiEndPoint = '/subjects'
 let userid
@@ -61,7 +62,7 @@ export const cloneSubject = subjectId => async dispatch => {
     const { data } = await httpService.post(`${apiEndPoint}/clone`, {
       subjectId,
     })
-
+    toast('Subject cloned Successfully!')
     dispatch(actions.CLONE_SUBJECT(data))
   } catch (error) {
     console.log(error)
@@ -195,13 +196,22 @@ export const toggleSubjectUpvote = (id, userId) => dispatch => {
   dispatch(actions.TOGGLE_SUBJECT_UPVOTE({ id, userId }))
 }
 
-export const deleteSubject = id => async dispatch => {
-  try {
-    await httpService.delete(`${apiEndPoint}/${id}`)
+export const deleteSubject = subject => async dispatch => {
+  if (
+    subject.numberOfTasks === 0 &&
+    subject.numberOfNotes === 0 &&
+    subject.numberOfResources === 0 &&
+    subject.numberOfPracticals === 0
+  ) {
+    try {
+      await httpService.delete(`${apiEndPoint}/${subject._id}`)
 
-    dispatch(actions.DELETE_SUBJECT(id))
-    dispatch(loadSubjects())
-  } catch (error) {
-    console.log(error)
+      dispatch(actions.DELETE_SUBJECT(subject._id))
+      // dispatch(loadSubjects())
+    } catch (error) {
+      console.log(error)
+    }
+  } else {
+    toast.error('Subject must be empty to be deleted')
   }
 }

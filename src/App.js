@@ -1,6 +1,7 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
 import Workspace from './components/Workspace'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
@@ -10,11 +11,12 @@ import ProfilePublic from './components/ProfilePublic'
 import NotFound from './components/NotFound'
 import NavBar from './components/NavBar'
 import About from './components/About'
-import { getCurrentUser } from './store/services/authService'
-import { setCurrentUser } from './store/auth/authParams'
-import './App.css'
 import Home from './components/Home'
 import SubjectDetails from './components/SubjectDetails'
+import { getCurrentUser } from './store/services/authService'
+import { setCurrentUser } from './store/auth/authParams'
+import 'react-toastify/dist/ReactToastify.css'
+import './App.css'
 
 function App() {
   const user = getCurrentUser()
@@ -26,6 +28,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <NavBar />
       <Switch>
         <Route path='/register' component={RegisterForm}></Route>
