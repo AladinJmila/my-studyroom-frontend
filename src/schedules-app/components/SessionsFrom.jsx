@@ -31,12 +31,31 @@ class SessionsForm extends Form {
   }
 
   componentDidMount() {
-    const { subjects, loops, selectedSession } = this.props
+    const { subjects, loops, selectedSession, selectedSubject } = this.props
     this.setState({ subjects, loops })
+
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
 
     if (selectedSession) {
       this.setState({ data: this.mapToViewModel(selectedSession) })
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedSubject !== this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject)
+  }
+
+  setStateOnSubjectSelect = selectedSubject => {
+    this.setState({
+      data: {
+        subjectId: selectedSubject._id,
+        loopId: '',
+        name: '',
+        numOfReps: 1,
+        break: 0,
+      },
+    })
   }
 
   mapToViewModel = session => {
@@ -116,6 +135,7 @@ class SessionsForm extends Form {
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
   loops: state.apps.loops.list,
+  selectedSubject: state.apps.subjects.selectedSubject,
   selectedSession: state.apps.sessions.selectedSession,
 })
 
