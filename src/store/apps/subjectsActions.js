@@ -62,6 +62,7 @@ export const cloneSubject = subjectId => async dispatch => {
     const { data } = await httpService.post(`${apiEndPoint}/clone`, {
       subjectId,
     })
+
     toast('Subject cloned Successfully!')
     dispatch(actions.CLONE_SUBJECT(data))
   } catch (error) {

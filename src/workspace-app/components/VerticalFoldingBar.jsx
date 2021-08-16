@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import iconTB from '../../static/images/icons/T-M.png'
 import iconTS from '../../static/images/icons/T-S.png'
 import iconRB from '../../static/images/icons/R-M.png'
@@ -20,13 +21,22 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
     setShow(show)
   }
 
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+
+  useEffect(() => {
+    !Boolean(count) && setShow(false)
+  }, [selectedSubject])
+
+  useEffect(() => {
+    if (window.innerWidth < 500 && count) {
+      setShow(!Boolean(count) ? false : true)
+    }
+  }, [count])
+
   const navigateToItem = () => {
-    // console.log(itemRef)
     itemRef.current.scrollIntoView({
       behavior: 'smooth',
       inline: 'center',
-      // inline: 'start',
-      // inline: 'end',
     })
   }
 
@@ -58,7 +68,7 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
       bigIcon = iconVB
       smallIcon = iconVS
       break
-    case 'Timer (inProgress)':
+    case 'Timer':
       bigIcon = iconSB
       smallIcon = iconSS
       break
@@ -86,12 +96,6 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
     styles.minWidth = show ? 50 : 160
     styles.maxWidth = show ? 50 : 160
   }
-
-  useEffect(() => {
-    if (window.innerWidth < 500 && count) {
-      setShow(!count ? false : true)
-    }
-  }, [count])
 
   return (
     <div
@@ -122,7 +126,9 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
       ></i>
       {!show && (
         <div>
-          {name === 'Timer (inProgress)' ? (
+          {name === 'Timer' ||
+          name === 'AudioNotes (planned)' ||
+          name === 'VisualNotes (planned)' ? (
             <div
               className='total-items-folding-bar'
               style={{ visibility: 'hidden' }}

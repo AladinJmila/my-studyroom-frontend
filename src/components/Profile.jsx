@@ -27,9 +27,14 @@ const Profile = () => {
       className='full-height'
       style={{ width: '80%', position: 'absolute', left: '10%' }}
     >
-      <h2 className='mt-5 text-center'>Progress Tracker</h2>
+      <h2 className='mt-5 text-center'>
+        Progress Tracker{' '}
+        <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
+      </h2>
       <img src={plansAndProgress} className='mt-4' style={{ width: '100%' }} />
-      <h2 className='mt-5 text-center'>Daily Status</h2>
+      <h2 className='mt-5 text-center'>
+        Daily Status <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
+      </h2>
       <img src={dailyStatus} className='mt-4 mb-4' style={{ width: '100%' }} />
       {/* <div
         className='mt-4 mb-4'

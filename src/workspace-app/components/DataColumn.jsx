@@ -15,11 +15,15 @@ if (window.innerWidth < 500) {
   containerStyles.maxWidth = window.innerWidth - 55
 }
 const DataColumn = forwardRef(
-  ({ name, data, color, icon, show, count, setShow }, ref) => {
+  ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
     const [showScrollTop, setShowScrollTop] = useState(false)
     const topRef = useRef()
     const divRef = useRef()
     const myRef = useRef()
+
+    useEffect(() => {
+      setRef(myRef)
+    }, [])
 
     const handleScrollTop = () => {
       topRef.current.scrollIntoView({ behavior: 'smooth' })
