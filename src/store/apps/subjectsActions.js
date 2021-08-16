@@ -63,7 +63,7 @@ export const cloneSubject = subjectId => async dispatch => {
       subjectId,
     })
 
-    toast('Subject cloned Successfully!')
+    toast.success('Subject cloned Successfully!')
     dispatch(actions.CLONE_SUBJECT(data))
   } catch (error) {
     console.log(error)
@@ -161,6 +161,7 @@ export const shareSubject = (id, email, authType) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/share/${id}`, body)
 
+    toast.success('Subject shared Successfully!')
     dispatch(loadSubjects())
   } catch (error) {
     console.log(error)
