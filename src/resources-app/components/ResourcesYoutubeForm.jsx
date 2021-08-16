@@ -8,7 +8,6 @@ class ResourcesYoutubeForm extends Form {
   state = {
     data: {
       subjectId: '',
-      // content: '',
       url: '',
     },
     subjects: [],
@@ -18,7 +17,6 @@ class ResourcesYoutubeForm extends Form {
   schema = {
     _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
-    // content: Joi.string().required().max(500).label('Resource'),
     url: Joi.string().required().max(500).regex(/list/).label('URL'),
   }
 
@@ -30,8 +28,24 @@ class ResourcesYoutubeForm extends Form {
   componentDidMount() {
     this.setFormHeight()
 
-    const { subjects } = this.props
+    const { subjects, selectedSubject } = this.props
     this.setState({ subjects })
+
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedSubject !== this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject)
+  }
+
+  setStateOnSubjectSelect = selectedSubject => {
+    this.setState({
+      data: {
+        subjectId: selectedSubject._id,
+        url: '',
+      },
+    })
   }
 
   doSubmit = () => {
@@ -46,7 +60,6 @@ class ResourcesYoutubeForm extends Form {
     this.setState({
       data: {
         subjectId: '',
-        // content: '',
         url: '',
       },
     })
@@ -61,7 +74,6 @@ class ResourcesYoutubeForm extends Form {
           this.state.subjects,
           'required'
         )}
-        {/* {this.renderInput('content', 'Title', 'text', 'required')} */}
         {this.renderInput('url', 'Playlist URL', 'text', 'required')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}
@@ -73,6 +85,7 @@ class ResourcesYoutubeForm extends Form {
 
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
+  selectedSubject: state.apps.subjects.selectedSubject,
 })
 
 const mapDispatchToProps = dispatch => ({
