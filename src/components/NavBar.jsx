@@ -24,7 +24,7 @@ function NavBar() {
       >
         <div className='container-fluid d-flex flex-row'>
           <Link className='navbar-brand ' to='/home'>
-            My StudyRoom{' '}
+            My Studyroom{' '}
             <small>
               <i>beta</i>
             </small>
