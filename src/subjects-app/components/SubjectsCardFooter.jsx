@@ -1,7 +1,7 @@
 import Upvote from '../../common/Upvote'
 import { Link } from 'react-router-dom'
 
-const SubjectsCardFooter = ({ user, subject, onToggleUpvote }) => {
+const SubjectsCardFooter = ({ user, subject, onToggleUpvote, details }) => {
   return (
     <div className='mt-3 d-flex flex-row justify-content-between'>
       <div>
@@ -10,7 +10,9 @@ const SubjectsCardFooter = ({ user, subject, onToggleUpvote }) => {
             to={`/profile/${subject.creatorName}/${subject.creatorId}`}
             className='card-link'
           >
-            {subject.creatorName}
+            <span style={details && { fontSize: '1.2rem' }}>
+              {subject.creatorName}
+            </span>
           </Link>
         ) : (
           ''

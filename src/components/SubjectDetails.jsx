@@ -13,11 +13,13 @@ import { cloneResources } from './../store/apps/resourcesActions'
 import { cloneNotes } from '../store/apps/notesActions'
 import { clonePracticals } from '../store/apps/practicalsActions'
 import { cloneTasks } from '../store/apps/tasksActions'
+import SubjectsCardFooter from '../subjects-app/components/SubjectsCardFooter'
 
 const SubjectDetails = () => {
   const subject = useSelector(state => state.apps.subjects.selectedSubject)
   const clonedSubject = useSelector(state => state.apps.subjects.clonedSubject)
   const { loading } = useSelector(state => state.apps.subjects)
+  const { user } = useSelector(state => state.auth)
   const { id } = useParams()
   const dispatch = useDispatch()
 
@@ -47,7 +49,8 @@ const SubjectDetails = () => {
   }
 
   const subjectDetails = {
-    width: '100%',
+    width: '40%',
+    minHeight: '5rem',
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
     margin: '16px 0',
@@ -64,18 +67,33 @@ const SubjectDetails = () => {
         <>
           {subject && (
             <>
-              <div className='mt-4' style={subjectDetails}>
-                <i
-                  title='clone'
-                  onClick={handleSubjectClone}
-                  className='fa fa-lg fa-clone float-end pointer'
-                  aria-hidden='true'
-                ></i>
-                <h2 className='text-center'>{subject.name}</h2>
-                <h3>Creator: {subject.creatorName}</h3>
-                <h3>Upvotes: {subject.upvotes.length}</h3>
+              <div className='d-flex justify-content-center'>
+                <div className='mt-4' style={subjectDetails}>
+                  <div className='float-end pointer'>
+                    <i
+                      title='clone'
+                      onClick={handleSubjectClone}
+                      className='fa fa-lg fa-clone mt-2 float-end'
+                      aria-hidden='true'
+                    ></i>
+                    <p
+                      className='float-end me-2'
+                      style={{ fontSize: '1.2rem' }}
+                    >
+                      Clone
+                    </p>
+                  </div>
+                  <h2>{subject.name}</h2>
+                  <div style={{ marginTop: '5rem' }}>
+                    <SubjectsCardFooter subject={subject} user={user} details />
+                  </div>
+                </div>
               </div>
-              <SubjectDetailsWrapper subject={subject} />
+              <div className='d-flex justify-content-center'>
+                <div style={{ width: '70%' }}>
+                  <SubjectDetailsWrapper subject={subject} />
+                </div>
+              </div>
             </>
           )}
         </>
