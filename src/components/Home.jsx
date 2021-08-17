@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BeatLoader } from 'react-spinners'
 import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
 import { loadPublicSubjects } from '../store/apps/subjectsActions'
+import videoPlaceholder from '../static/images/Video placeholder.png'
 
 const Home = () => {
   const publicSubjects = useSelector(state => state.apps.subjects.public)
@@ -29,15 +30,9 @@ const Home = () => {
   return (
     <div className='container full-height'>
       <h2 className='mt-5 text-center'>Presentation video</h2>
-      <div
-        className='mt-4 mb-4 center'
-        style={{
-          width: '60%',
-          height: 400,
-          borderRadius: '0.25rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.6)',
-        }}
-      ></div>
+      <div className='mt-4 mb-4 p-0 center' style={{ width: '60%' }}>
+        <img src={videoPlaceholder} width='100%' />
+      </div>
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
       {loading ? (
