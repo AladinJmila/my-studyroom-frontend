@@ -59,11 +59,13 @@ function NavBar() {
                   Home
                 </NavLink>
               </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/workspace'>
-                  Workspace
-                </NavLink>
-              </li>
+              {user && (
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='/workspace'>
+                    Workspace
+                  </NavLink>
+                </li>
+              )}
               {!user && (
                 <>
                   <li className='nav-item'>
