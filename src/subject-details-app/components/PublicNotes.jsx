@@ -28,6 +28,7 @@ const PublicNotes = () => {
             publicNotes.map(note => (
               <div key={note._id} style={cardsBody} className='card mb-1'>
                 <div className='p-3'>
+                  <h6 className='card-subtitle mb-2'>{note.title}</h6>
                   {note.resource && (
                     <p className='card-subtitle mb-2 text-muted'>
                       {note.resource.content}
