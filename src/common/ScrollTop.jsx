@@ -8,7 +8,7 @@ const ScrollTop = ({ onClick }) => {
   }
 
   return (
-    <div className='text-center' style={divStyle}>
+    <div className='text-center pointer' style={divStyle}>
       <i
         onClick={onClick}
         className='fa fa-3x fa-arrow-circle-up to-top-icon'
