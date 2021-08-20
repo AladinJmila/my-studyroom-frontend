@@ -31,7 +31,16 @@ const Home = () => {
     <div className='container full-height'>
       <h2 className='mt-5 text-center'>Presentation video</h2>
       <div className='mt-4 mb-4 p-0 center' style={{ width: '60%' }}>
-        <img src={videoPlaceholder} width='100%' />
+        <iframe
+          width='560'
+          height='315'
+          src='https://www.youtube.com/embed/PfdH3PPgBZ4'
+          title='YouTube video player'
+          frameborder='0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+          allowfullscreen
+        ></iframe>
+        {/* <img src={videoPlaceholder} width='100%' /> */}
       </div>
 
       <h2 className='mt-5 text-center'>Popular Subjects</h2>
