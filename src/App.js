@@ -2,6 +2,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
+import MetaTags from 'react-meta-tags'
 import Workspace from './components/Workspace'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
@@ -15,6 +16,7 @@ import Home from './components/Home'
 import SubjectDetails from './components/SubjectDetails'
 import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
+import appLogo from './static/images/studyroom-logo.png'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
@@ -29,6 +31,15 @@ function App() {
   return (
     <>
       <ToastContainer />
+      <MetaTags>
+        <title>MyStudyroom</title>
+        <meta
+          name='description'
+          content='A platform for gathering and sharing learning material and experiences.'
+        />
+        <meta property='og:title' content='MyStudyroom' />
+        <meta property='og:image' content={appLogo} />
+      </MetaTags>
       <NavBar />
       <Switch>
         <Route path='/register' component={RegisterForm}></Route>
