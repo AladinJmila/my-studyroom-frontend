@@ -22,6 +22,8 @@ const Profile = () => {
     dispatch(loadUpvotedSubjects())
   }, [])
 
+  console.log(plansAndProgress)
+
   return (
     <div
       className='full-height'

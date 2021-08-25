@@ -38,12 +38,12 @@ function App() {
           content='A platform for gathering and sharing learning material and experiences.'
         />
         <meta property='og:title' content='MyStudyroom' />
+        <meta property='og:image' content={appLogo} />
         <meta property='og:image:url' content={appLogo} />
-        {/* <meta property='og:image:secure' content={appLogo} /> */}
-        {/* <meta property='og:image:secure_url' content={appLogo} /> */}
-        {/* <meta property='og:image:type' content='image/png' /> */}
-        {/* <meta property='og:image:width' content='500' /> */}
-        {/* <meta property='og:image:height' content='346' /> */}
+        <meta property='og:image:secure_url' content={appLogo} />
+        <meta property='og:image:type' content='image/png' />
+        <meta property='og:image:width' content='500' />
+        <meta property='og:image:height' content='346' />
       </MetaTags>
       <NavBar />
       <Switch>
