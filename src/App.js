@@ -18,6 +18,7 @@ import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
+import ogimage from './static/images/ogimage.png'
 
 function App() {
   const user = getCurrentUser()
@@ -26,6 +27,10 @@ function App() {
   useEffect(() => {
     dispatch(setCurrentUser(user))
   }, [])
+
+  const StaticImage = () => {
+    return <img src={ogimage} />
+  }
 
   return (
     <>
@@ -56,6 +61,7 @@ function App() {
         <Route path='/register' component={RegisterForm}></Route>
         <Route path='/login' component={LoginForm}></Route>
         <Route path='/logout' component={Logout}></Route>
+        <Route path='/images' component={StaticImage}></Route>
         <Route
           path='/profile/:creatorName/:creatorId'
           component={ProfilePublic}
