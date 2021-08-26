@@ -2,7 +2,6 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-import MetaTags from 'react-meta-tags'
 import Workspace from './components/Workspace'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
@@ -28,9 +27,9 @@ function App() {
     dispatch(setCurrentUser(user))
   }, [])
 
-  const StaticImage = () => {
-    return <img src={ogimage} />
-  }
+  // const StaticImage = () => {
+  //   return <img src={ogimage} />
+  // }
 
   return (
     <>
