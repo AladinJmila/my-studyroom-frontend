@@ -16,7 +16,6 @@ import Home from './components/Home'
 import SubjectDetails from './components/SubjectDetails'
 import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
-import appLogo from './static/images/studyroom-logo.png'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
@@ -38,12 +37,19 @@ function App() {
           content='A platform for gathering and sharing learning material and experiences.'
         />
         <meta property='og:title' content='MyStudyroom' />
-        <meta property='og:image' content={appLogo} />
-        <meta property='og:image:url' content={appLogo} />
-        <meta property='og:image:secure_url' content={appLogo} />
-        <meta property='og:image:type' content='image/png' />
-        <meta property='og:image:width' content='500' />
-        <meta property='og:image:height' content='346' />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://www.mystudyroom.io' />
+        <meta
+          property='og:image'
+          content='https://www.mystudyroom.io/images/ogimage.png'
+        />
+        <meta
+          property='og:image:secure_url'
+          content='https://www.mystudyroom.io/images/ogimage.png'
+        />
+        {/* <meta property='og:image:type' content='image/png' /> */}
+        {/* <meta property='og:image:width' content='500' /> */}
+        {/* <meta property='og:image:height' content='346' /> */}
       </MetaTags>
       <NavBar />
       <Switch>
