@@ -35,37 +35,12 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <MetaTags>
-        <title>MyStudyroom</title>
-        <meta
-          name='description'
-          content='A platform for gathering and sharing learning material and experiences.'
-        />
-        <meta property='og:title' content='MyStudyroom' />
-        <meta
-          property='og:description'
-          content='A platform for gathering and sharing learning material and experiences'
-        />
-        <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://www.mystudyroom.io/home' />
-        <meta
-          property='og:image'
-          content='https://www.mystudyroom.io/static/media/ogimage.752ef999.png'
-        />
-        <meta
-          property='og:image:secure_url'
-          content='https://www.mystudyroom.io/static/media/ogimage.752ef999.png'
-        />
-        {/* <meta property='og:image:type' content='image/png' /> */}
-        {/* <meta property='og:image:width' content='500' /> */}
-        {/* <meta property='og:image:height' content='346' /> */}
-      </MetaTags>
       <NavBar />
       <Switch>
         <Route path='/register' component={RegisterForm}></Route>
         <Route path='/login' component={LoginForm}></Route>
         <Route path='/logout' component={Logout}></Route>
-        <Route path='/images' component={StaticImage}></Route>
+        {/* <Route path='/images' component={StaticImage}></Route> */}
         <Route
           path='/profile/:creatorName/:creatorId'
           component={ProfilePublic}
