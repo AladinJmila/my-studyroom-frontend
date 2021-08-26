@@ -46,11 +46,11 @@ function App() {
         <meta property='og:url' content='https://www.mystudyroom.io' />
         <meta
           property='og:image'
-          content='https://www.mystudyroom.io/images/ogimage.png'
+          content='https://www.mystudyroom.io/static/media/ogimage.752ef999.png'
         />
         <meta
           property='og:image:secure_url'
-          content='https://www.mystudyroom.io/images/ogimage.png'
+          content='https://www.mystudyroom.io/static/media/ogimage.752ef999.png'
         />
         {/* <meta property='og:image:type' content='image/png' /> */}
         {/* <meta property='og:image:width' content='500' /> */}
