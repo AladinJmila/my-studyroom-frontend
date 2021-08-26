@@ -42,8 +42,12 @@ function App() {
           content='A platform for gathering and sharing learning material and experiences.'
         />
         <meta property='og:title' content='MyStudyroom' />
+        <meta
+          property='og:description'
+          content='A platform for gathering and sharing learning material and experiences'
+        />
         <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://www.mystudyroom.io' />
+        <meta property='og:url' content='https://www.mystudyroom.io/home' />
         <meta
           property='og:image'
           content='https://www.mystudyroom.io/static/media/ogimage.752ef999.png'
