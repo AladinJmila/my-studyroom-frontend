@@ -7,6 +7,7 @@ const slice = createSlice({
     loading: false,
     selectedSession: null,
     playingSession: null,
+    playing: false,
   },
   reducers: {
     REQUEST_SESSIONS: (sessions, action) => {
@@ -36,10 +37,12 @@ const slice = createSlice({
 
     SET_PLAYING_SESSION: (sessions, action) => {
       sessions.playingSession = action.payload
+      sessions.playing = true
     },
 
     CLEAR_PLAYING_SESSION: (sessions, action) => {
       sessions.playingSession = null
+      sessions.playing = false
     },
 
     UPDATE_SESSION: (sessions, action) => {

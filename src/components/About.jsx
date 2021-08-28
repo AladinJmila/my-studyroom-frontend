@@ -82,6 +82,9 @@ const About = () => {
             ></i>
           </a>
         </div>
+        <h5>
+          Email: <b>jmila.aladin@gmail.com</b>
+        </h5>
       </footer>
     </div>
   )

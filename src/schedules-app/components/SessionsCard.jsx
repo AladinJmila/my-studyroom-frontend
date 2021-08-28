@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux'
 import Star from '../../common/Star'
 import PlayStop from '../../common/PlayStop'
 import CardEllipsisMenu from '../../common/CardEllipsisMenu'
@@ -11,6 +12,9 @@ const SessionsCard = ({
   onEdit,
   onPlay,
 }) => {
+  const { playingSession } = useSelector(state => state.apps.sessions)
+  const { playing } = useSelector(state => state.apps.sessions)
+
   const formattedDuration = formatDuration(
     session.loop.totalDuration,
     session.numOfReps
@@ -31,7 +35,7 @@ const SessionsCard = ({
         >
           <PlayStop
             onToggle={() => user && onPlay(session)}
-            isPlaying={session.isPlaying}
+            isPlaying={playingSession === session && playing}
             user={user}
           />
         </div>

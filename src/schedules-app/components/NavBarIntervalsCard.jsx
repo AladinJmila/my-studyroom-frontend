@@ -1,8 +1,9 @@
 import PlayPauseStep from './../../common/PlayPauseStep'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { playStartBeep, computeHalfInterval } from '../services/timerServices'
 import beep from '../../static/audio/beep-07a.wav'
 import beepHalf from '../../static/audio/beep-09.wav'
+import { useSelector } from 'react-redux'
 
 const myBeep = new Audio(beep)
 const myHalfBeep = new Audio(beepHalf)
@@ -11,6 +12,7 @@ let roundIndex = 1
 let repNum = 1
 
 const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
+  const { playingSession } = useSelector(state => state.apps.sessions)
   const loopLength = intervals.length
   if (numOfReps > 1) {
     let i = 0
@@ -34,6 +36,10 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const [interv, setInterv] = useState()
   const [play, setPlay] = useState(false)
   const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    stop()
+  }, [playingSession])
 
   const halfInterval = computeHalfInterval(currentInterval)
   const intervalDurationInSeconds =

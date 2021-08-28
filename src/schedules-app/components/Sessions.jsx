@@ -22,6 +22,8 @@ const Sessions = () => {
 
   const loops = useSelector(state => state.apps.loops.list)
   const sessions = useSelector(state => state.apps.sessions.list)
+  const { playingSession } = useSelector(state => state.apps.sessions)
+  const { playing } = useSelector(state => state.apps.sessions)
   const { user } = useSelector(state => state.auth)
 
   useEffect(() => {
@@ -30,6 +32,10 @@ const Sessions = () => {
 
   const handleDelete = session => {
     dispatch(deleteSession(session._id))
+    if (session === playingSession) {
+      dispatch(clearPlayingSession())
+      dispatch(clearPlayingLoop())
+    }
   }
 
   const handleSessionSelect = session => {
@@ -48,22 +54,24 @@ const Sessions = () => {
   }
 
   const handlePlay = session => {
-    const index = sessions.indexOf(session)
-    const sessionToUpdate = { ...sessions[index] }
-    sessionToUpdate.isPlaying = !sessionToUpdate.isPlaying
-    const update = { isPlaying: sessionToUpdate.isPlaying }
-
     const loop = loops.find(l => l._id === session.loop._id)
-    if (sessionToUpdate.isPlaying) {
-      dispatch(setPlayingSession(session))
-      dispatch(setPlayingLoop(loop))
+
+    if (session === playingSession) {
+      if (!playing) {
+        dispatch(setPlayingSession(session))
+        dispatch(setPlayingLoop(loop))
+      } else {
+        dispatch(clearPlayingSession())
+        dispatch(clearPlayingLoop())
+      }
     } else {
       dispatch(clearPlayingSession())
       dispatch(clearPlayingLoop())
+      setTimeout(() => {
+        dispatch(setPlayingSession(session))
+        dispatch(setPlayingLoop(loop))
+      }, 100)
     }
-
-    dispatch(patchSession(session._id, update))
-    dispatch(toggleSessionProp(session._id, 'isPlaying'))
   }
 
   const handleShowForm = () => {
