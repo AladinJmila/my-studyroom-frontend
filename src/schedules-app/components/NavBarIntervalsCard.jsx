@@ -10,9 +10,11 @@ const myHalfBeep = new Audio(beepHalf)
 let trackIndex = 1
 let roundIndex = 1
 let repNum = 1
+let isPlaying = false
 
 const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const { playingSession } = useSelector(state => state.apps.sessions)
+  const { playing } = useSelector(state => state.apps.sessions)
   const loopLength = intervals.length
   if (numOfReps > 1) {
     let i = 0
@@ -38,8 +40,10 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    isPlaying = false
     stop()
-  }, [playingSession])
+    console.log(playing)
+  }, [playing, playingSession])
 
   const halfInterval = computeHalfInterval(currentInterval)
   const intervalDurationInSeconds =
@@ -54,15 +58,18 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   }
 
   const start = () => {
+    isPlaying = true
+    setPlay(true)
     run()
     setInterv(setInterval(run, 1000))
-    setPlay(true)
     playStartBeep(time, currentInterval, 2)
   }
 
   const stop = () => {
-    clearInterval(interv)
+    isPlaying = false
     setPlay(false)
+    clearInterval(interv)
+    console.log('stopped')
   }
 
   const handleTogglePlay = () => {
@@ -112,62 +119,67 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   let updatedHours = time.hours
 
   const run = () => {
-    if (updatedHours > 0 && updatedMinutes === 0) {
-      updatedHours--
-      updatedMinutes = 60
-    }
-    if (updatedMinutes > 0 && updatedSeconds === 0) {
-      updatedMinutes--
-      updatedSeconds = 60
-    }
-
-    if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0)
-      return stop()
-
-    if (
-      currentInterval.signalHalf &&
-      updatedHours === halfInterval.hours &&
-      updatedMinutes === halfInterval.minutes &&
-      updatedSeconds === halfInterval.seconds
-    ) {
-      myHalfBeep.play()
-    }
-
-    if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
-      let x = 0
-      myBeep.play()
-      const intervalId = setInterval(() => {
-        myBeep.play()
-        if (++x === 2) {
-          clearInterval(intervalId)
-        }
-      }, 1000)
-    }
-
-    updatedSeconds--
-
-    const currentTimeInSeconds =
-      (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
-
-    const progressPercentage =
-      100 - Math.floor((currentTimeInSeconds / intervalDurationInSeconds) * 100)
-
-    if (
-      currentInterval.numOfReps > 1 &&
-      currentTimeInSeconds % repDurationInseconds === 0
-    ) {
-      if (repNum !== currentInterval.numOfReps) {
-        repNum++
-        myBeep.play()
+    // console.log('inside run', playing)
+    if (isPlaying) {
+      if (updatedHours > 0 && updatedMinutes === 0) {
+        updatedHours--
+        updatedMinutes = 60
       }
-    }
+      if (updatedMinutes > 0 && updatedSeconds === 0) {
+        updatedMinutes--
+        updatedSeconds = 60
+      }
 
-    setProgress(progressPercentage)
-    setTime({
-      seconds: updatedSeconds,
-      minutes: updatedMinutes,
-      hours: updatedHours,
-    })
+      if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0)
+        return stop()
+
+      if (
+        currentInterval.signalHalf &&
+        updatedHours === halfInterval.hours &&
+        updatedMinutes === halfInterval.minutes &&
+        updatedSeconds === halfInterval.seconds
+      ) {
+        myHalfBeep.play()
+      }
+
+      if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
+        let x = 0
+        myBeep.play()
+        const intervalId = setInterval(() => {
+          myBeep.play()
+          if (++x === 2) {
+            clearInterval(intervalId)
+          }
+        }, 1000)
+      }
+
+      updatedSeconds--
+      console.log('running')
+
+      const currentTimeInSeconds =
+        (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
+
+      const progressPercentage =
+        100 -
+        Math.floor((currentTimeInSeconds / intervalDurationInSeconds) * 100)
+
+      if (
+        currentInterval.numOfReps > 1 &&
+        currentTimeInSeconds % repDurationInseconds === 0
+      ) {
+        if (repNum !== currentInterval.numOfReps) {
+          repNum++
+          myBeep.play()
+        }
+      }
+
+      setProgress(progressPercentage)
+      setTime({
+        seconds: updatedSeconds,
+        minutes: updatedMinutes,
+        hours: updatedHours,
+      })
+    }
   }
 
   const intervalsCardStyle = {
