@@ -1,9 +1,10 @@
-import PlayPauseStep from './../../common/PlayPauseStep'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import * as workerTimers from 'worker-timers'
 import { playStartBeep, computeHalfInterval } from '../services/timerServices'
+import PlayPauseStep from './../../common/PlayPauseStep'
 import beep from '../../static/audio/beep-07a.wav'
 import beepHalf from '../../static/audio/beep-09.wav'
-import { useSelector } from 'react-redux'
 
 const myBeep = new Audio(beep)
 const myHalfBeep = new Audio(beepHalf)
@@ -40,10 +41,9 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    if (isPlaying) stop()
     isPlaying = false
-    stop()
-    console.log(playing)
-  }, [playing, playingSession])
+  }, [playingSession])
 
   const halfInterval = computeHalfInterval(currentInterval)
   const intervalDurationInSeconds =
@@ -61,15 +61,15 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
     isPlaying = true
     setPlay(true)
     run()
-    setInterv(setInterval(run, 1000))
+    setInterv(workerTimers.setInterval(run, 1000))
     playStartBeep(time, currentInterval, 2)
   }
 
   const stop = () => {
     isPlaying = false
     setPlay(false)
-    clearInterval(interv)
-    console.log('stopped')
+    workerTimers.clearInterval(interv)
+    // console.log('stopped')
   }
 
   const handleTogglePlay = () => {
@@ -81,7 +81,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       const newIntervalIndex = intervalIndex + 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      clearInterval(interv)
+      workerTimers.clearInterval(interv)
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
@@ -100,7 +100,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       let newIntervalIndex = intervalIndex - 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      clearInterval(interv)
+      workerTimers.clearInterval(interv)
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
@@ -119,7 +119,6 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   let updatedHours = time.hours
 
   const run = () => {
-    // console.log('inside run', playing)
     if (isPlaying) {
       if (updatedHours > 0 && updatedMinutes === 0) {
         updatedHours--
@@ -145,16 +144,16 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
         let x = 0
         myBeep.play()
-        const intervalId = setInterval(() => {
+        const intervalId = workerTimers.setInterval(() => {
           myBeep.play()
           if (++x === 2) {
-            clearInterval(intervalId)
+            workerTimers.clearInterval(intervalId)
           }
         }, 1000)
       }
 
       updatedSeconds--
-      console.log('running')
+      // console.log('running')
 
       const currentTimeInSeconds =
         (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
