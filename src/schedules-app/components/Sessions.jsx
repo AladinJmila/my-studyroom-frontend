@@ -61,11 +61,13 @@ const Sessions = () => {
         dispatch(setPlayingSession(session))
         dispatch(setPlayingLoop(loop))
       } else {
-        dispatch(clearPlayingSession({ empty: false }))
+        dispatch(clearPlayingSession())
         dispatch(clearPlayingLoop())
+        dispatch(setPlayingSession(null))
+        dispatch(setPlayingLoop(null))
       }
     } else {
-      dispatch(clearPlayingSession({ empty: false }))
+      dispatch(clearPlayingSession())
       dispatch(clearPlayingLoop())
       setTimeout(() => {
         dispatch(setPlayingSession(session))

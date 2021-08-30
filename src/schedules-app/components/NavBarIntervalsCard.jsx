@@ -15,7 +15,6 @@ let isPlaying = false
 
 const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const { playingSession } = useSelector(state => state.apps.sessions)
-  const { playing } = useSelector(state => state.apps.sessions)
   const loopLength = intervals.length
   if (numOfReps > 1) {
     let i = 0
@@ -41,8 +40,10 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    if (isPlaying) stop()
-    isPlaying = false
+    return () => {
+      if (play) stop()
+      isPlaying = false
+    }
   }, [playingSession])
 
   const halfInterval = computeHalfInterval(currentInterval)
@@ -69,7 +70,6 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
     isPlaying = false
     setPlay(false)
     workerTimers.clearInterval(interv)
-    // console.log('stopped')
   }
 
   const handleTogglePlay = () => {
@@ -78,10 +78,12 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
 
   const handleStepForward = () => {
     if (intervalIndex < intervals.length - 1) {
+      isPlaying = false
       const newIntervalIndex = intervalIndex + 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
       workerTimers.clearInterval(interv)
+
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
@@ -97,10 +99,12 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
 
   const handleStepBackward = () => {
     if (intervalIndex > 0) {
+      isPlaying = false
       let newIntervalIndex = intervalIndex - 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
       workerTimers.clearInterval(interv)
+
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
@@ -120,6 +124,11 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
 
   const run = () => {
     if (isPlaying) {
+      if (!isPlaying) {
+        workerTimers.clearInterval(interv)
+        return
+      }
+
       if (updatedHours > 0 && updatedMinutes === 0) {
         updatedHours--
         updatedMinutes = 60
@@ -153,7 +162,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       }
 
       updatedSeconds--
-      // console.log('running')
+      console.log('running')
 
       const currentTimeInSeconds =
         (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
