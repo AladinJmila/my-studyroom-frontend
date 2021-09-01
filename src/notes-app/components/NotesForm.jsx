@@ -50,6 +50,7 @@ class NotesForm extends Form {
       this.setStateOnSubjectSelect(selectedSubject, resources)
 
     if (selectedNote) {
+      console.log(selectedNote)
       this.setState({ data: this.mapToViewModel(selectedNote) })
     }
   }
@@ -85,15 +86,16 @@ class NotesForm extends Form {
         resourceId: note.resource._id,
         title: note.title,
         content: note.content,
-        url: note.url,
+        url: note.url || '',
       }
 
     return {
       _id: note._id,
       subjectId: note.subject._id,
+      resourceId: '',
       title: note.title,
       content: note.content,
-      url: note.url,
+      url: note.url || '',
     }
   }
 

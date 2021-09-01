@@ -80,14 +80,14 @@ class TasksForm extends Form {
         subjectId: task.subject._id,
         resourceId: task.resource._id,
         content: task.content,
-        url: task.url,
+        url: task.url || '',
       }
 
     return {
       _id: task._id,
       subjectId: task.subject._id,
       content: task.content,
-      url: task.url,
+      url: task.url || '',
     }
   }
 

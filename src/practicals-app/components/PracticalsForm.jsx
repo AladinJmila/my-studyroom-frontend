@@ -80,7 +80,7 @@ class PracticalForm extends Form {
       cause: practical.cause,
       solution: practical.solution,
       lesson: practical.lesson,
-      url: practical.url,
+      url: practical.url || '',
     }
   }
 
