@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
-  name: 'timer',
+  name: 'intervals',
   initialState: {
     list: [],
     loading: false,

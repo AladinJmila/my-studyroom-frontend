@@ -5,6 +5,7 @@ import { playStartBeep, computeHalfInterval } from '../services/timerServices'
 import PlayPauseStep from './../../common/PlayPauseStep'
 import beep from '../../static/audio/beep-07a.wav'
 import beepHalf from '../../static/audio/beep-09.wav'
+import { toast } from 'react-toastify'
 
 const myBeep = new Audio(beep)
 const myHalfBeep = new Audio(beepHalf)
@@ -62,14 +63,15 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
     isPlaying = true
     setPlay(true)
     run()
+    toast(`${currentInterval.name} started`)
     setInterv(workerTimers.setInterval(run, 1000))
     playStartBeep(time, currentInterval, 2)
   }
 
   const stop = () => {
     isPlaying = false
-    setPlay(false)
     workerTimers.clearInterval(interv)
+    setPlay(false)
   }
 
   const handleTogglePlay = () => {
@@ -82,7 +84,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       const newIntervalIndex = intervalIndex + 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      workerTimers.clearInterval(interv)
+      if (play) stop()
 
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
@@ -103,7 +105,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       let newIntervalIndex = intervalIndex - 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      workerTimers.clearInterval(interv)
+      if (play) stop()
 
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
@@ -138,8 +140,10 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
         updatedSeconds = 60
       }
 
-      if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0)
+      if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0) {
+        toast(`${currentInterval.name} completed`)
         return stop()
+      }
 
       if (
         currentInterval.signalHalf &&
@@ -148,6 +152,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
         updatedSeconds === halfInterval.seconds
       ) {
         myHalfBeep.play()
+        toast(`${currentInterval.name} reached half`)
       }
 
       if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
