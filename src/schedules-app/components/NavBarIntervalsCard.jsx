@@ -14,13 +14,13 @@ let roundIndex = 1
 let repNum = 1
 let isPlaying = false
 
-const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
-  const { playingSession } = useSelector(state => state.apps.sessions)
+const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
+  let intervals = playingLoop.intervals
   const loopLength = intervals.length
-  if (numOfReps > 1) {
+  if (playingSession.numOfReps > 1) {
     let i = 0
     let extendedIntervlas = []
-    while (i < numOfReps) {
+    while (i < playingSession.numOfReps) {
       extendedIntervlas.push(...intervals)
       i++
     }
@@ -43,9 +43,25 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
   useEffect(() => {
     return () => {
       if (play) stop()
+      sendTimerState()
       isPlaying = false
     }
   }, [playingSession])
+
+  useEffect(() => {
+    sendTimerState()
+  }, [isPlaying, play])
+
+  const sendTimerState = timerState => {
+    const record = {
+      currentTime: Date.now(),
+      timeInSeconds: time.seconds + time.minutes * 60 + time.hours * 3600,
+      interval: currentInterval.name,
+      session: playingSession.subject.name,
+      loop: playingLoop.name,
+    }
+    console.log(record)
+  }
 
   const halfInterval = computeHalfInterval(currentInterval)
   const intervalDurationInSeconds =
@@ -245,7 +261,7 @@ const NavBarIntervalsCard = ({ intervals, numOfReps }) => {
       <div
         className='float-end'
         style={labelStyle}
-      >{`Round ${roundIndex} of ${numOfReps}`}</div>
+      >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div>
       <div className='float-start' style={progressBar}></div>
     </div>
   )

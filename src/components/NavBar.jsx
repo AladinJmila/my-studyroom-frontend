@@ -32,8 +32,8 @@ function NavBar() {
           <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
             {playingSession && playingLoop && (
               <NavBarIntervalsCard
-                intervals={playingLoop.intervals}
-                numOfReps={playingSession.numOfReps}
+                playingSession={playingSession}
+                playingLoop={playingLoop}
               />
             )}
           </div>

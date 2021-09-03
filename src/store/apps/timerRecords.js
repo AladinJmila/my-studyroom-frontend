@@ -6,7 +6,7 @@ const slice = createSlice({
     list: [],
   },
   reducers: {
-    UPDATE_TIMER_RECORDS: (timerRecords, actions) => {
+    UPDATE_TIMER_RECORDS: (timerRecords, action) => {
       timerRecords.list.unshift(action.payload)
     },
   },

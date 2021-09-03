@@ -7,6 +7,7 @@ import practicalsReducer from './practicals'
 import sessionsReducer from './sessions'
 import loopsReducer from './loops'
 import intervalsReducer from './intervals'
+import timerRecordsReducer from './timerRecords'
 
 export default combineReducers({
   subjects: subjectsReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   sessions: sessionsReducer,
   loops: loopsReducer,
   intervals: intervalsReducer,
+  timerRecords: timerRecordsReducer,
 })
