@@ -13,6 +13,7 @@ let trackIndex = 1
 let roundIndex = 1
 let repNum = 1
 let isPlaying = false
+let playingTime
 
 const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   let intervals = playingLoop.intervals
@@ -42,20 +43,15 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   useEffect(() => {
     return () => {
-      if (play) stop()
-      sendTimerState()
-      isPlaying = false
+      if (isPlaying) stop()
     }
   }, [playingSession])
-
-  useEffect(() => {
-    sendTimerState()
-  }, [isPlaying, play])
 
   const sendTimerState = timerState => {
     const record = {
       currentTime: Date.now(),
-      timeInSeconds: time.seconds + time.minutes * 60 + time.hours * 3600,
+      timeInSeconds:
+        timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
       interval: currentInterval.name,
       session: playingSession.subject.name,
       loop: playingLoop.name,
@@ -79,6 +75,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
     isPlaying = true
     setPlay(true)
     run()
+    sendTimerState(playingTime)
     toast(`${currentInterval.name} started`)
     setInterv(workerTimers.setInterval(run, 1000))
     playStartBeep(time, currentInterval, 2)
@@ -86,7 +83,9 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const stop = () => {
     isPlaying = false
-    workerTimers.clearInterval(interv)
+
+    sendTimerState(playingTime)
+    if (interv) workerTimers.clearInterval(interv)
     setPlay(false)
   }
 
@@ -96,18 +95,17 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const handleStepForward = () => {
     if (intervalIndex < intervals.length - 1) {
-      isPlaying = false
       const newIntervalIndex = intervalIndex + 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      if (play) stop()
 
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
         hours: intervals[newIntervalIndex].totalDuration.hours,
       })
-      setPlay(false)
+
+      if (play) stop()
       setProgress(0)
       trackIndex++
       if ((trackIndex - 1) % loopLength === 0) roundIndex++
@@ -117,18 +115,17 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const handleStepBackward = () => {
     if (intervalIndex > 0) {
-      isPlaying = false
       let newIntervalIndex = intervalIndex - 1
       setIntervalIndex(newIntervalIndex)
       setCurrentInterval(intervals[newIntervalIndex])
-      if (play) stop()
 
       setTime({
         seconds: intervals[newIntervalIndex].totalDuration.seconds,
         minutes: intervals[newIntervalIndex].totalDuration.minutes,
         hours: intervals[newIntervalIndex].totalDuration.hours,
       })
-      setPlay(false)
+
+      if (play) stop()
       setProgress(0)
       trackIndex--
       if (trackIndex % loopLength === 0) roundIndex--
@@ -142,11 +139,6 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const run = () => {
     if (isPlaying) {
-      if (!isPlaying) {
-        workerTimers.clearInterval(interv)
-        return
-      }
-
       if (updatedHours > 0 && updatedMinutes === 0) {
         updatedHours--
         updatedMinutes = 60
@@ -203,11 +195,12 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       }
 
       setProgress(progressPercentage)
-      setTime({
+      playingTime = {
         seconds: updatedSeconds,
         minutes: updatedMinutes,
         hours: updatedHours,
-      })
+      }
+      setTime(playingTime)
     }
   }
 
