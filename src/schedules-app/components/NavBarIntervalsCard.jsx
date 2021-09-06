@@ -47,6 +47,18 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
     }
   }, [playingSession])
 
+  useEffect(() => {
+    console.log(isPlaying)
+
+    if (isPlaying) {
+      window.addEventListener('beforeunload', e => {
+        e.preventDefault()
+        sendTimerState(playingTime)
+        e.returnValue = ''
+      })
+    }
+  }, [isPlaying])
+
   const sendTimerState = timerState => {
     const record = {
       currentTime: Date.now(),
