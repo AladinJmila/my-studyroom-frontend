@@ -3,14 +3,18 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
   name: 'timerRecords',
   initialState: {
-    list: [],
+    newestTimerRecord: null,
   },
   reducers: {
+    GET_NEWEST_TIMER_RECORD: (timerRecords, action) => {
+      timerRecords.newestTimerRecord = action.payload
+    },
+
     UPDATE_TIMER_RECORDS: (timerRecords, action) => {
-      timerRecords.list.unshift(action.payload)
+      timerRecords.newestTimerRecord = action.payload
     },
   },
 })
 
-export const { UPDATE_TIMER_RECORDS } = slice.actions
+export const { LOAD_NEWEST_TIMER_RECORD, UPDATE_TIMER_RECORDS } = slice.actions
 export default slice.reducer
