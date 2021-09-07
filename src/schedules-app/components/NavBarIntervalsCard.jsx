@@ -48,27 +48,30 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   }, [playingSession])
 
   useEffect(() => {
-    console.log(isPlaying)
-
     if (isPlaying) {
       window.addEventListener('beforeunload', e => {
         e.preventDefault()
-        sendTimerState(playingTime)
         e.returnValue = ''
+
+        isPlaying = false
+        sendTimerState(playingTime, 'stop')
+        // if (interv) workerTimers.clearInterval(interv)
+        setPlay(false)
+        playingSession && toast(`${currentInterval.name} stopped`)
       })
     }
   }, [isPlaying])
 
-  const sendTimerState = timerState => {
-    const record = {
+  const sendTimerState = (timerState, playState) => {
+    const timeRecord = {
       currentTime: Date.now(),
+      playState,
       timeInSeconds:
         timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
       interval: currentInterval.name,
       session: playingSession.subject.name,
-      loop: playingLoop.name,
     }
-    console.log(record)
+    console.log(timeRecord)
   }
 
   const halfInterval = computeHalfInterval(currentInterval)
@@ -87,7 +90,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
     isPlaying = true
     setPlay(true)
     run()
-    sendTimerState(playingTime)
+    sendTimerState(playingTime, 'start')
     toast(`${currentInterval.name} started`)
     setInterv(workerTimers.setInterval(run, 1000))
     playStartBeep(time, currentInterval, 2)
@@ -96,7 +99,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   const stop = () => {
     isPlaying = false
 
-    sendTimerState(playingTime)
+    sendTimerState(playingTime, 'stop')
     if (interv) workerTimers.clearInterval(interv)
     setPlay(false)
   }

@@ -93,8 +93,8 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
     styles.margin = 0
     styles.display = 'none'
   } else {
-    styles.minWidth = show ? 50 : 160
-    styles.maxWidth = show ? 50 : 160
+    styles.minWidth = show ? 50 : 140
+    styles.maxWidth = show ? 50 : 140
   }
 
   return (
