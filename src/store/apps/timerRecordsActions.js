@@ -7,9 +7,24 @@ let userid
 const user = getCurrentUser()
 if (user) userid = user._id
 
-export const recordTimer = record => async dispatch => {
+export const loadNewestTimerRecord = () => async dispatch => {
   try {
-    const { data } = await attpService.post(apiEndpoint, record)
+    const { data } = await httpService.get(apiEndPoint)
+
+    dispatch(actions.LOAD_NEWEST_TIMER_RECORD(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateTimerRecords = (record, timerRecord) => async dispatch => {
+  try {
+    const { data } = await attpService.put(
+      `${apiEndpoint}/${timerRecord._id}`,
+      record
+    )
+
+    dispatch(actions.UPDATE_TIMER_RECORDS(data))
   } catch (error) {
     console.log(error)
   }
