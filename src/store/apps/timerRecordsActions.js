@@ -11,16 +11,16 @@ export const loadNewestTimerRecord = () => async dispatch => {
   try {
     const { data } = await httpService.get(apiEndPoint)
 
-    dispatch(actions.LOAD_NEWEST_TIMER_RECORD(data))
+    dispatch(actions.GET_NEWEST_TIMER_RECORD(data[0]))
   } catch (error) {
     console.log(error)
   }
 }
 
-export const updateTimerRecords = (record, timerRecord) => async dispatch => {
+export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
   try {
-    const { data } = await attpService.put(
-      `${apiEndpoint}/${timerRecord._id}`,
+    const { data } = await httpService.put(
+      `${apiEndPoint}/${timerRecordId}`,
       record
     )
 

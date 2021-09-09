@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
-  name: 'timerRecords',
+  name: 'timerRecord',
   initialState: {
     newestTimerRecord: null,
   },
@@ -16,5 +16,5 @@ const slice = createSlice({
   },
 })
 
-export const { LOAD_NEWEST_TIMER_RECORD, UPDATE_TIMER_RECORDS } = slice.actions
+export const { GET_NEWEST_TIMER_RECORD, UPDATE_TIMER_RECORDS } = slice.actions
 export default slice.reducer

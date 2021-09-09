@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as workerTimers from 'worker-timers'
 import { playStartBeep, computeHalfInterval } from '../services/timerServices'
 import PlayPauseStep from './../../common/PlayPauseStep'
 import beep from '../../static/audio/beep-07a.wav'
 import beepHalf from '../../static/audio/beep-09.wav'
 import { toast } from 'react-toastify'
+import {
+  loadNewestTimerRecord,
+  updateTimerRecords,
+} from '../../store/apps/timerRecordsActions'
 
 const myBeep = new Audio(beep)
 const myHalfBeep = new Audio(beepHalf)
@@ -37,13 +41,21 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
     minutes: currentInterval.totalDuration.minutes,
     hours: currentInterval.totalDuration.hours,
   })
-  const [interv, setInterv] = useState()
+  const [interv, setInterv] = useState(null)
   const [play, setPlay] = useState(false)
   const [progress, setProgress] = useState(0)
+  const { newestTimerRecord } = useSelector(state => state.apps.timerRecords)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadNewestTimerRecord())
+  }, [])
 
   useEffect(() => {
     return () => {
-      if (isPlaying) stop()
+      console.log('reached before')
+      if (playingSession && isPlaying) stop()
+      console.log('reached after')
     }
   }, [playingSession])
 
@@ -53,34 +65,41 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         e.preventDefault()
         e.returnValue = ''
 
-        isPlaying = false
-        sendTimerState(playingTime, 'stop')
-        // if (interv) workerTimers.clearInterval(interv)
-        setPlay(false)
-        playingSession && toast(`${currentInterval.name} stopped`)
+        if (playingSession) {
+          stop()
+          toast(`${currentInterval.name} stopped`)
+        }
       })
     }
   }, [isPlaying])
 
   const sendTimerState = (timerState, playState) => {
-    const timeRecord = {
-      currentTime: Date.now(),
-      playState,
-      timeInSeconds:
-        timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
-      interval: currentInterval.name,
-      session: playingSession.subject.name,
+    if (playingSession) {
+      const timeRecord = {
+        currentTime: Date.now(),
+        playState,
+        timeInSeconds:
+          timerState.seconds +
+          timerState.minutes * 60 +
+          timerState.hours * 3600,
+        intervalName: currentInterval.name,
+        intervalColor: currentInterval.color,
+        subject: playingSession.subject.name,
+      }
+      dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id))
     }
-    console.log(timeRecord)
   }
 
   const halfInterval = computeHalfInterval(currentInterval)
+
   const intervalDurationInSeconds =
     (currentInterval.totalDuration.hours * 60 +
       currentInterval.totalDuration.minutes) *
       60 +
     currentInterval.totalDuration.seconds
+
   let repDurationInseconds
+
   if (currentInterval.numOfReps > 1) {
     repDurationInseconds =
       currentInterval.minutes * 60 + currentInterval.seconds
@@ -97,10 +116,11 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   }
 
   const stop = () => {
+    console.log(interv)
+    if (isPlaying) workerTimers.clearInterval(interv || 1)
     isPlaying = false
 
     sendTimerState(playingTime, 'stop')
-    if (interv) workerTimers.clearInterval(interv)
     setPlay(false)
   }
 
