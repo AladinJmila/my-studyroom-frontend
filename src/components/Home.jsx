@@ -37,9 +37,9 @@ const Home = () => {
             height='315'
             src='https://www.youtube.com/embed/PfdH3PPgBZ4'
             title='YouTube video player'
-            frameborder='0'
+            frameBorder='0'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
-            allowfullscreen
+            // allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
           ></iframe>
           {/* <img src={videoPlaceholder} width='100%' /> */}
         </div>

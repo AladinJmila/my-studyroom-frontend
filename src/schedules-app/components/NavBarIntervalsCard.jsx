@@ -76,7 +76,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         dispatch(loadNewestTimerRecord())
         isPlaying = false
         setPlay(false)
-        toast(`${currentInterval.name} stopped`)
+        toast.error(`"${recordInterval.name}" stopped`)
         sendTimerState(recordTime, 'stop', recordInterval, recordSubject)
         // sendTimerState(playingTime, 'stop: session card', recInterval, recordSubject)
         if (intervalIsSet) workerTimers.clearInterval(intervalIsSet)
@@ -95,7 +95,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         isPlaying = false
         // stop()
         setPlay(false)
-        toast.warning(`${currentInterval.name} stopped`)
+        toast.error(`"${recordInterval.name}" stopped`)
         sendTimerState(recordTime, 'stop', recordInterval, recordSubject)
         // sendTimerState(playingTime, 'stop: reload', recInterval, recordSubject)
         if (intervalIsSet) workerTimers.clearInterval(intervalIsSet)
@@ -117,7 +117,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         subjectName: subject.name,
       }
       dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id))
-      // console.log(timeRecord)
+      console.log(timeRecord)
     }
   }
 
@@ -141,7 +141,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
     setPlay(true)
     run()
     sendTimerState(time, 'start', currentInterval, subject)
-    toast(`${currentInterval.name} started`)
+    toast.success(`"${currentInterval.name}" started`)
     setInterv(workerTimers.setInterval(run, 1000))
     playStartBeep(time, currentInterval, 2)
   }
@@ -152,8 +152,8 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       return
     }
 
-    sendTimerState(time, 'stop', currentInterval, subject)
-    workerTimers.clearInterval(interv)
+    sendTimerState(recordTime, 'stop', currentInterval, subject)
+    if (interv) workerTimers.clearInterval(interv)
     isPlaying = false
 
     setPlay(false)
@@ -178,7 +178,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       if (play) {
         isPlaying = false
         stop()
-        toast(`${currentInterval.name} stopped`)
+        toast.error(`"${currentInterval.name}" stopped`)
         sendTimerState(time, 'stop', currentInterval, subject)
         // sendTimerState(time, 'stop: step forward', currentInterval, subject)
         workerTimers.clearInterval(interv)
@@ -206,7 +206,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       if (play) {
         isPlaying = false
         stop()
-        toast(`${currentInterval.name} stopped`)
+        toast.error(`"${currentInterval.name}" stopped`)
         sendTimerState(time, 'stop', currentInterval, subject)
         // sendTimerState(time, 'stop: step backward', currentInterval, subject)
         workerTimers.clearInterval(interv)
@@ -235,8 +235,19 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       }
 
       if (updatedSeconds === 0 && updatedMinutes === 0 && updatedHours === 0) {
-        toast(`${currentInterval.name} completed`)
-        return stop()
+        isPlaying = false
+        setPlay(false)
+        toast.success(`"${currentInterval.name}" completed`)
+        sendTimerState(recordTime, 'stop', recordInterval, recordSubject)
+        // sendTimerState(playingTime, 'stop: reload', recInterval, recordSubject)
+        if (intervalIsSet) workerTimers.clearInterval(intervalIsSet)
+
+        setTime({
+          seconds: currentInterval.totalDuration.seconds,
+          minutes: currentInterval.totalDuration.minutes,
+          hours: currentInterval.totalDuration.hours,
+        })
+        return
       }
 
       if (
@@ -246,7 +257,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         updatedSeconds === halfInterval.seconds
       ) {
         myHalfBeep.play()
-        toast(`${currentInterval.name} reached half`)
+        toast.warning(`"${currentInterval.name}" reached half`)
       }
 
       if (updatedHours === 0 && updatedMinutes === 0 && updatedSeconds === 3) {
@@ -261,7 +272,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       }
 
       updatedSeconds--
-      // console.log('running')
+      console.log('running')
 
       const currentTimeInSeconds =
         (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds
