@@ -8,6 +8,7 @@ import {
 } from '../store/apps/subjectsActions'
 import plansAndProgress from '../../src/static/images/plansAndProgress.png'
 import dailyStatus from '../../src/static/images/dailyStatus.png'
+import Calendar from '../calendar-app/components/Calendar'
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
@@ -33,6 +34,7 @@ const Profile = () => {
         Progress Tracker{' '}
         <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
       </h2>
+      <Calendar />
       <img src={plansAndProgress} className='mt-4' style={{ width: '100%' }} />
       <h2 className='mt-5 text-center'>
         Daily Status <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
