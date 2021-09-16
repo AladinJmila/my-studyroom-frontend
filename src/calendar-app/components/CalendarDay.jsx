@@ -1,6 +1,5 @@
 const CalendarDay = () => {
   const dayStyle = {
-    // height: 22,
     height: '1.3rem',
     width: '1.3rem',
     backgroundColor: '#D9D9D9',

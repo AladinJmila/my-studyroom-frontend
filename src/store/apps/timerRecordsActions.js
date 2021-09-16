@@ -17,6 +17,16 @@ export const loadNewestTimerRecord = () => async dispatch => {
   }
 }
 
+export const loadDailyDurations = () => async dispatch => {
+  try {
+    const { data } = await httpService.get(`${apiEndPoint}/daily-durations`)
+
+    dispatch(actions.GET_DAILY_DURATIONS(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
   try {
     const { data } = await httpService.put(
