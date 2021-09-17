@@ -35,7 +35,7 @@ const Profile = () => {
         <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
       </h2>
       <Calendar />
-      <img src={plansAndProgress} className='mt-4' style={{ width: '100%' }} />
+      {/* <img src={plansAndProgress} className='mt-4' style={{ width: '100%' }} /> */}
       <h2 className='mt-5 text-center'>
         Daily Status <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
       </h2>

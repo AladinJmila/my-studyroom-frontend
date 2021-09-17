@@ -32,8 +32,8 @@ const CalendarDay = ({ index, dailyDurations }) => {
   }
 
   const dayStyle = {
-    height: '1.3rem',
-    width: '1.3rem',
+    height: '1.27rem',
+    width: '1.27rem',
     backgroundColor: color,
     borderRadius: '0.65rem',
     margin: '0.208rem',
