@@ -6,15 +6,19 @@ const CalendarDay = ({ index, dailyDurations }) => {
   if (hours[0]) hours = hours[0][String(index)]
 
   switch (true) {
-    case hours > 9:
+    case hours > 8:
       color = '#CC7400'
       break
 
-    case hours > 7:
+    case hours > 6:
+      color = '#EB8500'
+      break
+
+    case hours > 4:
       color = '#FF9C1A'
       break
 
-    case hours > 3:
+    case hours > 2:
       color = '#FFB452'
       break
 
@@ -36,7 +40,7 @@ const CalendarDay = ({ index, dailyDurations }) => {
   }
 
   return (
-    <div>
+    <div title={hours ? hours : 0}>
       <div style={dayStyle}></div>
     </div>
   )
