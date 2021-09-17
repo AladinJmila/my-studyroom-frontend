@@ -1,10 +1,11 @@
 import CalendarDay from './CalendarDay'
 import { useEffect } from 'react'
 import { loadDailyDurations } from '../../store/apps/timerRecordsActions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Calendar = () => {
   const daysPerYear = 364
+  const { dailyDurations } = useSelector(state => state.apps.timerRecords)
 
   const dispatch = useDispatch()
 
@@ -24,11 +25,11 @@ const Calendar = () => {
         }}
       >
         <div
-          class='d-inline-flex bd-highlight flex-wrap'
+          class='d-inline-flex flex-column bd-highlight flex-wrap'
           style={{ height: '12rem', position: 'relative' }}
         >
           {[...Array(daysPerYear)].map((e, i) => (
-            <CalendarDay />
+            <CalendarDay index={i} dailyDurations={dailyDurations} />
           ))}
         </div>
       </div>
