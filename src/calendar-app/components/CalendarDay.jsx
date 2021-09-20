@@ -37,6 +37,7 @@ const CalendarDay = ({ index, dailyDurations }) => {
     backgroundColor: color,
     borderRadius: '0.65rem',
     margin: '0.208rem',
+    marginTop: index === 0 ? 48 : 0,
   }
 
   return (
