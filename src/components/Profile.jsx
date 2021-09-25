@@ -9,6 +9,7 @@ import {
 import plansAndProgress from '../../src/static/images/plansAndProgress.png'
 import dailyStatus from '../../src/static/images/dailyStatus.png'
 import Calendar from '../calendar-app/components/Calendar'
+import { loadVizData } from './../store/apps/timerRecordsActions'
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
@@ -21,6 +22,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(loadSubjects())
     dispatch(loadUpvotedSubjects())
+    dispatch(loadVizData())
   }, [])
 
   console.log(plansAndProgress)

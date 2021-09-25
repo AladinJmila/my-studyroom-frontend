@@ -27,6 +27,16 @@ export const loadDailyDurations = () => async dispatch => {
   }
 }
 
+export const loadVizData = () => async dispatch => {
+  try {
+    const { data } = await httpService.get(`${apiEndPoint}/week-stats`)
+
+    dispatch(actions.GET_VIZ_DATA(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
   try {
     const { data } = await httpService.put(
