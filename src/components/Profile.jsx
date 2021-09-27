@@ -8,8 +8,9 @@ import {
 } from '../store/apps/subjectsActions'
 import plansAndProgress from '../../src/static/images/plansAndProgress.png'
 import dailyStatus from '../../src/static/images/dailyStatus.png'
-import Calendar from '../calendar-app/components/Calendar'
+import Calendar from '../stats-app/components/Calendar'
 import { loadVizData } from './../store/apps/timerRecordsActions'
+import DailyActivity from '../stats-app/components/DailyActivity'
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list)
@@ -41,7 +42,8 @@ const Profile = () => {
       <h2 className='mt-5 text-center'>
         Daily Status <span style={{ fontSize: '1.5rem' }}>(in progress)</span>
       </h2>
-      <img src={dailyStatus} className='mt-4 mb-4' style={{ width: '100%' }} />
+      <DailyActivity />
+      {/* <img src={dailyStatus} className='mt-4 mb-4' style={{ width: '100%' }} /> */}
       {/* <div
         className='mt-4 mb-4'
         style={{
