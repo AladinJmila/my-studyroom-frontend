@@ -64,7 +64,7 @@ const Calendar = () => {
           <span>Fri</span>
         </div>
         <div
-          class='d-flex flex-column flex-wrap'
+          className='d-flex flex-column flex-wrap'
           style={{ height: '12rem', position: 'relative' }}
         >
           {[...Array(daysPerYear)].map((e, i) => (

@@ -15,12 +15,12 @@ import Home from './components/Home'
 import SubjectDetails from './components/SubjectDetails'
 import { getCurrentUser } from './store/services/authService'
 import { setCurrentUser } from './store/auth/authParams'
-import 'react-toastify/dist/ReactToastify.css'
+   import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
 function App() {
   const user = getCurrentUser()
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(setCurrentUser(user))
@@ -31,21 +31,21 @@ function App() {
       <ToastContainer />
       <NavBar />
       <Switch>
-        <Route path='/register' component={RegisterForm}></Route>
-        <Route path='/login' component={LoginForm}></Route>
-        <Route path='/logout' component={Logout}></Route>
+        <Route path="/register" component={RegisterForm}></Route>
+        <Route path="/login" component={LoginForm}></Route>
+        <Route path="/logout" component={Logout}></Route>
         <Route
-          path='/profile/:creatorName/:creatorId'
+          path="/profile/:creatorName/:creatorId"
           component={ProfilePublic}
         ></Route>
-        <Route path='/my-profile' component={Profile}></Route>
-        <Route path='/subjects/:id' component={SubjectDetails}></Route>
-        <Route path='/about' component={About}></Route>
-        <Route path='/not-found' component={NotFound}></Route>
-        <Route path='/workspace' exact component={Workspace}></Route>
-        <Route path='/home' exact component={Home}></Route>
-        <Redirect from='/' to='/home' />
-        <Redirect to='/not-found' />
+        <Route path="/my-profile" component={Profile}></Route>
+        <Route path="/subjects/:id" component={SubjectDetails}></Route>
+        <Route path="/about" component={About}></Route>
+        <Route path="/not-found" component={NotFound}></Route>
+        <Route path="/workspace" exact component={Workspace}></Route>
+        <Route path="/home" exact component={Home}></Route>
+        <Redirect from="/" to="/home" />
+        <Redirect to="/not-found" />
       </Switch>
     </>
   )
