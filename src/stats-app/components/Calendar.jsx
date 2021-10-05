@@ -15,7 +15,6 @@ const Calendar = () => {
 
   return (
     <div>
-      <h1>Calendar</h1>
       <div
         style={{
           padding: '4rem 1rem 1rem 5rem',
