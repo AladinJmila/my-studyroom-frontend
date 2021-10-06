@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import AppsWrapper from '../workspace-app/components/AppsWrapper'
 import VerticalNavBar from '../workspace-app/components/VerticalNavBar'
 import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper'
+import { loadNewestTimerRecord } from './../store/apps/timerRecordsActions'
 
 function Workspace() {
   const [showSubjects, setShowSubjects] = useState(true)
@@ -15,6 +16,12 @@ function Workspace() {
   const [schedulesRef, setSchedulesRef] = useState()
 
   const { selectedSubject } = useSelector(state => state.apps.subjects)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadNewestTimerRecord())
+  }, [])
 
   return (
     <main

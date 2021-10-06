@@ -26,7 +26,7 @@ const Profile = () => {
     dispatch(loadVizData())
   }, [])
 
-  console.log(plansAndProgress)
+  // console.log(plansAndProgress)
 
   return (
     <div
