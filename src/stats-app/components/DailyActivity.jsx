@@ -11,11 +11,14 @@ const DailyActivity = () => {
   // console.log(dayIndex)
   const data = vizData[dayIndex]?.activity
   const date = vizData[dayIndex]?.date
-  let learntSubjects = new Set(data.map(item => item.subjectName))
-  learntSubjects = Array.from(learntSubjects)
+  let learntSubjects = []
+  if (data) {
+    learntSubjects = new Set(data.map(item => item.subjectName))
+    learntSubjects = Array.from(learntSubjects)
+  }
 
-  console.log(learntSubjects)
-  console.log(data)
+  // console.log(learntSubjects)
+  // console.log(data)
 
   // const data = [
   //   { intervalName: 'Study Hard', totalTime: 45, color: '#fe452d' },
@@ -136,18 +139,18 @@ const DailyActivity = () => {
             </div>
           ))}
       </div>
-      {learntSubjects && (
-        <div
-          className='d-flex justify-content-between flex-wrap pt-2'
-          style={{ borderTop: '1px solid grey', color: 'grey' }}
-        >
-          {learntSubjects.map((s, i) => (
+
+      <div
+        className='d-flex justify-content-between flex-wrap pt-2'
+        style={{ borderTop: '1px solid grey', color: 'grey' }}
+      >
+        {data &&
+          learntSubjects.map((s, i) => (
             <h6 key={i} className='m-0'>
               {s}
             </h6>
           ))}
-        </div>
-      )}
+      </div>
     </div>
   )
 }
