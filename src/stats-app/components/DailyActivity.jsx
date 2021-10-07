@@ -1,11 +1,17 @@
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import * as d3 from 'd3'
+import NavDate from './NavDate'
+import { loadVizData } from '../../store/apps/timerRecordsActions'
 
 const DailyActivity = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords)
-  const data = vizData[4]?.activity
-  data && console.log(data)
+  const [dayIndex, setDayIndex] = useState(vizData?.length - 1)
+  // vizData.length > 0 && setDayIndex()
+  // console.log(dayIndex)
+  // console.log(vizData)
+  const data = vizData[dayIndex]?.activity
+  const date = vizData[dayIndex]?.date
 
   // const data = [
   //   { intervalName: 'Study Hard', totalTime: 45, color: '#fe452d' },
@@ -15,9 +21,10 @@ const DailyActivity = () => {
   //   { intervalName: 'Coding', totalTime: 60, color: '#0934b1' },
   //   { intervalName: 'Stretching', totalTime: 5, color: '#bc3e00' },
   // ]
+
   useEffect(() => {
     genGraph()
-  }, [])
+  }, [data, dayIndex])
 
   let totalDuration = 0
 
@@ -37,7 +44,6 @@ const DailyActivity = () => {
   if (data) {
     stack = () => {
       const total = d3.sum(data, d => d.totalPlayTime)
-      console.log(total)
       let value = 0
       return data.map(d => ({
         name: d.intervalName,
@@ -50,14 +56,14 @@ const DailyActivity = () => {
     }
   }
 
-  // console.log(stack())
-
   const formatPercent = x.tickFormat(null, '%')
 
   let genGraph = () => {}
 
   if (data) {
     genGraph = () => {
+      d3.select('svg').remove()
+
       const svg = d3
         .select('#svg')
         .append('svg')
@@ -77,77 +83,56 @@ const DailyActivity = () => {
         .append('title')
         .text(d => `${d.name}${formatPercent(d.value)}`)
 
-      // svg
-      //   .append('g')
-      //   .attr('font-family', 'sans-serif')
-      //   .attr('font-size', 12)
-      //   .selectAll('text')
-      //   .data(stack().filter(d => x(d.endValue) - x(d.startValue) > 40))
-      //   .join('text')
-      //   .attr('fill', d => (d3.lab(d.color).l < 50 ? 'white' : 'black'))
-      //   .attr('transform', d => `translate(${x(d.startValue) + 6}, 6)`)
-      //   .call(text =>
-      //     text
-      //       .append('tspan')
-      //       .attr('y', '0.7em')
-      //       .attr('font-weight', 'bold')
-      //       .text(d => d.name)
-      //   )
-      //   .call(text =>
-      //     text
-      //       .append('tspan')
-      //       .attr('x', 0)
-      //       .attr('y', '1.7em')
-      //       .attr('fill-opacity', 0.7)
-      //       .text(d => formatPercent(d.value))
-      //   )
-
       return svg.node()
     }
   }
 
   return (
-    <>
-      {data && (
-        <div
-          className='mt-4 mb-4'
-          style={{
-            padding: '1rem 2rem 2rem 2rem',
-            border: 'black solid 1px',
-            backgroundColor: '#F2F2F2',
-            overflow: 'auto',
-            position: 'relative',
-          }}
-        >
-          <h4 className='text-center'>{`${totalDuration} Hours`}</h4>
-          <div
-            className='mb-3 mt-4'
-            style={{ borderRadius: '1rem', overflow: 'hidden' }}
-            id='svg'
-          ></div>
-          <div className='d-flex justify-content-between flex-wrap mb-2'>
-            {data &&
-              stack().map(d => (
-                <div className='mb-2' style={{ minWidth: '12rem' }}>
-                  <div
-                    style={{
-                      height: '1rem',
-                      width: '1rem',
-                      borderRadius: '0.5rem',
-                      backgroundColor: d.color,
-                      display: 'inline-block',
-                    }}
-                  ></div>
-                  <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
-                    {formatPercent(d.value)}
-                  </span>
-                  <span style={{ fontSize: '1rem' }}>{d.name}</span>
-                </div>
-              ))}
-          </div>
-        </div>
+    <div
+      className='mt-4 mb-4'
+      style={{
+        padding: '1rem 2rem 1rem 2rem',
+        border: 'black solid 1px',
+        backgroundColor: '#F2F2F2',
+        overflow: 'auto',
+        position: 'relative',
+      }}
+    >
+      {date && (
+        <NavDate
+          date={date}
+          dayIndex={dayIndex}
+          setDayIndex={setDayIndex}
+          maxIndex={vizData.length - 1}
+        />
       )}
-    </>
+      <h4 className='text-center mt-3'>{`${totalDuration} hours`}</h4>
+      <div
+        className='mb-3 mt-4'
+        style={{ borderRadius: '1rem', overflow: 'hidden' }}
+        id='svg'
+      ></div>
+      <div className='d-flex justify-content-between flex-wrap mb-2'>
+        {data &&
+          stack().map(d => (
+            <div className='mb-2' style={{ minWidth: '12rem' }}>
+              <div
+                style={{
+                  height: '1rem',
+                  width: '1rem',
+                  borderRadius: '0.5rem',
+                  backgroundColor: d.color,
+                  display: 'inline-block',
+                }}
+              ></div>
+              <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
+                {formatPercent(d.value)}
+              </span>
+              <span style={{ fontSize: '1rem' }}>{d.name}</span>
+            </div>
+          ))}
+      </div>
+    </div>
   )
 }
 
