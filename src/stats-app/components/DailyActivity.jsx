@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import * as d3 from 'd3'
 import NavDate from './NavDate'
-import { loadVizData } from '../../store/apps/timerRecordsActions'
 
 const DailyActivity = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords)
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1)
-  // vizData.length > 0 && setDayIndex()
-  // console.log(dayIndex)
   const data = vizData[dayIndex]?.activity
   const date = vizData[dayIndex]?.date
   let learntSubjects = []
@@ -17,28 +14,21 @@ const DailyActivity = () => {
     learntSubjects = Array.from(learntSubjects)
   }
 
-  // console.log(learntSubjects)
-  // console.log(data)
-
-  // const data = [
-  //   { intervalName: 'Study Hard', totalTime: 45, color: '#fe452d' },
-  //   { intervalName: 'Break', totalTime: 10, color: '#da92e1' },
-  //   { intervalName: 'Study Easy', totalTime: 30, color: '#e9abc4' },
-  //   { intervalName: 'Meditation', totalTime: 10, color: '#e934c4' },
-  //   { intervalName: 'Coding', totalTime: 60, color: '#0934b1' },
-  //   { intervalName: 'Stretching', totalTime: 5, color: '#bc3e00' },
-  // ]
-
   useEffect(() => {
     genGraph()
   }, [data, dayIndex])
 
   let totalDuration = 0
+  let formattedDuration
 
   if (data) {
-    totalDuration = Number.parseFloat(
-      d3.sum(data, d => d.totalPlayTime) / 3600
-    ).toFixed(1)
+    totalDuration = Math.floor(d3.sum(data, d => d.totalPlayTime))
+
+    const hours = Math.floor(totalDuration / 3600)
+    const minutes = Math.floor((totalDuration % 3600) / 60)
+
+    formattedDuration = { hours, minutes }
+    console.log(formattedDuration)
   }
 
   const width = 600
@@ -113,7 +103,11 @@ const DailyActivity = () => {
           maxIndex={vizData.length - 1}
         />
       )}
-      <h4 className='text-center mt-3'>{`${totalDuration} hours`}</h4>
+      <h4 className='text-center mt-3'>
+        {totalDuration
+          ? `${formattedDuration.hours} h ${formattedDuration.minutes} m`
+          : 'No activity'}
+      </h4>
       <div
         className='mb-3 mt-4'
         style={{ borderRadius: '1rem', overflow: 'hidden' }}
