@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import * as d3 from 'd3'
 import NavDate from './NavDate'
+import {
+  timeFormatter,
+  toStringTimeFormatter,
+} from './../services/StatsService'
 
 const DailyActivity = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords)
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1)
+  const subjectData = vizData[dayIndex]?.subjectActivity
   const data = vizData[dayIndex]?.activity
   const date = vizData[dayIndex]?.date
   let learntSubjects = []
@@ -13,6 +18,8 @@ const DailyActivity = () => {
     learntSubjects = new Set(data.map(item => item.subjectName))
     learntSubjects = Array.from(learntSubjects)
   }
+
+  vizData && console.log(vizData)
 
   useEffect(() => {
     genGraph()
@@ -24,11 +31,7 @@ const DailyActivity = () => {
   if (data) {
     totalDuration = Math.floor(d3.sum(data, d => d.totalPlayTime))
 
-    const hours = Math.floor(totalDuration / 3600)
-    const minutes = Math.floor((totalDuration % 3600) / 60)
-
-    formattedDuration = { hours, minutes }
-    console.log(formattedDuration)
+    formattedDuration = timeFormatter(totalDuration)
   }
 
   const width = 600
@@ -104,9 +107,7 @@ const DailyActivity = () => {
         />
       )}
       <h4 className='text-center mt-3'>
-        {totalDuration
-          ? `${formattedDuration.hours} h ${formattedDuration.minutes} m`
-          : 'No activity'}
+        {totalDuration && toStringTimeFormatter(formattedDuration)}
       </h4>
       <div
         className='mb-3 mt-4'
@@ -138,10 +139,11 @@ const DailyActivity = () => {
         className='d-flex justify-content-between flex-wrap pt-2'
         style={{ borderTop: '1px solid grey', color: 'grey' }}
       >
-        {data &&
-          learntSubjects.map((s, i) => (
+        {subjectData &&
+          subjectData.map((s, i) => (
             <h6 key={i} className='m-0'>
-              {s}
+              {s.subjectName}:{' '}
+              {toStringTimeFormatter(timeFormatter(s.subjectPlayTime))}
             </h6>
           ))}
       </div>
