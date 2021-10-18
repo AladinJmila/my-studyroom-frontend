@@ -19,7 +19,7 @@ const DailyActivity = () => {
     learntSubjects = Array.from(learntSubjects)
   }
 
-  vizData && console.log(vizData)
+  // vizData && console.log(vizData)
 
   useEffect(() => {
     genGraph()
@@ -48,6 +48,7 @@ const DailyActivity = () => {
       return data.map(d => ({
         name: d.intervalName,
         value: d.totalPlayTime / total,
+        duration: d.totalPlayTime,
         startValue: value / total,
         endValue: (value += d.totalPlayTime) / total,
         color: d.color,
@@ -127,10 +128,14 @@ const DailyActivity = () => {
                   display: 'inline-block',
                 }}
               ></div>
+
+              <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
+                {toStringTimeFormatter(timeFormatter(d.duration))}
+              </span>
+              <span style={{ fontSize: '1rem' }}>{d.name}</span>
               <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
                 {formatPercent(d.value)}
               </span>
-              <span style={{ fontSize: '1rem' }}>{d.name}</span>
             </div>
           ))}
       </div>
