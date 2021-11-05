@@ -1,11 +1,11 @@
-import { sortHeadersStyle } from '../../services/stylesService'
+import { sortHeadersStyle } from '../../services/stylesService';
 
 const SubjectsSortCard = ({ onSort, sortTarget }) => {
   const columns = [
     {
       path: 'starred',
       label: (
-        <div style={{ cursor: 'pointer' }} className='p-2'>
+        <div className='p-2 pointer'>
           <i className='fa fa-sort' aria-hidden='true'></i> Starred
         </div>
       ),
@@ -13,23 +13,23 @@ const SubjectsSortCard = ({ onSort, sortTarget }) => {
     {
       path: 'isPublic',
       label: (
-        <div style={{ cursor: 'pointer' }} className='p-2'>
+        <div className='p-2 pointer'>
           <i className='fa fa-sort ' aria-hidden='true'></i> Public
         </div>
       ),
     },
-  ]
+  ];
 
   const handleSort = path => {
-    const newSortTarget = { ...sortTarget }
+    const newSortTarget = { ...sortTarget };
     if (newSortTarget.path === path)
-      newSortTarget.order = newSortTarget.order === 'asc' ? 'desc' : 'asc'
+      newSortTarget.order = newSortTarget.order === 'asc' ? 'desc' : 'asc';
     else {
-      newSortTarget.path = path
-      newSortTarget.order = 'asc'
+      newSortTarget.path = path;
+      newSortTarget.order = 'asc';
     }
-    onSort(newSortTarget)
-  }
+    onSort(newSortTarget);
+  };
 
   return (
     <div
@@ -45,7 +45,7 @@ const SubjectsSortCard = ({ onSort, sortTarget }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default SubjectsSortCard
+export default SubjectsSortCard;

@@ -1,5 +1,5 @@
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import Star from '../../common/Star'
+import CardEllipsisMenu from './../../common/CardEllipsisMenu';
+import Star from '../../common/Star';
 
 const SubjectsCardHeader = ({
   subject,
@@ -23,12 +23,12 @@ const SubjectsCardHeader = ({
             // onEdit={onEdit}
             onToggleProp={onToggleProp}
             onDelete={onDelete}
-            onToggleShareForm={onShowShareForm}
+            onShareForm={onShowShareForm}
           />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SubjectsCardHeader
+export default SubjectsCardHeader;

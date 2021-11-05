@@ -7,7 +7,7 @@ const Input = ({ name, label, required, error, ...rest }) => {
       <input {...rest} id={name} name={name} className='form-control' />
       {error && <div className='alert alert-danger'>{error}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

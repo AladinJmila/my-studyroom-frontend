@@ -9,7 +9,7 @@ const CardEllipsisMenu = ({
   onDelete,
   vertical,
   share,
-  onToggleShareForm,
+  onShareForm,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -82,7 +82,7 @@ const CardEllipsisMenu = ({
             <div
               className='list-group-item list-group-item-action pointer'
               onClick={() => {
-                onToggleShareForm();
+                onShareForm();
                 handleShowMenu();
               }}
             >

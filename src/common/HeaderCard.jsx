@@ -1,4 +1,4 @@
-import { headersStyle } from './../services/stylesService'
+import { headersStyle } from './../services/stylesService';
 
 const HeaderCard = ({
   user,
@@ -16,7 +16,7 @@ const HeaderCard = ({
       className='d-flex flex-row justify-content-between sticky-top'
     >
       <h6 className='p-2'>
-        Showing {count} <b>{' ' + item}</b>
+        Showing {count} <b>{item}</b>
       </h6>
       <div>
         {user && youtube && (
@@ -34,7 +34,7 @@ const HeaderCard = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HeaderCard
+export default HeaderCard;

@@ -1,16 +1,16 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import Form from './../../common/Form'
-import { appsFormStyle } from '../../services/stylesService'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import Form from './../../common/Form';
+import { appsFormStyle } from '../../services/stylesService';
 import {
   createTask,
   updateTask,
   clearSelectedTask,
-} from '../../store/apps/tasksActions'
+} from '../../store/apps/tasksActions';
 import {
   updateSubjectItemsCount,
-  updateSubjectOnEdit,
-} from '../../store/apps/subjectsActions'
+  // updateSubjectOnEdit,
+} from '../../store/apps/subjectsActions';
 
 class TasksForm extends Form {
   state = {
@@ -23,7 +23,7 @@ class TasksForm extends Form {
     subjects: [],
     resources: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
@@ -31,36 +31,36 @@ class TasksForm extends Form {
     resourceId: Joi.string().allow(''),
     content: Joi.string().required().max(500).label('Task'),
     url: Joi.string().max(500).allow('').label('URL'),
-    sessions: Joi.number().label('Sessions').allow(''),
-  }
+  };
 
   setFormHeight() {
-    this.newAppsFormStyle = { ...appsFormStyle }
-    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+    this.newAppsFormStyle = { ...appsFormStyle };
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250;
   }
 
   componentDidMount() {
-    this.setFormHeight()
+    this.setFormHeight();
 
-    const { subjects, resources, selectedTask, selectedSubject } = this.props
-    this.setState({ subjects, resources })
+    const { subjects, resources, selectedTask, selectedSubject } = this.props;
+    this.setState({ subjects, resources });
 
     if (selectedSubject)
-      this.setStateOnSubjectSelect(selectedSubject, resources)
+      this.setStateOnSubjectSelect(selectedSubject, resources);
 
-    if (selectedTask) this.setState({ data: this.mapToViewModel(selectedTask) })
+    if (selectedTask)
+      this.setState({ data: this.mapToViewModel(selectedTask) });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { resources, selectedSubject } = this.props
+    const { resources, selectedSubject } = this.props;
     if (prevProps.selectedSubject !== selectedSubject)
-      this.setStateOnSubjectSelect(selectedSubject, resources)
+      this.setStateOnSubjectSelect(selectedSubject, resources);
   }
 
   setStateOnSubjectSelect = (selectedSubject, resources) => {
     const filteredResources = resources.filter(
       r => r.subject._id === selectedSubject._id
-    )
+    );
 
     this.setState({
       resources: filteredResources,
@@ -70,8 +70,8 @@ class TasksForm extends Form {
         content: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   mapToViewModel = task => {
     if (task.resource)
@@ -81,19 +81,19 @@ class TasksForm extends Form {
         resourceId: task.resource._id,
         content: task.content,
         url: task.url || '',
-      }
+      };
 
     return {
       _id: task._id,
       subjectId: task.subject._id,
       content: task.content,
       url: task.url || '',
-    }
-  }
+    };
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
     const {
       createTask,
@@ -102,21 +102,21 @@ class TasksForm extends Form {
       clearSelectedTask,
       updateSubjectOnEdit,
       updateSubjectItemsCount,
-    } = this.props
+    } = this.props;
 
     if (selectedTask) {
-      data.isChecked = selectedTask.isChecked
-      data.starred = selectedTask.starred
-      data.isPublic = selectedTask.isPublic
-      updateTask(data)
-      updateSubjectOnEdit(selectedTask, data, 'Tasks')
-      clearSelectedTask()
+      data.isChecked = selectedTask.isChecked;
+      data.starred = selectedTask.starred;
+      data.isPublic = selectedTask.isPublic;
+      updateTask(data);
+      // updateSubjectOnEdit(selectedTask, data, 'Tasks');
+      clearSelectedTask();
     } else {
-      createTask(data)
-      updateSubjectItemsCount(data, 'Tasks', 'create')
+      createTask(data);
+      updateSubjectItemsCount(data, 'Tasks', 'create');
     }
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         subjectId: '',
@@ -124,8 +124,8 @@ class TasksForm extends Form {
         content: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -143,7 +143,7 @@ class TasksForm extends Form {
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
       </form>
-    )
+    );
   }
 }
 
@@ -152,16 +152,16 @@ const mapStateToProps = state => ({
   selectedSubject: state.apps.subjects.selectedSubject,
   resources: state.apps.resources.list,
   selectedTask: state.apps.tasks.selectedTask,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createTask: task => dispatch(createTask(task)),
   updateTask: task => dispatch(updateTask(task)),
   clearSelectedTask: () => dispatch(clearSelectedTask()),
-  updateSubjectOnEdit: (itemInDb, item, itemName) =>
-    dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
+  // updateSubjectOnEdit: (itemInDb, item, itemName) =>
+  //   dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
   updateSubjectItemsCount: (item, itemName, operation) =>
     dispatch(updateSubjectItemsCount(item, itemName, operation)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(TasksForm)
+export default connect(mapStateToProps, mapDispatchToProps)(TasksForm);
