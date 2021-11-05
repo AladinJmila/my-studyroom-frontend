@@ -17,16 +17,13 @@ const CardEllipsisMenu = ({
     setShowMenu(!showMenu);
   };
 
-  const iconClass = !vertical ? 'fa fa-lg fa-ellipsis-h' : 'fa fa-ellipsis-v';
+  const iconClass = vertical
+    ? 'fa fa-ellipsis-v align-top pointer'
+    : 'fa fa-lg fa-ellipsis-h align-top pointer';
 
   return (
     <>
-      <i
-        className={iconClass}
-        style={{ cursor: 'pointer', verticalAlign: 'top' }}
-        aria-hidden='true'
-        onClick={handleShowMenu}
-      ></i>
+      <i onClick={handleShowMenu} className={iconClass} aria-hidden='true'></i>
       {showMenu && (
         <div
           className='list-group float-end'
@@ -47,11 +44,7 @@ const CardEllipsisMenu = ({
           >
             <h6 style={{ margin: 0 }}>
               Edit
-              <i
-                className='fa fa-pencil float-end'
-                style={{ cursor: 'pointer' }}
-                aria-hidden='true'
-              ></i>
+              <i className='fa fa-pencil float-end' aria-hidden='true'></i>
             </h6>
           </div>
 
