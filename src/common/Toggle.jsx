@@ -1,14 +1,8 @@
 const Toggle = ({ toggled, onToggle }) => {
-  let classes = 'ms-2 fa  fa-toggle-off'
-  if (toggled) classes = 'ms-2 fa  fa-toggle-on'
-  return (
-    <i
-      onClick={onToggle}
-      className={classes}
-      style={{ cursor: 'pointer' }}
-      aria-hidden='true'
-    ></i>
-  )
-}
+  const classes = toggled
+    ? 'ms-2 fa fa-toggle-on pointer'
+    : 'ms-2 fa fa-toggle-off pointer';
+  return <i onClick={onToggle} className={classes} aria-hidden='true'></i>;
+};
 
-export default Toggle
+export default Toggle;

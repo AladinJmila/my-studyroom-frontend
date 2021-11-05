@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import Toggle from './Toggle'
-import Star from './Star'
+import { useState } from 'react';
+import Toggle from './Toggle';
+import Star from './Star';
 
 const CardEllipsisMenu = ({
   item,
@@ -11,13 +11,13 @@ const CardEllipsisMenu = ({
   share,
   onToggleShareForm,
 }) => {
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleShowMenu = () => {
-    showMenu ? setShowMenu(false) : setShowMenu(true)
-  }
+    setShowMenu(!showMenu);
+  };
 
-  const iconClass = !vertical ? 'fa fa-lg fa-ellipsis-h' : 'fa fa-ellipsis-v'
+  const iconClass = !vertical ? 'fa fa-lg fa-ellipsis-h' : 'fa fa-ellipsis-v';
 
   return (
     <>
@@ -41,8 +41,8 @@ const CardEllipsisMenu = ({
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
-              onEdit(item)
-              handleShowMenu()
+              onEdit(item);
+              handleShowMenu();
             }}
           >
             <h6 style={{ margin: 0 }}>
@@ -58,8 +58,8 @@ const CardEllipsisMenu = ({
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
-              onToggleProp(item, 'starred')
-              handleShowMenu()
+              onToggleProp(item, 'starred');
+              handleShowMenu();
             }}
           >
             <h6 style={{ margin: 0 }}>
@@ -73,8 +73,8 @@ const CardEllipsisMenu = ({
           <div
             className='list-group-item list-group-item-action pointer'
             onClick={() => {
-              onToggleProp(item, 'isPublic')
-              handleShowMenu()
+              onToggleProp(item, 'isPublic');
+              handleShowMenu();
             }}
           >
             <h6 style={{ margin: 0 }}>
@@ -89,8 +89,8 @@ const CardEllipsisMenu = ({
             <div
               className='list-group-item list-group-item-action pointer'
               onClick={() => {
-                onToggleShareForm()
-                handleShowMenu()
+                onToggleShareForm();
+                handleShowMenu();
               }}
             >
               <h6 style={{ margin: 0 }}>
@@ -120,7 +120,7 @@ const CardEllipsisMenu = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CardEllipsisMenu
+export default CardEllipsisMenu;
