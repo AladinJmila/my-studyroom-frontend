@@ -1,27 +1,20 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import AppsWrapper from '../workspace-app/components/AppsWrapper'
-import VerticalNavBar from '../workspace-app/components/VerticalNavBar'
-import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper'
-import { loadNewestTimerRecord } from './../store/apps/timerRecordsActions'
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import AppsWrapper from '../workspace-app/components/AppsWrapper';
+import VerticalNavBar from '../workspace-app/components/VerticalNavBar';
+import SubjectsWrapper from '../subjects-app/components/SubjectsWrapper';
 
 function Workspace() {
-  const [showSubjects, setShowSubjects] = useState(true)
-  const [tasksRef, setTasksRef] = useState()
-  const [resourcesRef, setResourcesRef] = useState()
-  const [notesRef, setNotesRef] = useState()
-  const [practicalsRef, setPracticalsRef] = useState()
-  const [audioNotesRef, setAudioNotesRef] = useState()
-  const [visualNotesRef, setVisualNotesRef] = useState()
-  const [schedulesRef, setSchedulesRef] = useState()
+  const [showSubjects, setShowSubjects] = useState(true);
+  const [tasksRef, setTasksRef] = useState();
+  const [resourcesRef, setResourcesRef] = useState();
+  const [notesRef, setNotesRef] = useState();
+  const [practicalsRef, setPracticalsRef] = useState();
+  const [audioNotesRef, setAudioNotesRef] = useState();
+  const [visualNotesRef, setVisualNotesRef] = useState();
+  const [schedulesRef, setSchedulesRef] = useState();
 
-  const { selectedSubject } = useSelector(state => state.apps.subjects)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(loadNewestTimerRecord())
-  }, [])
+  const { selectedSubject } = useSelector(state => state.apps.subjects);
 
   return (
     <main
@@ -52,7 +45,7 @@ function Workspace() {
         setSchedulesRef={setSchedulesRef}
       />
     </main>
-  )
+  );
 }
 
-export default Workspace
+export default Workspace;

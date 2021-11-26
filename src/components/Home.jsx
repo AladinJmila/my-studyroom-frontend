@@ -1,31 +1,33 @@
-import _ from 'lodash'
-import { produce } from 'immer'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { BeatLoader } from 'react-spinners'
-import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
-import { loadPublicSubjects } from '../store/apps/subjectsActions'
-import videoPlaceholder from '../static/images/Video placeholder.png'
+import _ from 'lodash';
+import { produce } from 'immer';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone';
+import { loadPublicSubjects } from '../store/apps/subjectsActions';
+import videoPlaceholder from '../static/images/Video placeholder.png';
+import { loadNewestTimerRecord } from './../store/apps/timerRecordsActions';
 
 const Home = () => {
-  const publicSubjects = useSelector(state => state.apps.subjects.public)
-  const { loading } = useSelector(state => state.apps.subjects)
-  const { user } = useSelector(state => state.auth)
+  const publicSubjects = useSelector(state => state.apps.subjects.public);
+  const { loading } = useSelector(state => state.apps.subjects);
+  const { user } = useSelector(state => state.auth);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadPublicSubjects())
-  }, [])
+    dispatch(loadPublicSubjects());
+    dispatch(loadNewestTimerRecord());
+  }, []);
 
   const tempPublicSubjects = produce(publicSubjects, list => {
-    list.forEach(s => (s.numOfUpvotes = s.upvotes.length))
-  })
+    list.forEach(s => (s.numOfUpvotes = s.upvotes.length));
+  });
   const sortedPublicSubjects = _.orderBy(
     tempPublicSubjects,
     ['numOfUpvotes'],
     ['desc']
-  )
+  );
 
   return (
     <div className='container full-height'>
@@ -69,7 +71,7 @@ const Home = () => {
         ))}
       </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
