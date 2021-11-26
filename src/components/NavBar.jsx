@@ -11,9 +11,9 @@ function NavBar() {
   const { playingLoop } = useSelector(state => state.apps.loops);
   const { playingSession } = useSelector(state => state.apps.sessions);
   const nbspName = user?.name.split(' ').map(tag => (
-    <div key={key++}>
+    <>
       <>{tag}</>&nbsp;
-    </div>
+    </>
   ));
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
