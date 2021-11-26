@@ -220,6 +220,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   const handleSubmitCompleted = () => {
+    toast.success(`"${currentInterval.name}" Completed`);
     sendTimerState(
       currentInterval.totalDuration,
       'start',
