@@ -1,20 +1,22 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard'
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard';
+
+let key = 0;
 
 function NavBar() {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
-  const user = useSelector(state => state.auth.user)
-  const { playingLoop } = useSelector(state => state.apps.loops)
-  const { playingSession } = useSelector(state => state.apps.sessions)
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const user = useSelector(state => state.auth.user);
+  const { playingLoop } = useSelector(state => state.apps.loops);
+  const { playingSession } = useSelector(state => state.apps.sessions);
   const nbspName = user?.name.split(' ').map(tag => (
-    <>
+    <div key={key++}>
       <>{tag}</>&nbsp;
-    </>
-  ))
+    </div>
+  ));
 
-  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed)
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
   return (
     <div>
@@ -115,7 +117,7 @@ function NavBar() {
         </div>
       </nav>
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;

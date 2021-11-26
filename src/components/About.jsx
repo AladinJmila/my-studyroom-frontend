@@ -1,5 +1,4 @@
-import { aboutStyles } from '../services/stylesService'
-import image from '../static/images/AlaeddineJmila.jpg'
+import { aboutStyles } from '../services/stylesService';
 
 const About = () => {
   return (
@@ -87,7 +86,7 @@ const About = () => {
         </h5>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
