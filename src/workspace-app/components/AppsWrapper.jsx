@@ -1,15 +1,16 @@
-import _ from 'lodash'
-import { useState, createRef } from 'react'
-import { useSelector } from 'react-redux'
-import Notes from '../../notes-app/components/Notes'
-import Tasks from '../../tasks-app/components/Tasks'
-import Resources from '../../resources-app/components/Resources'
-import Practicals from '../../practicals-app/components/Practicals'
-import DataColumn from './DataColumn'
-import AudioNotes from '../../audio-notes-app/components/AudioNotes'
-import VisualNotes from '../../visual-notes-app/components/VisualNotes'
-import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper'
-import AnimateReorderX from '../../Effects/AnimateReorderX'
+import _ from 'lodash';
+import { useState, createRef } from 'react';
+import { useSelector } from 'react-redux';
+import Notes from '../../notes-app/components/Notes';
+import Tasks from '../../tasks-app/components/Tasks';
+import Resources from '../../resources-app/components/Resources';
+import Practicals from '../../practicals-app/components/Practicals';
+import DataColumn from './DataColumn';
+import AudioNotes from '../../audio-notes-app/components/AudioNotes';
+import VisualNotes from '../../visual-notes-app/components/VisualNotes';
+import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper';
+import AnimateReorderX from '../../Effects/AnimateReorderX';
+import { appName } from './../servecies/appsInfo';
 
 const AppsWrapper = ({
   selectedSubject,
@@ -21,27 +22,39 @@ const AppsWrapper = ({
   setVisualNotesRef,
   setSchedulesRef,
 }) => {
-  const [showPracticals, setShowPracticals] = useState(false)
-  const [showResources, setShowResources] = useState(false)
-  const [showNotes, setShowNotes] = useState(false)
-  const [showTasks, setShowTasks] = useState(false)
-  const [showAudioNotes, setShowAudioNotes] = useState(false)
-  const [showVisualNotes, setShowVisualNotes] = useState(false)
-  const [showSchedules, setShowSchedules] = useState(false)
+  const [showPracticals, setShowPracticals] = useState(false);
+  const [showResources, setShowResources] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [showTasks, setShowTasks] = useState(false);
+  const [showAudioNotes, setShowAudioNotes] = useState(false);
+  const [showVisualNotes, setShowVisualNotes] = useState(false);
+  const [showSchedules, setShowSchedules] = useState(true);
 
-  const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects'
-  const tasksCount = useSelector(state => state.ui.tasksPerSubject[subjectName])
-  const notesCount = useSelector(state => state.ui.notesPerSubject[subjectName])
+  const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects';
+  const tasksCount = useSelector(
+    state => state.ui.tasksPerSubject[subjectName]
+  );
+  const notesCount = useSelector(
+    state => state.ui.notesPerSubject[subjectName]
+  );
   const resourcesCount = useSelector(
     state => state.ui.resourcesPerSubject[subjectName]
-  )
+  );
   const practicalsCount = useSelector(
     state => state.ui.practicalsPerSubject[subjectName]
-  )
+  );
 
   const appsWrapperArray = [
     {
-      name: 'Tasks',
+      name: appName.sessionsAndTimer,
+      count: Number.POSITIVE_INFINITY,
+      show: showSchedules,
+      setShow: setShowSchedules,
+      setRef: setSchedulesRef,
+      data: <SchedulesWrapper />,
+    },
+    {
+      name: appName.tasks,
       count: tasksCount,
       show: showTasks,
       setShow: setShowTasks,
@@ -49,7 +62,7 @@ const AppsWrapper = ({
       data: <Tasks />,
     },
     {
-      name: 'Resources',
+      name: appName.resources,
       count: resourcesCount,
       show: showResources,
       setShow: setShowResources,
@@ -57,7 +70,7 @@ const AppsWrapper = ({
       data: <Resources />,
     },
     {
-      name: 'StudyNotes',
+      name: appName.studyNotes,
       count: notesCount,
       show: showNotes,
       setShow: setShowNotes,
@@ -65,7 +78,7 @@ const AppsWrapper = ({
       data: <Notes />,
     },
     {
-      name: 'PracticeNotes',
+      name: appName.practiceNotes,
       count: practicalsCount,
       show: showPracticals,
       setShow: setShowPracticals,
@@ -73,7 +86,7 @@ const AppsWrapper = ({
       data: <Practicals />,
     },
     {
-      name: 'AudioNotes (planned)',
+      name: appName.audioNotes,
       count: 0,
       show: showAudioNotes,
       setShow: setShowAudioNotes,
@@ -81,24 +94,16 @@ const AppsWrapper = ({
       data: <AudioNotes />,
     },
     {
-      name: 'VisualNotes (planned)',
+      name: appName.visualNotes,
       count: 0,
       show: showVisualNotes,
       setShow: setShowVisualNotes,
       setRef: setVisualNotesRef,
       data: <VisualNotes />,
     },
-    {
-      name: 'Timer',
-      count: 0,
-      show: showSchedules,
-      setShow: setShowSchedules,
-      setRef: setSchedulesRef,
-      data: <SchedulesWrapper />,
-    },
-  ]
+  ];
 
-  const sortedAppsArray = _.orderBy(appsWrapperArray, ['count'], ['desc'])
+  const sortedAppsArray = _.orderBy(appsWrapperArray, ['count'], ['desc']);
 
   return (
     <div
@@ -129,7 +134,7 @@ const AppsWrapper = ({
         }}
       ></div>
     </div>
-  )
-}
+  );
+};
 
-export default AppsWrapper
+export default AppsWrapper;

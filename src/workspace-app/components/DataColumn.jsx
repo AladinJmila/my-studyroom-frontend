@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, forwardRef } from 'react'
-import ScrollTop from '../../common/ScrollTop'
-import VerticalFoldingBar from './VerticalFoldingBar'
+import { useEffect, useState, useRef, forwardRef } from 'react';
+import ScrollTop from '../../common/ScrollTop';
+import VerticalFoldingBar from './VerticalFoldingBar';
 
 const containerStyles = {
   margin: '5px 10px',
@@ -8,32 +8,32 @@ const containerStyles = {
   maxWidth: 500,
   display: 'inline-block',
   height: '90vh',
-}
+};
 
 if (window.innerWidth < 500) {
-  containerStyles.minWidth = window.innerWidth - 55
-  containerStyles.maxWidth = window.innerWidth - 55
+  containerStyles.minWidth = window.innerWidth - 55;
+  containerStyles.maxWidth = window.innerWidth - 55;
 }
 const DataColumn = forwardRef(
   ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
-    const [showScrollTop, setShowScrollTop] = useState(false)
-    const topRef = useRef()
-    const divRef = useRef()
-    const myRef = useRef()
+    const [showScrollTop, setShowScrollTop] = useState(false);
+    const topRef = useRef();
+    const divRef = useRef();
+    const myRef = useRef();
 
     useEffect(() => {
-      setRef(myRef)
-    }, [])
+      setRef(myRef);
+    }, []);
 
     const handleScrollTop = () => {
-      topRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
+      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const toggleShowScrollTop = () => {
-      const div = divRef.current
-      const scrolled = div.scrollTop
-      setShowScrollTop(scrolled > 300 ? true : false)
-    }
+      const div = divRef.current;
+      const scrolled = div.scrollTop;
+      setShowScrollTop(scrolled > 300 ? true : false);
+    };
 
     return (
       <div ref={myRef}>
@@ -66,8 +66,8 @@ const DataColumn = forwardRef(
           )}
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
-export default DataColumn
+export default DataColumn;
