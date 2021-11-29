@@ -370,6 +370,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         className='me-2'
         style={labelStyle}
       >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div>
+      <div className='float-start' style={progressBar}></div>
       <div
         onClick={handleSubmitCompleted}
         className='float-end pointer'

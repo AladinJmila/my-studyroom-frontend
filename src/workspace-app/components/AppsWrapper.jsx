@@ -28,7 +28,7 @@ const AppsWrapper = ({
   const [showTasks, setShowTasks] = useState(false);
   const [showAudioNotes, setShowAudioNotes] = useState(false);
   const [showVisualNotes, setShowVisualNotes] = useState(false);
-  const [showSchedules, setShowSchedules] = useState(true);
+  const [showSchedules, setShowSchedules] = useState(false);
 
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects';
   const tasksCount = useSelector(
