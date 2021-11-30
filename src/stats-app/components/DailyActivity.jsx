@@ -1,50 +1,52 @@
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import * as d3 from 'd3'
-import NavDate from './NavDate'
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as d3 from 'd3';
+import NavDate from './NavDate';
 import {
   timeFormatter,
   toStringTimeFormatter,
-} from './../services/StatsService'
+} from './../services/StatsService';
+import { setSelectedDayViz } from './../../store/apps/timerRecordsActions';
 
 const DailyActivity = () => {
-  const { vizData } = useSelector(state => state.apps.timerRecords)
-  const [dayIndex, setDayIndex] = useState(vizData?.length - 1)
-  const subjectData = vizData[dayIndex]?.subjectActivity
-  const data = vizData[dayIndex]?.activity
-  const date = vizData[dayIndex]?.date
-  let learntSubjects = []
+  const { vizData } = useSelector(state => state.apps.timerRecords);
+  const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
+  const subjectData = vizData[dayIndex]?.subjectActivity;
+  const data = vizData[dayIndex]?.activity;
+  const date = vizData[dayIndex]?.date;
+
+  let learntSubjects = [];
   if (data) {
-    learntSubjects = new Set(data.map(item => item.subjectName))
-    learntSubjects = Array.from(learntSubjects)
+    learntSubjects = new Set(data.map(item => item.subjectName));
+    learntSubjects = Array.from(learntSubjects);
   }
 
-  // vizData && console.log(vizData)
+  const dispatch = useDispatch();
+  dispatch(setSelectedDayViz(vizData[dayIndex]));
 
   useEffect(() => {
-    genGraph()
-  }, [data, dayIndex])
+    genGraph();
+  }, [data, dayIndex]);
 
-  let totalDuration = 0
-  let formattedDuration
+  let totalDuration = 0;
+  let formattedDuration;
 
   if (data) {
-    totalDuration = Math.floor(d3.sum(data, d => d.totalPlayTime))
-
-    formattedDuration = timeFormatter(totalDuration)
+    totalDuration = Math.floor(d3.sum(data, d => d.totalPlayTime));
+    formattedDuration = timeFormatter(totalDuration);
   }
 
-  const width = 600
-  const height = 15
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 }
-  const x = d3.scaleLinear([0, 1], [margin.left, width - margin.right])
+  const width = 600;
+  const height = 15;
+  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+  const x = d3.scaleLinear([0, 1], [margin.left, width - margin.right]);
 
-  let stack = null
+  let stack = null;
 
   if (data) {
     stack = () => {
-      const total = d3.sum(data, d => d.totalPlayTime)
-      let value = 0
+      const total = d3.sum(data, d => d.totalPlayTime);
+      let value = 0;
       return data.map(d => ({
         name: d.intervalName,
         value: d.totalPlayTime / total,
@@ -53,23 +55,23 @@ const DailyActivity = () => {
         endValue: (value += d.totalPlayTime) / total,
         color: d.color,
         subject: d.subjectName,
-      }))
-    }
+      }));
+    };
   }
 
-  const formatPercent = x.tickFormat(null, '%')
+  const formatPercent = x.tickFormat(null, '%');
 
-  let genGraph = () => {}
+  let genGraph = () => {};
 
   if (data) {
     genGraph = () => {
-      d3.select('svg').remove()
+      d3.select('svg').remove();
 
       const svg = d3
         .select('#svg')
         .append('svg')
         .attr('viewBox', [0, 0, width, height])
-        .style('display', 'block')
+        .style('display', 'block');
 
       svg
         .append('g')
@@ -82,10 +84,10 @@ const DailyActivity = () => {
         .attr('width', d => x(d.endValue) - x(d.startValue))
         .attr('height', height - margin.top - margin.bottom)
         .append('title')
-        .text(d => `${d.name}${formatPercent(d.value)}`)
+        .text(d => `${d.name}${formatPercent(d.value)}`);
 
-      return svg.node()
-    }
+      return svg.node();
+    };
   }
 
   return (
@@ -155,7 +157,7 @@ const DailyActivity = () => {
           ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DailyActivity
+export default DailyActivity;

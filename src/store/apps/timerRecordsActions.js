@@ -1,51 +1,55 @@
-import httpService from '../services/httpService'
-import { getCurrentUser } from '../services/authService'
-import * as actions from './timerRecords'
+import httpService from '../services/httpService';
+import { getCurrentUser } from '../services/authService';
+import * as actions from './timerRecords';
 
-const apiEndPoint = '/timerRecords'
-let userid
-const user = getCurrentUser()
-if (user) userid = user._id
+const apiEndPoint = '/timerRecords';
+let userid;
+const user = getCurrentUser();
+if (user) userid = user._id;
 
 export const loadNewestTimerRecord = () => async dispatch => {
   try {
-    const { data } = await httpService.get(apiEndPoint)
+    const { data } = await httpService.get(apiEndPoint);
 
-    dispatch(actions.GET_NEWEST_TIMER_RECORD(data[0]))
+    dispatch(actions.GET_NEWEST_TIMER_RECORD(data[0]));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const loadDailyDurations = () => async dispatch => {
   try {
-    const { data } = await httpService.get(`${apiEndPoint}/daily-durations`)
+    const { data } = await httpService.get(`${apiEndPoint}/daily-durations`);
 
-    dispatch(actions.GET_DAILY_DURATIONS(data))
+    dispatch(actions.GET_DAILY_DURATIONS(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const loadVizData = () => async dispatch => {
   try {
-    const { data } = await httpService.get(`${apiEndPoint}/week-stats`)
+    const { data } = await httpService.get(`${apiEndPoint}/week-stats`);
 
-    dispatch(actions.GET_VIZ_DATA(data))
+    dispatch(actions.GET_VIZ_DATA(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
   try {
     const { data } = await httpService.put(
       `${apiEndPoint}/${timerRecordId}`,
       record
-    )
+    );
 
-    dispatch(actions.UPDATE_TIMER_RECORDS(data))
+    dispatch(actions.UPDATE_TIMER_RECORDS(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const setSelectedDayViz = day => dispatch => {
+  dispatch(actions.SET_SELECTED_DAY_VIZ(day));
+};

@@ -1,17 +1,17 @@
-import CalendarDay from './CalendarDay'
-import { useEffect } from 'react'
-import { loadDailyDurations } from '../../store/apps/timerRecordsActions'
-import { useDispatch, useSelector } from 'react-redux'
+import CalendarDay from './CalendarDay';
+import { useEffect } from 'react';
+import { loadDailyDurations } from '../../store/apps/timerRecordsActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Calendar = () => {
-  const daysPerYear = 365
-  const { dailyDurations } = useSelector(state => state.apps.timerRecords)
+  const daysPerYear = 365;
+  const { dailyDurations } = useSelector(state => state.apps.timerRecords);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadDailyDurations())
-  }, [])
+    dispatch(loadDailyDurations());
+  }, []);
 
   return (
     <div>
@@ -67,12 +67,12 @@ const Calendar = () => {
           style={{ height: '12rem', position: 'relative' }}
         >
           {[...Array(daysPerYear)].map((e, i) => (
-            <CalendarDay index={i} dailyDurations={dailyDurations} />
+            <CalendarDay key={i} index={i} dailyDurations={dailyDurations} />
           ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Calendar
+export default Calendar;
