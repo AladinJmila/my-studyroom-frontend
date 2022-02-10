@@ -1,20 +1,13 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard';
-
-let key = 0;
+import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import NavBarIntervalsCard from "../schedules-app/components/NavBarIntervalsCard";
 
 function NavBar() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const user = useSelector(state => state.auth.user);
   const { playingLoop } = useSelector(state => state.apps.loops);
   const { playingSession } = useSelector(state => state.apps.sessions);
-  const nbspName = user?.name.split(' ').map(tag => (
-    <>
-      <>{tag}</>&nbsp;
-    </>
-  ));
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
@@ -22,16 +15,16 @@ function NavBar() {
     <div>
       <nav
         className='navbar navbar-expand-lg navbar-dark bg-dark'
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         <div className='container-fluid d-flex flex-row'>
           <Link className='navbar-brand ' to='/home'>
-            My Studyroom{' '}
+            My Studyroom{" "}
             <small>
               <i>beta</i>
             </small>
           </Link>
-          <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
+          <div className='ms-4 me-4 flex-fill' style={{ width: "50%" }}>
             {playingSession && playingLoop && (
               <NavBarIntervalsCard
                 playingSession={playingSession}
@@ -52,7 +45,7 @@ function NavBar() {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div
-            className={`${isNavCollapsed ? 'collapse' : ''}  navbar-collapse`}
+            className={`${isNavCollapsed ? "collapse" : ""}  navbar-collapse`}
             id='navbarNav'
           >
             <ul className='navbar-nav me-auto'>
@@ -85,8 +78,12 @@ function NavBar() {
               {user && (
                 <>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/my-profile'>
-                      {nbspName}
+                    <NavLink
+                      className='nav-link'
+                      to='/my-profile'
+                      style={{ whiteSpace: "nowrap" }}
+                    >
+                      {user?.name}
                     </NavLink>
                   </li>
                   <li className='nav-item'>

@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 const calculateBoundingBoxes = children => {
-  const boundingBoxes = {}
+  const boundingBoxes = {};
 
   React.Children.forEach(children, child => {
-    const domNode = child.ref.current
-    const nodeBoundingBox = domNode?.getBoundingClientRect()
-    boundingBoxes[child.key] = nodeBoundingBox
-  })
+    const domNode = child.ref.current;
+    const nodeBoundingBox = domNode?.getBoundingClientRect();
+    boundingBoxes[child.key] = nodeBoundingBox;
+  });
 
-  return boundingBoxes
-}
+  return boundingBoxes;
+};
 
-export default calculateBoundingBoxes
+export default calculateBoundingBoxes;

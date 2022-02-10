@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
 const usePrevious = value => {
-  const prevChildrenRef = useRef()
+  const prevChildrenRef = useRef();
 
   useEffect(() => {
-    prevChildrenRef.current = value
-  }, [value])
+    prevChildrenRef.current = value;
+  }, [value]);
 
-  return prevChildrenRef.current
-}
+  return prevChildrenRef.current;
+};
 
-export default usePrevious
+export default usePrevious;

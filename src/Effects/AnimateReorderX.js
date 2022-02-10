@@ -2,11 +2,16 @@ import React, { useState, useLayoutEffect, useEffect } from 'react';
 import usePrevious from './hooks/usePrevious';
 import calculateBoundingBoxes from './services/calculateBoundingBoxes';
 
-const AnimateReorder = ({ children }) => {
+const AnimateReorderX = ({ children }) => {
   const [boundingBox, setBoundingBox] = useState({});
   const [prevBoundingBox, setPrevBoundingBox] = useState({});
   const prevChildren = usePrevious(children);
 
+  // useEffect(() => {
+  //   console.log('in here');
+  //   const newBoundingBox = calculateBoundingBoxes(children);
+  //   setBoundingBox(newBoundingBox);
+  // }, [children]);
   useLayoutEffect(() => {
     const newBoundingBox = calculateBoundingBoxes(children);
     setBoundingBox(newBoundingBox);
@@ -26,9 +31,9 @@ const AnimateReorder = ({ children }) => {
         const firstBox = prevBoundingBox[child.key];
         const lastBox = boundingBox[child.key];
         const changeInX = firstBox?.left - lastBox?.left;
-        // console.log(changeInX)
+        // console.log(changeInX);
 
-        if (!isNaN(changeInX) && !isNaN(changeInX)) {
+        if (changeInX && changeInX !== NaN) {
           requestAnimationFrame(() => {
             // Before the DOM paints, invert child to old position
             domNode.style.transform = `translateX(${changeInX}px)`;
@@ -48,4 +53,4 @@ const AnimateReorder = ({ children }) => {
   return children;
 };
 
-export default AnimateReorder;
+export default AnimateReorderX;
