@@ -75,33 +75,9 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
       break;
   }
 
-  let minWidth;
-  let maxWidth;
-
-  const styles = {
-    minWidth: minWidth,
-    maxWidth: maxWidth,
-    height: '100%',
-    cursor: 'pointer',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 10,
-    margin: '0 5px',
-    padding: '10px 5px',
-    positon: 'relative',
-  };
-
-  if (window.innerWidth < 500 && count) {
-    styles.margin = 0;
-    styles.display = 'none';
-  } else {
-    styles.minWidth = show ? 50 : 140;
-    styles.maxWidth = show ? 50 : 140;
-  }
-
   return (
     <div
-      className='float-start folding-bar center relative'
-      style={styles}
+      className={`vertical-folding-bar ${show && 'unfold'}`}
       onClick={() => {
         handleToggleColumn();
         if (show) {
@@ -126,27 +102,19 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
         aria-hidden='true'
       ></i>
       {!show && (
-        <div>
+        <>
           {name === appName.sessionsAndTimer ||
           name === appName.audioNotes ||
           name === appName.visualNotes ? (
             <div
-              className='total-items-folding-bar'
+              className='folding-bar-items-count'
               style={{ visibility: 'hidden' }}
             ></div>
           ) : (
-            <div className='total-items-folding-bar'>{count}</div>
+            <div className='folding-bar-items-count'>{count}</div>
           )}
-          <h2
-            className='rotate-title-90'
-            style={{
-              textAlign: 'left',
-              // whiteSpace: 'nowrap',
-            }}
-          >
-            {name}
-          </h2>
-        </div>
+          <h2>{name}</h2>
+        </>
       )}
     </div>
   );

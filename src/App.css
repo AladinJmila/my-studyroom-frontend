@@ -1,9 +1,10 @@
 body {
-  background-image: linear-gradient(#6b6b6b, #5dcdde);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* height: 100%; */
+  /* background-image: linear-gradient(#6b6b6b, #5dcdde); */
+  background-color: #dddddd !important;
+  /* background-attachment: fixed; */
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+  height: 100%;
 }
 
 .full-height {
@@ -36,56 +37,6 @@ body {
 .subjects {
   padding-right: 0;
   min-width: 300px;
-}
-
-.data-column {
-  display: flex;
-}
-
-/* Side bar */
-.folding-bar {
-  height: 100%;
-  display: inline-block;
-}
-
-.total-items-folding-bar {
-  display: inline-flex;
-  justify-content: center;
-  font-size: 2rem;
-  color: white;
-  border-radius: 10px;
-  margin-top: 20px;
-  height: 50px;
-  min-width: 50px;
-  padding: 0 8px;
-  background-color: rgb(22, 22, 22);
-}
-
-.rotate-title-90 {
-  -webkit-transform: rotate(90deg);
-  margin-top: 80px;
-  text-align: center;
-}
-
-/* folding bar big icons */
-.folding-bar-big-icon {
-  cursor: pointer;
-  height: 100px;
-  width: 100px;
-}
-
-/* folding bar medium icons */
-.folding-bar-medium-icon {
-  cursor: pointer;
-  height: 80px;
-  width: 80px;
-}
-
-/* folding bar small icons */
-.folding-bar-small-icon {
-  cursor: pointer;
-  height: 35px;
-  width: 35px;
 }
 
 /* Side tab */
