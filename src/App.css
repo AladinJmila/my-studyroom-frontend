@@ -21,10 +21,6 @@ body {
   height: 100vh;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 .required {
   color: red;
   font-weight: bold;

@@ -1,0 +1,40 @@
+.ellipsis-menu {
+  position: absolute;
+  min-width: 110px;
+  right: 14px;
+  float: right;
+  z-index: 2000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ellipsis-menu .ellipsis-menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  color: #212529;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: -1px;
+  cursor: pointer;
+}
+.ellipsis-menu .ellipsis-menu-item h6 {
+  margin: 0;
+}
+.ellipsis-menu .ellipsis-menu-item:first-child {
+  margin-top: 0;
+}
+.ellipsis-menu .ellipsis-menu-item:last-child {
+  color: red;
+}
+.ellipsis-menu .ellipsis-menu-item:hover {
+  background-color: #f8f8f8;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.float-right {
+  float: right;
+}
