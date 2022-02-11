@@ -1,5 +1,19 @@
-.test {
-  background-color: aqua;
-  padding: 0;
-  margin: 20px;
-}
+// variables
+@import 'variables';
+
+// base
+@import 'base';
+
+// general components
+
+// project structure
+@import '../common';
+@import '../components';
+@import '../notes-app/';
+@import '../practicals-app';
+@import '../schedules-app';
+@import '../stats-app';
+@import '../subject-details-app';
+@import '../subjects-app';
+@import '../tasks-app';
+@import '../workspace-app';
