@@ -4,12 +4,14 @@
 // base
 @import 'base';
 
-// general components
+// general
+@import 'general';
 
 // project structure
 @import '../common';
 @import '../components';
 @import '../notes-app/';
+@import '../resources-app';
 @import '../practicals-app';
 @import '../schedules-app';
 @import '../stats-app';
