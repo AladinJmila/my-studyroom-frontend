@@ -2,18 +2,6 @@ import { useEffect, useState, useRef, forwardRef } from 'react';
 import ScrollTop from '../../common/ScrollTop';
 import VerticalFoldingBar from './VerticalFoldingBar';
 
-const containerStyles = {
-  margin: '5px 10px',
-  minWidth: 500,
-  maxWidth: 500,
-  display: 'inline-block',
-  height: '90vh',
-};
-
-if (window.innerWidth < 500) {
-  containerStyles.minWidth = window.innerWidth - 55;
-  containerStyles.maxWidth = window.innerWidth - 55;
-}
 const DataColumn = forwardRef(
   ({ name, data, color, icon, show, count, setShow, setRef }, ref) => {
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -55,8 +43,7 @@ const DataColumn = forwardRef(
             <div
               ref={divRef}
               onScroll={toggleShowScrollTop}
-              style={containerStyles}
-              className='y-scroll'
+              className='y-scroll data-column-content'
             >
               <div ref={topRef}></div>
               {showScrollTop && <ScrollTop onClick={handleScrollTop} />}

@@ -1,7 +1,12 @@
 .data-column {
   display: flex;
 }
-
+.data-column-content {
+  margin: 5px 10px;
+  min-width: 500px;
+  display: inline-block;
+  height: 90vh;
+}
 .vertical-folding-bar {
   display: flex;
   position: relative;
@@ -65,4 +70,9 @@
   .vertical-folding-bar {
     display: none;
   }
+  // .data-column {
+  .data-column-content {
+    min-width: 84vw;
+  }
+  // }
 }
