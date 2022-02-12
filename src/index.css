@@ -47,7 +47,7 @@
   border-radius: 10px;
   margin: 0 5px;
   padding: 10px 5px;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.5) inset;
 }
 .vertical-folding-bar h2 {
   position: absolute;
@@ -80,6 +80,14 @@
 
 .unfold {
   min-width: 50px;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.closing-frame {
+  min-width: 45px;
+  background-color: #212529;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 480px) {

@@ -125,14 +125,7 @@ const AppsWrapper = ({
           />
         ))}
       </AnimateReorderX>
-      <div
-        style={{
-          minWidth: 45,
-          backgroundColor: '#212529',
-          borderRadius: '10px 0 0 10px',
-          margin: 0,
-        }}
-      ></div>
+      <div className='closing-frame'></div>
     </div>
   );
 };
