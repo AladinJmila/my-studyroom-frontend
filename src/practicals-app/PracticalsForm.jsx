@@ -1,16 +1,16 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import Form from '../../common/Form'
-import { appsFormStyle } from '../../services/stylesService'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import Form from '../common/Form';
+import { appsFormStyle } from '../services/stylesService';
 import {
   createPractical,
   updatePractical,
   clearSelectedPractical,
-} from './../../store/apps/practicalsActions'
+} from './../store/apps/practicalsActions';
 import {
   updateSubjectItemsCount,
   updateSubjectOnEdit,
-} from '../../store/apps/subjectsActions'
+} from '../store/apps/subjectsActions';
 
 class PracticalForm extends Form {
   state = {
@@ -24,7 +24,7 @@ class PracticalForm extends Form {
     },
     subjects: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
@@ -34,29 +34,29 @@ class PracticalForm extends Form {
     solution: Joi.string().max(500).allow('').label('Solution'),
     lesson: Joi.string().max(500).allow('').label('Lesson'),
     url: Joi.string().max(500).allow('').label('URL'),
-  }
+  };
 
   setFormHeight() {
-    this.newAppsFormStyle = { ...appsFormStyle }
-    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+    this.newAppsFormStyle = { ...appsFormStyle };
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250;
   }
 
   componentDidMount() {
-    this.setFormHeight()
+    this.setFormHeight();
 
-    const { subjects, selectedPractical, selectedSubject } = this.props
-    this.setState({ subjects })
+    const { subjects, selectedPractical, selectedSubject } = this.props;
+    this.setState({ subjects });
 
-    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject);
 
     if (selectedPractical) {
-      this.setState({ data: this.mapToViewModel(selectedPractical) })
+      this.setState({ data: this.mapToViewModel(selectedPractical) });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedSubject !== this.props.selectedSubject)
-      this.setStateOnSubjectSelect(this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject);
   }
 
   setStateOnSubjectSelect = selectedSubject => {
@@ -69,8 +69,8 @@ class PracticalForm extends Form {
         lesson: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   mapToViewModel = practical => {
     return {
@@ -81,12 +81,12 @@ class PracticalForm extends Form {
       solution: practical.solution,
       lesson: practical.lesson,
       url: practical.url || '',
-    }
-  }
+    };
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
     const {
       createPractical,
@@ -95,21 +95,21 @@ class PracticalForm extends Form {
       clearSelectedPractical,
       updateSubjectOnEdit,
       updateSubjectItemsCount,
-    } = this.props
+    } = this.props;
 
     if (selectedPractical) {
-      data.isChecked = selectedPractical.isChecked
-      data.starred = selectedPractical.starred
-      data.isPublic = selectedPractical.isPublic
-      updatePractical(data)
-      updateSubjectOnEdit(selectedPractical, data, 'Practicals')
-      clearSelectedPractical()
+      data.isChecked = selectedPractical.isChecked;
+      data.starred = selectedPractical.starred;
+      data.isPublic = selectedPractical.isPublic;
+      updatePractical(data);
+      updateSubjectOnEdit(selectedPractical, data, 'Practicals');
+      clearSelectedPractical();
     } else {
-      createPractical(data)
-      updateSubjectItemsCount(data, 'Practicals', 'create')
+      createPractical(data);
+      updateSubjectItemsCount(data, 'Practicals', 'create');
     }
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         subjectId: '',
@@ -119,8 +119,8 @@ class PracticalForm extends Form {
         lesson: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -140,7 +140,7 @@ class PracticalForm extends Form {
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
       </form>
-    )
+    );
   }
 }
 
@@ -148,7 +148,7 @@ const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
   selectedSubject: state.apps.subjects.selectedSubject,
   selectedPractical: state.apps.practicals.selectedPractical,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createPractical: practical => dispatch(createPractical(practical)),
@@ -158,6 +158,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
   updateSubjectItemsCount: (item, itemName, operation) =>
     dispatch(updateSubjectItemsCount(item, itemName, operation)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PracticalForm)
+export default connect(mapStateToProps, mapDispatchToProps)(PracticalForm);

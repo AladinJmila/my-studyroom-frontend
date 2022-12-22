@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Notes from '../../notes-app/Notes';
 import Tasks from '../../tasks-app/components/Tasks';
 import Resources from '../../resources-app/components/Resources';
-import Practicals from '../../practicals-app/components/Practicals';
+import Practicals from '../../practicals-app/Practicals';
 import DataColumn from './DataColumn';
 import AudioNotes from '../../audio-notes-app/components/AudioNotes';
 import VisualNotes from '../../visual-notes-app/components/VisualNotes';
