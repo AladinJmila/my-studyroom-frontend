@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { loadOneSubjectPublicPracticals } from './../../store/apps/practicalsActions'
-import { BeatLoader } from 'react-spinners'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadOneSubjectPublicPracticals } from './../store/apps/practicalsActions';
+import { BeatLoader } from 'react-spinners';
+import { cardsBody, mainContentStyle } from './../services/stylesService';
 
 const PublicPracticals = () => {
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const subject = useSelector(state => state.apps.subjects.selectedSubject);
   const publicPracticals = useSelector(
     state => state.apps.practicals.subjectsPublic[subject._id]
-  )
-  const { loading } = useSelector(state => state.apps.practicals)
-  const dispatch = useDispatch()
+  );
+  const { loading } = useSelector(state => state.apps.practicals);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOneSubjectPublicPracticals(subject._id))
-  }, [])
+    dispatch(loadOneSubjectPublicPracticals(subject._id));
+  }, []);
   return (
     <div>
       {loading ? (
@@ -105,7 +105,7 @@ const PublicPracticals = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PublicPracticals
+export default PublicPracticals;

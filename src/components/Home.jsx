@@ -59,6 +59,7 @@ const Home = () => {
               key={subject._id}
               user={user}
               subject={subject}
+              showDetails
             />
           ))}
         </div>

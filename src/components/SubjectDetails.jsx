@@ -1,51 +1,51 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { BeatLoader } from 'react-spinners'
-import SubjectDetailsWrapper from './../subject-details-app/components/SubjectDetailsWrapper'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
+import SubjectDetailsWrapper from './../subject-details-app/SubjectDetailsWrapper';
 import {
   loadSubject,
   cloneSubject,
   clearClonedSubject,
   setSelectedSubject,
-} from './../store/apps/subjectsActions'
-import { cloneResources } from './../store/apps/resourcesActions'
-import { cloneNotes } from '../store/apps/notesActions'
-import { clonePracticals } from '../store/apps/practicalsActions'
-import { cloneTasks } from '../store/apps/tasksActions'
-import SubjectsCardFooter from '../subjects-app/components/SubjectsCardFooter'
+} from './../store/apps/subjectsActions';
+import { cloneResources } from './../store/apps/resourcesActions';
+import { cloneNotes } from '../store/apps/notesActions';
+import { clonePracticals } from '../store/apps/practicalsActions';
+import { cloneTasks } from '../store/apps/tasksActions';
+import SubjectsCardFooter from '../subjects-app/components/SubjectsCardFooter';
 
 const SubjectDetails = () => {
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
-  const clonedSubject = useSelector(state => state.apps.subjects.clonedSubject)
-  const { loading } = useSelector(state => state.apps.subjects)
-  const { user } = useSelector(state => state.auth)
-  const { id } = useParams()
-  const dispatch = useDispatch()
+  const subject = useSelector(state => state.apps.subjects.selectedSubject);
+  const clonedSubject = useSelector(state => state.apps.subjects.clonedSubject);
+  const { loading } = useSelector(state => state.apps.subjects);
+  const { user } = useSelector(state => state.auth);
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadSubject(id))
-  }, [])
+    dispatch(loadSubject(id));
+  }, []);
 
   const handleSubjectClone = () => {
-    dispatch(cloneSubject(subject._id))
-  }
+    dispatch(cloneSubject(subject._id));
+  };
 
   if (clonedSubject) {
     if (clonedSubject.numberOfPublicResources !== 0)
-      dispatch(cloneResources(subject._id, clonedSubject._id))
+      dispatch(cloneResources(subject._id, clonedSubject._id));
 
     if (clonedSubject.numberOfPublicNotes !== 0)
-      dispatch(cloneNotes(subject._id, clonedSubject._id))
+      dispatch(cloneNotes(subject._id, clonedSubject._id));
 
     if (clonedSubject.numberOfPublicPracticals !== 0)
-      dispatch(clonePracticals(subject._id, clonedSubject._id))
+      dispatch(clonePracticals(subject._id, clonedSubject._id));
 
     if (clonedSubject.numberOfPulbicTasks !== 0)
-      dispatch(cloneTasks(subject._id, clonedSubject._id))
+      dispatch(cloneTasks(subject._id, clonedSubject._id));
 
-    dispatch(clearClonedSubject())
-    dispatch(setSelectedSubject(clonedSubject))
+    dispatch(clearClonedSubject());
+    dispatch(setSelectedSubject(clonedSubject));
   }
 
   const subjectDetails = {
@@ -55,7 +55,7 @@ const SubjectDetails = () => {
     borderRadius: 10,
     margin: '16px 0',
     padding: 20,
-  }
+  };
 
   return (
     <div className='container'>
@@ -99,7 +99,7 @@ const SubjectDetails = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SubjectDetails
+export default SubjectDetails;

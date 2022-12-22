@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { BeatLoader } from 'react-spinners'
-import { loadOneSubjectPublicTasks } from '../../store/apps/tasksActions'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import { loadOneSubjectPublicTasks } from '../store/apps/tasksActions';
+import { cardsBody, mainContentStyle } from './../services/stylesService';
 
 const PublicTasks = () => {
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const subject = useSelector(state => state.apps.subjects.selectedSubject);
   const publicTasks = useSelector(
     state => state.apps.tasks.subjectsPublic[subject._id]
-  )
-  const { loading } = useSelector(state => state.apps.tasks)
-  const dispatch = useDispatch()
+  );
+  const { loading } = useSelector(state => state.apps.tasks);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOneSubjectPublicTasks(subject._id))
-  }, [])
+    dispatch(loadOneSubjectPublicTasks(subject._id));
+  }, []);
 
   return (
     <>
@@ -55,7 +55,7 @@ const PublicTasks = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default PublicTasks
+export default PublicTasks;

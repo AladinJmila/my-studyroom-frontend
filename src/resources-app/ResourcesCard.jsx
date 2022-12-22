@@ -2,14 +2,14 @@ import {
   cardsBody,
   mainContentStyle,
   checkedStyle,
-} from './../../services/stylesService'
-import Check from './../../common/Check'
-import Star from '../../common/Star'
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import { userIsEditor } from './../../services/permissionsService'
+} from './../services/stylesService';
+import Check from './../common/Check';
+import Star from '../common/Star';
+import CardEllipsisMenu from './../common/CardEllipsisMenu';
+import { userIsEditor } from './../services/permissionsService';
 
 const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
-  const showPrivateInfo = user && userIsEditor(resource, user._id)
+  const showPrivateInfo = user && userIsEditor(resource, user._id);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -70,7 +70,7 @@ const ResourcesCard = ({ user, resource, onToggleProp, onEdit, onDelete }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ResourcesCard
+export default ResourcesCard;

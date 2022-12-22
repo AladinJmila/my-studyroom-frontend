@@ -2,11 +2,11 @@ import {
   cardsBody,
   checkedStyle,
   mainContentStyle,
-} from './../../services/stylesService'
-import Check from './../../common/Check'
-import Star from '../../common/Star'
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import { userIsEditor } from './../../services/permissionsService'
+} from './../services/stylesService';
+import Check from './../common/Check';
+import Star from '../common/Star';
+import CardEllipsisMenu from './../common/CardEllipsisMenu';
+import { userIsEditor } from './../services/permissionsService';
 
 const PracticalsCard = ({
   user,
@@ -15,7 +15,7 @@ const PracticalsCard = ({
   onDelete,
   onEdit,
 }) => {
-  const showPrivateInfo = user && userIsEditor(practical, user._id)
+  const showPrivateInfo = user && userIsEditor(practical, user._id);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -140,7 +140,7 @@ const PracticalsCard = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PracticalsCard
+export default PracticalsCard;

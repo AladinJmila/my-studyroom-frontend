@@ -1,16 +1,16 @@
-import { forwardRef } from 'react'
+import { forwardRef } from 'react';
 import {
   cardsBody,
   checkedStyle,
   mainContentStyle,
-} from './../../services/stylesService'
-import Check from './../../common/Check'
-import Star from '../../common/Star'
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import { userIsEditor } from './../../services/permissionsService'
+} from './../services/stylesService';
+import Check from './../common/Check';
+import Star from '../common/Star';
+import CardEllipsisMenu from './../common/CardEllipsisMenu';
+import { userIsEditor } from './../services/permissionsService';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
-  const showPrivateInfo = user && userIsEditor(note, user._id)
+  const showPrivateInfo = user && userIsEditor(note, user._id);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -89,7 +89,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
         </>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NotesCard
+export default NotesCard;

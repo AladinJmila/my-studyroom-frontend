@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import HeaderCard from '../../common/HeaderCard';
-import SortCard from '../../common/SortCard';
+import HeaderCard from '../common/HeaderCard';
+import SortCard from '../common/SortCard';
 import ResourcesForm from './ResourcesForm';
 import ResourcesYoutubeForm from './ResourcesYoutubeForm';
 import ResourcesCard from './ResourcesCard';
@@ -13,11 +13,11 @@ import {
   deleteResource,
   setSelectedResource,
   toggleResourceProp,
-} from './../../store/apps/resourcesActions';
+} from '../store/apps/resourcesActions';
 import {
   updateSubjectItemsCount,
   updateSubjectCheckedItemsCount,
-} from './../../store/apps/subjectsActions';
+} from '../store/apps/subjectsActions';
 
 function Resources() {
   const [showForm, setShowForm] = useState(false);
