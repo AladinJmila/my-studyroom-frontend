@@ -11,17 +11,6 @@ body {
   height: 100vh;
 }
 
-.scrolling-wrapper {
-  display: flex;
-  overflow-x: auto;
-  flex-wrap: nowrap;
-  min-width: 100px;
-}
-.y-scroll {
-  overflow-y: auto;
-  height: 100vh;
-}
-
 .required {
   color: red;
   font-weight: bold;
