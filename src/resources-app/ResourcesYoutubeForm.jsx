@@ -1,8 +1,8 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import Form from '../../common/Form'
-import { appsFormStyle } from '../../services/stylesService'
-import { createYoutubeResources } from '../../store/apps/resourcesActions'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import Form from '../common/Form';
+import { appsFormStyle } from '../services/stylesService';
+import { createYoutubeResources } from '../store/apps/resourcesActions';
 
 class ResourcesYoutubeForm extends Form {
   state = {
@@ -12,31 +12,31 @@ class ResourcesYoutubeForm extends Form {
     },
     subjects: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
     url: Joi.string().required().max(500).regex(/list/).label('URL'),
-  }
+  };
 
   setFormHeight() {
-    this.newAppsFormStyle = { ...appsFormStyle }
-    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+    this.newAppsFormStyle = { ...appsFormStyle };
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250;
   }
 
   componentDidMount() {
-    this.setFormHeight()
+    this.setFormHeight();
 
-    const { subjects, selectedSubject } = this.props
-    this.setState({ subjects })
+    const { subjects, selectedSubject } = this.props;
+    this.setState({ subjects });
 
-    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedSubject !== this.props.selectedSubject)
-      this.setStateOnSubjectSelect(this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject);
   }
 
   setStateOnSubjectSelect = selectedSubject => {
@@ -45,25 +45,25 @@ class ResourcesYoutubeForm extends Form {
         subjectId: selectedSubject._id,
         url: '',
       },
-    })
-  }
+    });
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
-    const { createYoutubeResources } = this.props
+    const { createYoutubeResources } = this.props;
 
-    createYoutubeResources(data)
+    createYoutubeResources(data);
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         subjectId: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -79,20 +79,20 @@ class ResourcesYoutubeForm extends Form {
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
       </form>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
   selectedSubject: state.apps.subjects.selectedSubject,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createYoutubeResources: data => dispatch(createYoutubeResources(data)),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ResourcesYoutubeForm)
+)(ResourcesYoutubeForm);
