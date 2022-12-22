@@ -1,7 +1,7 @@
-import { Link, NavLink } from "react-router-dom";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import NavBarIntervalsCard from "../schedules-app/components/NavBarIntervalsCard";
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard';
 
 function NavBar() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
@@ -15,16 +15,16 @@ function NavBar() {
     <div>
       <nav
         className='navbar navbar-expand-lg navbar-dark bg-dark'
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
       >
         <div className='container-fluid d-flex flex-row'>
           <Link className='navbar-brand ' to='/home'>
-            My Studyroom{" "}
+            My Studyroom{' '}
             <small>
               <i>beta</i>
             </small>
           </Link>
-          <div className='ms-4 me-4 flex-fill' style={{ width: "50%" }}>
+          <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
             {playingSession && playingLoop && (
               <NavBarIntervalsCard
                 playingSession={playingSession}
@@ -45,7 +45,7 @@ function NavBar() {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div
-            className={`${isNavCollapsed ? "collapse" : ""}  navbar-collapse`}
+            className={`${isNavCollapsed ? 'collapse' : ''}  navbar-collapse`}
             id='navbarNav'
           >
             <ul className='navbar-nav me-auto'>
@@ -81,7 +81,7 @@ function NavBar() {
                     <NavLink
                       className='nav-link'
                       to='/my-profile'
-                      style={{ whiteSpace: "nowrap" }}
+                      style={{ whiteSpace: 'nowrap' }}
                     >
                       {user?.name}
                     </NavLink>
@@ -99,7 +99,7 @@ function NavBar() {
                 </NavLink>
               </li>
             </ul>
-            <form className='d-flex'>
+            {/* <form className='d-flex'>
               <input
                 className='form-control me-2 ms-2'
                 type='search'
@@ -109,7 +109,7 @@ function NavBar() {
               <button className='btn btn-outline-success' type='submit'>
                 Search
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
       </nav>

@@ -1,30 +1,30 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone';
 import {
   loadOneUserPublicSubjects,
   loadOneUserUpvotedSubjects,
-} from '../store/apps/subjectsActions'
-import { useParams } from 'react-router-dom'
-import plansAndProgress from '../../src/static/images/plansAndProgress.png'
+} from '../store/apps/subjectsActions';
+import { useParams } from 'react-router-dom';
+import plansAndProgress from '../../src/static/images/plansAndProgress.png';
 
 const ProfilePublic = () => {
-  const { creatorName, creatorId } = useParams()
+  const { creatorName, creatorId } = useParams();
   const usersPublicsubjects = useSelector(
     state => state.apps.subjects.usersPublic[creatorId]
-  )
+  );
 
   const usersUpvotedSubjects = useSelector(
     state => state.apps.subjects.usersUpvoted[creatorId]
-  )
-  const { user } = useSelector(state => state.auth)
+  );
+  const { user } = useSelector(state => state.auth);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOneUserPublicSubjects(creatorId))
-    dispatch(loadOneUserUpvotedSubjects(creatorId))
-  }, [])
+    dispatch(loadOneUserPublicSubjects(creatorId));
+    dispatch(loadOneUserUpvotedSubjects(creatorId));
+  }, []);
 
   return (
     <div
@@ -46,6 +46,7 @@ const ProfilePublic = () => {
                 key={subject._id}
                 user={user}
                 subject={subject}
+                showDetails
               />
             ))}
           </div>
@@ -58,13 +59,14 @@ const ProfilePublic = () => {
                 key={subject._id}
                 user={user}
                 subject={subject}
+                showDetails
               />
             ))}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePublic
+export default ProfilePublic;

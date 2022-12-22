@@ -1,41 +1,46 @@
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
-import 'react-circular-progressbar/dist/styles.css'
-import Star from '../../common/Star'
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import 'react-circular-progressbar/dist/styles.css';
+import Star from '../../common/Star';
 import {
   backgroundOpacity,
   mainContentStyle,
-} from '../../services/stylesService'
+} from '../../services/stylesService';
 import {
   upvoteSubject,
   toggleSubjectUpvote,
-} from '../../store/apps/subjectsActions'
-import ProgressStats from './ProgressStats'
-import ItemsCount from './ItemsCount'
-import SubjectsCardFooter from './SubjectsCardFooter'
-import { setSelectedSubject } from './../../store/apps/subjectsActions'
+} from '../../store/apps/subjectsActions';
+import ProgressStats from './ProgressStats';
+import ItemsCount from './ItemsCount';
+import SubjectsCardFooter from './SubjectsCardFooter';
+import { setSelectedSubject } from './../../store/apps/subjectsActions';
 
-const SubjectsCardStandalone = ({ user, subject }) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
+const SubjectsCardStandalone = ({
+  user,
+  subject,
+  showProgress,
+  showDetails,
+}) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const tasksPercentage =
     Math.round((subject.numberOfCheckedTasks / subject.numberOfTasks) * 100) ||
-    0
+    0;
 
   const resourcesPercentage =
     Math.round(
       (subject.numberOfCheckedResources / subject.numberOfResources) * 100
-    ) || 0
+    ) || 0;
 
-  const showPrivateInfo = user && user._id === subject.creatorId
+  const showPrivateInfo = user && user._id === subject.creatorId;
 
   const handleToggleUpvote = (subject, status) => {
-    const update = { upvote: status }
+    const update = { upvote: status };
 
-    dispatch(upvoteSubject(subject._id, update))
-    dispatch(toggleSubjectUpvote(subject._id, user._id))
-  }
+    dispatch(upvoteSubject(subject._id, update));
+    dispatch(toggleSubjectUpvote(subject._id, user._id));
+  };
 
   const itemsToDisplay = showPrivateInfo
     ? [
@@ -49,46 +54,46 @@ const SubjectsCardStandalone = ({ user, subject }) => {
         subject.numberOfPublicResources,
         subject.numberOfPublicNotes,
         subject.numberOfPublicPracticals,
-      ]
+      ];
 
-  let countOfZeros = 0
-  let gridRowEnd
+  let countOfZeros = 0;
+  let gridRowEnd;
   itemsToDisplay.forEach(item => {
-    if (item === 0) countOfZeros++
-  })
+    if (item === 0) countOfZeros++;
+  });
 
   switch (countOfZeros) {
     case 0:
-      gridRowEnd = 'span 38'
-      break
+      gridRowEnd = 'span 22';
+      break;
     case 1:
-      gridRowEnd = 'span 35'
-      break
+      gridRowEnd = 'span 20';
+      break;
     case 2:
-      gridRowEnd = 'span 33'
-      break
+      gridRowEnd = 'span 18';
+      break;
     case 3:
-      gridRowEnd = 'span 30'
-      break
+      gridRowEnd = 'span 16';
+      break;
     case 4:
-      gridRowEnd = 'span 28'
-      break
+      gridRowEnd = 'span 13';
+      break;
 
     default:
-      gridRowEnd = 'span 39'
-      break
+      gridRowEnd = 'span 39';
+      break;
   }
 
   const handleShowSubjectDetails = () => {
-    history.push(`/subjects/${subject._id}`)
-    dispatch(setSelectedSubject(subject))
-  }
+    history.push(`/subjects/${subject._id}`);
+    dispatch(setSelectedSubject(subject));
+  };
 
   const cardStyle = {
     ...backgroundOpacity,
     gridRowEnd,
     margin: '15px 10px',
-  }
+  };
 
   return (
     <div style={cardStyle} className='card m-2'>
@@ -107,45 +112,49 @@ const SubjectsCardStandalone = ({ user, subject }) => {
           ></i>
         </div>
 
-        <ProgressStats
-          condition={showPrivateInfo}
-          tasksPercentage={tasksPercentage}
-          resourcesPercentage={resourcesPercentage}
-        />
-
-        <div className='font-weight-bold' style={mainContentStyle}>
-          <ItemsCount
-            name='Tasks'
+        {showProgress && (
+          <ProgressStats
             condition={showPrivateInfo}
-            itemsCount={subject.numberOfTasks}
-            checkedItemsCount={subject.numberOfCheckedTasks}
-            publicItemsCount={subject.numberOfPublicTasks}
+            tasksPercentage={tasksPercentage}
+            resourcesPercentage={resourcesPercentage}
           />
+        )}
 
-          <ItemsCount
-            name='Resources'
-            condition={showPrivateInfo}
-            itemsCount={subject.numberOfResources}
-            checkedItemsCount={subject.numberOfCheckedResources}
-            publicItemsCount={subject.numberOfPublicResources}
-          />
+        {showDetails && (
+          <div className='font-weight-bold' style={mainContentStyle}>
+            <ItemsCount
+              name='Tasks'
+              condition={showPrivateInfo}
+              itemsCount={subject.numberOfTasks}
+              checkedItemsCount={subject.numberOfCheckedTasks}
+              publicItemsCount={subject.numberOfPublicTasks}
+            />
 
-          <ItemsCount
-            name='Study Notes'
-            condition={showPrivateInfo}
-            itemsCount={subject.numberOfNotes}
-            checkedItemsCount={subject.numberOfCheckedNotes}
-            publicItemsCount={subject.numberOfPublicNotes}
-          />
+            <ItemsCount
+              name='Resources'
+              condition={showPrivateInfo}
+              itemsCount={subject.numberOfResources}
+              checkedItemsCount={subject.numberOfCheckedResources}
+              publicItemsCount={subject.numberOfPublicResources}
+            />
 
-          <ItemsCount
-            name='Practice Notes'
-            condition={showPrivateInfo}
-            itemsCount={subject.numberOfPracticals}
-            checkedItemsCount={subject.numberOfCheckedPracticals}
-            publicItemsCount={subject.numberOfPublicPracticals}
-          />
-        </div>
+            <ItemsCount
+              name='Study Notes'
+              condition={showPrivateInfo}
+              itemsCount={subject.numberOfNotes}
+              checkedItemsCount={subject.numberOfCheckedNotes}
+              publicItemsCount={subject.numberOfPublicNotes}
+            />
+
+            <ItemsCount
+              name='Practice Notes'
+              condition={showPrivateInfo}
+              itemsCount={subject.numberOfPracticals}
+              checkedItemsCount={subject.numberOfCheckedPracticals}
+              publicItemsCount={subject.numberOfPublicPracticals}
+            />
+          </div>
+        )}
 
         <SubjectsCardFooter
           user={user}
@@ -154,7 +163,7 @@ const SubjectsCardStandalone = ({ user, subject }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SubjectsCardStandalone
+export default SubjectsCardStandalone;

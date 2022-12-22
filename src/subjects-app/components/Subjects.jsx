@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { BeatLoader } from 'react-spinners'
+import _ from 'lodash';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
 import {
   loadSubjects,
   patchSubject,
@@ -10,66 +10,66 @@ import {
   toggleSubjectProp,
   setSelectedSubject,
   toggleSubjectUpvote,
-} from '../../store/apps/subjectsActions'
-import HeaderCard from '../../common/HeaderCard'
-import SubjectsCard from './SubjectsCard'
-import SubjectsForm from './SubjectsForm'
-import SubjectsSortCard from './SubjectsSortCard'
-import generateAllSubjects from '../services/generateAllSubjects'
+} from '../../store/apps/subjectsActions';
+import HeaderCard from '../../common/HeaderCard';
+import SubjectsCard from './SubjectsCard';
+import SubjectsForm from './SubjectsForm';
+import SubjectsSortCard from './SubjectsSortCard';
+import generateAllSubjects from '../services/generateAllSubjects';
 
 const Subjects = () => {
-  const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(false);
   const [sortTarget, setSortTarget] = useState({
     path: 'starred',
     order: 'desc',
-  })
+  });
 
-  const dispatch = useDispatch()
-  const subjects = useSelector(state => state.apps.subjects.list)
-  const { user } = useSelector(state => state.auth)
-  const { loading } = useSelector(state => state.apps.subjects)
+  const dispatch = useDispatch();
+  const subjects = useSelector(state => state.apps.subjects.list);
+  const { user } = useSelector(state => state.auth);
+  const { loading } = useSelector(state => state.apps.subjects);
 
-  const allSubjects = generateAllSubjects(user, subjects)
+  const allSubjects = generateAllSubjects(user, subjects);
 
   useEffect(() => {
-    dispatch(loadSubjects())
-  }, [])
+    dispatch(loadSubjects());
+  }, []);
 
   const handleDelete = subject => {
-    dispatch(deleteSubject(subject))
-  }
+    dispatch(deleteSubject(subject));
+  };
 
   const onSort = sortTarget => {
-    setSortTarget(sortTarget)
-  }
+    setSortTarget(sortTarget);
+  };
 
   const handleToggleProp = (subject, property) => {
-    const index = subjects.indexOf(subject)
-    const subjectToUpdate = { ...subjects[index] }
-    subjectToUpdate[property] = !subjectToUpdate[property]
-    const update = { [property]: subjectToUpdate[property] }
+    const index = subjects.indexOf(subject);
+    const subjectToUpdate = { ...subjects[index] };
+    subjectToUpdate[property] = !subjectToUpdate[property];
+    const update = { [property]: subjectToUpdate[property] };
 
-    dispatch(patchSubject(subject._id, update))
-    dispatch(toggleSubjectProp(subject._id, property))
-  }
+    dispatch(patchSubject(subject._id, update));
+    dispatch(toggleSubjectProp(subject._id, property));
+  };
 
   const handleToggleUpvote = (subject, status) => {
-    const update = { upvote: status }
+    const update = { upvote: status };
 
-    dispatch(upvoteSubject(subject._id, update))
-    dispatch(toggleSubjectUpvote(subject._id, user._id))
-  }
+    dispatch(upvoteSubject(subject._id, update));
+    dispatch(toggleSubjectUpvote(subject._id, user._id));
+  };
 
   const handleSubjectSelect = subject => {
-    dispatch(setSelectedSubject(subject))
-  }
+    dispatch(setSelectedSubject(subject));
+  };
 
   const handleShowForm = () => {
-    setShowForm(showForm ? false : true)
-  }
+    setShowForm(showForm ? false : true);
+  };
 
-  let sorted = _.orderBy(subjects, [sortTarget.path], [sortTarget.order])
-  sorted = [allSubjects, ...sorted]
+  let sorted = _.orderBy(subjects, [sortTarget.path], [sortTarget.order]);
+  sorted = [allSubjects, ...sorted];
 
   return (
     <>
@@ -102,12 +102,13 @@ const Subjects = () => {
               onToggleUpvote={handleToggleUpvote}
               onDelete={handleDelete}
               allSubjects={allSubjects}
+              showProgress
             />
           ))}
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Subjects
+export default Subjects;

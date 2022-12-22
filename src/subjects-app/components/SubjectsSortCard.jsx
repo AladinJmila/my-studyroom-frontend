@@ -1,5 +1,3 @@
-import { sortHeadersStyle } from '../../services/stylesService';
-
 const SubjectsSortCard = ({ onSort, sortTarget }) => {
   const columns = [
     {
@@ -32,10 +30,7 @@ const SubjectsSortCard = ({ onSort, sortTarget }) => {
   };
 
   return (
-    <div
-      className='d-flex flex-row justify-content-between'
-      style={sortHeadersStyle}
-    >
+    <div className='d-flex flex-row justify-content-between sort-header'>
       {columns.map(column => (
         <div
           key={column.path || column.key}
