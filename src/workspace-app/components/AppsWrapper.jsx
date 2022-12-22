@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useState, createRef } from 'react';
 import { useSelector } from 'react-redux';
-import Notes from '../../notes-app/components/Notes';
+import Notes from '../../notes-app/Notes';
 import Tasks from '../../tasks-app/components/Tasks';
 import Resources from '../../resources-app/components/Resources';
 import Practicals from '../../practicals-app/components/Practicals';
