@@ -1,57 +1,57 @@
-import { useEffect } from 'react'
-import iconTB from '../../static/images/icons/T-M.png'
-import iconTS from '../../static/images/icons/T-S.png'
-import iconRB from '../../static/images/icons/R-M.png'
-import iconRS from '../../static/images/icons/R-S.png'
-import iconNB from '../../static/images/icons/N-M.png'
-import iconNS from '../../static/images/icons/N-S.png'
-import iconPB from '../../static/images/icons/P-M.png'
-import iconPS from '../../static/images/icons/P-S.png'
-import iconAB from '../../static/images/icons/A-M.png'
-import iconAS from '../../static/images/icons/A-S.png'
-import iconVB from '../../static/images/icons/V-M.png'
-import iconVS from '../../static/images/icons/V-S.png'
-import iconSB from '../../static/images/icons/S-M.png'
-import iconSS from '../../static/images/icons/S-S.png'
+import { useEffect } from 'react';
+import iconTB from '../static/images/icons/T-M.png';
+import iconTS from '../static/images/icons/T-S.png';
+import iconRB from '../static/images/icons/R-M.png';
+import iconRS from '../static/images/icons/R-S.png';
+import iconNB from '../static/images/icons/N-M.png';
+import iconNS from '../static/images/icons/N-S.png';
+import iconPB from '../static/images/icons/P-M.png';
+import iconPS from '../static/images/icons/P-S.png';
+import iconAB from '../static/images/icons/A-M.png';
+import iconAS from '../static/images/icons/A-S.png';
+import iconVB from '../static/images/icons/V-M.png';
+import iconVS from '../static/images/icons/V-S.png';
+import iconSB from '../static/images/icons/S-M.png';
+import iconSS from '../static/images/icons/S-S.png';
 
 const VerticalFoldingBar = ({ name, show, count, setShow }) => {
   const handleToggleColumn = () => {
-    show = show ? false : true
-    setShow(show)
-  }
+    show = show ? false : true;
+    setShow(show);
+  };
 
-  let bigIcon
-  let smallIcon
+  let bigIcon;
+  let smallIcon;
 
   switch (name) {
     case 'Tasks':
-      bigIcon = iconTB
-      smallIcon = iconTS
-      break
+      bigIcon = iconTB;
+      smallIcon = iconTS;
+      break;
     case 'Resources':
-      bigIcon = iconRB
-      smallIcon = iconRS
-      break
+      bigIcon = iconRB;
+      smallIcon = iconRS;
+      break;
     case 'StudyNotes':
-      bigIcon = iconNB
-      smallIcon = iconNS
-      break
+      bigIcon = iconNB;
+      smallIcon = iconNS;
+      break;
     case 'PracticeNotes':
-      bigIcon = iconPB
-      smallIcon = iconPS
-      break
+      bigIcon = iconPB;
+      smallIcon = iconPS;
+      break;
     case 'AudioNotes (planned)':
-      bigIcon = iconAB
-      smallIcon = iconAS
-      break
+      bigIcon = iconAB;
+      smallIcon = iconAS;
+      break;
     case 'VisualNotes (planned)':
-      bigIcon = iconVB
-      smallIcon = iconVS
-      break
+      bigIcon = iconVB;
+      smallIcon = iconVS;
+      break;
     case 'Timer (inProgress)':
-      bigIcon = iconSB
-      smallIcon = iconSS
-      break
+      bigIcon = iconSB;
+      smallIcon = iconSS;
+      break;
   }
 
   // let minHeight
@@ -66,7 +66,7 @@ const VerticalFoldingBar = ({ name, show, count, setShow }) => {
     borderRadius: 10,
     margin: '16px 0',
     padding: 20,
-  }
+  };
 
   // if (window.innerWidth < 500 && count) {
   //   styles.margin = 0
@@ -78,9 +78,9 @@ const VerticalFoldingBar = ({ name, show, count, setShow }) => {
 
   useEffect(() => {
     if (window.innerWidth < 500 && count) {
-      setShow(!count ? false : true)
+      setShow(!count ? false : true);
     }
-  }, [count])
+  }, [count]);
 
   return (
     <div
@@ -109,7 +109,7 @@ const VerticalFoldingBar = ({ name, show, count, setShow }) => {
       </div>
       {/* )} */}
     </div>
-  )
-}
+  );
+};
 
-export default VerticalFoldingBar
+export default VerticalFoldingBar;

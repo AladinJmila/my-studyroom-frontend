@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { loadOneSubjectPublicResources } from './../../store/apps/resourcesActions'
-import { BeatLoader } from 'react-spinners'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadOneSubjectPublicResources } from './../store/apps/resourcesActions';
+import { BeatLoader } from 'react-spinners';
+import { cardsBody, mainContentStyle } from './../services/stylesService';
 
 const PublicResources = () => {
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const subject = useSelector(state => state.apps.subjects.selectedSubject);
   const publicResources = useSelector(
     state => state.apps.resources.subjectsPublic[subject._id]
-  )
-  const { loading } = useSelector(state => state.apps.resources)
-  const dispatch = useDispatch()
+  );
+  const { loading } = useSelector(state => state.apps.resources);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOneSubjectPublicResources(subject._id))
-  }, [])
+    dispatch(loadOneSubjectPublicResources(subject._id));
+  }, []);
 
   return (
     <div>
@@ -45,7 +45,7 @@ const PublicResources = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PublicResources
+export default PublicResources;
