@@ -1,30 +1,30 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { BeatLoader } from 'react-spinners'
-import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone';
 import {
   loadSubjects,
   loadUpvotedSubjects,
-} from '../store/apps/subjectsActions'
-import plansAndProgress from '../../src/static/images/plansAndProgress.png'
-import dailyStatus from '../../src/static/images/dailyStatus.png'
-import Calendar from '../stats-app/components/Calendar'
-import { loadVizData } from './../store/apps/timerRecordsActions'
-import DailyActivity from '../stats-app/components/DailyActivity'
+} from '../store/apps/subjectsActions';
+import plansAndProgress from '../../src/static/images/plansAndProgress.png';
+import dailyStatus from '../../src/static/images/dailyStatus.png';
+import Calendar from '../stats-app/components/Calendar';
+import { loadVizData } from './../store/apps/timerRecordsActions';
+import DailyActivity from '../stats-app/components/DailyActivity';
 
 const Profile = () => {
-  const subjects = useSelector(state => state.apps.subjects.list)
-  const upvotedSubjects = useSelector(state => state.apps.subjects.upvoted)
-  const { loading } = useSelector(state => state.apps.subjects)
-  const { user } = useSelector(state => state.auth)
+  const subjects = useSelector(state => state.apps.subjects.list);
+  const upvotedSubjects = useSelector(state => state.apps.subjects.upvoted);
+  const { loading } = useSelector(state => state.apps.subjects);
+  const { user } = useSelector(state => state.auth);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadSubjects())
-    dispatch(loadUpvotedSubjects())
-    dispatch(loadVizData())
-  }, [])
+    dispatch(loadSubjects());
+    dispatch(loadUpvotedSubjects());
+    dispatch(loadVizData());
+  }, []);
 
   // console.log(plansAndProgress)
 
@@ -68,6 +68,7 @@ const Profile = () => {
                   key={subject._id}
                   user={user}
                   subject={subject}
+                  showDetails
                 />
               ))}
             </div>
@@ -86,6 +87,7 @@ const Profile = () => {
                   key={subject._id}
                   user={user}
                   subject={subject}
+                  showDetails
                 />
               ))}
             </div>
@@ -93,7 +95,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

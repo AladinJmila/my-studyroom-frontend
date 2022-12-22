@@ -1,16 +1,16 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import Form from '../../common/Form'
-import { appsFormStyle } from '../../services/stylesService'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import Form from '../common/Form';
+import { appsFormStyle } from '../services/stylesService';
 import {
   createResource,
   updateResource,
   clearSelectedResource,
-} from '../../store/apps/resourcesActions'
+} from '../store/apps/resourcesActions';
 import {
   updateSubjectItemsCount,
   updateSubjectOnEdit,
-} from '../../store/apps/subjectsActions'
+} from '../store/apps/subjectsActions';
 
 class ResourcesForm extends Form {
   state = {
@@ -21,36 +21,36 @@ class ResourcesForm extends Form {
     },
     subjects: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
     subjectId: Joi.string().required().label('Subject'),
     content: Joi.string().required().max(500).label('Title'),
     url: Joi.string().required().max(500).label('URL'),
-  }
+  };
 
   setFormHeight() {
-    this.newAppsFormStyle = { ...appsFormStyle }
-    this.newAppsFormStyle.maxHeight = window.innerHeight - 250
+    this.newAppsFormStyle = { ...appsFormStyle };
+    this.newAppsFormStyle.maxHeight = window.innerHeight - 250;
   }
 
   componentDidMount() {
-    this.setFormHeight()
+    this.setFormHeight();
 
-    const { subjects, selectedResource, selectedSubject } = this.props
-    this.setState({ subjects })
+    const { subjects, selectedResource, selectedSubject } = this.props;
+    this.setState({ subjects });
 
-    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject);
 
     if (selectedResource) {
-      this.setState({ data: this.mapToViewModel(selectedResource) })
+      this.setState({ data: this.mapToViewModel(selectedResource) });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedSubject !== this.props.selectedSubject)
-      this.setStateOnSubjectSelect(this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject);
   }
 
   setStateOnSubjectSelect = selectedSubject => {
@@ -60,8 +60,8 @@ class ResourcesForm extends Form {
         content: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   mapToViewModel = resource => {
     return {
@@ -69,12 +69,12 @@ class ResourcesForm extends Form {
       subjectId: resource.subject._id,
       content: resource.content,
       url: resource.url,
-    }
-  }
+    };
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
     const {
       createResource,
@@ -83,29 +83,29 @@ class ResourcesForm extends Form {
       clearSelectedResource,
       updateSubjectOnEdit,
       updateSubjectItemsCount,
-    } = this.props
+    } = this.props;
 
     if (selectedResource) {
-      data.isChecked = selectedResource.isChecked
-      data.starred = selectedResource.starred
-      data.isPublic = selectedResource.isPublic
-      updateResource(data)
-      updateSubjectOnEdit(selectedResource, data, 'Resources')
-      clearSelectedResource()
+      data.isChecked = selectedResource.isChecked;
+      data.starred = selectedResource.starred;
+      data.isPublic = selectedResource.isPublic;
+      updateResource(data);
+      updateSubjectOnEdit(selectedResource, data, 'Resources');
+      clearSelectedResource();
     } else {
-      createResource(data)
-      updateSubjectItemsCount(data, 'Resources', 'create')
+      createResource(data);
+      updateSubjectItemsCount(data, 'Resources', 'create');
     }
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         subjectId: '',
         content: '',
         url: '',
       },
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -122,7 +122,7 @@ class ResourcesForm extends Form {
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
       </form>
-    )
+    );
   }
 }
 
@@ -130,7 +130,7 @@ const mapStateToProps = state => ({
   subjects: state.apps.subjects.list,
   selectedSubject: state.apps.subjects.selectedSubject,
   selectedResource: state.apps.resources.selectedResource,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createResource: resource => dispatch(createResource(resource)),
@@ -140,6 +140,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateSubjectOnEdit(itemInDb, item, itemName)),
   updateSubjectItemsCount: (item, itemName, operation) =>
     dispatch(updateSubjectItemsCount(item, itemName, operation)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResourcesForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ResourcesForm);

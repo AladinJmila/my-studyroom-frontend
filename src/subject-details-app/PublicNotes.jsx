@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { BeatLoader } from 'react-spinners'
-import { loadOneSubjectPublicNotes } from './../../store/apps/notesActions'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import { loadOneSubjectPublicNotes } from './../store/apps/notesActions';
+import { cardsBody, mainContentStyle } from './../services/stylesService';
 
 const PublicNotes = () => {
-  const subject = useSelector(state => state.apps.subjects.selectedSubject)
+  const subject = useSelector(state => state.apps.subjects.selectedSubject);
   const publicNotes = useSelector(
     state => state.apps.notes.subjectsPublic[subject._id]
-  )
-  const { loading } = useSelector(state => state.apps.notes)
-  const dispatch = useDispatch()
+  );
+  const { loading } = useSelector(state => state.apps.notes);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOneSubjectPublicNotes(subject._id))
-  }, [])
+    dispatch(loadOneSubjectPublicNotes(subject._id));
+  }, []);
 
   return (
     <div>
@@ -59,7 +59,7 @@ const PublicNotes = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PublicNotes
+export default PublicNotes;

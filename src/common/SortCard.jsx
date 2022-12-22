@@ -1,5 +1,3 @@
-import { sortHeadersStyle } from '../services/stylesService'
-
 const SortCard = ({ onSort, sortTarget, checkedName }) => {
   const columns = [
     {
@@ -26,24 +24,21 @@ const SortCard = ({ onSort, sortTarget, checkedName }) => {
         </div>
       ),
     },
-  ]
+  ];
 
   const handleSort = path => {
-    const newSortTarget = { ...sortTarget }
+    const newSortTarget = { ...sortTarget };
     if (newSortTarget.path === path)
-      newSortTarget.order = newSortTarget.order === 'asc' ? 'desc' : 'asc'
+      newSortTarget.order = newSortTarget.order === 'asc' ? 'desc' : 'asc';
     else {
-      newSortTarget.path = path
-      newSortTarget.order = 'asc'
+      newSortTarget.path = path;
+      newSortTarget.order = 'asc';
     }
-    onSort(newSortTarget)
-  }
+    onSort(newSortTarget);
+  };
 
   return (
-    <div
-      className='d-flex flex-row justify-content-between'
-      style={sortHeadersStyle}
-    >
+    <div className='d-flex flex-row justify-content-between sort-header'>
       {columns.map(column => (
         <div
           key={column.path || column.key}
@@ -53,7 +48,7 @@ const SortCard = ({ onSort, sortTarget, checkedName }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default SortCard
+export default SortCard;

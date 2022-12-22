@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Toggle from './Toggle';
 import Star from './Star';
+import './CardEllipsisMenu.css';
 
 const CardEllipsisMenu = ({
   item,

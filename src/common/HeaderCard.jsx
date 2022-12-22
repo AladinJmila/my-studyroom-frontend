@@ -1,5 +1,3 @@
-import { headersStyle } from './../services/stylesService';
-
 const HeaderCard = ({
   user,
   count,
@@ -11,10 +9,7 @@ const HeaderCard = ({
   youtube,
 }) => {
   return (
-    <div
-      style={headersStyle}
-      className='d-flex flex-row justify-content-between sticky-top'
-    >
+    <div className='d-flex flex-row justify-content-between sticky-top app-header'>
       <h6 className='p-2'>
         Showing {count} <b>{item}</b>
       </h6>

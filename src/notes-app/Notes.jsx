@@ -1,83 +1,83 @@
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import _ from 'lodash'
-import HeaderCard from '../../common/HeaderCard'
-import NotesForm from './NotesForm'
-import NotesCard from './NotesCard'
-import SortCard from '../../common/SortCard'
-import { BeatLoader } from 'react-spinners'
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
+import HeaderCard from '../common/HeaderCard';
+import NotesForm from './NotesForm';
+import NotesCard from './NotesCard';
+import SortCard from '../common/SortCard';
+import { BeatLoader } from 'react-spinners';
 import {
   loadNotes,
   patchNote,
   deleteNote,
   toggleNoteProp,
   setSelectedNote,
-} from './../../store/apps/notesActions'
+} from '../store/apps/notesActions';
 import {
   updateSubjectItemsCount,
   updateSubjectCheckedItemsCount,
-} from './../../store/apps/subjectsActions'
+} from '../store/apps/subjectsActions';
 
 const Notes = () => {
-  const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(false);
   const [sortTarget, setSortTarget] = useState({
     path: 'initial',
     order: 'asc',
-  })
+  });
 
-  const dispatch = useDispatch()
-  const notes = useSelector(state => state.apps.notes.list)
-  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const dispatch = useDispatch();
+  const notes = useSelector(state => state.apps.notes.list);
+  const { selectedSubject } = useSelector(state => state.apps.subjects);
   const numOfNotes = useSelector(
     state =>
       state.ui.notesPerSubject[`${selectedSubject?.name}`] ||
       state.ui.notesPerSubject['All Subjects']
-  )
-  const { user } = useSelector(state => state.auth)
-  const { loading } = useSelector(state => state.apps.notes)
+  );
+  const { user } = useSelector(state => state.auth);
+  const { loading } = useSelector(state => state.apps.notes);
 
   useEffect(() => {
-    dispatch(loadNotes())
-  }, [])
+    dispatch(loadNotes());
+  }, []);
 
   const handleDelete = note => {
-    dispatch(deleteNote(note._id))
-    dispatch(updateSubjectItemsCount(note, 'Notes', 'delete'))
-  }
+    dispatch(deleteNote(note._id));
+    dispatch(updateSubjectItemsCount(note, 'Notes', 'delete'));
+  };
 
   const handleNoteSelect = note => {
-    dispatch(setSelectedNote(note))
-    handleShowForm()
-  }
+    dispatch(setSelectedNote(note));
+    handleShowForm();
+  };
 
   const onSort = sortTarget => {
-    setSortTarget(sortTarget)
-  }
+    setSortTarget(sortTarget);
+  };
 
   const handleToggleProp = (note, property) => {
-    const index = notes.indexOf(note)
-    const noteToUpdate = { ...notes[index] }
-    noteToUpdate[property] = !noteToUpdate[property]
-    const update = { [property]: noteToUpdate[property] }
+    const index = notes.indexOf(note);
+    const noteToUpdate = { ...notes[index] };
+    noteToUpdate[property] = !noteToUpdate[property];
+    const update = { [property]: noteToUpdate[property] };
 
-    dispatch(patchNote(note._id, update))
-    dispatch(toggleNoteProp(note._id, property))
+    dispatch(patchNote(note._id, update));
+    dispatch(toggleNoteProp(note._id, property));
     if (property === 'isChecked')
       dispatch(
         updateSubjectCheckedItemsCount(note.subject._id, 'Notes', update)
-      )
-  }
+      );
+  };
 
   const handleShowForm = () => {
-    setShowForm(showForm ? false : true)
-  }
+    setShowForm(showForm ? false : true);
+  };
 
   const filtered =
     selectedSubject && selectedSubject._id
       ? notes.filter(n => n.subject._id === selectedSubject._id)
-      : notes
+      : notes;
 
-  const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order])
+  const sorted = _.orderBy(filtered, [sortTarget.path], [sortTarget.order]);
 
   return (
     <>
@@ -119,7 +119,7 @@ const Notes = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Notes
+export default Notes;
