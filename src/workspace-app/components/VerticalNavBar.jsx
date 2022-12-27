@@ -21,10 +21,10 @@ const VerticalNavBar = ({
 }) => {
   const styles = {
     maxWidth: 55,
-    backgroundColor: '#212529',
     borderRadius: '0 10px 10px 0',
     margin: 0,
     padding: 10,
+    boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)',
   };
 
   const buttonStyle = {
@@ -84,7 +84,7 @@ const VerticalNavBar = ({
 
   return (
     <div
-      className='float-start position-sticky d-flex felx-column justify-content-around flex-wrap center pt-5 pb-5'
+      className='float-start position-sticky d-flex felx-column justify-content-around flex-wrap center pt-5 pb-5 bg-dark'
       style={styles}
     >
       <ToggleSideTab

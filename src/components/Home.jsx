@@ -6,7 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import SubjectsCardStandalone from '../subjects-app/components/SubjectsCardStandalone';
 import { loadPublicSubjects } from '../store/apps/subjectsActions';
 import videoPlaceholder from '../static/images/Video placeholder.png';
-import { loadNewestTimerRecord } from './../store/apps/timerRecordsActions';
+// import { loadNewestTimerRecord } from './../store/apps/timerRecordsActions';
 
 const Home = () => {
   const publicSubjects = useSelector(state => state.apps.subjects.public);
@@ -17,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(loadPublicSubjects());
-    dispatch(loadNewestTimerRecord());
+    // dispatch(loadNewestTimerRecord());
   }, []);
 
   const tempPublicSubjects = produce(publicSubjects, list => {

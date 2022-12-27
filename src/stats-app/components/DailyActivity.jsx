@@ -26,6 +26,10 @@ const DailyActivity = () => {
 
   useEffect(() => {
     genGraph();
+    // console.log(date);
+    // console.log(data);
+    // console.log(dayIndex);
+    // console.log(vizData);
   }, [data, dayIndex]);
 
   let totalDuration = 0;
@@ -95,10 +99,12 @@ const DailyActivity = () => {
       className='mt-4 mb-4'
       style={{
         padding: '1rem 2rem 1rem 2rem',
-        border: 'black solid 1px',
-        backgroundColor: '#F2F2F2',
+        border: '#fdfdfd solid 2px',
         overflow: 'auto',
         position: 'relative',
+        borderRadius: '10px',
+        boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
       }}
     >
       {date && (

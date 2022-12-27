@@ -50,6 +50,23 @@ export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
   }
 };
 
+export const updateAction =
+  (record, timerRecordId, actionId) => async dispatch => {
+    console.log(actionId);
+
+    try {
+      const { data } = await httpService.put(
+        `${apiEndPoint}/action/${timerRecordId}/${actionId}`,
+        record
+      );
+
+      // console.log(data);
+      dispatch(actions.UPDATE_ACTION(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export const setSelectedDayViz = day => dispatch => {
   dispatch(actions.SET_SELECTED_DAY_VIZ(day));
 };

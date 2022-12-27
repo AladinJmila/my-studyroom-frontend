@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import {
   loadNewestTimerRecord,
   updateTimerRecords,
+  updateAction,
 } from '../../store/apps/timerRecordsActions';
 
 const myBeep = new Audio(beep);
@@ -21,21 +22,22 @@ let recordTime;
 let recordInterval;
 let recordSubject;
 let newestTimerRecord;
+let newestAction;
 let intervalIsSet;
 
 const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   const { subject, numOfReps } = playingSession;
   let intervals = playingLoop.intervals;
   const loopLength = intervals.length;
-  if (numOfReps > 1) {
-    let i = 0;
-    let extendedIntervlas = [];
-    while (i < numOfReps) {
-      extendedIntervlas.push(...intervals);
-      i++;
-    }
-    intervals = [...extendedIntervlas];
-  }
+  // if (numOfReps > 1) {
+  //   let i = 0;
+  //   let extendedIntervlas = [];
+  //   while (i < numOfReps) {
+  //     extendedIntervlas.push(...intervals);
+  //     i++;
+  //   }
+  //   intervals = [...extendedIntervlas];
+  // }
 
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [currentInterval, setCurrentInterval] = useState(
@@ -52,6 +54,8 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   newestTimerRecord = useSelector(
     state => state.apps.timerRecords.newestTimerRecord
   );
+  newestAction = useSelector(state => state.apps.timerRecords.newestAction);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -104,21 +108,20 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   }, []);
 
   const sendTimerState = (timerState, playState, interval, subject) => {
-    if (newestTimerRecord) {
-      const timeRecord = {
-        currentTime: Date.now(),
-        playState,
-        timeInSeconds:
-          timerState.seconds +
-          timerState.minutes * 60 +
-          timerState.hours * 3600,
-        intervalName: interval.name,
-        intervalColor: interval.color,
-        subjectName: subject.name,
-      };
-      dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id));
-      // console.log(timeRecord);
-    }
+    // if (newestTimerRecord) {
+    const action = {
+      timeInSeconds:
+        timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
+      intervalName: interval._id,
+      intervalName: interval.name,
+      intervalColor: interval.color,
+      subjectName: subject.name,
+      subjectId: subject._id,
+    };
+    // dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id));
+    dispatch(updateAction(action, newestAction?.recordId, newestAction?._id));
+    // console.log(timeRecord);
+    // }
   };
 
   const halfInterval = computeHalfInterval(currentInterval);

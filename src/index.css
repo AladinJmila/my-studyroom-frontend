@@ -1,9 +1,15 @@
 :root {
-  --color1: #dfdbd0;
+  --color1: #e2e0d7;
+  /* --color1: #dfdbd0; */
   --color2: #cbc5b4;
   --color3: #dddddd;
 
   --white1: #fdfdfd;
+  --bright1: #2870dc;
+  /* --dark1: #868576; */
+  /* --dark1: #3d381d; */
+  --dark1: #34311f;
+  --dark2: #3b3b3b;
 }
 
 body {
@@ -54,7 +60,7 @@ body {
   padding: 10px 5px;
   border: 2px solid var(--white1);
   z-index: 1000 !important;
-  /* box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.5) inset; */
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
 }
 .vertical-folding-bar h2 {
   position: absolute;
@@ -82,19 +88,20 @@ body {
   height: 50px;
   min-width: 50px;
   padding: 0 8px;
-  background-color: #161616;
+  background-color: var(--dark1);
 }
 
 .unfold {
   min-width: 50px;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 3px 5px 1px rgba(0, 0, 0, 0.5);
 }
 
 .closing-frame {
   min-width: 45px;
-  background-color: #212529;
+  background-color: var(--dark1);
   border-radius: 10px 0 0 10px;
-  box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--white1);
 }
 
 @media screen and (max-width: 480px) {
@@ -118,18 +125,29 @@ body {
   background-color: var(--color1);
   border-radius: 0.25rem 0.25rem 0 0;
   border: 2px solid var(--white1);
+  /* border-bottom: none; */
   padding: 13px;
+  /* z-index: -1; */
+  margin-right: 5px;
+  /* box-shadow: 6px 0 2px -2px rgb(0 0 0 / 30%); */
+  /* box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 50%); */
 }
 
 .sort-header {
+  position: relative;
   background-color: var(--color1);
   border-bottom: 2px solid var(--white1);
   border-left: 2px solid var(--white1);
   border-right: 2px solid var(--white1);
   border-radius: 0 0 0.25rem 0.25rem;
   font-weight: bold;
-  padding: 3px;
+  padding: 0 3px 10px 3px;
   margin-bottom: 15px;
+  /* box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 50%); */
+  margin-right: 5px;
+  transform: translateY(-4px);
+  z-index: 10;
+  height: 44px;
 }
 
 ::-webkit-scrollbar {
@@ -163,4 +181,35 @@ body {
   border-radius: 5px;
   font-weight: 'normal';
   padding: 4px;
+}
+
+nav.bg-dark,
+div.bg-dark {
+  background-color: var(--dark1) !important;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--white1);
+}
+
+nav.bg-dark {
+  border: none;
+  border-bottom: 2px solid var(--white1);
+}
+
+.card {
+  border: 2px solid var(--white1) !important;
+}
+
+.subjects .card {
+  margin-right: 5px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: var(--bright1) !important;
+}
+.card.text-white.bg-dark .CircularProgressbar .CircularProgressbar-text {
+  fill: white !important;
+}
+.CircularProgressbar .CircularProgressbar-text {
+  fill: var(--bright1) !important;
 }
