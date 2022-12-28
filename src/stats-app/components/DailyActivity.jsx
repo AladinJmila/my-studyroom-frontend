@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as d3 from 'd3';
 import NavDate from './NavDate';
@@ -6,26 +6,26 @@ import {
   timeFormatter,
   toStringTimeFormatter,
 } from './../services/StatsService';
-import { setSelectedDayViz } from './../../store/apps/timerRecordsActions';
+import {
+  setSelectedDayViz,
+  loadVizData,
+} from './../../store/apps/timerRecordsActions';
 
 const DailyActivity = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords);
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
-  const subjectData = vizData[dayIndex]?.subjectActivity;
+  const subjectData = vizData[dayIndex]?.SubjectActivity;
   const data = vizData[dayIndex]?.activity;
   const date = vizData[dayIndex]?.date;
 
-  let learntSubjects = [];
-  if (data) {
-    learntSubjects = new Set(data.map(item => item.subjectName));
-    learntSubjects = Array.from(learntSubjects);
-  }
-
   const dispatch = useDispatch();
-  dispatch(setSelectedDayViz(vizData[dayIndex]));
 
   useEffect(() => {
+    // dispatch(loadVizData());
+    dispatch(setSelectedDayViz(vizData[dayIndex]));
+
     genGraph();
+
     // console.log(date);
     // console.log(data);
     // console.log(dayIndex);
