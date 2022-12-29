@@ -11,6 +11,7 @@ import dailyStatus from '../../src/static/images/dailyStatus.png';
 import Calendar from '../stats-app/components/Calendar';
 import { loadVizData } from './../store/apps/timerRecordsActions';
 import DailyActivity from '../stats-app/components/DailyActivity';
+import YearlyActivityBar from '../stats-app/components/YearlyActivityBar';
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list);
@@ -37,6 +38,8 @@ const Profile = () => {
       <Calendar />
       <h2 className='mt-5 text-center'>Daily Status</h2>
       <DailyActivity />
+      <h2 className='mt-5 text-center'>Yearly Status</h2>
+      <YearlyActivityBar />
 
       <div className='row'>
         <div className='col-6'>

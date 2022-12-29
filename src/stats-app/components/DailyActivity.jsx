@@ -5,6 +5,9 @@ import NavDate from './NavDate';
 import {
   timeFormatter,
   toStringTimeFormatter,
+  weekPaginate,
+  monthPaginate,
+  yearPaginate,
 } from './../services/StatsService';
 import {
   setSelectedDayViz,
@@ -17,6 +20,61 @@ const DailyActivity = () => {
   const subjectData = vizData[dayIndex]?.SubjectActivity;
   const data = vizData[dayIndex]?.activity;
   const date = vizData[dayIndex]?.date;
+
+  if (vizData) {
+    // weekPaginate(vizData);
+    // monthPaginate(vizData);
+    const filterData = {
+      subject: { name: 'Genesys', _id: '620e13f300b78f00146ff85e' },
+      groups: [
+        [
+          { name: 'Genesys', _id: '62383ee2519aae00146fc4f4', label: 'Admin' },
+          { name: 'Genesys-DX', _id: null, label: 'Admin' },
+          { name: 'Planning', _id: null, label: 'Admin' },
+        ],
+        [
+          {
+            name: 'Training',
+            _id: '62383fa1519aae00146fc4f6',
+            label: 'Training',
+          },
+          { name: 'GenEd-Training', _id: null, label: 'Training' },
+          { name: 'GenEd-PersonalGrowth', _id: null, label: 'Training' },
+          { name: 'Coding', _id: null, label: 'Training' },
+          { name: 'Design', _id: null, label: 'Training' },
+        ],
+        [
+          {
+            name: 'RBS',
+            _id: '630884ed86c2d30014c4baea',
+            label: 'Billable',
+          },
+          {
+            name: 'RBS Bankline',
+            _id: '630884ed86c2d30014c4baea',
+            label: 'Billable',
+          },
+          {
+            name: 'Vodafone',
+            _id: '62b44080a3eabc00145a2207',
+            label: 'Billable',
+          },
+          {
+            name: 'SeeGroup',
+            _id: '6266850ace78b30014ff5e2a',
+            label: 'Billable',
+          },
+          {
+            name: 'NatWest',
+            _id: '624abd670a679200141215c9',
+            label: 'Billable',
+          },
+          { name: 'ATOS', _id: '6241c1bbd4fda20014682c00', label: 'Billable' },
+        ],
+      ],
+    };
+    yearPaginate(vizData, filterData);
+  }
 
   const dispatch = useDispatch();
 
@@ -69,10 +127,10 @@ const DailyActivity = () => {
 
   if (data) {
     genGraph = () => {
-      d3.select('svg').remove();
+      d3.select('#svg-day svg').remove();
 
       const svg = d3
-        .select('#svg')
+        .select('#svg-day')
         .append('svg')
         .attr('viewBox', [0, 0, width, height])
         .style('display', 'block');
@@ -121,7 +179,7 @@ const DailyActivity = () => {
       <div
         className='mb-3 mt-4'
         style={{ borderRadius: '1rem', overflow: 'hidden' }}
-        id='svg'
+        id='svg-day'
       ></div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         {data &&
