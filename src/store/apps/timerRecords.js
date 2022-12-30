@@ -4,6 +4,7 @@ const slice = createSlice({
   name: 'timerRecord',
   initialState: {
     newestTimerRecord: null,
+    newestAction: null,
     dailyDurations: [],
     vizData: [],
     selectedDayViz: null,
@@ -25,6 +26,10 @@ const slice = createSlice({
       timerRecords.newestTimerRecord = action.payload;
     },
 
+    UPDATE_ACTION: (timerRecords, action) => {
+      timerRecords.newestAction = action.payload;
+    },
+
     SET_SELECTED_DAY_VIZ: (timerRecords, action) => {
       timerRecords.selectedDayViz = action.payload;
     },
@@ -36,6 +41,7 @@ export const {
   GET_DAILY_DURATIONS,
   GET_VIZ_DATA,
   UPDATE_TIMER_RECORDS,
+  UPDATE_ACTION,
   SET_SELECTED_DAY_VIZ,
 } = slice.actions;
 export default slice.reducer;

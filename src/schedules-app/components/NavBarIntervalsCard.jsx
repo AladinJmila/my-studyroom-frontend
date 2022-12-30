@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import {
   loadNewestTimerRecord,
   updateTimerRecords,
+  updateAction,
 } from '../../store/apps/timerRecordsActions';
 
 const myBeep = new Audio(beep);
@@ -21,21 +22,22 @@ let recordTime;
 let recordInterval;
 let recordSubject;
 let newestTimerRecord;
+let newestAction;
 let intervalIsSet;
 
 const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   const { subject, numOfReps } = playingSession;
   let intervals = playingLoop.intervals;
   const loopLength = intervals.length;
-  if (numOfReps > 1) {
-    let i = 0;
-    let extendedIntervlas = [];
-    while (i < numOfReps) {
-      extendedIntervlas.push(...intervals);
-      i++;
-    }
-    intervals = [...extendedIntervlas];
-  }
+  // if (numOfReps > 1) {
+  //   let i = 0;
+  //   let extendedIntervlas = [];
+  //   while (i < numOfReps) {
+  //     extendedIntervlas.push(...intervals);
+  //     i++;
+  //   }
+  //   intervals = [...extendedIntervlas];
+  // }
 
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [currentInterval, setCurrentInterval] = useState(
@@ -52,6 +54,8 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   newestTimerRecord = useSelector(
     state => state.apps.timerRecords.newestTimerRecord
   );
+  newestAction = useSelector(state => state.apps.timerRecords.newestAction);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -104,21 +108,20 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   }, []);
 
   const sendTimerState = (timerState, playState, interval, subject) => {
-    if (newestTimerRecord) {
-      const timeRecord = {
-        currentTime: Date.now(),
-        playState,
-        timeInSeconds:
-          timerState.seconds +
-          timerState.minutes * 60 +
-          timerState.hours * 3600,
-        intervalName: interval.name,
-        intervalColor: interval.color,
-        subjectName: subject.name,
-      };
-      dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id));
-      // console.log(timeRecord);
-    }
+    // if (newestTimerRecord) {
+    const action = {
+      timeInSeconds:
+        timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
+      intervalName: interval._id,
+      intervalName: interval.name,
+      intervalColor: interval.color,
+      subjectName: subject.name,
+      subjectId: subject._id,
+    };
+    // dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id));
+    dispatch(updateAction(action, newestAction?.recordId, newestAction?._id));
+    // console.log(timeRecord);
+    // }
   };
 
   const halfInterval = computeHalfInterval(currentInterval);
@@ -321,14 +324,10 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const intervalsCardStyle = {
     backgroundColor: currentInterval.color,
-    position: 'relative',
-    padding: '0.265rem 0.75rem',
-    fontFamily: 'Lucida Sans',
-    width: '100%',
   };
 
   const labelStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: '0.25rem',
     padding: '0 1rem',
     fontSize: '1.15rem',
@@ -337,7 +336,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   const progressBar = {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    // backgroundColor: 'rgba(0, 0, 0, 0.2)',
     width: `${progress}%`,
     height: '100%',
     position: 'absolute',
@@ -346,7 +345,10 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   return (
-    <div className='card d-flex flex-row' style={intervalsCardStyle}>
+    <div
+      className='card d-flex flex-row navbar-timer'
+      style={intervalsCardStyle}
+    >
       <div style={labelStyle}>
         <PlayPauseStep
           user
@@ -356,20 +358,23 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
           onStepBackward={handleStepBackward}
         />
       </div>
-      <div className='text-center flex-grow-1 d-flex justify-content-around'>
+      <div
+        className='text-center flex-grow-1 d-flex justify-content-around'
+        style={{ position: 'relative', zIndex: 100 }}
+      >
         <div style={labelStyle}>
           {currentInterval.name} &nbsp;&nbsp;&nbsp;&nbsp;
           {time.hours < 10 ? `0${time.hours}` : time.hours} :&nbsp;
           {time.minutes < 10 ? `0${time.minutes}` : time.minutes} :&nbsp;
           {time.seconds < 10 ? `0${time.seconds}` : time.seconds}&nbsp;&nbsp;
-          {currentInterval.numOfReps > 1 &&
-            `set ${repNum} of ${currentInterval.numOfReps}`}
+          {/* {currentInterval.numOfReps > 1 &&
+            `set ${repNum} of ${currentInterval.numOfReps}`} */}
         </div>
       </div>
-      <div
+      {/* <div
         className='me-2'
         style={labelStyle}
-      >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div>
+      >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div> */}
       <div className='float-start' style={progressBar}></div>
       <div
         onClick={handleSubmitCompleted}

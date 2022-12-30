@@ -18,10 +18,13 @@ const Calendar = () => {
       <div
         style={{
           padding: '4rem 1rem 1rem 5rem',
-          border: 'black solid 1px',
-          backgroundColor: '#F2F2F2',
+          border: '#fdfdfd solid 2px',
+          marginTop: '2rem',
           overflow: 'auto',
           position: 'relative',
+          borderRadius: '10px',
+          boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       >
         <div
