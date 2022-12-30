@@ -90,8 +90,7 @@ const YearlyActivityPie = () => {
                 ' ' +
                 date.getFullYear(),
               name: a.label,
-              duration: a.totalDuration,
-              color: a.color,
+              value: a.totalDuration,
             });
           });
       });
@@ -102,9 +101,26 @@ const YearlyActivityPie = () => {
       secondPass[item.name].push(item);
     });
 
+    // console.log(secondPass);
+
     const lastPass = [];
-    for (const [key, value] of Object.entries(secondPass))
-      lastPass.push(...value);
+
+    for (const [key, value] of Object.entries(secondPass)) {
+      let prevKey;
+      if (!prevKey) prevKey = key;
+      if (prevKey === key) {
+        const temp = { value: 0 };
+        temp.name = value[0].name;
+        value.forEach(v => {
+          temp.value += v.value;
+        });
+        lastPass.push(temp);
+      } else {
+        prevKey = key;
+      }
+    }
+
+    console.log(lastPass);
 
     return lastPass;
   };
@@ -134,6 +150,27 @@ const YearlyActivityPie = () => {
   //   { date: 'August', name: 'Billable', duration: 690830 },
   // ];
 
+  const mockData = [
+    { name: '<5', value: 19912018 },
+    { name: '5-9', value: 20501982 },
+    { name: '10-14', value: 20679786 },
+    { name: '15-19', value: 21354481 },
+    { name: '20-24', value: 22604232 },
+    { name: '25-29', value: 21698010 },
+    { name: '30-34', value: 21183639 },
+    { name: '35-39', value: 19855782 },
+    { name: '40-44', value: 20796128 },
+    { name: '45-49', value: 21370368 },
+    { name: '50-54', value: 22525490 },
+    { name: '55-59', value: 21001947 },
+    { name: '60-64', value: 18415681 },
+    { name: '65-69', value: 14547446 },
+    { name: '70-74', value: 10587721 },
+    { name: '75-79', value: 7730129 },
+    { name: '80-84', value: 5811429 },
+    { name: '≥85', value: 5938752 },
+  ];
+
   useEffect(() => {
     // dispatch(loadVizData());
     dispatch(setSelectedDayViz(vizData[dayIndex]));
@@ -154,147 +191,107 @@ const YearlyActivityPie = () => {
 
   if (data.length) {
     genGraph = () => {
-      function StackedBarChart(
+      function DonutChart(
         data,
         {
-          x = (d, i) => i, // given d in data, returns the (ordinal) x-value
-          y = d => d, // given d in data, returns the (quantitative) y-value
-          z = () => 1, // given d in data, returns the (categorical) z-value
+          name = ([x]) => x, // given d in data, returns the (ordinal) label
+          value = ([, y]) => y, // given d in data, returns the (quantitative) value
           title, // given d in data, returns the title text
-          marginTop = 30, // top margin, in pixels
-          marginRight = 0, // right margin, in pixels
-          marginBottom = 30, // bottom margin, in pixels
-          marginLeft = 40, // left margin, in pixels
           width = 640, // outer width, in pixels
           height = 400, // outer height, in pixels
-          xDomain, // array of x-values
-          xRange = [marginLeft, width - marginRight], // [left, right]
-          xPadding = 0.3, // amount of x-range to reserve to separate bars
-          yType = d3.scaleLinear, // type of y-scale
-          yDomain, // [ymin, ymax]
-          yRange = [height - marginBottom, marginTop], // [bottom, top]
-          zDomain, // array of z-values
-          offset = d3.stackOffsetDiverging, // stack offset method
-          order = d3.stackOrderNone, // stack order method
-          yFormat, // a format specifier string for the y-axis
-          yLabel, // a label for the y-axis
-          colors = d3.schemeTableau10, // array of colors
+          innerRadius = Math.min(width, height) / 3.2, // inner radius of pie, in pixels (non-zero for donut)
+          outerRadius = Math.min(width, height) / 2, // outer radius of pie, in pixels
+          labelRadius = (innerRadius + outerRadius) / 2, // center radius of labels
+          format = ',', // a format specifier for values (in the label)
+          names, // array of names (the domain of the color scale)
+          colors, // array of colors for names
+          stroke = innerRadius > 0 ? 'none' : 'white', // stroke separating widths
+          strokeWidth = 1, // width of stroke separating wedges
+          strokeLinejoin = 'round', // line join of stroke separating wedges
+          padAngle = stroke === 'none' ? 1 / outerRadius : 0, // angular separation between wedges
         } = {}
       ) {
         // Compute values.
-        const X = d3.map(data, x);
-        const Y = d3.map(data, y);
-        const Z = d3.map(data, z);
+        const N = d3.map(data, name);
+        const V = d3.map(data, value);
+        const I = d3.range(N.length).filter(i => !isNaN(V[i]));
 
-        // Compute default x- and z-domains, and unique them.
-        if (xDomain === undefined) xDomain = X;
-        if (zDomain === undefined) zDomain = Z;
-        xDomain = new d3.InternSet(xDomain);
-        zDomain = new d3.InternSet(zDomain);
+        // Unique the names.
+        if (names === undefined) names = N;
+        names = new d3.InternSet(names);
 
-        // Omit any data not present in the x- and z-domains.
-        const I = d3
-          .range(X.length)
-          .filter(i => xDomain.has(X[i]) && zDomain.has(Z[i]));
+        // Chose a default color scheme based on cardinality.
+        if (colors === undefined) colors = d3.schemeSpectral[names.size];
+        if (colors === undefined)
+          colors = d3.quantize(
+            t => d3.interpolateSpectral(t * 0.8 + 0.1),
+            names.size
+          );
 
-        // Compute a nested array of series where each series is [[y1, y2], [y1, y2],
-        // [y1, y2], …] representing the y-extent of each stacked rect. In addition,
-        // each tuple has an i (index) property so that we can refer back to the
-        // original data point (data[i]). This code assumes that there is only one
-        // data point for a given unique x- and z-value.
-        const series = d3
-          .stack()
-          .keys(zDomain)
-          .value(([x, I], z) => Y[I.get(z)])
-          .order(order)
-          .offset(offset)(
-            d3.rollup(
-              I,
-              ([i]) => i,
-              i => X[i],
-              i => Z[i]
-            )
-          )
-          .map(s => s.map(d => Object.assign(d, { i: d.data[1].get(s.key) })));
-
-        // Compute the default y-domain. Note: diverging stacks can be negative.
-        if (yDomain === undefined) yDomain = d3.extent(series.flat(2));
-
-        // Construct scales, axes, and formats.
-        const xScale = d3.scaleBand(xDomain, xRange).paddingInner(xPadding);
-        const yScale = yType(yDomain, yRange);
-        // const color = d3.scaleOrdinal(zDomain, colors);
-        const color = d3.scaleOrdinal(zDomain, [
-          '#f06000',
-          '#dd69b3',
-          '#60a951',
-        ]);
-        const xAxis = d3.axisBottom(xScale).tickSizeOuter(0);
-        const yAxis = d3.axisLeft(yScale).ticks(height / 60, yFormat);
+        // Construct scales.
+        const color = d3.scaleOrdinal(names, ['#f06000', '#dd69b3', '#60a951']);
 
         // Compute titles.
         if (title === undefined) {
-          const formatValue = yScale.tickFormat(100, yFormat);
-          title = i => `${X[i]}\n${Z[i]}\n${formatValue(Y[i])}`;
+          const formatValue = d3.format(format);
+          title = i => `${N[i]}\n${formatValue(V[i])}`;
         } else {
           const O = d3.map(data, d => d);
           const T = title;
           title = i => T(O[i], i, data);
         }
 
-        let svg = d3
+        // Construct arcs.
+        const arcs = d3
+          .pie()
+          .padAngle(padAngle)
+          .sort(null)
+          .value(i => V[i])(I);
+        const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+        const arcLabel = d3
+          .arc()
+          .innerRadius(labelRadius)
+          .outerRadius(labelRadius);
 
+        const svg = d3
           .create('svg')
           .attr('width', width)
           .attr('height', height)
-          .attr('viewBox', [0, 0, width, height])
+          .attr('viewBox', [-width / 2, -height / 2, width, height])
           .attr('style', 'max-width: 100%; height: auto; height: intrinsic;');
 
         svg
           .append('g')
-          .attr('transform', `translate(${marginLeft},0)`)
-          .call(yAxis)
-          .call(g => g.select('.domain').remove())
-          .call(g =>
-            g
-              .selectAll('.tick line')
-              .clone()
-              .attr('x2', width - marginLeft - marginRight)
-              .attr('stroke-opacity', 0.1)
-          )
-          .call(g =>
-            g
-              .append('text')
-              .attr('x', -marginLeft)
-              .attr('y', 10)
-              .attr('fill', 'currentColor')
-              .attr('text-anchor', 'start')
-              .text(yLabel)
-              .attr('class', 'y-label')
-          );
-
-        const bar = svg
-          .append('g')
-          .selectAll('g')
-          .data(series)
-          .join('g')
-          .attr('fill', ([{ i }]) => color(Z[i]))
-          .selectAll('rect')
-          .data(d => d)
-          .join('rect')
-          .attr('x', ({ i }) => xScale(X[i]))
-          // .attr('x', 0)
-          .attr('y', ([y1, y2]) => Math.min(yScale(y1), yScale(y2)))
-          .attr('height', ([y1, y2]) => Math.abs(yScale(y1) - yScale(y2)))
-          .attr('width', xScale.bandwidth())
-          .attr('fake', ({ i }) => console.log(X[i]));
-
-        if (title) bar.append('title').text(({ i }) => title(i));
+          .attr('stroke', stroke)
+          .attr('stroke-width', strokeWidth)
+          .attr('stroke-linejoin', strokeLinejoin)
+          .selectAll('path')
+          .data(arcs)
+          .join('path')
+          .attr('fill', d => color(N[d.data]))
+          .attr('d', arc)
+          .append('title')
+          .text(d => title(d.data));
 
         svg
           .append('g')
-          .attr('transform', `translate(0,${yScale(0)})`)
-          .call(xAxis);
+          .attr('font-family', 'sans-serif')
+          .attr('font-size', 10)
+          .attr('text-anchor', 'middle')
+          .selectAll('text')
+          .data(arcs)
+          .join('text')
+          .attr('transform', d => `translate(${arcLabel.centroid(d)})`)
+          .selectAll('tspan')
+          .data(d => {
+            const lines = `${title(d.data)}`.split(/\n/);
+            return d.endAngle - d.startAngle > 0.25 ? lines : lines.slice(0, 1);
+          })
+          .join('tspan')
+          .attr('x', 0)
+          .attr('y', (_, i) => `${i * 1.1}em`)
+          .attr('font-weight', (_, i) => (i ? null : 'bold'))
+          .text(d => d);
 
         const container = document.getElementById('svg-year-pie');
         if (container) {
@@ -302,28 +299,15 @@ const YearlyActivityPie = () => {
           container.appendChild(svg.node());
         }
 
-        // return Object.assign(svg.node(), { scales: { color } });
+        // return Object.assign(svg.node(), {scales: {color}});
       }
 
-      const chart = StackedBarChart(data, {
-        x: d => d.date,
-        y: d => d.duration / 60 / 60 / 4,
-        z: d => d.name,
-        // xDomain: d3.groupSort(
-        //   data,
-        //   D => d3.sum(D, d => -d.duration),
-        //   d => d.date
-        // ),
-        yLabel: 'Hours',
-        zDomain: activity,
-        colors: d3.schemeSpectral[activity.length],
-        width: 1100,
+      const chart = DonutChart(data, {
+        name: d => d.name,
+        value: d => d.value,
+        width: 500,
         height: 500,
       });
-
-      // if (chart) {
-      //   const key = legend(chart.scales.color, { title: 'Age (years)' }); // try also Swatches
-      // }
     };
   }
 

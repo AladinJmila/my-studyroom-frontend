@@ -90,7 +90,7 @@ const YearlyActivityBar = () => {
                 ' ' +
                 date.getFullYear(),
               name: a.label,
-              duration: a.totalDuration,
+              value: a.totalDuration,
               color: a.color,
             });
           });
@@ -114,24 +114,24 @@ const YearlyActivityBar = () => {
   const activity = ['Admin', 'Training', 'Billable'];
 
   // const data = [
-  //   { date: 'March', name: 'Admin', duration: 598478 },
-  //   { date: 'April', name: 'Admin', duration: 106741 },
-  //   { date: 'Mai', name: 'Admin', duration: 892083 },
-  //   { date: 'Juin', name: 'Admin', duration: 392177 },
-  //   { date: 'July', name: 'Admin', duration: 5038433 },
-  //   { date: 'August', name: 'Admin', duration: 690830 },
-  //   { date: 'March', name: 'Training', duration: 598478 },
-  //   { date: 'April', name: 'Training', duration: 106741 },
-  //   { date: 'Mai', name: 'Training', duration: 892083 },
-  //   { date: 'Juin', name: 'Training', duration: 392177 },
-  //   { date: 'July', name: 'Training', duration: 5038433 },
-  //   { date: 'August', name: 'Training', duration: 690830 },
-  //   { date: 'March', name: 'Billable', duration: 598478 },
-  //   { date: 'April', name: 'Billable', duration: 106741 },
-  //   { date: 'Mai', name: 'Billable', duration: 892083 },
-  //   { date: 'Juin', name: 'Billable', duration: 392177 },
-  //   { date: 'July', name: 'Billable', duration: 5038433 },
-  //   { date: 'August', name: 'Billable', duration: 690830 },
+  //   { date: 'March', name: 'Admin', value: 598478 },
+  //   { date: 'April', name: 'Admin', value: 106741 },
+  //   { date: 'Mai', name: 'Admin', value: 892083 },
+  //   { date: 'Juin', name: 'Admin', value: 392177 },
+  //   { date: 'July', name: 'Admin', value: 5038433 },
+  //   { date: 'August', name: 'Admin', value: 690830 },
+  //   { date: 'March', name: 'Training', value: 598478 },
+  //   { date: 'April', name: 'Training', value: 106741 },
+  //   { date: 'Mai', name: 'Training', value: 892083 },
+  //   { date: 'Juin', name: 'Training', value: 392177 },
+  //   { date: 'July', name: 'Training', value: 5038433 },
+  //   { date: 'August', name: 'Training', value: 690830 },
+  //   { date: 'March', name: 'Billable', value: 598478 },
+  //   { date: 'April', name: 'Billable', value: 106741 },
+  //   { date: 'Mai', name: 'Billable', value: 892083 },
+  //   { date: 'Juin', name: 'Billable', value: 392177 },
+  //   { date: 'July', name: 'Billable', value: 5038433 },
+  //   { date: 'August', name: 'Billable', value: 690830 },
   // ];
 
   useEffect(() => {
@@ -286,8 +286,7 @@ const YearlyActivityBar = () => {
           // .attr('x', 0)
           .attr('y', ([y1, y2]) => Math.min(yScale(y1), yScale(y2)))
           .attr('height', ([y1, y2]) => Math.abs(yScale(y1) - yScale(y2)))
-          .attr('width', xScale.bandwidth())
-          .attr('fake', ({ i }) => console.log(X[i]));
+          .attr('width', xScale.bandwidth());
 
         if (title) bar.append('title').text(({ i }) => title(i));
 
@@ -307,11 +306,11 @@ const YearlyActivityBar = () => {
 
       const chart = StackedBarChart(data, {
         x: d => d.date,
-        y: d => d.duration / 60 / 60 / 4,
+        y: d => d.value / 60 / 60 / 4,
         z: d => d.name,
         // xDomain: d3.groupSort(
         //   data,
-        //   D => d3.sum(D, d => -d.duration),
+        //   D => d3.sum(D, d => -d.value),
         //   d => d.date
         // ),
         yLabel: 'Hours',
@@ -371,7 +370,7 @@ const YearlyActivityBar = () => {
               ></div>
 
               <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
-                {toStringTimeFormatter(timeFormatter(d.duration))}
+                {toStringTimeFormatter(timeFormatter(d.value))}
               </span>
               <span style={{ fontSize: '1rem' }}>{d.name}</span>
               <span style={{ fontWeight: 'bold', padding: '1rem .5rem' }}>
