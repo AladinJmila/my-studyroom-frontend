@@ -324,14 +324,10 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
 
   const intervalsCardStyle = {
     backgroundColor: currentInterval.color,
-    position: 'relative',
-    padding: '0.265rem 0.75rem',
-    fontFamily: 'Lucida Sans',
-    width: '100%',
   };
 
   const labelStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: '0.25rem',
     padding: '0 1rem',
     fontSize: '1.15rem',
@@ -340,7 +336,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   const progressBar = {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    // backgroundColor: 'rgba(0, 0, 0, 0.2)',
     width: `${progress}%`,
     height: '100%',
     position: 'absolute',
@@ -349,7 +345,10 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   return (
-    <div className='card d-flex flex-row' style={intervalsCardStyle}>
+    <div
+      className='card d-flex flex-row navbar-timer'
+      style={intervalsCardStyle}
+    >
       <div style={labelStyle}>
         <PlayPauseStep
           user
@@ -359,20 +358,23 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
           onStepBackward={handleStepBackward}
         />
       </div>
-      <div className='text-center flex-grow-1 d-flex justify-content-around'>
+      <div
+        className='text-center flex-grow-1 d-flex justify-content-around'
+        style={{ position: 'relative', zIndex: 100 }}
+      >
         <div style={labelStyle}>
           {currentInterval.name} &nbsp;&nbsp;&nbsp;&nbsp;
           {time.hours < 10 ? `0${time.hours}` : time.hours} :&nbsp;
           {time.minutes < 10 ? `0${time.minutes}` : time.minutes} :&nbsp;
           {time.seconds < 10 ? `0${time.seconds}` : time.seconds}&nbsp;&nbsp;
-          {currentInterval.numOfReps > 1 &&
-            `set ${repNum} of ${currentInterval.numOfReps}`}
+          {/* {currentInterval.numOfReps > 1 &&
+            `set ${repNum} of ${currentInterval.numOfReps}`} */}
         </div>
       </div>
-      <div
+      {/* <div
         className='me-2'
         style={labelStyle}
-      >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div>
+      >{`Round ${roundIndex} of ${playingSession.numOfReps}`}</div> */}
       <div className='float-start' style={progressBar}></div>
       <div
         onClick={handleSubmitCompleted}

@@ -11,7 +11,7 @@ export const loadNewestTimerRecord = () => async dispatch => {
   try {
     const { data } = await httpService.get(apiEndPoint);
 
-    dispatch(actions.GET_NEWEST_TIMER_RECORD(data[0]));
+    dispatch(actions.GET_NEWEST_TIMER_RECORD(data));
   } catch (error) {
     console.log(error);
   }

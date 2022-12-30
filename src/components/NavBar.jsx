@@ -19,10 +19,7 @@ function NavBar() {
       >
         <div className='container-fluid d-flex flex-row'>
           <Link className='navbar-brand ' to='/home'>
-            My Studyroom{' '}
-            <small>
-              <i>beta</i>
-            </small>
+            My Studyroom
           </Link>
           <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
             {playingSession && playingLoop && (
