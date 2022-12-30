@@ -16,7 +16,7 @@ import {
 } from '../../store/apps/timerRecordsActions';
 import { consoleSandbox } from '@sentry/utils';
 
-const YearlyActivityBar = () => {
+const YearlyActivityPie = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords);
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
   const [data, setData] = useState([]);
@@ -296,7 +296,7 @@ const YearlyActivityBar = () => {
           .attr('transform', `translate(0,${yScale(0)})`)
           .call(xAxis);
 
-        const container = document.getElementById('svg-year-bar');
+        const container = document.getElementById('svg-year-pie');
         if (container) {
           container.innerHTML = '';
           container.appendChild(svg.node());
@@ -317,7 +317,7 @@ const YearlyActivityBar = () => {
         yLabel: 'Hours',
         zDomain: activity,
         colors: d3.schemeSpectral[activity.length],
-        width: 1800,
+        width: 1100,
         height: 500,
       });
 
@@ -354,7 +354,7 @@ const YearlyActivityBar = () => {
       <div
         className='mb-3 mt-4'
         style={{ borderRadius: '1rem', overflow: 'hidden' }}
-        id='svg-year-bar'
+        id='svg-year-pie'
       ></div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         {/* {data &&
@@ -400,4 +400,4 @@ const YearlyActivityBar = () => {
   );
 };
 
-export default YearlyActivityBar;
+export default YearlyActivityPie;

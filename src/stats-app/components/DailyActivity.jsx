@@ -212,12 +212,12 @@ const DailyActivity = () => {
       >
         {subjectData &&
           subjectData.map((s, i) => (
-            <h6 key={i} className='m-0'>
+            <h5 key={i} className='m-0'>
               {`${s.subjectName}: `}
               <span style={{ color: 'black' }}>
                 {toStringTimeFormatter(timeFormatter(s.totalPlayTime))}
               </span>
-            </h6>
+            </h5>
           ))}
       </div>
     </div>
