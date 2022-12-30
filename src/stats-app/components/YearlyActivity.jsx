@@ -1,32 +1,17 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as d3 from 'd3';
-// import legend from 'd3-color-legend';
-import NavDate from './NavDate';
-import {
-  timeFormatter,
-  toStringTimeFormatter,
-  weekPaginate,
-  monthPaginate,
-  yearPaginate,
-} from '../services/StatsService';
-import {
-  setSelectedDayViz,
-  loadVizData,
-} from '../../store/apps/timerRecordsActions';
-import { consoleSandbox } from '@sentry/utils';
+import { yearPaginate } from '../services/StatsService';
+import { setSelectedDayViz } from '../../store/apps/timerRecordsActions';
 import YearlyActivityBar from './YearlyActivityBar';
+import YearlyActivityPie from './YearlyActivityPie';
 
-const YearlyActivityPie = () => {
+const YearlyActivity = () => {
   const { vizData } = useSelector(state => state.apps.timerRecords);
   // const [pageIndex, setPageIndex] = useState(vizData?.length - 1);
   const [pageIndex, setPageIndex] = useState(1);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
-  // if (vizData) {
-  // weekPaginate(vizData);
-  // monthPaginate(vizData);
   const filterData = {
     subject: { name: 'Genesys', _id: '620e13f300b78f00146ff85e' },
     groups: [
@@ -76,55 +61,6 @@ const YearlyActivityPie = () => {
       ],
     ],
   };
-  // }
-
-  const modelData = data => {
-    const firstPass = [];
-    data &&
-      data.forEach(d => {
-        d.activities.length &&
-          d.activities.forEach(a => {
-            let date = new Date(d.date);
-            firstPass.push({
-              date:
-                date.toLocaleString('default', { month: 'long' }) +
-                ' ' +
-                date.getFullYear(),
-              name: a.label,
-              value: a.totalDuration,
-            });
-          });
-      });
-
-    const secondPass = {};
-    firstPass.forEach(item => {
-      if (!secondPass[item.name]) secondPass[item.name] = [];
-      secondPass[item.name].push(item);
-    });
-
-    // console.log(secondPass);
-
-    const lastPass = [];
-
-    for (const [key, value] of Object.entries(secondPass)) {
-      let prevKey;
-      if (!prevKey) prevKey = key;
-      if (prevKey === key) {
-        const temp = { value: 0 };
-        temp.name = value[0].name;
-        value.forEach(v => {
-          temp.value += v.value;
-        });
-        lastPass.push(temp);
-      } else {
-        prevKey = key;
-      }
-    }
-
-    console.log(lastPass);
-
-    return lastPass;
-  };
 
   const dispatch = useDispatch();
 
@@ -132,7 +68,7 @@ const YearlyActivityPie = () => {
     dispatch(setSelectedDayViz(vizData[pageIndex]));
     setFilteredData(yearPaginate(vizData, filterData));
 
-    setData(modelData(filteredData[pageIndex]));
+    setData(filteredData[pageIndex]);
   }, [pageIndex, vizData]);
 
   return (
@@ -148,8 +84,10 @@ const YearlyActivityPie = () => {
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
       }}
     >
-      {/* <YearlyActivityBar data={filteredData[pageIndex]} /> */}
-      {/* <YearlyActivityPie data={filteredData[pageIndex]} /> */}
+      <div className='d-flex justify-content-around flex-wrap'>
+        <YearlyActivityBar data={data} />
+        <YearlyActivityPie data={data} />
+      </div>
 
       <div
         className='d-flex justify-content-between flex-wrap pt-2'
@@ -161,4 +99,4 @@ const YearlyActivityPie = () => {
   );
 };
 
-export default YearlyActivityPie;
+export default YearlyActivity;
