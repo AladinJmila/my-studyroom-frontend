@@ -65,11 +65,13 @@ const YearlyActivity = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSelectedDayViz(vizData[pageIndex]));
-    setFilteredData(yearPaginate(vizData, filterData));
+    if (!filteredData.length) {
+      dispatch(setSelectedDayViz(vizData[pageIndex]));
+      setFilteredData(yearPaginate(vizData, filterData));
+    }
 
     setData(filteredData[pageIndex]);
-  }, [pageIndex, vizData]);
+  }, [pageIndex, filteredData]);
 
   return (
     <div

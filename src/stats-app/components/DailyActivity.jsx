@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as d3 from 'd3';
 import NavDate from './NavDate';
@@ -15,80 +15,25 @@ import {
 } from './../../store/apps/timerRecordsActions';
 
 const DailyActivity = () => {
+  const dispatch = useDispatch();
   const { vizData } = useSelector(state => state.apps.timerRecords);
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
-  const subjectData = vizData[dayIndex]?.SubjectActivity;
-  const data = vizData[dayIndex]?.activity;
-  const date = vizData[dayIndex]?.date;
-
-  if (vizData) {
-    // weekPaginate(vizData);
-    // monthPaginate(vizData);
-    const filterData = {
-      subject: { name: 'Genesys', _id: '620e13f300b78f00146ff85e' },
-      groups: [
-        [
-          { name: 'Genesys', _id: '62383ee2519aae00146fc4f4', label: 'Admin' },
-          { name: 'Genesys-DX', _id: null, label: 'Admin' },
-          { name: 'Planning', _id: null, label: 'Admin' },
-        ],
-        [
-          {
-            name: 'Training',
-            _id: '62383fa1519aae00146fc4f6',
-            label: 'Training',
-          },
-          { name: 'GenEd-Training', _id: null, label: 'Training' },
-          { name: 'GenEd-PersonalGrowth', _id: null, label: 'Training' },
-          { name: 'Coding', _id: null, label: 'Training' },
-          { name: 'Design', _id: null, label: 'Training' },
-        ],
-        [
-          {
-            name: 'RBS',
-            _id: '630884ed86c2d30014c4baea',
-            label: 'Billable',
-          },
-          {
-            name: 'RBS Bankline',
-            _id: '630884ed86c2d30014c4baea',
-            label: 'Billable',
-          },
-          {
-            name: 'Vodafone',
-            _id: '62b44080a3eabc00145a2207',
-            label: 'Billable',
-          },
-          {
-            name: 'SeeGroup',
-            _id: '6266850ace78b30014ff5e2a',
-            label: 'Billable',
-          },
-          {
-            name: 'NatWest',
-            _id: '624abd670a679200141215c9',
-            label: 'Billable',
-          },
-          { name: 'ATOS', _id: '6241c1bbd4fda20014682c00', label: 'Billable' },
-        ],
-      ],
-    };
-    yearPaginate(vizData, filterData);
-  }
-
-  const dispatch = useDispatch();
+  const [subjectData, setSubjectData] = useState();
+  const [data, setData] = useState();
+  const [date, setDate] = useState();
 
   useEffect(() => {
-    // dispatch(loadVizData());
+    if (!vizData) {
+      dispatch(loadVizData());
+    }
+    // setDayIndex();
     dispatch(setSelectedDayViz(vizData[dayIndex]));
+    setSubjectData(vizData[dayIndex]?.SubjectActivity);
+    setData(vizData[dayIndex]?.activity);
+    setDate(vizData[dayIndex]?.date);
 
     genGraph();
-
-    // console.log(date);
-    // console.log(data);
-    // console.log(dayIndex);
-    // console.log(vizData);
-  }, [data, dayIndex]);
+  }, [data, dayIndex, vizData]);
 
   let totalDuration = 0;
   let formattedDuration;

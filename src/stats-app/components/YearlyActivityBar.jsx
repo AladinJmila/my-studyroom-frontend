@@ -202,7 +202,7 @@ const YearlyActivityBar = ({ data }) => {
         yLabel: 'hours/week',
         zDomain: activity,
         colors: d3.schemeSpectral[activity.length],
-        width: 1000,
+        width: 900,
         height: 500,
       });
     };

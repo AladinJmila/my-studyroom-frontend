@@ -179,8 +179,8 @@ const YearlyActivityPie = ({ data }) => {
       DonutChart(modeledData, {
         name: d => d.name,
         value: d => d.value,
-        width: 500,
-        height: 500,
+        width: 480,
+        height: 480,
       });
     };
   }

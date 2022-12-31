@@ -14,6 +14,7 @@ import DailyActivity from '../stats-app/components/DailyActivity';
 import YearlyActivityBar from '../stats-app/components/YearlyActivityBar';
 import YearlyActivityPie from '../stats-app/components/YearlyActivityPie';
 import YearlyActivity from '../stats-app/components/YearlyActivity';
+import Activities from '../stats-app/components/Activities';
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list);
@@ -40,10 +41,9 @@ const Profile = () => {
       <Calendar />
       <h2 className='mt-5 text-center'>Daily Stats</h2>
       <DailyActivity />
+      <Activities />
       <h2 className='mt-5 text-center'>Yearly Stats</h2>
       <YearlyActivity />
-      {/* <YearlyActivityBar /> */}
-      {/* <YearlyActivityPie /> */}
 
       <div className='row'>
         <div className='col-6'>

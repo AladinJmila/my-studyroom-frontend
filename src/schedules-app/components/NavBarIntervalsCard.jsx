@@ -8,8 +8,8 @@ import beepHalf from '../../static/audio/beep-09.wav';
 import { toast } from 'react-toastify';
 import {
   loadNewestTimerRecord,
-  updateTimerRecords,
   updateAction,
+  loadVizData,
 } from '../../store/apps/timerRecordsActions';
 
 const myBeep = new Audio(beep);
@@ -21,23 +21,13 @@ let isPlaying = false;
 let recordTime;
 let recordInterval;
 let recordSubject;
-let newestTimerRecord;
 let newestAction;
 let intervalIsSet;
 
 const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
-  const { subject, numOfReps } = playingSession;
+  const { subject } = playingSession;
   let intervals = playingLoop.intervals;
   const loopLength = intervals.length;
-  // if (numOfReps > 1) {
-  //   let i = 0;
-  //   let extendedIntervlas = [];
-  //   while (i < numOfReps) {
-  //     extendedIntervlas.push(...intervals);
-  //     i++;
-  //   }
-  //   intervals = [...extendedIntervlas];
-  // }
 
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [currentInterval, setCurrentInterval] = useState(
@@ -51,16 +41,15 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   const [interv, setInterv] = useState(null);
   const [play, setPlay] = useState(false);
   const [progress, setProgress] = useState(0);
-  newestTimerRecord = useSelector(
-    state => state.apps.timerRecords.newestTimerRecord
-  );
+
   newestAction = useSelector(state => state.apps.timerRecords.newestAction);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadNewestTimerRecord());
-  }, []);
+    dispatch(loadVizData());
+  }, [play]);
 
   // Load interval object for useEffect()
   useEffect(() => {
@@ -108,7 +97,6 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   }, []);
 
   const sendTimerState = (timerState, playState, interval, subject) => {
-    // if (newestTimerRecord) {
     const action = {
       timeInSeconds:
         timerState.seconds + timerState.minutes * 60 + timerState.hours * 3600,
@@ -118,10 +106,8 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       subjectName: subject.name,
       subjectId: subject._id,
     };
-    // dispatch(updateTimerRecords(timeRecord, newestTimerRecord._id));
+
     dispatch(updateAction(action, newestAction?.recordId, newestAction?._id));
-    // console.log(timeRecord);
-    // }
   };
 
   const halfInterval = computeHalfInterval(currentInterval);
@@ -237,6 +223,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         currentInterval,
         subject
       );
+      dispatch(loadVizData());
     }, 1000);
   };
 
@@ -327,7 +314,6 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   const labelStyle = {
-    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: '0.25rem',
     padding: '0 1rem',
     fontSize: '1.15rem',
@@ -336,11 +322,11 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   };
 
   const progressBar = {
-    // backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     width: `${progress}%`,
     height: '100%',
     position: 'absolute',
-    top: 0,
+    top: 2,
     left: 0,
   };
 

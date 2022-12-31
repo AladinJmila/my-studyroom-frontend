@@ -5,7 +5,8 @@
   --color3: #dddddd;
 
   --white1: #fdfdfd;
-  --bright1: #2870dc;
+  --theme-color1: #2870dc;
+  --theme-color2: #f24570;
   /* --dark1: #868576; */
   /* --dark1: #3d381d; */
   --dark1: #34311f;
@@ -205,13 +206,13 @@ nav.bg-dark {
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: var(--bright1) !important;
+  stroke: var(--theme-color1) !important;
 }
 .card.text-white.bg-dark .CircularProgressbar .CircularProgressbar-text {
   fill: white !important;
 }
 .CircularProgressbar .CircularProgressbar-text {
-  fill: var(--bright1) !important;
+  fill: var(--theme-color1) !important;
 }
 
 .navbar-brand {
