@@ -18,7 +18,11 @@ const Activities = () => {
     <div className='activities'>
       {newestTimerRecord &&
         newestTimerRecord.activities.map(activity => (
-          <Activity key={activity._id} activity={activity} />
+          <Activity
+            key={activity._id}
+            activity={activity}
+            recordId={newestTimerRecord._id}
+          />
         ))}
     </div>
   );

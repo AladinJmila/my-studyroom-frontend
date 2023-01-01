@@ -28,6 +28,7 @@ export const loadDailyDurations = () => async dispatch => {
 };
 
 export const loadVizData = () => async dispatch => {
+  console.log('dispatched from updateTimerRecord');
   try {
     const { data } = await httpService.get(`${apiEndPoint}/week-stats`);
 
@@ -37,14 +38,16 @@ export const loadVizData = () => async dispatch => {
   }
 };
 
-export const updateTimerRecords = (record, timerRecordId) => async dispatch => {
+export const updateTimerRecord = (activity, recordId) => async dispatch => {
+  console.log(activity);
+  console.log(recordId);
   try {
     const { data } = await httpService.put(
-      `${apiEndPoint}/${timerRecordId}`,
-      record
+      `${apiEndPoint}/${recordId}/${activity._id}`,
+      activity
     );
 
-    dispatch(actions.UPDATE_TIMER_RECORDS(data));
+    // dispatch(actions.UPDATE_TIMER_RECORDS(data));
   } catch (error) {
     console.log(error);
   }

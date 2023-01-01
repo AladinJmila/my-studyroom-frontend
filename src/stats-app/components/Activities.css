@@ -59,11 +59,12 @@
 
 .activity .minutes-input input {
   width: 60px;
-  text-align: center;
+  text-align: right;
   max-height: 32px;
   border: none;
   font-weight: 700;
   background-color: transparent;
+  margin-right: 4px;
 }
 
 .activity .btns {

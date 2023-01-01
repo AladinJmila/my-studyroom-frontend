@@ -11,14 +11,13 @@ import dailyStatus from '../../src/static/images/dailyStatus.png';
 import Calendar from '../stats-app/components/Calendar';
 import { loadVizData } from './../store/apps/timerRecordsActions';
 import DailyActivity from '../stats-app/components/DailyActivity';
-import YearlyActivityBar from '../stats-app/components/YearlyActivityBar';
-import YearlyActivityPie from '../stats-app/components/YearlyActivityPie';
 import YearlyActivity from '../stats-app/components/YearlyActivity';
 import Activities from '../stats-app/components/Activities';
 
 const Profile = () => {
   const subjects = useSelector(state => state.apps.subjects.list);
   const upvotedSubjects = useSelector(state => state.apps.subjects.upvoted);
+  const { vizData } = useSelector(state => state.apps.timerRecords);
   const { loading } = useSelector(state => state.apps.subjects);
   const { user } = useSelector(state => state.auth);
 
@@ -30,7 +29,7 @@ const Profile = () => {
     dispatch(loadVizData());
   }, []);
 
-  // console.log(plansAndProgress)
+  // console.log(vizData);
 
   return (
     <div
@@ -40,10 +39,10 @@ const Profile = () => {
       <h2 className='mt-5 text-center'>Progress Tracker</h2>
       <Calendar />
       <h2 className='mt-5 text-center'>Daily Stats</h2>
-      <DailyActivity />
+      <DailyActivity vizData={vizData} />
       <Activities />
       <h2 className='mt-5 text-center'>Yearly Stats</h2>
-      <YearlyActivity />
+      <YearlyActivity vizData={vizData} />
 
       <div className='row'>
         <div className='col-6'>

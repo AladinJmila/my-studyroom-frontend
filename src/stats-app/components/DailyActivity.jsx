@@ -14,26 +14,26 @@ import {
   loadVizData,
 } from './../../store/apps/timerRecordsActions';
 
-const DailyActivity = () => {
+const DailyActivity = ({ vizData }) => {
   const dispatch = useDispatch();
-  const { vizData } = useSelector(state => state.apps.timerRecords);
+  // const { vizData } = useSelector(state => state.apps.timerRecords);
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
   const [subjectData, setSubjectData] = useState();
-  const [data, setData] = useState();
+  const [data, setData] = useState(vizData[vizData?.length - 1]?.activity);
   const [date, setDate] = useState();
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    if (!vizData) {
-      dispatch(loadVizData());
-    }
-    // setDayIndex();
     dispatch(setSelectedDayViz(vizData[dayIndex]));
     setSubjectData(vizData[dayIndex]?.SubjectActivity);
     setData(vizData[dayIndex]?.activity);
     setDate(vizData[dayIndex]?.date);
+    // console.log(vizData);
+    // console.log(data);
 
     genGraph();
-  }, [data, dayIndex, vizData]);
+  }, [data, dayIndex]);
 
   let totalDuration = 0;
   let formattedDuration;

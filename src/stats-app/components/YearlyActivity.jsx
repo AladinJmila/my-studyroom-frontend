@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { yearPaginate } from '../services/StatsService';
-import { setSelectedDayViz } from '../../store/apps/timerRecordsActions';
+import {
+  setSelectedDayViz,
+  loadVizData,
+} from '../../store/apps/timerRecordsActions';
 import YearlyActivityBar from './YearlyActivityBar';
 import YearlyActivityPie from './YearlyActivityPie';
 
-const YearlyActivity = () => {
-  const { vizData } = useSelector(state => state.apps.timerRecords);
+const YearlyActivity = ({ vizData }) => {
+  // const { vizData } = useSelector(state => state.apps.timerRecords);
   // const [pageIndex, setPageIndex] = useState(vizData?.length - 1);
   const [pageIndex, setPageIndex] = useState(1);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+
+  // console.log(filteredData);
 
   const filterData = {
     subject: { name: 'Genesys', _id: '620e13f300b78f00146ff85e' },
@@ -65,13 +70,13 @@ const YearlyActivity = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!filteredData.length) {
-      dispatch(setSelectedDayViz(vizData[pageIndex]));
-      setFilteredData(yearPaginate(vizData, filterData));
-    }
+    // dispatch(loadVizData());
+
+    dispatch(setSelectedDayViz(vizData[pageIndex]));
+    setFilteredData(yearPaginate(vizData, filterData));
 
     setData(filteredData[pageIndex]);
-  }, [pageIndex, filteredData]);
+  }, [pageIndex, vizData]);
 
   return (
     <div

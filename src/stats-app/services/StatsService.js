@@ -82,17 +82,19 @@ export function monthPaginate(daysPages) {
     }
   }
   // console.log(paginated);
-  return paginated;
+  return paginated.filter(item => item);
 }
 
 export function yearPaginate(daysPages, filterData = null) {
   const monthPages = monthPaginate(daysPages);
+  // console.log(monthPages);
 
   const paginated = [];
   let index = 0;
 
   for (let i = monthPages.length - 1; i >= 1; i--) {
     const current = monthPages[i][0];
+    // add some check to prevent crashing
     const prev = monthPages[i - 1][0];
 
     const currentDate = new Date(current.date);
@@ -110,7 +112,6 @@ export function yearPaginate(daysPages, filterData = null) {
     } else {
       index++;
     }
-    // break;
   }
 
   let filtered;
@@ -157,6 +158,5 @@ export function yearPaginate(daysPages, filterData = null) {
     });
   }
 
-  // console.log(paginated);
   return filtered.length ? filtered : paginated;
 }
