@@ -9,10 +9,11 @@ const Activities = () => {
   const newestTimerRecord = useSelector(
     state => state.apps.timerRecords.newestTimerRecord
   );
+  const vizData = useSelector(state => state.apps.timerRecords.vizData);
 
   useEffect(() => {
     dispatch(loadNewestTimerRecord());
-  }, []);
+  }, [vizData]);
 
   return (
     <div className='activities'>

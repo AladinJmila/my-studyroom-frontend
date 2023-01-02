@@ -21,7 +21,7 @@ let isPlaying = false;
 let recordTime;
 let recordInterval;
 let recordSubject;
-let newestAction;
+let newestTimerRecord;
 let intervalIsSet;
 
 const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
@@ -42,7 +42,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
   const [play, setPlay] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  newestAction = useSelector(state => state.apps.timerRecords.newestAction);
+  newestTimerRecord = useSelector(state => state.apps.timerRecords);
 
   const dispatch = useDispatch();
 
@@ -107,7 +107,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       subjectId: subject._id,
     };
 
-    dispatch(updateAction(action, newestAction?.recordId, newestAction?._id));
+    dispatch(updateAction(action, newestTimerRecord?._id));
   };
 
   const halfInterval = computeHalfInterval(currentInterval);
@@ -224,6 +224,7 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
         subject
       );
       dispatch(loadVizData());
+      dispatch(loadNewestTimerRecord());
     }, 1000);
   };
 
@@ -280,7 +281,6 @@ const NavBarIntervalsCard = ({ playingSession, playingLoop }) => {
       }
 
       updatedSeconds--;
-      // console.log('running');
 
       const currentTimeInSeconds =
         (updatedHours * 60 + updatedMinutes) * 60 + updatedSeconds;

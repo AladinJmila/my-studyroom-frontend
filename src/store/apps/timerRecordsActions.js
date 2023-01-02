@@ -10,6 +10,7 @@ if (user) userid = user._id;
 export const loadNewestTimerRecord = () => async dispatch => {
   try {
     const { data } = await httpService.get(apiEndPoint);
+    console.log('record loaded');
 
     dispatch(actions.GET_NEWEST_TIMER_RECORD(data));
   } catch (error) {
@@ -28,7 +29,6 @@ export const loadDailyDurations = () => async dispatch => {
 };
 
 export const loadVizData = () => async dispatch => {
-  console.log('dispatched from updateTimerRecord');
   try {
     const { data } = await httpService.get(`${apiEndPoint}/week-stats`);
 
@@ -38,37 +38,30 @@ export const loadVizData = () => async dispatch => {
   }
 };
 
-export const updateTimerRecord = (activity, recordId) => async dispatch => {
-  console.log(activity);
-  console.log(recordId);
-  try {
-    const { data } = await httpService.put(
-      `${apiEndPoint}/${recordId}/${activity._id}`,
-      activity
-    );
-
-    // dispatch(actions.UPDATE_TIMER_RECORDS(data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const updateAction =
-  (record, timerRecordId, actionId) => async dispatch => {
-    console.log(actionId);
-
+export const updateTimerRecord =
+  (activity, recordId, method) => async dispatch => {
     try {
       const { data } = await httpService.put(
-        `${apiEndPoint}/action/${timerRecordId}/${actionId}`,
-        record
+        `${apiEndPoint}/${recordId}/${activity._id}/${method}`,
+        activity
       );
-
-      // console.log(data);
-      dispatch(actions.UPDATE_ACTION(data));
     } catch (error) {
       console.log(error);
     }
   };
+
+export const updateAction = (record, timerRecordId) => async dispatch => {
+  try {
+    const { data } = await httpService.put(
+      `${apiEndPoint}/action/${timerRecordId}`,
+      record
+    );
+
+    dispatch(actions.UPDATE_ACTION(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const setSelectedDayViz = day => dispatch => {
   dispatch(actions.SET_SELECTED_DAY_VIZ(day));
