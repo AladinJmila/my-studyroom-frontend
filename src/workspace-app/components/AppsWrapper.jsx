@@ -107,7 +107,7 @@ const AppsWrapper = ({
 
   return (
     <div
-      style={{ padding: 0, height: '92vh' }}
+      style={{ padding: 0, height: '91vh' }}
       className='col scrolling-wrapper d-flex flex-row justify-content-between'
     >
       <div></div>

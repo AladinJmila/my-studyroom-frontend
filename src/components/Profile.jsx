@@ -29,8 +29,6 @@ const Profile = () => {
     dispatch(loadVizData());
   }, []);
 
-  // console.log(vizData);
-
   return (
     <div
       className='full-height'
@@ -38,7 +36,7 @@ const Profile = () => {
     >
       <h2 className='mt-5 text-center'>Progress Tracker</h2>
       <Calendar />
-      <h2 className='mt-5 text-center'>Daily Stats</h2>
+      <h2 className='mt-5 text-center'>Daily Activities</h2>
       <DailyActivity vizData={vizData} />
       <Activities />
       <h2 className='mt-5 text-center'>Yearly Stats</h2>

@@ -25,6 +25,7 @@ const VerticalNavBar = ({
     margin: 0,
     padding: 10,
     boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)',
+    height: '91vh',
   };
 
   const buttonStyle = {

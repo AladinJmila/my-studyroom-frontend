@@ -5,35 +5,21 @@ import NavDate from './NavDate';
 import {
   timeFormatter,
   toStringTimeFormatter,
-  weekPaginate,
-  monthPaginate,
-  yearPaginate,
 } from './../services/StatsService';
-import {
-  setSelectedDayViz,
-  loadVizData,
-} from './../../store/apps/timerRecordsActions';
 
 const DailyActivity = ({ vizData }) => {
-  const dispatch = useDispatch();
-  // const { vizData } = useSelector(state => state.apps.timerRecords);
   const [dayIndex, setDayIndex] = useState(vizData?.length - 1);
   const [subjectData, setSubjectData] = useState();
   const [data, setData] = useState(vizData[vizData?.length - 1]?.activity);
   const [date, setDate] = useState();
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
-    dispatch(setSelectedDayViz(vizData[dayIndex]));
     setSubjectData(vizData[dayIndex]?.SubjectActivity);
     setData(vizData[dayIndex]?.activity);
     setDate(vizData[dayIndex]?.date);
-    // console.log(vizData);
-    // console.log(data);
 
-    genGraph();
-  }, [data, dayIndex]);
+    genGraph(data);
+  }, [data, dayIndex, vizData]);
 
   let totalDuration = 0;
   let formattedDuration;
@@ -48,30 +34,24 @@ const DailyActivity = ({ vizData }) => {
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
   const x = d3.scaleLinear([0, 1], [margin.left, width - margin.right]);
 
-  let stack = null;
-
-  if (data) {
-    stack = () => {
-      const total = d3.sum(data, d => d.totalPlayTime);
-      let value = 0;
-      return data.map(d => ({
-        name: d.intervalName,
-        value: d.totalPlayTime / total,
-        duration: d.totalPlayTime,
-        startValue: value / total,
-        endValue: (value += d.totalPlayTime) / total,
-        color: d.color,
-        subject: d.subjectName,
-      }));
-    };
-  }
+  const stack = data => {
+    const total = d3.sum(data, d => d.totalPlayTime);
+    let value = 0;
+    return data.map(d => ({
+      name: d.intervalName,
+      value: d.totalPlayTime / total,
+      duration: d.totalPlayTime,
+      startValue: value / total,
+      endValue: (value += d.totalPlayTime) / total,
+      color: d.color,
+      subject: d.subjectName,
+    }));
+  };
 
   const formatPercent = x.tickFormat(null, '%');
 
-  let genGraph = () => {};
-
-  if (data) {
-    genGraph = () => {
+  const genGraph = data => {
+    if (data) {
       d3.select('#svg-day svg').remove();
 
       const svg = d3
@@ -83,7 +63,7 @@ const DailyActivity = ({ vizData }) => {
       svg
         .append('g')
         .selectAll('rect')
-        .data(stack())
+        .data(stack(data))
         .join('rect')
         .attr('fill', d => d.color)
         .attr('x', d => x(d.startValue))
@@ -94,8 +74,8 @@ const DailyActivity = ({ vizData }) => {
         .text(d => `${d.name}${formatPercent(d.value)}`);
 
       return svg.node();
-    };
-  }
+    }
+  };
 
   return (
     <div
@@ -128,7 +108,7 @@ const DailyActivity = ({ vizData }) => {
       ></div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         {data &&
-          stack().map((d, i) => (
+          stack(data).map((d, i) => (
             <div key={i} className='mb-2' style={{ minWidth: '12rem' }}>
               <div
                 style={{
