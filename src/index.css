@@ -13,6 +13,10 @@
   --dark2: #3b3b3b;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   /* background-image: linear-gradient(#6b6b6b, #5dcdde); */
   background-color: var(--color3) !important;
