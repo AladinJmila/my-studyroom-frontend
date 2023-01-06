@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import {
   cardsBody,
   checkedStyle,
@@ -11,6 +10,12 @@ import { userIsEditor } from './../services/permissionsService';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
+
+  // function htmlDecode(content) {
+  //   let e = document.createElement('div');
+  //   e.innerHTML = content;
+  //   return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  // }
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -33,11 +38,6 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           </div>
         </div>
         <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>
-        {note.resource && (
-          <p className='card-subtitle mb-2 text-muted'>
-            {note.resource.content}
-          </p>
-        )}
         <>
           <div className='float-start me-2'>
             {showPrivateInfo && (
@@ -48,9 +48,10 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             )}
           </div>{' '}
           {note.isChecked && showPrivateInfo ? (
-            <p
+            <div
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
+              // dangerouslySetInnerHTML={{ __html: htmlDecode(note.content) }}
             >
               {note.content}
               {note.url && (
@@ -67,11 +68,12 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   ></i>
                 </a>
               )}
-            </p>
+            </div>
           ) : (
-            <p
+            <div
               className='mb-2'
               style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
+              // dangerouslySetInnerHTML={{ __html: htmlDecode(note.content) }}
             >
               {note.content}
               {note.url && (
@@ -84,7 +86,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   <i className='fa fa-external-link' aria-hidden='true'></i>
                 </a>
               )}
-            </p>
+            </div>
           )}
         </>
       </div>

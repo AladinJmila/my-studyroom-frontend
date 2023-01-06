@@ -289,9 +289,9 @@ input[type='text']:focus,
 select,
 textarea {
   margin-top: 4px !important;
-  background-color: var(--color0) !important;
+  background-color: white !important;
   border: none !important;
-  border-bottom: 2px solid var(--white1) !important;
+  border-bottom: 2px solid var(--dark2) !important;
   border-radius: 0 !important;
   outline: none !important;
 }
