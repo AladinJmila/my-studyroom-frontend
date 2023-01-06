@@ -1,4 +1,5 @@
 :root {
+  --color0: #f1f0e9;
   --color1: #e2e0d7;
   /* --color1: #dfdbd0; */
   --color2: #cbc5b4;
@@ -7,6 +8,7 @@
   --white1: #fdfdfd;
   --theme-color1: #2870dc;
   --theme-color2: #f24570;
+  --theme-color2t: #f24570b5;
   /* --dark1: #868576; */
   /* --dark1: #3d381d; */
   --dark1: #34311f;
@@ -129,9 +131,12 @@ body {
   /* border-bottom: none; */
   padding: 13px;
   /* z-index: -1; */
-  margin-right: 5px;
   /* box-shadow: 6px 0 2px -2px rgb(0 0 0 / 30%); */
   /* box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 50%); */
+}
+
+.subjects-container .app-header {
+  margin-right: 5px;
 }
 
 .sort-header {
@@ -143,12 +148,15 @@ body {
   border-radius: 0 0 0.25rem 0.25rem;
   font-weight: bold;
   padding: 0 3px 10px 3px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   /* box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 50%); */
-  margin-right: 5px;
   transform: translateY(-4px);
   z-index: 10;
   height: 44px;
+}
+
+.subjects-container .sort-header {
+  margin-right: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -257,4 +265,47 @@ nav.bg-dark {
 #svg-year-pie tspan {
   font-size: 1.5em;
   fill: white !important;
+}
+
+.btn-dark {
+  background-color: var(--dark1) !important;
+  border-color: var(--dark1) !important;
+}
+
+.main-form {
+  background-color: var(--color1);
+  padding: 10px;
+  margin: 12px 0;
+  border: 2px solid var(--white1);
+  border-radius: 5px;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  background-color: var(--white1);
+}
+
+input[type='text'],
+input[type='text']:focus,
+select,
+textarea {
+  margin-top: 4px !important;
+  background-color: var(--color0) !important;
+  border: none !important;
+  border-bottom: 2px solid var(--white1) !important;
+  border-radius: 0 !important;
+  outline: none !important;
+}
+
+select option {
+  background-color: var(--color0);
+}
+
+.alert-danger {
+  margin-top: 6px;
+  margin-bottom: 6px !important;
+  background-color: var(--theme-color2t) !important;
+  border-color: var(--theme-color2t) !important;
+  color: white !important;
+  border-radius: 0 !important;
+  padding: 6px 12px !important;
 }

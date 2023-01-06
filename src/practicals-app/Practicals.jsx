@@ -93,6 +93,11 @@ const Practicals = () => {
           onClick={handleShowForm}
           showForm={showForm}
         />
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Practiced'
+        />
         {showForm && (
           <PracticalsForm
             user={user}
@@ -100,11 +105,6 @@ const Practicals = () => {
             toggleShowForm={handleShowForm}
           />
         )}
-        <SortCard
-          sortTarget={sortTarget}
-          onSort={onSort}
-          checkedName='Practiced'
-        />
       </div>
       {loading ? (
         <div className='center-spinner'>

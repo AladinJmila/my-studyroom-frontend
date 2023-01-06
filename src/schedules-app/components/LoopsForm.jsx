@@ -1,12 +1,12 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import { produce } from 'immer'
-import Form from '../../common/Form'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import { produce } from 'immer';
+import Form from '../../common/Form';
 import {
   createLoop,
   updateLoop,
   clearSelectedLoop,
-} from './../../store/apps/loopsActions'
+} from './../../store/apps/loopsActions';
 
 class LoopsFrom extends Form {
   state = {
@@ -16,104 +16,92 @@ class LoopsFrom extends Form {
     },
     intervals: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
     name: Joi.string().required().max(100).label('Name'),
     intervalsIds: Joi.array(),
-  }
+  };
 
   componentDidMount() {
-    const { intervals, selectedLoop } = this.props
-    this.setState({ intervals })
+    const { intervals, selectedLoop } = this.props;
+    this.setState({ intervals });
 
     if (selectedLoop) {
-      this.setState({ data: this.mapToViewModel(selectedLoop) })
+      this.setState({ data: this.mapToViewModel(selectedLoop) });
     }
   }
 
   mapToViewModel = loop => {
     const intervalsIds = loop.intervals.map(interval => {
-      return { intervalId: interval._id }
-    })
+      return { intervalId: interval._id };
+    });
 
     return {
       _id: loop._id,
       name: loop.name,
       intervalsIds,
-    }
-  }
+    };
+  };
 
   handleToggleProp = property => {
-    const data = { ...this.state.data }
-    data[property] = !data[property]
+    const data = { ...this.state.data };
+    data[property] = !data[property];
 
-    this.setState({ data })
-  }
+    this.setState({ data });
+  };
 
   handleIntervalAdd = (e, index) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     const data = produce(this.state.data, data => {
-      data.intervalsIds[index][name] = value
-    })
-    this.setState({ data })
-  }
+      data.intervalsIds[index][name] = value;
+    });
+    this.setState({ data });
+  };
 
   handleAddInput = () => {
     const data = produce(this.state.data, data => {
-      data.intervalsIds.push({ intervalId: '' })
-    })
-    this.setState({ data })
-  }
+      data.intervalsIds.push({ intervalId: '' });
+    });
+    this.setState({ data });
+  };
 
   handleRemoveInput = index => {
     const data = produce(this.state.data, data => {
-      data.intervalsIds.splice(index, 1)
-    })
-    this.setState({ data })
-  }
+      data.intervalsIds.splice(index, 1);
+    });
+    this.setState({ data });
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
     const { createLoop, updateLoop, selectedLoop, clearSelectedLoop } =
-      this.props
+      this.props;
 
     if (selectedLoop) {
-      data.starred = selectedLoop.starred
-      data.isPublic = selectedLoop.isPublic
-      updateLoop(data)
-      clearSelectedLoop()
+      data.starred = selectedLoop.starred;
+      data.isPublic = selectedLoop.isPublic;
+      updateLoop(data);
+      clearSelectedLoop();
     } else {
-      createLoop(data)
+      createLoop(data);
     }
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         name: '',
         intervalsIds: [],
       },
-    })
-  }
-
-  loopsFormStyle = {
-    backgroundImage: 'linear-gradient(#678387, #62a9b4)',
-    padding: 10,
-    margin: '12px 0',
-    border: '3px solid #343A40',
-    borderRadius: 5,
-  }
+    });
+  };
 
   render() {
     return (
-      <form
-        className='mt-2 mb-0'
-        onSubmit={this.handleSubmit}
-        style={this.loopsFormStyle}
-      >
+      <form className='mt-2 mb-0 main-form' onSubmit={this.handleSubmit}>
         {this.renderInput('name', 'Name', 'text', 'required')}
         <label htmlFor='intervalId'>
           <span className='required'>*</span>Intervals
@@ -162,19 +150,19 @@ class LoopsFrom extends Form {
         </div>
         {/* <pre>{JSON.stringify(this.state.data.intervalsIds, null, 2)}</pre> */}
       </form>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
   intervals: state.apps.intervals.list,
   selectedLoop: state.apps.loops.selectedLoop,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createLoop: loop => dispatch(createLoop(loop)),
   updateLoop: loop => dispatch(updateLoop(loop)),
   clearSelectedLoop: () => dispatch(clearSelectedLoop()),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoopsFrom)
+export default connect(mapStateToProps, mapDispatchToProps)(LoopsFrom);

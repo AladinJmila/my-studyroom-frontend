@@ -89,6 +89,7 @@ const Notes = () => {
           onClick={handleShowForm}
           showForm={showForm}
         />
+        <SortCard sortTarget={sortTarget} onSort={onSort} checkedName='Noted' />
         {showForm && (
           <NotesForm
             user={user}
@@ -96,7 +97,6 @@ const Notes = () => {
             toggleShowForm={handleShowForm}
           />
         )}
-        <SortCard sortTarget={sortTarget} onSort={onSort} checkedName='Noted' />
       </div>
 
       {loading ? (

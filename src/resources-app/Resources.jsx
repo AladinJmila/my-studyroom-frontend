@@ -102,6 +102,11 @@ function Resources() {
           showYoutubeForm={showYoutubeForm}
           youtube
         />
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Processed'
+        />
         {showForm && (
           <ResourcesForm user={user} toggleShowForm={handleShowForm} />
         )}
@@ -111,11 +116,6 @@ function Resources() {
             toggleShowForm={handleShowYoutubeForm}
           />
         )}
-        <SortCard
-          sortTarget={sortTarget}
-          onSort={onSort}
-          checkedName='Processed'
-        />
       </div>
       {loading ? (
         <div className='center-spinner'>

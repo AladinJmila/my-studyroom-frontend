@@ -1,11 +1,11 @@
-import Joi from 'joi-browser'
-import { connect } from 'react-redux'
-import Form from '../../common/Form'
+import Joi from 'joi-browser';
+import { connect } from 'react-redux';
+import Form from '../../common/Form';
 import {
   createSession,
   updateSession,
   clearSelectedSession,
-} from '../../store/apps/sessionsActions'
+} from '../../store/apps/sessionsActions';
 
 class SessionsForm extends Form {
   state = {
@@ -19,7 +19,7 @@ class SessionsForm extends Form {
     subjects: [],
     loops: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
@@ -28,22 +28,22 @@ class SessionsForm extends Form {
     name: Joi.string().max(100).allow('').label('Name'),
     numOfReps: Joi.number().integer().min(1).max(10),
     break: Joi.number().integer().min(0).max(60),
-  }
+  };
 
   componentDidMount() {
-    const { subjects, loops, selectedSession, selectedSubject } = this.props
-    this.setState({ subjects, loops })
+    const { subjects, loops, selectedSession, selectedSubject } = this.props;
+    this.setState({ subjects, loops });
 
-    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject)
+    if (selectedSubject) this.setStateOnSubjectSelect(selectedSubject);
 
     if (selectedSession) {
-      this.setState({ data: this.mapToViewModel(selectedSession) })
+      this.setState({ data: this.mapToViewModel(selectedSession) });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedSubject !== this.props.selectedSubject)
-      this.setStateOnSubjectSelect(this.props.selectedSubject)
+      this.setStateOnSubjectSelect(this.props.selectedSubject);
   }
 
   setStateOnSubjectSelect = selectedSubject => {
@@ -55,8 +55,8 @@ class SessionsForm extends Form {
         numOfReps: 1,
         break: 0,
       },
-    })
-  }
+    });
+  };
 
   mapToViewModel = session => {
     return {
@@ -66,31 +66,31 @@ class SessionsForm extends Form {
       loopId: session.loop._id,
       numOfReps: session.numOfReps,
       break: session.break,
-    }
-  }
+    };
+  };
 
   doSubmit = () => {
-    const data = { ...this.state.data }
-    data.creatorId = this.props.user._id
+    const data = { ...this.state.data };
+    data.creatorId = this.props.user._id;
 
     const {
       createSession,
       updateSession,
       selectedSession,
       clearSelectedSession,
-    } = this.props
+    } = this.props;
 
     if (selectedSession) {
-      data.play = selectedSession.play
-      data.starred = selectedSession.starred
-      data.isPublic = selectedSession.isPublic
-      updateSession(data)
-      clearSelectedSession()
+      data.play = selectedSession.play;
+      data.starred = selectedSession.starred;
+      data.isPublic = selectedSession.isPublic;
+      updateSession(data);
+      clearSelectedSession();
     } else {
-      createSession(data)
+      createSession(data);
     }
 
-    this.props.toggleShowForm()
+    this.props.toggleShowForm();
     this.setState({
       data: {
         name: '',
@@ -99,19 +99,12 @@ class SessionsForm extends Form {
         numOfReps: 1,
         break: 0,
       },
-    })
-  }
-
-  sessionsFormStyle = {
-    padding: 10,
-    margin: '12px 0',
-    border: '3px solid #343A40',
-    borderRadius: 5,
-  }
+    });
+  };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={this.sessionsFormStyle}>
+      <form onSubmit={this.handleSubmit} className='main-form'>
         {this.renderSelect(
           'subjectId',
           'Subject',
@@ -128,7 +121,7 @@ class SessionsForm extends Form {
           {this.renderButton('Save', 'btn btn-dark mb-2')}
         </div>
       </form>
-    )
+    );
   }
 }
 
@@ -137,12 +130,12 @@ const mapStateToProps = state => ({
   loops: state.apps.loops.list,
   selectedSubject: state.apps.subjects.selectedSubject,
   selectedSession: state.apps.sessions.selectedSession,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   createSession: session => dispatch(createSession(session)),
   updateSession: session => dispatch(updateSession(session)),
   clearSelectedSession: () => dispatch(clearSelectedSession()),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SessionsForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SessionsForm);

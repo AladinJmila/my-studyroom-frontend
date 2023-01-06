@@ -31,12 +31,11 @@ export const checkedStyle = {
 };
 
 export const appsFormStyle = {
-  backgroundImage: 'linear-gradient(#678387, #62a9b4)',
-  // position: 'absolute',
-  // width: '100%',
+  // backgroundImage: 'linear-gradient(#678387, #62a9b4)',
+  backgroundColor: 'var(--color1)',
   padding: 10,
   marginBottom: 12,
-  border: '3px solid #343A40',
+  border: '2px solid var(--white1)',
   borderRadius: 5,
   overflowY: 'auto',
 };

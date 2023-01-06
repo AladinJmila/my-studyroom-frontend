@@ -86,6 +86,12 @@ const Tasks = () => {
           onClick={handleShowForm}
           showForm={showForm}
         />
+
+        <SortCard
+          sortTarget={sortTarget}
+          onSort={onSort}
+          checkedName='Checked'
+        />
         {showForm && (
           <TasksForm
             user={user}
@@ -93,11 +99,6 @@ const Tasks = () => {
             toggleShowForm={handleShowForm}
           />
         )}
-        <SortCard
-          sortTarget={sortTarget}
-          onSort={onSort}
-          checkedName='Checked'
-        />
       </div>
 
       {loading ? (
