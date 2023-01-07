@@ -40,9 +40,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           setTimeout(() => {
             dispatch(createTask(task));
             dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
-          }, 300);
+            dispatch(loadTasks());
+          }, 600);
         });
-        dispatch(loadTasks());
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
       } else {
