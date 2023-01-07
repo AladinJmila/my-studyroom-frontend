@@ -7,15 +7,39 @@ import Check from './../common/Check';
 import Star from '../common/Star';
 import CardEllipsisMenu from './../common/CardEllipsisMenu';
 import { userIsEditor } from './../services/permissionsService';
+import { createTask, loadTasks } from '../store/apps/tasksActions';
+import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
+import { useDispatch } from 'react-redux';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
+  const dispatch = useDispatch();
 
-  // function htmlDecode(content) {
-  //   let e = document.createElement('div');
-  //   e.innerHTML = content;
-  //   return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
-  // }
+  const generateTasks = note => {
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = note.content;
+    const listTitles = tempContainer.getElementsByTagName('strong');
+
+    console.log(listTitles);
+    [...listTitles].forEach(title => {
+      const nextElement = title.parentNode.nextElementSibling;
+      if (nextElement.matches('ul')) {
+        [...nextElement.children].forEach(li => {
+          const task = {
+            content: `${title.parentNode.innerHTML} ${li.innerHTML}`,
+            creatorId: note.creatorId,
+            resourceId: '',
+            subjectId: note.subject._id,
+            url: '',
+          };
+
+          dispatch(createTask(task));
+          dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+        });
+        dispatch(loadTasks());
+      }
+    });
+  };
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -37,7 +61,8 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             )}
           </div>
         </div>
-        <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>
+        <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
+        <button onClick={() => generateTasks(note)}>extract tasks</button>
         <>
           <div className='float-start me-2'>
             {showPrivateInfo && (
@@ -51,7 +76,6 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             <div
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
-              // dangerouslySetInnerHTML={{ __html: htmlDecode(note.content) }}
             >
               <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
               {note.url && (

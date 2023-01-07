@@ -112,6 +112,7 @@ class TasksForm extends Form {
       // updateSubjectOnEdit(selectedTask, data, 'Tasks');
       clearSelectedTask();
     } else {
+      console.log(data);
       createTask(data);
       updateSubjectItemsCount(data, 'Tasks', 'create');
     }

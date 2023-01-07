@@ -309,3 +309,7 @@ select option {
   border-radius: 0 !important;
   padding: 6px 12px !important;
 }
+
+.card ul {
+  margin-top: -14px;
+}
