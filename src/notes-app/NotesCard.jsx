@@ -10,20 +10,24 @@ import { userIsEditor } from './../services/permissionsService';
 import { createTask, loadTasks } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
+  const [btnColor, setBtnColor] = useState('neutral');
   const dispatch = useDispatch();
+
+  useEffect(() => {}, [btnColor]);
 
   const generateTasks = note => {
     const tempContainer = document.createElement('div');
     tempContainer.innerHTML = note.content;
     const listTitles = tempContainer.getElementsByTagName('strong');
 
-    console.log(listTitles);
     [...listTitles].forEach(title => {
       const nextElement = title.parentNode.nextElementSibling;
-      if (nextElement.matches('ul')) {
+      if (nextElement && nextElement.matches('ul')) {
         [...nextElement.children].forEach(li => {
           const task = {
             content: `${title.parentNode.innerHTML} ${li.innerHTML}`,
@@ -33,12 +37,23 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             url: '',
           };
 
-          dispatch(createTask(task));
-          dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+          setTimeout(() => {
+            dispatch(createTask(task));
+            dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+          }, 300);
         });
         dispatch(loadTasks());
+        setBtnColor('success');
+        setTimeout(() => setBtnColor('neutral'), 3000);
+      } else {
+        setBtnColor('fail');
+        setTimeout(() => setBtnColor('neutral'), 3000);
       }
     });
+    if (!listTitles.length) {
+      setBtnColor('fail');
+      setTimeout(() => setBtnColor('neutral'), 3000);
+    }
   };
 
   return (
@@ -61,8 +76,15 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             )}
           </div>
         </div>
-        <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
-        <button onClick={() => generateTasks(note)}>extract tasks</button>
+        <div className='subject-name'>
+          <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
+          <button
+            className={`extract-tasks-btn ${btnColor}`}
+            onClick={() => generateTasks(note)}
+          >
+            Extract tasks
+          </button>
+        </div>
         <>
           <div className='float-start me-2'>
             {showPrivateInfo && (
