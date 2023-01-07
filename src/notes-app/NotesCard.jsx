@@ -53,7 +53,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
               // dangerouslySetInnerHTML={{ __html: htmlDecode(note.content) }}
             >
-              {note.content}
+              <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
               {note.url && (
                 <a
                   href={note.url}
@@ -73,9 +73,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             <div
               className='mb-2'
               style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
-              // dangerouslySetInnerHTML={{ __html: htmlDecode(note.content) }}
             >
-              {note.content}
+              <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+
               {note.url && (
                 <a
                   href={note.url}
