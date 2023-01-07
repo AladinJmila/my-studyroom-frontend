@@ -1,11 +1,11 @@
-import Check from '../../common/Check'
-import Star from '../../common/Star'
-import CardEllipsisMenu from './../../common/CardEllipsisMenu'
-import { cardsBody, mainContentStyle } from './../../services/stylesService'
-import { userIsEditor } from './../../services/permissionsService'
+import Check from '../../common/Check';
+import Star from '../../common/Star';
+import CardEllipsisMenu from './../../common/CardEllipsisMenu';
+import { cardsBody, mainContentStyle } from './../../services/stylesService';
+import { userIsEditor } from './../../services/permissionsService';
 
 const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
-  const showPrivateInfo = user && userIsEditor(task, user._id)
+  const showPrivateInfo = user && userIsEditor(task, user._id);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -42,9 +42,9 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
             )}
           </div>{' '}
           {task.isChecked && showPrivateInfo ? (
-            <p className='mb-2' style={mainContentStyle}>
+            <div className='mb-2' style={mainContentStyle}>
               <s>
-                {task.content}{' '}
+                <div dangerouslySetInnerHTML={{ __html: task.content }}></div>
                 {task.url && (
                   <a
                     href={task.url}
@@ -56,10 +56,10 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
                   </a>
                 )}
               </s>
-            </p>
+            </div>
           ) : (
-            <p className='mb-2' style={mainContentStyle}>
-              {task.content}
+            <div className='mb-2' style={mainContentStyle}>
+              <div dangerouslySetInnerHTML={{ __html: task.content }}></div>
               {task.url && (
                 <a
                   href={task.url}
@@ -70,12 +70,12 @@ const TasksCard = ({ user, task, onToggleProp, onEdit, onDelete }) => {
                   <i className='fa fa-external-link' aria-hidden='true'></i>
                 </a>
               )}
-            </p>
+            </div>
           )}
         </>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TasksCard
+export default TasksCard;

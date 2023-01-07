@@ -1,5 +1,7 @@
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Form from '../common/Form';
 import { appsFormStyle } from '../services/stylesService';
 import {
@@ -16,13 +18,11 @@ class NotesForm extends Form {
   state = {
     data: {
       subjectId: '',
-      resourceId: '',
       title: '',
       content: '',
       url: '',
     },
     subjects: [],
-    resources: [],
     errors: {},
   };
 
@@ -30,9 +30,8 @@ class NotesForm extends Form {
     _id: Joi.string(),
     title: Joi.string().required().max(500).label('Title'),
     subjectId: Joi.string().required().label('Subject'),
-    resourceId: Joi.string().allow(''),
-    content: Joi.string().required().max(2000).label('Content'),
-    url: Joi.string().max(500).allow('').label('URL'),
+    content: Joi.string().required().max(10000).label('Content'),
+    url: Joi.string().max(1000).allow('').label('URL'),
   };
 
   setFormHeight() {
@@ -70,7 +69,6 @@ class NotesForm extends Form {
       resources: filteredResources,
       data: {
         subjectId: selectedSubject._id,
-        resourceId: '',
         title: '',
         content: '',
         url: '',
@@ -79,20 +77,9 @@ class NotesForm extends Form {
   };
 
   mapToViewModel = note => {
-    if (note.resource)
-      return {
-        _id: note._id,
-        subjectId: note.subject._id,
-        resourceId: note.resource._id,
-        title: note.title,
-        content: note.content,
-        url: note.url || '',
-      };
-
     return {
       _id: note._id,
       subjectId: note.subject._id,
-      resourceId: '',
       title: note.title,
       content: note.content,
       url: note.url || '',
@@ -116,7 +103,6 @@ class NotesForm extends Form {
       data.isChecked = selectedNote.isChecked;
       data.starred = selectedNote.starred;
       data.isPublic = selectedNote.isPublic;
-      // if (!data.resourceId)
       updateNote(data);
       updateSubjectOnEdit(selectedNote, data, 'Notes');
       clearSelectedNote();
@@ -147,8 +133,14 @@ class NotesForm extends Form {
           'required'
         )}
         {this.renderInput('title', 'Title', 'text', 'required')}
-        {this.renderTextArea('content', 'Content', 5, 'required')}
-        {this.renderSelect('resourceId', 'Resource', this.state.resources)}
+        <CKEditor
+          editor={ClassicEditor}
+          data={this.state.data.content}
+          onChange={(event, editor) => {
+            const input = editor.getData();
+            this.setState({ data: { ...this.state.data, content: input } });
+          }}
+        />
         {this.renderInput('url', 'URL')}
         <div className='d-grid gap-2'>
           {this.renderButton('Save', 'btn btn-dark mb-2')}

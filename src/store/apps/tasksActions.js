@@ -1,110 +1,112 @@
-import moment from 'moment'
-import httpService from '../services/httpService'
-import { getCurrentUser } from '../services/authService'
-import * as actions from './tasks'
-import config from '../../config.json'
+import moment from 'moment';
+import httpService from '../services/httpService';
+import { getCurrentUser } from '../services/authService';
+import * as actions from './tasks';
+import config from '../../config.json';
 
-const apiEndPoint = '/tasks'
-let userid
-const user = getCurrentUser()
-const loadingInterval = Number(config.loadingInterval)
+const apiEndPoint = '/tasks';
+let userid;
+const user = getCurrentUser();
+const loadingInterval = Number(config.loadingInterval);
 
-if (user) userid = user._id
+if (user) userid = user._id;
 
 export const loadTasks = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().apps.tasks
+  const { lastFetch } = getState().apps.tasks;
 
-  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
-  if (diffInMinutes < loadingInterval) return
+  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
+  if (diffInMinutes < loadingInterval) return;
 
   try {
-    dispatch(actions.REQUEST_TASKS())
+    dispatch(actions.REQUEST_TASKS());
 
-    const { data } = await httpService.get(apiEndPoint, { headers: { userid } })
+    const { data } = await httpService.get(apiEndPoint, {
+      headers: { userid },
+    });
 
-    dispatch(actions.GET_TASKS(data))
+    dispatch(actions.GET_TASKS(data));
   } catch (error) {
-    console.log(error)
-    dispatch(actions.REQUEST_TASKS_FAIL())
+    console.log(error);
+    dispatch(actions.REQUEST_TASKS_FAIL());
   }
-}
+};
 
 export const loadOneSubjectPublicTasks = subjectId => async dispatch => {
   try {
-    dispatch(actions.REQUEST_TASKS())
+    dispatch(actions.REQUEST_TASKS());
 
-    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`)
+    const { data } = await httpService.get(`${apiEndPoint}/${subjectId}`);
 
-    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_TASKS({ subjectId, data }))
+    dispatch(actions.GET_ONE_SUBJECT_PUBLIC_TASKS({ subjectId, data }));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const createTask = task => async dispatch => {
   try {
-    const { data } = await httpService.post(apiEndPoint, task)
+    const { data } = await httpService.post(apiEndPoint, task);
 
-    dispatch(actions.CREATE_TASK(data))
+    dispatch(actions.CREATE_TASK(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const cloneTasks = (oldSubjectId, newSubjectId) => async dispatch => {
   try {
     const { data } = await httpService.post(`${apiEndPoint}/clone`, {
       oldSubjectId,
       newSubjectId,
-    })
+    });
 
-    dispatch(actions.CLONE_TASK(data))
+    dispatch(actions.CLONE_TASK(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const setSelectedTask = task => dispatch => {
-  dispatch(actions.SELECT_TASK(task))
-}
+  dispatch(actions.SELECT_TASK(task));
+};
 
 export const updateTask = task => async dispatch => {
-  const body = { ...task }
-  delete body._id
+  const body = { ...task };
+  delete body._id;
 
   try {
-    const { data } = await httpService.put(`${apiEndPoint}/${task._id}`, body)
+    const { data } = await httpService.put(`${apiEndPoint}/${task._id}`, body);
 
-    dispatch(actions.UPDATE_TASK(data))
+    dispatch(actions.UPDATE_TASK(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const clearSelectedTask = () => dispatch => {
-  dispatch(actions.CLEAR_SELECTED_TASK())
-}
+  dispatch(actions.CLEAR_SELECTED_TASK());
+};
 
 export const patchTask = (id, update) => async dispatch => {
   try {
-    const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update)
+    const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update);
 
-    dispatch(actions.UPDATE_TASK(data))
+    dispatch(actions.UPDATE_TASK(data));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const toggleTaskProp = (id, property) => async dispatch => {
-  dispatch(actions.TOGGLE_TASK_PROP({ id, property }))
-}
+  dispatch(actions.TOGGLE_TASK_PROP({ id, property }));
+};
 
 export const deleteTask = id => async dispatch => {
   try {
-    await httpService.delete(`${apiEndPoint}/${id}`)
+    await httpService.delete(`${apiEndPoint}/${id}`);
 
-    dispatch(actions.DELETE_TASK(id))
+    dispatch(actions.DELETE_TASK(id));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

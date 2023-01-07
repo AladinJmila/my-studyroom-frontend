@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import {
   cardsBody,
   checkedStyle,
@@ -8,9 +7,54 @@ import Check from './../common/Check';
 import Star from '../common/Star';
 import CardEllipsisMenu from './../common/CardEllipsisMenu';
 import { userIsEditor } from './../services/permissionsService';
+import { createTask, loadTasks } from '../store/apps/tasksActions';
+import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
+  const [btnColor, setBtnColor] = useState('neutral');
+  const dispatch = useDispatch();
+
+  useEffect(() => {}, [btnColor]);
+
+  const generateTasks = note => {
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = note.content;
+    const listTitles = tempContainer.getElementsByTagName('strong');
+
+    [...listTitles].forEach(title => {
+      const nextElement = title.parentNode.nextElementSibling;
+      if (nextElement && nextElement.matches('ul')) {
+        [...nextElement.children].forEach(li => {
+          const task = {
+            content: `${title.parentNode.innerHTML} ${li.innerHTML}`,
+            creatorId: note.creatorId,
+            resourceId: '',
+            subjectId: note.subject._id,
+            url: '',
+          };
+
+          setTimeout(() => {
+            dispatch(createTask(task));
+            dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+          }, 300);
+        });
+        dispatch(loadTasks());
+        setBtnColor('success');
+        setTimeout(() => setBtnColor('neutral'), 3000);
+      } else {
+        setBtnColor('fail');
+        setTimeout(() => setBtnColor('neutral'), 3000);
+      }
+    });
+    if (!listTitles.length) {
+      setBtnColor('fail');
+      setTimeout(() => setBtnColor('neutral'), 3000);
+    }
+  };
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -32,12 +76,15 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             )}
           </div>
         </div>
-        <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>
-        {note.resource && (
-          <p className='card-subtitle mb-2 text-muted'>
-            {note.resource.content}
-          </p>
-        )}
+        <div className='subject-name'>
+          <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
+          <button
+            className={`extract-tasks-btn ${btnColor}`}
+            onClick={() => generateTasks(note)}
+          >
+            Extract tasks
+          </button>
+        </div>
         <>
           <div className='float-start me-2'>
             {showPrivateInfo && (
@@ -48,11 +95,11 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             )}
           </div>{' '}
           {note.isChecked && showPrivateInfo ? (
-            <p
+            <div
               className='mb-2'
               style={{ ...checkedStyle, whiteSpace: 'pre-wrap' }}
             >
-              {note.content}
+              <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
               {note.url && (
                 <a
                   href={note.url}
@@ -67,13 +114,14 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   ></i>
                 </a>
               )}
-            </p>
+            </div>
           ) : (
-            <p
+            <div
               className='mb-2'
               style={{ ...mainContentStyle, whiteSpace: 'pre-wrap' }}
             >
-              {note.content}
+              <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+
               {note.url && (
                 <a
                   href={note.url}
@@ -84,7 +132,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
                   <i className='fa fa-external-link' aria-hidden='true'></i>
                 </a>
               )}
-            </p>
+            </div>
           )}
         </>
       </div>

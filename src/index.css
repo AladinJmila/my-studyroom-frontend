@@ -6,9 +6,10 @@
   --color3: #dddddd;
 
   --white1: #fdfdfd;
-  --theme-color1: #2870dc;
-  --theme-color2: #f24570;
-  --theme-color2t: #f24570b5;
+  --theme-primary: #2870dc;
+  --theme-success: #6ead27;
+  --theme-danger: #f24570;
+  --theme-dangert: #f24570b5;
   /* --dark1: #868576; */
   /* --dark1: #3d381d; */
   --dark1: #34311f;
@@ -214,13 +215,13 @@ nav.bg-dark {
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: var(--theme-color1) !important;
+  stroke: var(--theme-primary) !important;
 }
 .card.text-white.bg-dark .CircularProgressbar .CircularProgressbar-text {
   fill: white !important;
 }
 .CircularProgressbar .CircularProgressbar-text {
-  fill: var(--theme-color1) !important;
+  fill: var(--theme-primary) !important;
 }
 
 .navbar-brand {
@@ -289,9 +290,9 @@ input[type='text']:focus,
 select,
 textarea {
   margin-top: 4px !important;
-  background-color: var(--color0) !important;
+  background-color: white !important;
   border: none !important;
-  border-bottom: 2px solid var(--white1) !important;
+  border-bottom: 2px solid var(--dark2) !important;
   border-radius: 0 !important;
   outline: none !important;
 }
@@ -303,9 +304,42 @@ select option {
 .alert-danger {
   margin-top: 6px;
   margin-bottom: 6px !important;
-  background-color: var(--theme-color2t) !important;
-  border-color: var(--theme-color2t) !important;
+  background-color: var(--theme-dangert) !important;
+  border-color: var(--theme-dangert) !important;
   color: white !important;
   border-radius: 0 !important;
   padding: 6px 12px !important;
+}
+
+.card ul {
+  margin-top: -14px;
+}
+
+.card .subject-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.extract-tasks-btn {
+  border: none;
+  margin: -4px 0 8px;
+  /* color: #6c757d !important; */
+  font-weight: 500;
+  padding: 0;
+}
+
+button.success {
+  color: var(--theme-success) !important;
+  transition: all ease-in-out 0.5s;
+}
+
+button.fail {
+  color: var(--theme-danger) !important;
+  transition: all ease-in-out 0.5s;
+}
+
+button.neutral {
+  color: #6c757d !important;
+  transition: all ease-in-out 0.5s;
 }
