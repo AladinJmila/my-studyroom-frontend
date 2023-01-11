@@ -28,20 +28,24 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
     [...listTitles].forEach(title => {
       const nextElement = title.parentNode.nextElementSibling;
       if (nextElement && nextElement.matches('ul')) {
-        [...nextElement.children].forEach(li => {
+        let reps = 0;
+
+        const createTasks = setInterval(() => {
           const task = {
-            content: `${title.parentNode.innerHTML} ${li.innerHTML}`,
+            content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
             creatorId: note.creatorId,
             resourceId: '',
             subjectId: note.subject._id,
             url: '',
           };
 
-          setTimeout(() => {
-            dispatch(createTask(task));
-            dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
-          }, 1000);
-        });
+          dispatch(createTask(task));
+          dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+
+          if (reps === nextElement.children.length - 1)
+            clearInterval(createTasks);
+          reps++;
+        }, 500);
 
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
