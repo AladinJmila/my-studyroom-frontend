@@ -17,6 +17,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const [btnColor, setBtnColor] = useState('neutral');
   const [selectedNote, setSelectedNote] = useState(null);
   const dispatch = useDispatch();
+  let createTasks;
 
   useEffect(() => {}, [btnColor]);
 
@@ -30,7 +31,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       if (nextElement && nextElement.matches('ul')) {
         let reps = 0;
 
-        const createTasks = setInterval(() => {
+        createTasks = setInterval(() => {
           const task = {
             content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
             creatorId: note.creatorId,
@@ -65,6 +66,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
 
   useEffect(() => {
     if (selectedNote) {
+      clearInterval(createTasks);
       generateTasks(selectedNote);
     }
   }, [selectedNote]);
