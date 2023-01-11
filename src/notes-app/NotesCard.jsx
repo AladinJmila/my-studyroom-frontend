@@ -16,57 +16,58 @@ import { useEffect } from 'react';
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
-  const [createdTasks, setCreatedTasks] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {}, [btnColor]);
 
-  const generateTasks = note => {
-    const tempContainer = document.createElement('div');
-    tempContainer.innerHTML = note.content;
-    const listTitles = tempContainer.getElementsByTagName('strong');
-
-    [...listTitles].forEach(title => {
-      const nextElement = title.parentNode.nextElementSibling;
-      if (nextElement && nextElement.matches('ul')) {
-        let reps = 0;
-
-        const createTasks = setInterval(() => {
-          const task = {
-            content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
-            creatorId: note.creatorId,
-            resourceId: '',
-            subjectId: note.subject._id,
-            url: '',
-          };
-
-          dispatch(createTask(task));
-          dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
-
-          console.log('task created');
-          console.log(new Date().getSeconds());
-
-          if (reps === nextElement.children.length - 1)
-            clearInterval(createTasks);
-          reps++;
-        }, 2000);
-
-        setBtnColor('success');
-        setTimeout(() => setBtnColor('neutral'), 3000);
-      } else {
-        setBtnColor('fail');
-        setTimeout(() => setBtnColor('neutral'), 3000);
-      }
-    });
-    if (!listTitles.length) {
-      setBtnColor('fail');
-      setTimeout(() => setBtnColor('neutral'), 3000);
-    }
-  };
-
   useEffect(() => {
-    selectedNote && generateTasks(selectedNote);
+    if (selectedNote) {
+      const generateTasks = note => {
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = note.content;
+        const listTitles = tempContainer.getElementsByTagName('strong');
+
+        [...listTitles].forEach(title => {
+          const nextElement = title.parentNode.nextElementSibling;
+          if (nextElement && nextElement.matches('ul')) {
+            let reps = 0;
+
+            const createTasks = setInterval(() => {
+              const task = {
+                content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
+                creatorId: note.creatorId,
+                resourceId: '',
+                subjectId: note.subject._id,
+                url: '',
+              };
+
+              dispatch(createTask(task));
+              dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+
+              console.log('task created');
+              console.log(new Date().getSeconds());
+
+              if (reps === nextElement.children.length - 1)
+                clearInterval(createTasks);
+              reps++;
+            }, 2000);
+
+            setBtnColor('success');
+            setTimeout(() => setBtnColor('neutral'), 3000);
+          } else {
+            setBtnColor('fail');
+            setTimeout(() => setBtnColor('neutral'), 3000);
+          }
+        });
+        if (!listTitles.length) {
+          setBtnColor('fail');
+          setTimeout(() => setBtnColor('neutral'), 3000);
+        }
+      };
+
+      generateTasks(selectedNote);
+    }
   }, [selectedNote]);
 
   return (
