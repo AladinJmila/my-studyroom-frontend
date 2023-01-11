@@ -16,6 +16,8 @@ import { useEffect } from 'react';
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
+  const [createdTasks, setCreatedTasks] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {}, [btnColor]);
@@ -42,13 +44,13 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           dispatch(createTask(task));
           dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
 
-          console.log(task);
+          console.log('task created');
           console.log(new Date().getSeconds());
 
           if (reps === nextElement.children.length - 1)
             clearInterval(createTasks);
           reps++;
-        }, 5000);
+        }, 2000);
 
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
@@ -62,6 +64,10 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       setTimeout(() => setBtnColor('neutral'), 3000);
     }
   };
+
+  useEffect(() => {
+    selectedNote && generateTasks(selectedNote);
+  }, [selectedNote]);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -87,7 +93,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
           <button
             className={`extract-tasks-btn ${btnColor}`}
-            onClick={() => generateTasks(note)}
+            onClick={() => {
+              setSelectedNote(note);
+            }}
           >
             Extract tasks
           </button>
