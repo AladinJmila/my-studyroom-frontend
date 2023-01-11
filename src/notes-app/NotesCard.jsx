@@ -42,10 +42,12 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           dispatch(createTask(task));
           dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
 
+          console.log(task);
+
           if (reps === nextElement.children.length - 1)
             clearInterval(createTasks);
           reps++;
-        }, 1000);
+        }, 3000);
 
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
