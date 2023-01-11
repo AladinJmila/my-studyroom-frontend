@@ -45,7 +45,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           if (reps === nextElement.children.length - 1)
             clearInterval(createTasks);
           reps++;
-        }, 500);
+        }, 1000);
 
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
