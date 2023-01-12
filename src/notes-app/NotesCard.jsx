@@ -1,4 +1,3 @@
-import * as workerTimers from 'worker-timers';
 import { useDispatch } from 'react-redux';
 import { useState, useCallback, useEffect } from 'react';
 import {
@@ -18,10 +17,8 @@ let intervalIsSet;
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
-  const [selectedNote, setSelectedNote] = useState(null);
   const [interv, setInterv] = useState(null);
   const dispatch = useDispatch();
-  let createTasks;
 
   useEffect(() => {
     intervalIsSet = interv;
@@ -39,9 +36,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       if (nextElement && nextElement.matches('ul')) {
         let reps = 0;
 
-        if (title) {
+        if (!intervalIsSet) {
           setInterv(
-            workerTimers.setInterval(() => {
+            setInterval(() => {
               const task = {
                 content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
                 creatorId: note.creatorId,
@@ -56,8 +53,8 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
               console.log('task created');
               console.log(new Date().getSeconds());
 
-              if (reps === nextElement.children.length - 2)
-                if (intervalIsSet) workerTimers.clearInterval(intervalIsSet);
+              if (reps === nextElement.children.length - 1)
+                if (intervalIsSet) clearInterval(intervalIsSet);
               reps++;
             }, 1000)
           );
@@ -75,15 +72,6 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       setTimeout(() => setBtnColor('neutral'), 3000);
     }
   }, []);
-
-  useEffect(() => {
-    if (selectedNote) {
-      generateTasks(selectedNote);
-    }
-    // return () => {
-    //   createTasks && workerTimers.clearInterval(createTasks);
-    // };
-  }, [selectedNote]);
 
   return (
     <div style={cardsBody} className='card mb-1'>
@@ -109,9 +97,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           <h6 className='card-subtitle mb-2 text-muted'>{note.subject.name}</h6>{' '}
           <button
             className={`extract-tasks-btn ${btnColor}`}
-            onClick={() => {
-              setSelectedNote(note);
-            }}
+            onClick={() => generateTasks(note)}
           >
             Extract tasks
           </button>
