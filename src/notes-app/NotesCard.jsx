@@ -13,12 +13,19 @@ import { userIsEditor } from './../services/permissionsService';
 import { createTask } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
 
+let intervalIsSet;
+
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
   const [selectedNote, setSelectedNote] = useState(null);
+  const [interv, setInterv] = useState(null);
   const dispatch = useDispatch();
   let createTasks;
+
+  useEffect(() => {
+    intervalIsSet = interv;
+  }, [interv]);
 
   useEffect(() => {}, [btnColor]);
 
@@ -32,25 +39,29 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       if (nextElement && nextElement.matches('ul')) {
         let reps = 0;
 
-        createTasks = workerTimers.setInterval(() => {
-          const task = {
-            content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
-            creatorId: note.creatorId,
-            resourceId: '',
-            subjectId: note.subject._id,
-            url: '',
-          };
+        if (title) {
+          setInterv(
+            workerTimers.setInterval(() => {
+              const task = {
+                content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
+                creatorId: note.creatorId,
+                resourceId: '',
+                subjectId: note.subject._id,
+                url: '',
+              };
 
-          dispatch(createTask(task));
-          dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+              dispatch(createTask(task));
+              dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
 
-          console.log('task created');
-          console.log(new Date().getSeconds());
+              console.log('task created');
+              console.log(new Date().getSeconds());
 
-          if (reps === nextElement.children.length - 1)
-            workerTimers.clearInterval(createTasks);
-          reps++;
-        }, 2000);
+              if (reps === nextElement.children.length - 2)
+                if (intervalIsSet) workerTimers.clearInterval(intervalIsSet);
+              reps++;
+            }, 1000)
+          );
+        }
 
         setBtnColor('success');
         setTimeout(() => setBtnColor('neutral'), 3000);
@@ -69,9 +80,9 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
     if (selectedNote) {
       generateTasks(selectedNote);
     }
-    return () => {
-      createTasks && workerTimers.clearInterval(createTasks);
-    };
+    // return () => {
+    //   createTasks && workerTimers.clearInterval(createTasks);
+    // };
   }, [selectedNote]);
 
   return (
