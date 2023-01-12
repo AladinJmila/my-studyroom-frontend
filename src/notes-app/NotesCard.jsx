@@ -12,9 +12,6 @@ import { userIsEditor } from './../services/permissionsService';
 import { createTask } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
 
-let createTaskInterval = null;
-let reps = 0;
-
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
@@ -26,46 +23,45 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
     const tempContainer = document.createElement('div');
     tempContainer.innerHTML = note.content;
     const listTitles = tempContainer.getElementsByTagName('strong');
+    let reps = 0;
+    let tasks = [];
 
     [...listTitles].forEach(title => {
       const nextElement = title.parentNode.nextElementSibling;
       if (nextElement && nextElement.matches('ul')) {
-        console.log(createTaskInterval);
+        [...nextElement.children].forEach(el => {
+          const task = {
+            content: `${title.parentNode.innerHTML} ${el.innerHTML}`,
+            creatorId: note.creatorId,
+            resourceId: '',
+            subjectId: note.subject._id,
+            url: '',
+          };
 
-        if (!createTaskInterval) {
-          createTaskInterval = setInterval(() => {
-            const task = {
-              content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
-              creatorId: note.creatorId,
-              resourceId: '',
-              subjectId: note.subject._id,
-              url: '',
-            };
-
-            dispatch(createTask(task));
-            dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
-
-            console.log('task created');
-            console.log(new Date().getSeconds());
-            console.log('Interval ', createTaskInterval);
-            console.log('reps ', reps);
-
-            if (reps === nextElement.children.length - 1) {
-              clearInterval(createTaskInterval);
-              createTaskInterval = null;
-            }
-
-            reps++;
-          }, 1000);
-        }
-
-        setBtnColor('success');
-        setTimeout(() => setBtnColor('neutral'), 3000);
+          tasks.push(task);
+        });
       } else {
         setBtnColor('fail');
         setTimeout(() => setBtnColor('neutral'), 3000);
       }
     });
+
+    if (tasks.length) {
+      const createTaskInterval = setInterval(() => {
+        dispatch(createTask(tasks[reps]));
+        dispatch(updateSubjectItemsCount(tasks[reps], 'Tasks', 'create'));
+
+        if (reps === tasks.length - 1) {
+          clearInterval(createTaskInterval);
+        }
+
+        reps++;
+      }, 1000);
+
+      setBtnColor('success');
+      setTimeout(() => setBtnColor('neutral'), 3000);
+    }
+
     if (!listTitles.length) {
       setBtnColor('fail');
       setTimeout(() => setBtnColor('neutral'), 3000);
