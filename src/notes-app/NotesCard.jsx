@@ -13,6 +13,7 @@ import { createTask } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
 
 let createTaskInterval = null;
+let reps = 0;
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
@@ -29,8 +30,6 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
     [...listTitles].forEach(title => {
       const nextElement = title.parentNode.nextElementSibling;
       if (nextElement && nextElement.matches('ul')) {
-        let reps = 0;
-
         console.log(createTaskInterval);
 
         if (!createTaskInterval) {
@@ -49,6 +48,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
             console.log('task created');
             console.log(new Date().getSeconds());
             console.log('Interval ', createTaskInterval);
+            console.log('reps ', reps);
 
             if (reps === nextElement.children.length - 1) {
               clearInterval(createTaskInterval);
