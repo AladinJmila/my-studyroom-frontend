@@ -12,17 +12,12 @@ import { userIsEditor } from './../services/permissionsService';
 import { createTask } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
 
-let intervalIsSet;
+let createTaskInterval = null;
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
   const [btnColor, setBtnColor] = useState('neutral');
-  const [interv, setInterv] = useState(null);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    intervalIsSet = interv;
-  }, [interv]);
 
   useEffect(() => {}, [btnColor]);
 
@@ -36,28 +31,32 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       if (nextElement && nextElement.matches('ul')) {
         let reps = 0;
 
-        if (!intervalIsSet) {
-          setInterv(
-            setInterval(() => {
-              const task = {
-                content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
-                creatorId: note.creatorId,
-                resourceId: '',
-                subjectId: note.subject._id,
-                url: '',
-              };
+        console.log(createTaskInterval);
 
-              dispatch(createTask(task));
-              dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
+        if (!createTaskInterval) {
+          createTaskInterval = setInterval(() => {
+            const task = {
+              content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
+              creatorId: note.creatorId,
+              resourceId: '',
+              subjectId: note.subject._id,
+              url: '',
+            };
 
-              console.log('task created');
-              console.log(new Date().getSeconds());
+            dispatch(createTask(task));
+            dispatch(updateSubjectItemsCount(task, 'Tasks', 'create'));
 
-              if (reps === nextElement.children.length - 1)
-                if (intervalIsSet) clearInterval(intervalIsSet);
-              reps++;
-            }, 1000)
-          );
+            console.log('task created');
+            console.log(new Date().getSeconds());
+            console.log('Interval ', createTaskInterval);
+
+            if (reps === nextElement.children.length - 1) {
+              clearInterval(createTaskInterval);
+              createTaskInterval = null;
+            }
+
+            reps++;
+          }, 1000);
         }
 
         setBtnColor('success');
