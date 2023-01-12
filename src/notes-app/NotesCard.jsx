@@ -1,3 +1,6 @@
+import * as workerTimers from 'worker-timers';
+import { useDispatch } from 'react-redux';
+import { useState, useCallback, useEffect } from 'react';
 import {
   cardsBody,
   checkedStyle,
@@ -9,8 +12,6 @@ import CardEllipsisMenu from './../common/CardEllipsisMenu';
 import { userIsEditor } from './../services/permissionsService';
 import { createTask } from '../store/apps/tasksActions';
 import { updateSubjectItemsCount } from '../store/apps/subjectsActions';
-import { useDispatch } from 'react-redux';
-import { useState, useCallback, useEffect } from 'react';
 
 const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
   const showPrivateInfo = user && userIsEditor(note, user._id);
@@ -31,7 +32,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
       if (nextElement && nextElement.matches('ul')) {
         let reps = 0;
 
-        createTasks = setInterval(() => {
+        createTasks = workerTimers.setInterval(() => {
           const task = {
             content: `${title.parentNode.innerHTML} ${nextElement.children[reps].innerHTML}`,
             creatorId: note.creatorId,
@@ -47,7 +48,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
           console.log(new Date().getSeconds());
 
           if (reps === nextElement.children.length - 1)
-            clearInterval(createTasks);
+            workerTimers.clearInterval(createTasks);
           reps++;
         }, 2000);
 
@@ -66,9 +67,11 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
 
   useEffect(() => {
     if (selectedNote) {
-      clearInterval(createTasks);
       generateTasks(selectedNote);
     }
+    return () => {
+      createTasks && workerTimers.clearInterval(createTasks);
+    };
   }, [selectedNote]);
 
   return (
