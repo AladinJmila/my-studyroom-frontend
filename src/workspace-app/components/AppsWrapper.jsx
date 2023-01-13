@@ -6,7 +6,7 @@ import Tasks from '../../tasks-app/components/Tasks';
 import Resources from '../../resources-app/Resources';
 import Practicals from '../../practicals-app/Practicals';
 import DataColumn from './DataColumn';
-import AudioNotes from '../../audio-notes-app/components/AudioNotes';
+import AudioNotes from '../../audio-notes-app/AudioNotes';
 import VisualNotes from '../../visual-notes-app/components/VisualNotes';
 import SchedulesWrapper from '../../schedules-app/components/SchedulesWrapper';
 import AnimateReorderX from '../../Effects/AnimateReorderX';

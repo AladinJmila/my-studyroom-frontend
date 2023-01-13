@@ -90,13 +90,8 @@ const Notes = () => {
           showForm={showForm}
         />
         <SortCard sortTarget={sortTarget} onSort={onSort} checkedName='Noted' />
-        {showForm && (
-          <NotesForm
-            user={user}
-            notes={notes}
-            toggleShowForm={handleShowForm}
-          />
-        )}
+        {showForm && <NotesForm user={user} toggleShowForm={handleShowForm} />}
+        {/* deleted from from in case an error coccurs later notes={notes} */}
       </div>
 
       {loading ? (

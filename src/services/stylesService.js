@@ -37,5 +37,5 @@ export const appsFormStyle = {
   marginBottom: 12,
   border: '2px solid var(--white1)',
   borderRadius: 5,
-  overflowY: 'auto',
+  overflowX: 'hidden',
 };
