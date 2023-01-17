@@ -7,6 +7,7 @@ import { loadSubjects } from '../store/apps/subjectsActions';
 import { appsFormStyle } from '../services/stylesService';
 import Input from '../common/Input';
 import './AudioNotes.css';
+import { useRef } from 'react';
 
 function AudioNotesForm() {
   const [data, setData] = useState({
@@ -17,7 +18,12 @@ function AudioNotesForm() {
   });
   const [errors, setErrors] = useState({});
   const [showGroupInput, setShowGroupInput] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioURL, setAudioURL] = useState('');
   const dispatch = useDispatch();
+
+  const audioEl = useRef();
 
   const subjects = useSelector(state => state.apps.subjects.list);
   const groups = [];
@@ -28,7 +34,39 @@ function AudioNotesForm() {
 
   useEffect(() => {
     dispatch(loadSubjects());
-  });
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (mediaStreamObj) {
+        setMediaRecorder(new MediaRecorder(mediaStreamObj));
+      });
+  }, []);
+
+  const record = e => {
+    setIsRecording(!isRecording);
+
+    let chunks = [];
+
+    if (!isRecording) {
+      mediaRecorder.start();
+      console.log(mediaRecorder.state);
+    } else {
+      mediaRecorder.stop();
+      console.log(mediaRecorder.state);
+    }
+
+    mediaRecorder.ondataavailable = e => {
+      chunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = e => {
+      const blob = new Blob(chunks, { type: 'audio/wav' });
+      console.log(blob);
+
+      chunks = [];
+      setAudioURL(window.URL.createObjectURL(blob));
+    };
+  };
 
   return (
     <form onSubmit={null} style={{ marginTop: 12, ...appsFormStyle }}>
@@ -63,16 +101,23 @@ function AudioNotesForm() {
 
       <div className='audio-recorder'>
         <div className='controls'>
-          <button className='record-btn stop-rec'></button>
-          <button className='play-btn'>
+          <button
+            type='button'
+            className={`record-btn ${isRecording ? 'rec' : 'stop-rec'}`}
+            onClick={e => record(e)}
+          ></button>
+          <button type='button' className='play-btn'>
             <i className='fa fa-play'></i>
           </button>
-          <button className='stop-btn'>
+          <button type='button' className='stop-btn'>
             <i className='fa fa-square'></i>
           </button>
         </div>
         <input type='range' className='timeline' max='100' value='0' />
-        <audio src='https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'></audio>
+        <audio
+          ref={audioEl}
+          src='https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
+        ></audio>
       </div>
       <div className='d-grid gap-2'>
         <button className='btn btn-dark mb-2' onClick={null}>
