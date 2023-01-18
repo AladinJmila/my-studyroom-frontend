@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Select from '../common/Select';
 import { loadSubjects } from '../store/apps/subjectsActions';
 import { appsFormStyle } from '../services/stylesService';
 import Input from '../common/Input';
 import './AudioNotes.css';
-import { useRef } from 'react';
+import getBlobDuration from 'get-blob-duration';
+import { duration } from 'moment/moment';
+
+let playInterval;
+let counter = 0;
 
 function AudioNotesForm() {
   const [data, setData] = useState({
@@ -19,8 +21,12 @@ function AudioNotesForm() {
   const [errors, setErrors] = useState({});
   const [showGroupInput, setShowGroupInput] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioURL, setAudioURL] = useState('');
+  const [progressPosition, setProgressPosition] = useState(0);
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
   const dispatch = useDispatch();
 
   const audioEl = useRef();
@@ -49,6 +55,10 @@ function AudioNotesForm() {
 
     if (!isRecording) {
       mediaRecorder.start();
+      setAudioDuration(0);
+      setAudioCurrentTime(0);
+      setProgressPosition(0);
+      setIsPlaying(false);
       console.log(mediaRecorder.state);
     } else {
       mediaRecorder.stop();
@@ -62,10 +72,62 @@ function AudioNotesForm() {
     mediaRecorder.onstop = e => {
       const blob = new Blob(chunks, { type: 'audio/wav' });
       console.log(blob);
+      getBlobDuration(blob).then(duration => {
+        setAudioDuration(Math.ceil(duration));
+      });
 
       chunks = [];
       setAudioURL(window.URL.createObjectURL(blob));
     };
+  };
+
+  const play = () => {
+    setIsPlaying(!isPlaying);
+    if (!isPlaying) {
+      audioEl.current.play();
+    } else {
+      audioEl.current.pause();
+    }
+  };
+
+  if (audioEl.current) {
+    audioEl.current.ontimeupdate = () => {
+      setAudioDuration(
+        audioEl.current.duration !== Infinity
+          ? Math.ceil(audioEl.current.duration)
+          : audioDuration
+      );
+      setAudioCurrentTime(Math.ceil(audioEl.current.currentTime));
+      setProgressPosition(
+        Math.ceil(
+          (100 * Math.ceil(audioEl.current.currentTime)) /
+            (audioEl.current.duration !== Infinity
+              ? Math.ceil(audioEl.current.duration)
+              : audioDuration)
+        )
+      );
+    };
+
+    audioEl.current.onended = () => {
+      setIsPlaying(false);
+    };
+  }
+
+  const seekTime = e => {
+    console.log(e.target.clientWidth);
+    console.log(e.nativeEvent.offsetX);
+    audioEl.current.currentTime =
+      (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration;
+  };
+
+  const formatTime = time => {
+    if (isNaN(time)) return '00:00';
+    let seconds = time % 60;
+    seconds = seconds >= 10 ? seconds : '0' + seconds;
+    let minutes = parseInt(time / 60);
+    minutes = minutes >= 10 ? minutes : '0' + minutes;
+
+    return `${minutes}:${seconds}`;
   };
 
   return (
@@ -104,20 +166,29 @@ function AudioNotesForm() {
           <button
             type='button'
             className={`record-btn ${isRecording ? 'rec' : 'stop-rec'}`}
-            onClick={e => record(e)}
+            onClick={record}
           ></button>
-          <button type='button' className='play-btn'>
-            <i className='fa fa-play'></i>
-          </button>
-          <button type='button' className='stop-btn'>
-            <i className='fa fa-square'></i>
+          <button
+            disabled={isRecording}
+            type='button'
+            className='play-btn'
+            onClick={play}
+          >
+            <i className={`fa fa-${isPlaying ? 'pause' : 'play'}`}></i>
           </button>
         </div>
-        <input type='range' className='timeline' max='100' value='0' />
-        <audio
-          ref={audioEl}
-          src='https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
-        ></audio>
+        <input
+          type='range'
+          className='timeline'
+          max='100'
+          value={progressPosition}
+          style={{ backgroundSize: `${progressPosition}% 100%` }}
+          onClick={seekTime}
+        />
+        <div className='time'>{`${formatTime(audioCurrentTime)} / ${formatTime(
+          audioDuration
+        )}`}</div>
+        <audio ref={audioEl} src={audioURL}></audio>
       </div>
       <div className='d-grid gap-2'>
         <button className='btn btn-dark mb-2' onClick={null}>
