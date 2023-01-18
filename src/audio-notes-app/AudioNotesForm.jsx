@@ -59,10 +59,10 @@ function AudioNotesForm() {
       setAudioCurrentTime(0);
       setProgressPosition(0);
       setIsPlaying(false);
-      console.log(mediaRecorder.state);
+      // console.log(mediaRecorder.state);
     } else {
       mediaRecorder.stop();
-      console.log(mediaRecorder.state);
+      // console.log(mediaRecorder.state);
     }
 
     mediaRecorder.ondataavailable = e => {
@@ -71,7 +71,7 @@ function AudioNotesForm() {
 
     mediaRecorder.onstop = e => {
       const blob = new Blob(chunks, { type: 'audio/wav' });
-      console.log(blob);
+      // console.log(blob);
       getBlobDuration(blob).then(duration => {
         setAudioDuration(Math.ceil(duration));
       });
@@ -82,6 +82,7 @@ function AudioNotesForm() {
   };
 
   const play = () => {
+    if (!audioURL) return;
     setIsPlaying(!isPlaying);
     if (!isPlaying) {
       audioEl.current.play();
@@ -98,14 +99,13 @@ function AudioNotesForm() {
           : audioDuration
       );
       setAudioCurrentTime(Math.ceil(audioEl.current.currentTime));
-      setProgressPosition(
-        Math.ceil(
-          (100 * Math.ceil(audioEl.current.currentTime)) /
-            (audioEl.current.duration !== Infinity
-              ? Math.ceil(audioEl.current.duration)
-              : audioDuration)
-        )
+      const position = Math.ceil(
+        (100 * Math.ceil(audioEl.current.currentTime)) /
+          (audioEl.current.duration !== Infinity
+            ? Math.ceil(audioEl.current.duration)
+            : audioDuration)
       );
+      setProgressPosition(isNaN(position) ? 0 : position);
     };
 
     audioEl.current.onended = () => {
@@ -114,8 +114,6 @@ function AudioNotesForm() {
   }
 
   const seekTime = e => {
-    console.log(e.target.clientWidth);
-    console.log(e.nativeEvent.offsetX);
     audioEl.current.currentTime =
       (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration;
   };
@@ -184,6 +182,7 @@ function AudioNotesForm() {
           value={progressPosition}
           style={{ backgroundSize: `${progressPosition}% 100%` }}
           onClick={seekTime}
+          readOnly
         />
         <div className='time'>{`${formatTime(audioCurrentTime)} / ${formatTime(
           audioDuration

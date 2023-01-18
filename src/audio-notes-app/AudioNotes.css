@@ -60,7 +60,6 @@
   font-size: 0.8em;
   font-weight: bold;
   text-align: center;
-  /* color: white; */
 }
 
 .record-btn {
@@ -102,7 +101,10 @@
   background-color: transparent;
   width: 25px;
   margin-left: 8px;
-  /* color: white; */
+}
+
+.play-btn:disabled {
+  color: black;
 }
 
 .controls {
