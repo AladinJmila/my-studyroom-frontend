@@ -6,10 +6,6 @@ import { appsFormStyle } from '../services/stylesService';
 import Input from '../common/Input';
 import './AudioNotes.css';
 import getBlobDuration from 'get-blob-duration';
-import { duration } from 'moment/moment';
-
-let playInterval;
-let counter = 0;
 
 function AudioNotesForm() {
   const [data, setData] = useState({
