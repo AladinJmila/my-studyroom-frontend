@@ -6,6 +6,7 @@ import { appsFormStyle } from '../services/stylesService';
 import Input from '../common/Input';
 import './AudioNotes.css';
 import getBlobDuration from 'get-blob-duration';
+import { formatTime } from './services';
 
 function AudioNotesForm() {
   const [data, setData] = useState({
@@ -112,16 +113,6 @@ function AudioNotesForm() {
   const seekTime = e => {
     audioEl.current.currentTime =
       (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration;
-  };
-
-  const formatTime = time => {
-    if (isNaN(time)) return '00:00';
-    let seconds = time % 60;
-    seconds = seconds >= 10 ? seconds : '0' + seconds;
-    let minutes = parseInt(time / 60);
-    minutes = minutes >= 10 ? minutes : '0' + minutes;
-
-    return `${minutes}:${seconds}`;
   };
 
   return (

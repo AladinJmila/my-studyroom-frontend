@@ -126,3 +126,20 @@
   background: transparent;
   border: none;
 }
+
+.audio-notes-group * {
+  margin: 0;
+}
+
+.audio-notes-group {
+  width: 100%;
+  color: white;
+  background-color: var(--dark1);
+  margin-bottom: 4px;
+  border: solid 2px var(--white1);
+  border-radius: 0.25rem;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

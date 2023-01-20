@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { userIsEditor } from '../services/permissionsService';
 import { cardsBody } from '../services/stylesService';
+import { formatTime } from './services';
 
 function AudioNotesCard({ user, audioNote }) {
   const showPrivateInfo = user && userIsEditor(audioNote, user._id);
@@ -47,7 +48,9 @@ function AudioNotesCard({ user, audioNote }) {
             onClick={null}
             readOnly
           />
-          <div className='time'>{`${5} / ${audioNote.track.duration}`}</div>
+          <div className='time'>{`${formatTime(24)} / ${formatTime(
+            audioNote.track.duration
+          )}`}</div>
         </div>
       </div>
     </div>
