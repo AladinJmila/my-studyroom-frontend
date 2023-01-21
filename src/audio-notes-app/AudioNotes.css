@@ -113,7 +113,13 @@
   justify-content: space-around;
 }
 
-.audio-notes input[type='number'] {
+/* Audio Notes Card */
+.audio-notes-card * {
+  padding: 0;
+  margin: 0;
+}
+
+.audio-notes-card input[type='number'] {
   width: 40px;
   max-height: 32px;
   text-align: center;
@@ -122,11 +128,42 @@
   background-color: transparent;
 }
 
-.audio-notes .update-reps {
+.audio-notes-card .update-reps {
   background: transparent;
   border: none;
 }
 
+.audio-notes-card .time {
+  text-align: end;
+}
+
+.audio-notes-card .audio-player {
+  grid-template-columns: 1fr 9fr 3fr;
+  gap: 0;
+  position: relative;
+  padding: 0 0 6px 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.audio-notes-card .controls {
+  display: block;
+}
+.audio-notes-card .play-btn {
+  margin-left: 0;
+}
+
+.audio-notes-card .reps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.audio-notes-card .reps p {
+  margin: 0;
+}
+
+/* Audio Notes Group */
 .audio-notes-group * {
   margin: 0;
 }

@@ -9,28 +9,34 @@ function AudioNotesCard({ user, audioNote }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div style={cardsBody} className='card mb-1 audio-notes'>
+    <div
+      style={cardsBody}
+      key={audioNote._id}
+      className='card mb-1 audio-notes-card'
+    >
       <div className='p-1 ps-3 pe-3'>
-        <div className='d-flex flex-row justify-content-between'>
-          <h6 className='card-subtitle d-flex align-items-center'>
+        <div className='row '>
+          <h6 className='col-6 card-subtitle d-flex align-items-center text-truncate'>
             {audioNote.title}
           </h6>
-          <div>
-            <i className='fa fa-repeat me-3'></i>
+          <div className='col-4 reps'>
+            <p>reps:</p>
             <input type='number' value={audioNote.reps} />
             <button type='button' className='update-reps'>
               <i className='fa fa-check'></i>
             </button>
           </div>
-          <div className='card-link float-end'>
-            {showPrivateInfo && (
-              <CardEllipsisMenu
-                item={audioNote}
-                onEdit={null}
-                onToggleProp={null}
-                onDelete={null}
-              />
-            )}
+          <div className='col-2'>
+            <div className=' card-link float-end'>
+              {showPrivateInfo && (
+                <CardEllipsisMenu
+                  item={audioNote}
+                  onEdit={null}
+                  onToggleProp={null}
+                  onDelete={null}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div className='audio-player'>
