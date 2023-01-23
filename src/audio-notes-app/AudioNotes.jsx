@@ -128,7 +128,9 @@ const AudioNotes = () => {
         <AudioNotesForm user={user} handleShowForm={handleShowForm} />
       )}
       {groups &&
-        groups.map(group => <AudioNotesGroup user={user} group={group} />)}
+        groups.map(group => (
+          <AudioNotesGroup key={group._id} user={user} group={group} />
+        ))}
     </>
   );
 };

@@ -9,11 +9,7 @@ function AudioNotesCard({ user, audioNote }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div
-      style={cardsBody}
-      key={audioNote._id}
-      className='card mb-1 audio-notes-card'
-    >
+    <div style={cardsBody} className='card mb-1 audio-notes-card'>
       <div className='p-1 ps-3 pe-3'>
         <div className='row '>
           <h6 className='col-6 card-subtitle d-flex align-items-center text-truncate'>

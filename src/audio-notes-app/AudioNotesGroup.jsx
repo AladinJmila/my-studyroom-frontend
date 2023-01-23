@@ -11,7 +11,6 @@ function AudioNotesGroup({ user, group }) {
         type='button'
         className='audio-notes-group'
         onClick={() => setShowContent(!showContent)}
-        key={group._id}
       >
         <h6> {group.name}</h6>
         <p>Items: {group.children.length}</p>
@@ -22,7 +21,7 @@ function AudioNotesGroup({ user, group }) {
       </button>
       {showContent &&
         group.children.map(child => (
-          <AudioNotesCard user={user} audioNote={child} />
+          <AudioNotesCard user={user} key={child._id} audioNote={child} />
         ))}
     </>
   );

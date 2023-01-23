@@ -1,12 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Select from '../common/Select';
-import { loadSubjects } from '../store/apps/subjectsActions';
-import { appsFormStyle } from '../services/stylesService';
-import Input from '../common/Input';
-import './AudioNotes.css';
 import getBlobDuration from 'get-blob-duration';
+import Joi from 'joi-browser';
+import { appsFormStyle } from '../services/stylesService';
 import { formatTime } from './services';
+import Select from '../common/Select';
+import Input from '../common/Input';
+import { loadSubjects } from '../store/apps/subjectsActions';
+import {
+  createAudioNotesGroup,
+  loadAudioNotesGroups,
+} from '../store/apps/audioNotesActions';
+import './AudioNotes.css';
 
 function AudioNotesForm() {
   const [data, setData] = useState({
@@ -15,6 +20,8 @@ function AudioNotesForm() {
     groupName: '',
     track: '',
   });
+  const [subjectId, setSubjectId] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [errors, setErrors] = useState({});
   const [showGroupInput, setShowGroupInput] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -29,14 +36,43 @@ function AudioNotesForm() {
   const audioEl = useRef();
 
   const subjects = useSelector(state => state.apps.subjects.list);
-  const groups = [];
+  const groups = useSelector(state => state.apps.audioNotes.groups);
+
+  const groupSchema = {
+    subjectId: Joi.string().label('Subject').required(),
+    groupName: Joi.string().label('Group Name').required(),
+  };
+
+  const validateGroup = () => {
+    const options = { abortEarly: false };
+    const groupBody = { subjectId, groupName };
+    const { error } = Joi.validate(groupBody, groupSchema, options);
+
+    if (!error) return null;
+
+    const errors = {};
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
+  };
 
   const handleShowGroupInput = () => {
     setShowGroupInput(!showGroupInput);
   };
 
+  const handleAddGroup = e => {
+    const group = {
+      subjectId,
+      name: groupName,
+      props: { duration: 0 },
+    };
+    dispatch(createAudioNotesGroup(group));
+    handleShowGroupInput();
+    setGroupName('');
+  };
+
   useEffect(() => {
     dispatch(loadSubjects());
+    dispatch(loadAudioNotesGroups());
 
     navigator.mediaDevices
       .getUserMedia({ audio: true })
@@ -117,7 +153,13 @@ function AudioNotesForm() {
 
   return (
     <form onSubmit={null} style={{ marginTop: 12, ...appsFormStyle }}>
-      <Select name='subjectId' label='Subject' options={subjects} required />
+      <Select
+        name='subjectId'
+        label='Subject'
+        options={subjects}
+        required
+        onChange={e => setSubjectId(e.target.value)}
+      />
       <div className='row'>
         <div className='col-10 ps pe-0'>
           <Select name='groupId' label='Group' options={groups} required />
@@ -134,12 +176,20 @@ function AudioNotesForm() {
       {showGroupInput && (
         <div className='row'>
           <div className='col-10 ps pe-0'>
-            <Input type='text' name='groupName' label='Group name' />
+            <Input
+              type='text'
+              required
+              name='groupName'
+              label='Group name'
+              value={groupName}
+              onChange={e => setGroupName(e.target.value)}
+            />
           </div>
           <button
             type='button'
             className='btn btn-outline-dark ms-4 mt-4 mb-3 me-0 col-1'
-            onClick={handleShowGroupInput}
+            onClick={handleAddGroup}
+            disabled={validateGroup()}
           >
             <i className='fa fa-check' aria-hidden='true'></i>
           </button>
