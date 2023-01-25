@@ -10,18 +10,14 @@ import { loadSubjects } from '../store/apps/subjectsActions';
 import {
   createAudioNotesGroup,
   loadAudioNotesGroups,
+  createAudioNote,
 } from '../store/apps/audioNotesActions';
 import './AudioNotes.css';
 
 function AudioNotesForm() {
-  const [data, setData] = useState({
-    subjectId: '',
-    groupId: '',
-    groupName: '',
-    track: '',
-  });
   const [subjectId, setSubjectId] = useState('');
   const [groupName, setGroupName] = useState('');
+  const [groupId, setGroupId] = useState('');
   const [errors, setErrors] = useState({});
   const [showGroupInput, setShowGroupInput] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -31,6 +27,7 @@ function AudioNotesForm() {
   const [progressPosition, setProgressPosition] = useState(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [audioBlob, setAudioBlob] = useState();
   const dispatch = useDispatch();
 
   const audioEl = useRef();
@@ -104,7 +101,7 @@ function AudioNotesForm() {
 
     mediaRecorder.onstop = e => {
       const blob = new Blob(chunks, { type: 'audio/wav' });
-      // console.log(blob);
+      setAudioBlob(blob);
       getBlobDuration(blob).then(duration => {
         setAudioDuration(Math.ceil(duration));
       });
@@ -151,8 +148,24 @@ function AudioNotesForm() {
       (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration;
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('audio', audioBlob);
+
+    const params = {
+      subjectId,
+      groupId,
+      audioDuration,
+    };
+
+    if (audioBlob) dispatch(createAudioNote(formData, params));
+    // if (audioBlob) dispatch(createAudioNote(audioNote));
+  };
+
   return (
-    <form onSubmit={null} style={{ marginTop: 12, ...appsFormStyle }}>
+    <form onSubmit={handleSubmit} style={{ marginTop: 12, ...appsFormStyle }}>
       <Select
         name='subjectId'
         label='Subject'
@@ -162,7 +175,13 @@ function AudioNotesForm() {
       />
       <div className='row'>
         <div className='col-10 ps pe-0'>
-          <Select name='groupId' label='Group' options={groups} required />
+          <Select
+            name='groupId'
+            label='Group'
+            options={groups}
+            required
+            onChange={e => setGroupId(e.target.value)}
+          />
         </div>
         <button
           type='button'

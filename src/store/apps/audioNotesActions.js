@@ -4,7 +4,7 @@ import { getCurrentUser } from '../services/authService';
 import * as actions from './audioNotes';
 import config from '../../config.json';
 
-const apiEndPoint = '/audio-notes';
+const apiEndPoint = '/audioNotes';
 let userid;
 const user = getCurrentUser();
 const loadingInterval = Number(config.loadingInterval);
@@ -26,6 +26,16 @@ export const loadAudioNotes = () => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
     dispatch(actions.REQUEST_AUDIO_NOTES_FAIL());
+  }
+};
+
+export const createAudioNote = (formData, params) => async dispatch => {
+  try {
+    const options = { params: params };
+    const { data } = await httpService.post(apiEndPoint, formData, options);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
   }
 };
 
