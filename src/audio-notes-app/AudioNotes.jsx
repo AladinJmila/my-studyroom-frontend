@@ -1,118 +1,24 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderCard from '../common/HeaderCard';
 import SortCard from '../common/SortCard';
+import { loadAudioNotesGroups } from '../store/apps/audioNotesActions';
 import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
   const { user } = useSelector(state => state.auth);
+  const groups = useSelector(state => state.apps.audioNotes.groups);
+  const dispatch = useDispatch();
 
   const handleShowForm = () => {
     setShowFrom(showForm ? false : true);
   };
 
-  const groups = [
-    {
-      _id: '354a3sd4f3',
-      name: 'group 1',
-      props: { duration: 412 },
-      children: [
-        {
-          _id: '354a3sd4f3',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-        {
-          _id: '354aa5d4f5f3',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladinas dfsafa sdfasdf',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-        {
-          _id: 'adf7as8',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-      ],
-    },
-    {
-      _id: '7asd97hg',
-      name: 'group 2',
-      props: { duration: 862 },
-      children: [
-        {
-          _id: '7jfg1h2fg4h',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-        {
-          _id: '157sg48dghw5',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-        {
-          _id: 'fgjh4t8yhj2f1h',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 3,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-        {
-          _id: 'fgjh4aad2f1h',
-          subject: { name: 'sbaladin', _id: '5434646' },
-          group: { name: 'graladin', _id: '57612313' },
-          title: 'taladin',
-          track: { duration: 23, url: 'https://www.some.url' },
-          creatorId: '60b919d916d48a00150b30fb',
-          reps: 2,
-          isChecked: false,
-          starred: false,
-          isPubplic: false,
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    dispatch(loadAudioNotesGroups());
+  }, []);
 
   return (
     <>

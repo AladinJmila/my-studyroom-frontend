@@ -1,12 +1,23 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { userIsEditor } from '../services/permissionsService';
 import { cardsBody } from '../services/stylesService';
 import { formatTime } from './services';
+import { baseURL } from '../store/services/httpService';
 
 function AudioNotesCard({ user, audioNote }) {
   const showPrivateInfo = user && userIsEditor(audioNote, user._id);
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioEl = useRef();
+
+  const play = () => {
+    setIsPlaying(!isPlaying);
+    if (!isPlaying) {
+      audioEl.current.play();
+    } else {
+      audioEl.current.pause();
+    }
+  };
 
   return (
     <div style={cardsBody} className='card mb-1 audio-notes-card'>
@@ -37,7 +48,7 @@ function AudioNotesCard({ user, audioNote }) {
         </div>
         <div className='audio-player'>
           <div className='controls'>
-            <button type='button' onClick={null} className='play-btn'>
+            <button type='button' onClick={play} className='play-btn'>
               <i className={`fa fa-${isPlaying ? 'pause' : 'play'}`}></i>
             </button>
           </div>
@@ -50,9 +61,13 @@ function AudioNotesCard({ user, audioNote }) {
             onClick={null}
             readOnly
           />
-          <div className='time'>{`${formatTime(24)} / ${formatTime(
+          <div className='time'>{`${formatTime(0)} / ${formatTime(
             audioNote.track.duration
           )}`}</div>
+          <audio
+            ref={audioEl}
+            src={`${baseURL}/audioNotes/stream/${audioNote.track.name}`}
+          ></audio>
         </div>
       </div>
     </div>
