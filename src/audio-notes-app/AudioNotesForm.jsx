@@ -138,9 +138,7 @@ function AudioNotesForm() {
       setProgressPosition(isNaN(position) ? 0 : position);
     };
 
-    audioEl.current.onended = () => {
-      setIsPlaying(false);
-    };
+    audioEl.current.onended = () => setIsPlaying(false);
   }
 
   const seekTime = e => {

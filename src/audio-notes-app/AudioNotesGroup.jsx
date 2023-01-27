@@ -20,8 +20,14 @@ function AudioNotesGroup({ user, group }) {
         ></i>
       </button>
       {showContent &&
-        group.children.map(child => (
-          <AudioNotesCard user={user} key={child._id} audioNote={child} />
+        group.children.map((child, index) => (
+          <AudioNotesCard
+            user={user}
+            key={child._id}
+            audioNote={child}
+            index={index}
+            groupName={group.name}
+          />
         ))}
     </>
   );
