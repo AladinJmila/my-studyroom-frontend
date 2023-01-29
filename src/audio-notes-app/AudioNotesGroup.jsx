@@ -1,12 +1,48 @@
 import { useState, useEffect, useRef } from 'react';
 import AudioNotesCard from './AudioNotesCard';
 import { formatTime, play } from './services';
+import { baseURL } from '../store/services/httpService';
+
+let timesPlayed = 1;
+let repsInterval = null;
+let currentIndex = 0;
 
 function AudioNotesGroup({ user, group }) {
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState();
 
-  const playGroup = () => {};
+  const audioEl = useRef();
+  const audioPadding = 5;
+
+  const playGroup = () => {
+    currentIndex = 0;
+    setTimeout(() => {
+      const playNext = () => {
+        setCurrentTrack(group.children[currentIndex].track.name);
+        const playArgs = {
+          audioEl,
+          audioNote: group.children[currentIndex],
+          isPlaying,
+          timesPlayed,
+          setIsPlaying,
+          audioPadding,
+          repsInterval,
+          onEnded,
+        };
+        play(playArgs);
+      };
+
+      const onEnded = () => {
+        currentIndex++;
+        setTimeout(() => {
+          playNext();
+        }, audioPadding * 1000);
+      };
+
+      playNext();
+    }, 500);
+  };
 
   return (
     <>
@@ -29,6 +65,12 @@ function AudioNotesGroup({ user, group }) {
           ></i>
         </button>
       </div>
+      {currentTrack && (
+        <audio
+          ref={audioEl}
+          src={`${baseURL}/audioNotes/stream/${currentTrack}`}
+        ></audio>
+      )}
       {showContent &&
         group.children.map((child, index) => (
           <AudioNotesCard
@@ -37,7 +79,7 @@ function AudioNotesGroup({ user, group }) {
             audioNote={child}
             index={index}
             groupName={group.name}
-            audioPadding={5}
+            audioPadding={audioPadding}
           />
         ))}
     </>

@@ -18,11 +18,13 @@ export const play = ({
   setIsPlaying,
   audioPadding,
   repsInterval,
+  onEnded = null,
 }) => {
   if (!audioNote.isChecked) {
     if (!isPlaying) {
       setIsPlaying(true);
       audioEl.current.play();
+
       if (!repsInterval && audioNote.reps > 1) {
         const intervalDuration =
           (audioNote.track.duration + audioPadding) * 1000;
@@ -48,7 +50,12 @@ export const play = ({
       repsInterval = null;
     }
   }
-  audioEl.current.onended = () => setIsPlaying(false);
+  audioEl.current.onended = () => {
+    setIsPlaying(false);
+    if (timesPlayed === audioNote.reps) {
+      onEnded && onEnded();
+    }
+  };
 };
 
 export const updateProgress = ({
