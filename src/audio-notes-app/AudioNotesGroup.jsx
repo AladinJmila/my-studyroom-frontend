@@ -54,8 +54,15 @@ function AudioNotesGroup({ user, group }) {
           ></i>
         </button>
         <h6> {group.name}</h6>
-        <p>Items: {group.children.length}</p>
-        <p>Duration: {formatTime(group.props.duration)}</p>
+        {isPlaying ? (
+          <p>
+            {currentIndex + 1} / {group.children.length}
+          </p>
+        ) : (
+          <p>Tracks: {group.children.length}</p>
+        )}
+
+        <p>{formatTime(group.props.duration)}</p>
         <button
           className='expand-btn'
           onClick={() => setShowContent(!showContent)}

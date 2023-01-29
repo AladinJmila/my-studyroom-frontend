@@ -14,6 +14,8 @@ import {
 } from '../store/apps/audioNotesActions';
 import './AudioNotes.css';
 
+let recordInterval;
+
 function AudioNotesForm() {
   const [subjectId, setSubjectId] = useState('');
   const [groupName, setGroupName] = useState('');
@@ -21,6 +23,7 @@ function AudioNotesForm() {
   const [errors, setErrors] = useState({});
   const [showGroupInput, setShowGroupInput] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioURL, setAudioURL] = useState('');
@@ -34,6 +37,24 @@ function AudioNotesForm() {
 
   const subjects = useSelector(state => state.apps.subjects.list);
   const groups = useSelector(state => state.apps.audioNotes.groups);
+
+  const audioNoteSchema = {
+    subjectId: Joi.string().label('Subject').required(),
+    groupId: Joi.string().label('Group').required(),
+    audioBlob: Joi.object().label('Recording').required(),
+  };
+
+  const validateAudioNote = () => {
+    const options = { abortEarly: false };
+    const audioNoteBody = { subjectId, groupId, audioBlob };
+    const { error } = Joi.validate(audioNoteBody, audioNoteSchema, options);
+
+    if (!error) return null;
+
+    const errors = {};
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
+  };
 
   const groupSchema = {
     subjectId: Joi.string().label('Subject').required(),
@@ -89,9 +110,15 @@ function AudioNotesForm() {
       setAudioCurrentTime(0);
       setProgressPosition(0);
       setIsPlaying(false);
+      recordInterval = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
       // console.log(mediaRecorder.state);
     } else {
       mediaRecorder.stop();
+      console.log(recordInterval);
+      clearInterval(recordInterval);
+      setRecordingTime(0);
       // console.log(mediaRecorder.state);
     }
 
@@ -101,6 +128,7 @@ function AudioNotesForm() {
 
     mediaRecorder.onstop = e => {
       const blob = new Blob(chunks, { type: 'audio/wav' });
+      console.log(typeof blob);
       setAudioBlob(blob);
       getBlobDuration(blob).then(duration => {
         setAudioDuration(Math.ceil(duration));
@@ -158,7 +186,8 @@ function AudioNotesForm() {
       audioDuration,
     };
 
-    if (audioBlob) dispatch(createAudioNote(formData, params));
+    dispatch(createAudioNote(formData, params));
+
     // if (audioBlob) dispatch(createAudioNote(audioNote));
   };
 
@@ -238,13 +267,16 @@ function AudioNotesForm() {
           onClick={seekTime}
           readOnly
         />
-        <div className='time'>{`${formatTime(audioCurrentTime)} / ${formatTime(
-          audioDuration
-        )}`}</div>
+
+        <p className='time'>
+          {isRecording
+            ? formatTime(recordingTime)
+            : `${formatTime(audioCurrentTime)} / ${formatTime(audioDuration)}`}
+        </p>
         <audio ref={audioEl} src={audioURL}></audio>
       </div>
       <div className='d-grid gap-2'>
-        <button className='btn btn-dark mb-2' onClick={null}>
+        <button className='btn btn-dark mb-2' disabled={validateAudioNote()}>
           Save
         </button>
       </div>

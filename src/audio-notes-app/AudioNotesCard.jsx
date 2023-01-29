@@ -75,7 +75,7 @@ const AudioNotesCard = ({
         </button>
       </div>
       <div className='track-details'>
-        <h6 className='card-subtitle d-flex align-items-center text-truncate'>
+        <h6>
           {index + 1} - {groupName}
         </h6>
         <div className='reps'>

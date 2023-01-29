@@ -39,10 +39,11 @@
 }
 
 .time {
-  width: 100%;
   font-size: 0.8em;
   font-weight: bold;
+  white-space: nowrap;
   text-align: center;
+  margin: 0;
 }
 
 .record-btn {
@@ -143,7 +144,7 @@
   position: absolute;
   filter: invert(0.3);
   top: 7px;
-  right: 73%;
+  right: 52%;
   display: block;
   width: 44px;
   height: 42px;
@@ -182,9 +183,14 @@
 
 .audio-notes-card .track-details {
   display: grid;
-  grid-template-columns: 4fr 2fr 2fr;
+  grid-template-columns: 8fr 2fr 2fr;
+  align-items: center;
   width: 100%;
   margin-right: 16px;
+  gap: 20px;
+}
+
+.audio-notes-card .track-details > h6 {
 }
 
 .audio-notes-card .play-btn {
@@ -213,9 +219,22 @@
   border: solid 2px var(--white1);
   border-radius: 0.25rem;
   padding: 8px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr 3fr 3fr 1fr;
+  gap: 10px;
   align-items: center;
   justify-content: space-between;
+}
+
+.audio-notes-group > p {
+  text-align: center;
+}
+
+.audio-notes-group > h6,
+.audio-notes-card .track-details > h6 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .audio-notes-group .expand-btn {
