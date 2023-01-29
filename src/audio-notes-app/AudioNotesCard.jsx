@@ -2,12 +2,20 @@ import { useState, useRef } from 'react';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { userIsEditor } from '../services/permissionsService';
 import { cardsBody } from '../services/stylesService';
-import { formatTime } from './services';
+import { formatTime, play, updateProgress } from './services';
 import { baseURL } from '../store/services/httpService';
 import Check from '../common/Check';
 
-let timesPlayed = 0;
-function AudioNotesCard({ user, audioNote, index, groupName }) {
+let timesPlayed = 1;
+let repsInterval = null;
+
+const AudioNotesCard = ({
+  user,
+  audioNote,
+  index,
+  groupName,
+  audioPadding,
+}) => {
   const showPrivateInfo = user && userIsEditor(audioNote, user._id);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progressPosition, setProgressPosition] = useState(0);
@@ -15,38 +23,27 @@ function AudioNotesCard({ user, audioNote, index, groupName }) {
   const [showUpdateRepsBtn, setShowUpdateRepsBtn] = useState(false);
   const [repetitions, setRepititions] = useState(audioNote.reps);
   const audioEl = useRef();
-  const audioPadding = 5;
 
-  const play = () => {
-    const repsInterval = setInterval(() => {
-      console.log(timesPlayed);
-      if (timesPlayed === audioNote.reps) {
-        timesPlayed = 0;
-        return clearInterval(repsInterval);
-      }
-      audioEl.current.play();
-      console.log('playing');
-      timesPlayed++;
-    }, audioNote.track.duration + audioPadding * 1000);
-    setIsPlaying(!isPlaying);
-    if (!isPlaying) {
-      audioEl.current.play();
-    } else {
-      audioEl.current.pause();
-    }
+  const playArgs = {
+    audioEl,
+    audioNote,
+    isPlaying,
+    timesPlayed,
+    setIsPlaying,
+    audioPadding,
+    repsInterval,
+  };
 
-    if (audioEl.current) {
-      audioEl.current.ontimeupdate = () => {
-        setAudioCurrentTime(Math.ceil(audioEl.current.currentTime));
-        setProgressPosition(
-          Math.ceil(
-            (100 * Math.ceil(audioEl.current.currentTime)) /
-              audioNote.track.duration
-          )
-        );
-      };
-    }
-    audioEl.current.onended = () => setIsPlaying(false);
+  const progressArgs = {
+    audioEl,
+    audioNote,
+    setAudioCurrentTime,
+    setProgressPosition,
+  };
+
+  const extendedPlay = (play, updateProgress) => {
+    play(playArgs);
+    updateProgress(progressArgs);
   };
 
   const handleUpdateReps = e => {
@@ -69,12 +66,12 @@ function AudioNotesCard({ user, audioNote, index, groupName }) {
         <Check onCheck={handleCheck} isChecked={audioNote.isChecked} />
         <button
           type='button'
-          onClick={play}
+          onClick={() => extendedPlay(play, updateProgress)}
           className='play-btn'
           disabled={audioNote.isChecked}
           style={{ color: audioNote.isChecked ? 'grey' : '' }}
         >
-          <i className={`fa fa-${isPlaying ? 'pause' : 'play'}`}></i>
+          <i className={`fa fa-${isPlaying ? 'stop' : 'play'}`}></i>
         </button>
       </div>
       <div className='track-details'>
@@ -130,6 +127,6 @@ function AudioNotesCard({ user, audioNote, index, groupName }) {
       ></audio>
     </div>
   );
-}
+};
 
 export default AudioNotesCard;

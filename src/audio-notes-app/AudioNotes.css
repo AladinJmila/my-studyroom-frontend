@@ -217,3 +217,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.audio-notes-group .expand-btn {
+  background: transparent;
+  border: none;
+  color: white;
+}
