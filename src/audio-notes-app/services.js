@@ -60,7 +60,8 @@ export const playTrack = ({
       repsInterval = null;
     }
   } else {
-    // onEnded && onEnded();
+    currentTrackIndex++;
+    onEnded && onEnded();
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
@@ -72,15 +73,15 @@ export const playTrack = ({
       onEnded && onEnded();
     }
 
-    console.log('tracks total', totalTracks);
-    console.log('track index', currentTrackIndex + 1);
-    console.log(' ');
     if (currentTrackIndex && totalTracks) {
+      console.log('tracks total', totalTracks);
+      console.log('track index', currentTrackIndex + 1);
       if (
         prevTimesPlayed === audioNote.reps &&
         currentTrackIndex + 1 === totalTracks
       ) {
-        currentGroupIndex.current++;
+        currentGroupIndex.current = currentGroupIndex.current + 1;
+
         setTimeout(() => {
           playSubject();
         }, audioPadding * 1000);
@@ -88,6 +89,7 @@ export const playTrack = ({
         prevTimesPlayed = 1;
       }
     }
+    console.log(' ');
   };
 };
 

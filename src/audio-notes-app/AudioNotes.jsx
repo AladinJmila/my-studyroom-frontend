@@ -8,7 +8,8 @@ import AudioNotesGroup from './AudioNotesGroup';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [subjectIsPlaying, setSubjectIsPlaying] = useState(false);
+  const [groupsBtns, setGroupsBtns] = useState([]);
   const currentGroupIndex = useRef();
   currentGroupIndex.current = 0;
 
@@ -26,29 +27,23 @@ const AudioNotes = () => {
   };
 
   const playSubject = () => {
-    const DOMGroups = document.querySelectorAll('.audio-notes-group');
-    if (!isPlaying) {
-      setIsPlaying(true);
-      [...DOMGroups][currentGroupIndex.current]
-        .querySelector('.play-btn')
-        .click();
-    } else {
-      setIsPlaying(false);
-      [...DOMGroups][currentGroupIndex.current]
-        .querySelector('.play-btn')
-        .click();
-    }
+    if (currentGroupIndex.current + 1 > groups.length)
+      return setSubjectIsPlaying(false);
+    groupsBtns[currentGroupIndex.current].click();
   };
 
   const item = (
     <div className='d-flex'>
       <div>AudioNotes</div>
       <button
-        onClick={playSubject}
+        onClick={() => {
+          setSubjectIsPlaying(!subjectIsPlaying);
+          playSubject();
+        }}
         className='play-btn'
-        disabled={selectedSubject?.name === 'All Subjects'}
+        disabled={!selectedSubject || selectedSubject?.name === 'All Subjects'}
       >
-        <i className={`fa fa-${isPlaying ? 'stop' : 'play'}`}></i>
+        <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
       </button>
     </div>
   );
@@ -70,6 +65,7 @@ const AudioNotes = () => {
             key={group._id}
             user={user}
             group={group}
+            setGroupsBtns={setGroupsBtns}
             playSubject={playSubject}
             currentGroupIndex={currentGroupIndex}
           />

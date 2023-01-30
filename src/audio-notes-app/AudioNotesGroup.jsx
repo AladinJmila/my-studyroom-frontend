@@ -7,18 +7,39 @@ let timesPlayed = 1;
 let repsInterval = null;
 let currentTrackIndex = 0;
 
-function AudioNotesGroup({ user, group, playSubject, currentGroupIndex }) {
+function AudioNotesGroup({
+  user,
+  group,
+  playSubject,
+  currentGroupIndex,
+  setGroupsBtns,
+}) {
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
+  const [groupDuration, setGroupDuration] = useState(0);
 
   const audioEl = useRef();
   const audioPadding = 5;
+  const playBtn = useRef();
+
+  useEffect(() => {
+    if (playBtn.current) {
+      setGroupsBtns(prev => [...prev, playBtn.current]);
+    }
+    group.children.forEach(child => {
+      console.log(child.isChecked);
+      !child.isChecked &&
+        setGroupDuration(prev => prev + child.track.duration * child.reps);
+    });
+  }, []);
 
   const playGroup = () => {
     currentTrackIndex = 0;
+
     setTimeout(() => {
       const playNext = () => {
+        console.log('attempted play');
         setCurrentTrack(group.children[currentTrackIndex].track.name);
         const playArgs = {
           audioEl,
@@ -40,7 +61,7 @@ function AudioNotesGroup({ user, group, playSubject, currentGroupIndex }) {
       const onEnded = () => {
         currentTrackIndex++;
         setTimeout(() => {
-          playNext();
+          if (group.children[currentTrackIndex]) playNext();
         }, audioPadding * 1000);
       };
 
@@ -51,7 +72,7 @@ function AudioNotesGroup({ user, group, playSubject, currentGroupIndex }) {
   return (
     <>
       <div className='audio-notes-group'>
-        <button onClick={playGroup} className='play-btn'>
+        <button ref={playBtn} onClick={playGroup} className='play-btn'>
           <i
             className={`fa fa-${isPlaying ? 'stop' : 'play'}`}
             style={{ color: 'white', zIndex: 100 }}
@@ -66,7 +87,7 @@ function AudioNotesGroup({ user, group, playSubject, currentGroupIndex }) {
           <p>{group.children.length} tracks</p>
         )}
 
-        <p>{formatTime(group.props.duration)}</p>
+        <p>{formatTime(groupDuration)}</p>
         <button
           className='expand-btn'
           onClick={() => setShowContent(!showContent)}
