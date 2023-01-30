@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { userIsEditor } from '../services/permissionsService';
 import { cardsBody } from '../services/stylesService';
-import { formatTime, play, updateProgress } from './services';
+import { formatTime, playTrack, updateProgress } from './services';
 import { baseURL } from '../store/services/httpService';
 import Check from '../common/Check';
 
@@ -41,8 +41,8 @@ const AudioNotesCard = ({
     setProgressPosition,
   };
 
-  const extendedPlay = (play, updateProgress) => {
-    play(playArgs);
+  const extendedPlay = (playTrack, updateProgress) => {
+    playTrack(playArgs);
     updateProgress(progressArgs);
   };
 
@@ -66,10 +66,9 @@ const AudioNotesCard = ({
         <Check onCheck={handleCheck} isChecked={audioNote.isChecked} />
         <button
           type='button'
-          onClick={() => extendedPlay(play, updateProgress)}
+          onClick={() => extendedPlay(playTrack, updateProgress)}
           className='play-btn'
           disabled={audioNote.isChecked}
-          style={{ color: audioNote.isChecked ? 'grey' : '' }}
         >
           <i className={`fa fa-${isPlaying ? 'stop' : 'play'}`}></i>
         </button>

@@ -88,6 +88,10 @@
 }
 
 .play-btn:disabled {
+  opacity: 0.5;
+}
+
+.play-btn:disabled {
   color: black;
 }
 

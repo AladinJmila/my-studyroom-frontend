@@ -10,7 +10,7 @@ export const formatTime = time => {
   return `${minutes}:${seconds}`;
 };
 
-export const play = ({
+export const playTrack = ({
   audioEl,
   audioNote,
   isPlaying,
@@ -18,7 +18,7 @@ export const play = ({
   setIsPlaying,
   audioPadding,
   repsInterval,
-  onEnded = null,
+  onEnded,
 }) => {
   if (!audioNote.isChecked) {
     if (!isPlaying) {
@@ -75,4 +75,45 @@ export const updateProgress = ({
       );
     };
   }
+};
+
+export const playGroup = ({
+  group,
+  audioEl,
+  isPlaying,
+  timesPlayed,
+  setIsPlaying,
+  audioPadding,
+  repsInterval,
+  currentIndex,
+  setCurrentTrack,
+  setPlayingTrackIndex,
+}) => {
+  currentIndex = 0;
+  setTimeout(() => {
+    const playNext = () => {
+      setCurrentTrack(group.children[currentIndex].track.name);
+      const playArgs = {
+        audioEl,
+        audioNote: group.children[currentIndex],
+        isPlaying,
+        timesPlayed,
+        setIsPlaying,
+        audioPadding,
+        repsInterval,
+        onEnded,
+      };
+      playTrack(playArgs);
+    };
+
+    const onEnded = () => {
+      currentIndex++;
+      setPlayingTrackIndex && setPlayingTrackIndex(currentIndex + 1);
+      setTimeout(() => {
+        playNext();
+      }, audioPadding * 1000);
+    };
+
+    playNext();
+  }, 500);
 };
