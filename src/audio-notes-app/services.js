@@ -18,8 +18,14 @@ export const playTrack = ({
   setIsPlaying,
   audioPadding,
   repsInterval,
+  currentTrackIndex,
+  totalTracks,
   onEnded,
+  playSubject,
+  currentGroupIndex,
 }) => {
+  let prevTimesPlayed = 1;
+
   if (!audioNote.isChecked) {
     if (!isPlaying) {
       setIsPlaying(true);
@@ -31,8 +37,11 @@ export const playTrack = ({
 
         repsInterval = workerTimers.setInterval(() => {
           timesPlayed++;
+          prevTimesPlayed = timesPlayed;
+
           if (timesPlayed === audioNote.reps) {
             setIsPlaying(false);
+            prevTimesPlayed = timesPlayed;
             timesPlayed = 1;
             workerTimers.clearInterval(repsInterval);
             repsInterval = null;
@@ -43,17 +52,41 @@ export const playTrack = ({
       }
     } else {
       timesPlayed = 1;
+      prevTimesPlayed = 1;
       setIsPlaying(false);
       audioEl.current.pause();
       audioEl.current.currentTime = 0;
       repsInterval && workerTimers.clearInterval(repsInterval);
       repsInterval = null;
     }
+  } else {
+    // onEnded && onEnded();
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
-    if (timesPlayed === audioNote.reps) {
+
+    console.log('audio reps', audioNote.reps);
+    console.log('prev times played', prevTimesPlayed);
+
+    if (prevTimesPlayed === audioNote.reps) {
       onEnded && onEnded();
+    }
+
+    console.log('tracks total', totalTracks);
+    console.log('track index', currentTrackIndex + 1);
+    console.log(' ');
+    if (currentTrackIndex && totalTracks) {
+      if (
+        prevTimesPlayed === audioNote.reps &&
+        currentTrackIndex + 1 === totalTracks
+      ) {
+        currentGroupIndex.current++;
+        setTimeout(() => {
+          playSubject();
+        }, audioPadding * 1000);
+        timesPlayed = 1;
+        prevTimesPlayed = 1;
+      }
     }
   };
 };
@@ -75,45 +108,4 @@ export const updateProgress = ({
       );
     };
   }
-};
-
-export const playGroup = ({
-  group,
-  audioEl,
-  isPlaying,
-  timesPlayed,
-  setIsPlaying,
-  audioPadding,
-  repsInterval,
-  currentIndex,
-  setCurrentTrack,
-  setPlayingTrackIndex,
-}) => {
-  currentIndex = 0;
-  setTimeout(() => {
-    const playNext = () => {
-      setCurrentTrack(group.children[currentIndex].track.name);
-      const playArgs = {
-        audioEl,
-        audioNote: group.children[currentIndex],
-        isPlaying,
-        timesPlayed,
-        setIsPlaying,
-        audioPadding,
-        repsInterval,
-        onEnded,
-      };
-      playTrack(playArgs);
-    };
-
-    const onEnded = () => {
-      currentIndex++;
-      setPlayingTrackIndex && setPlayingTrackIndex(currentIndex + 1);
-      setTimeout(() => {
-        playNext();
-      }, audioPadding * 1000);
-    };
-
-    playNext();
-  }, 500);
 };

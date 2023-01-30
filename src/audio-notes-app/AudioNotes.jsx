@@ -5,27 +5,17 @@ import SortCard from '../common/SortCard';
 import { loadAudioNotesGroups } from '../store/apps/audioNotesActions';
 import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
-import { baseURL } from '../store/services/httpService';
-import { playGroup } from './services';
-
-let timesPlayed = 1;
-let repsInterval = null;
-let currentGroupIndex = 0;
-let currentTrackIndex = 0;
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState();
-  const [playingGroupIndex, setPlayingGroupIndex] = useState(1);
-  const audioEl = useRef();
+  const currentGroupIndex = useRef();
+  currentGroupIndex.current = 0;
 
   const { user } = useSelector(state => state.auth);
   const groups = useSelector(state => state.apps.audioNotes.groups);
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const dispatch = useDispatch();
-
-  const audioPadding = 5;
 
   useEffect(() => {
     dispatch(loadAudioNotesGroups());
@@ -36,20 +26,18 @@ const AudioNotes = () => {
   };
 
   const playSubject = () => {
-    currentGroupIndex = 0;
-    const playNextGroup = () => {
-      const groupArgs = {
-        group: groups[currentGroupIndex],
-        audioEl,
-        isPlaying,
-        timesPlayed,
-        setIsPlaying,
-        repsInterval,
-        currentIndex: currentTrackIndex,
-        setCurrentTrack,
-      };
-      playGroup(groupArgs);
-    };
+    const DOMGroups = document.querySelectorAll('.audio-notes-group');
+    if (!isPlaying) {
+      setIsPlaying(true);
+      [...DOMGroups][currentGroupIndex.current]
+        .querySelector('.play-btn')
+        .click();
+    } else {
+      setIsPlaying(false);
+      [...DOMGroups][currentGroupIndex.current]
+        .querySelector('.play-btn')
+        .click();
+    }
   };
 
   const item = (
@@ -74,19 +62,17 @@ const AudioNotes = () => {
         onClick={handleShowForm}
         showForm={showForm}
       />
-      {currentTrack && (
-        <audio
-          ref={audioEl}
-          src={`${baseURL}/audioNotes/stream/${currentTrack}`}
-        ></audio>
-      )}
       <SortCard sortTarget={null} onSort={null} checkedName='Checked' />
-      {showForm && (
-        <AudioNotesForm user={user} handleShowForm={handleShowForm} />
-      )}
+      {showForm && <AudioNotesForm />}
       {groups &&
         groups.map(group => (
-          <AudioNotesGroup key={group._id} user={user} group={group} />
+          <AudioNotesGroup
+            key={group._id}
+            user={user}
+            group={group}
+            playSubject={playSubject}
+            currentGroupIndex={currentGroupIndex}
+          />
         ))}
     </div>
   );

@@ -97,7 +97,7 @@ function AudioNotesForm() {
       .then(function (mediaStreamObj) {
         setMediaRecorder(new MediaRecorder(mediaStreamObj));
       });
-  }, []);
+  }, [audioBlob]);
 
   const record = e => {
     setIsRecording(!isRecording);
@@ -187,8 +187,8 @@ function AudioNotesForm() {
     };
 
     dispatch(createAudioNote(formData, params));
-
-    // if (audioBlob) dispatch(createAudioNote(audioNote));
+    dispatch(loadAudioNotesGroups());
+    setAudioBlob(null);
   };
 
   return (
