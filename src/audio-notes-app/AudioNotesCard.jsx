@@ -81,6 +81,7 @@ const AudioNotesCard = ({
           <div className='repeat-icon'></div>
           <input
             type='number'
+            dir='rtl'
             value={repetitions}
             onChange={handleUpdateReps}
           />

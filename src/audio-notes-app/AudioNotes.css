@@ -130,14 +130,15 @@
 }
 
 .audio-notes-card input[type='number'] {
-  width: 40px;
+  width: 44px;
   height: 50px;
-  text-align: left;
+  text-align: right;
   border: none;
   font-weight: 700;
   background-color: transparent;
   position: relative;
   outline: none;
+  transform: translateX(-22.8px);
 }
 
 .audio-notes-card .reps {
@@ -148,7 +149,7 @@
   position: absolute;
   filter: invert(0.3);
   top: 7px;
-  right: 52%;
+  right: 30%;
   display: block;
   width: 44px;
   height: 42px;
@@ -163,7 +164,7 @@
   filter: invert(0.3);
   position: absolute;
   top: 14px;
-  left: 47px;
+  left: 45px;
   background: transparent;
   border: none;
 }
@@ -194,9 +195,6 @@
   gap: 20px;
 }
 
-.audio-notes-card .track-details > h6 {
-}
-
 .audio-notes-card .play-btn {
   margin-left: 0;
 }
@@ -223,19 +221,29 @@
   border: solid 2px var(--white1);
   border-radius: 0.25rem;
   padding: 8px;
+}
+
+.audio-notes-group h6 {
+  text-align: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 8px;
+  margin-bottom: 5px;
+}
+
+.audio-notes-group-contols {
   display: grid;
-  grid-template-columns: 1fr 3fr 3fr 3fr 1fr;
+  grid-template-columns: 1fr 3fr 3fr 1fr;
   gap: 10px;
   align-items: center;
   justify-content: space-between;
 }
 
-.audio-notes-group > p {
+.audio-notes-group p {
   text-align: center;
 }
 
-.audio-notes-group > h6,
-.audio-notes-card .track-details > h6 {
+.audio-notes-group h6,
+.audio-notes-card .track-details h6 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

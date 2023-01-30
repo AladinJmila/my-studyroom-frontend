@@ -72,30 +72,31 @@ function AudioNotesGroup({
   return (
     <>
       <div className='audio-notes-group'>
-        <button ref={playBtn} onClick={playGroup} className='play-btn'>
-          <i
-            className={`fa fa-${isPlaying ? 'stop' : 'play'}`}
-            style={{ color: 'white', zIndex: 100 }}
-          ></i>
-        </button>
         <h6> {group.name}</h6>
-        {isPlaying ? (
-          <p>
-            {currentTrackIndex + 1} / {group.children.length}
-          </p>
-        ) : (
-          <p>{group.children.length} tracks</p>
-        )}
-
-        <p>{formatTime(groupDuration)}</p>
-        <button
-          className='expand-btn'
-          onClick={() => setShowContent(!showContent)}
-        >
-          <i
-            className={`fa fa-${showContent ? 'chevron-up' : 'chevron-down'}`}
-          ></i>
-        </button>
+        <div className='audio-notes-group-contols'>
+          <button ref={playBtn} onClick={playGroup} className='play-btn'>
+            <i
+              className={`fa fa-${isPlaying ? 'stop' : 'play'}`}
+              style={{ color: 'white', zIndex: 100 }}
+            ></i>
+          </button>
+          {isPlaying ? (
+            <p>
+              {currentTrackIndex + 1} / {group.children.length}
+            </p>
+          ) : (
+            <p>{group.children.length} tracks</p>
+          )}
+          <p>{formatTime(groupDuration)}</p>
+          <button
+            className='expand-btn'
+            onClick={() => setShowContent(!showContent)}
+          >
+            <i
+              className={`fa fa-${showContent ? 'chevron-up' : 'chevron-down'}`}
+            ></i>
+          </button>
+        </div>
       </div>
       {currentTrack && (
         <audio
