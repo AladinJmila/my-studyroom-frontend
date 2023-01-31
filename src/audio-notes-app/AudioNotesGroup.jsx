@@ -28,7 +28,6 @@ function AudioNotesGroup({
       setGroupsBtns(prev => [...prev, playBtn.current]);
     }
     group.children.forEach(child => {
-      console.log(child.isChecked);
       !child.isChecked &&
         setGroupDuration(prev => prev + child.track.duration * child.reps);
     });

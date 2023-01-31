@@ -36,6 +36,19 @@ const slice = createSlice({
     CREATE_AUDIO_NOTE: (audioNotes, action) => {
       audioNotes.list.unshift(action.payload);
     },
+
+    DELETE_ADUIO_NOTE: (audioNotes, action) => {
+      const { groups } = audioNotes;
+      const groupIndex = groups.findIndex(
+        g => g._id === action.payload.groupId
+      );
+
+      const audioNoteIndex = groups[groupIndex].children.findIndex(
+        a => a._id === action.payload._id
+      );
+
+      groups[groupIndex].children.splice(audioNoteIndex, 1);
+    },
   },
 });
 
@@ -46,5 +59,6 @@ export const {
   CREATE_AUDIO_NOTES_GROUP,
   GET_AUDIO_NOTES,
   CREATE_AUDIO_NOTE,
+  DELETE_ADUIO_NOTE,
 } = slice.actions;
 export default slice.reducer;

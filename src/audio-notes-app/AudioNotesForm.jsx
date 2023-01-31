@@ -97,7 +97,7 @@ function AudioNotesForm() {
       .then(function (mediaStreamObj) {
         setMediaRecorder(new MediaRecorder(mediaStreamObj));
       });
-  }, [audioBlob]);
+  }, []);
 
   const record = e => {
     setIsRecording(!isRecording);
@@ -116,7 +116,6 @@ function AudioNotesForm() {
       // console.log(mediaRecorder.state);
     } else {
       mediaRecorder.stop();
-      console.log(recordInterval);
       clearInterval(recordInterval);
       setRecordingTime(0);
       // console.log(mediaRecorder.state);
@@ -128,7 +127,6 @@ function AudioNotesForm() {
 
     mediaRecorder.onstop = e => {
       const blob = new Blob(chunks, { type: 'audio/wav' });
-      console.log(typeof blob);
       setAudioBlob(blob);
       getBlobDuration(blob).then(duration => {
         setAudioDuration(Math.ceil(duration));
@@ -187,7 +185,6 @@ function AudioNotesForm() {
     };
 
     dispatch(createAudioNote(formData, params));
-    dispatch(loadAudioNotesGroups());
     setAudioBlob(null);
   };
 

@@ -5,6 +5,8 @@ import { cardsBody } from '../services/stylesService';
 import { formatTime, playTrack, updateProgress } from './services';
 import { baseURL } from '../store/services/httpService';
 import Check from '../common/Check';
+import { useDispatch } from 'react-redux';
+import { deleteAudioNote } from '../store/apps/audioNotesActions';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -23,6 +25,8 @@ const AudioNotesCard = ({
   const [showUpdateRepsBtn, setShowUpdateRepsBtn] = useState(false);
   const [repetitions, setRepititions] = useState(audioNote.reps);
   const audioEl = useRef();
+
+  const dispatch = useDispatch();
 
   const playArgs = {
     audioEl,
@@ -54,6 +58,10 @@ const AudioNotesCard = ({
   const submitNewRepetitions = () => {
     setShowUpdateRepsBtn(false);
     console.log(repetitions);
+  };
+
+  const handleDelete = audioNote => {
+    dispatch(deleteAudioNote(audioNote));
   };
 
   const handleCheck = () => {
@@ -116,7 +124,7 @@ const AudioNotesCard = ({
             item={audioNote}
             onEdit={null}
             onToggleProp={null}
-            onDelete={null}
+            onDelete={handleDelete}
             vertical
           />
         )}

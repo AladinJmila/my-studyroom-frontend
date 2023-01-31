@@ -33,7 +33,6 @@ export const createAudioNote = (formData, params) => async dispatch => {
   try {
     const options = { params: params };
     const { data } = await httpService.post(apiEndPoint, formData, options);
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -41,9 +40,10 @@ export const createAudioNote = (formData, params) => async dispatch => {
 
 export const loadAudioNotesGroups = () => async dispatch => {
   const options = { headers: { userid } };
+
   try {
     const { data } = await httpService.get(`groups${apiEndPoint}`, options);
-
+    console.log(data);
     dispatch(actions.GET_AUDIO_NOTES_GROUPS(data));
   } catch (error) {
     console.log(error);
@@ -51,11 +51,20 @@ export const loadAudioNotesGroups = () => async dispatch => {
 };
 
 export const createAudioNotesGroup = group => async dispatch => {
-  console.log(group);
   try {
     const { data } = await httpService.post(`groups${apiEndPoint}`, group);
 
     dispatch(actions.CREATE_AUDIO_NOTES_GROUP(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteAudioNote = audioNote => async dispatch => {
+  try {
+    await httpService.delete(`${apiEndPoint}/${audioNote._id}`);
+
+    dispatch(actions.DELETE_ADUIO_NOTE(audioNote));
   } catch (error) {
     console.log(error);
   }
