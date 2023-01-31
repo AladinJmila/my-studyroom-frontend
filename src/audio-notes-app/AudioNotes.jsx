@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderCard from '../common/HeaderCard';
 import SortCard from '../common/SortCard';
-import { loadAudioNotesGroups } from '../store/apps/audioNotesActions';
+import { loadAudioNotes } from '../store/apps/audioNotesActions';
 import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
 
@@ -14,12 +14,12 @@ const AudioNotes = () => {
   currentGroupIndex.current = 0;
 
   const { user } = useSelector(state => state.auth);
-  const groups = useSelector(state => state.apps.audioNotes.groups);
+  const groups = useSelector(state => state.apps.audioNotes.list);
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadAudioNotesGroups());
+    dispatch(loadAudioNotes());
   }, []);
 
   const handleShowForm = () => {

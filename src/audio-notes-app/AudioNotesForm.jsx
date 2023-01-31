@@ -9,7 +9,7 @@ import Input from '../common/Input';
 import { loadSubjects } from '../store/apps/subjectsActions';
 import {
   createAudioNotesGroup,
-  loadAudioNotesGroups,
+  loadAudioNotes,
   createAudioNote,
 } from '../store/apps/audioNotesActions';
 import './AudioNotes.css';
@@ -36,7 +36,7 @@ function AudioNotesForm() {
   const audioEl = useRef();
 
   const subjects = useSelector(state => state.apps.subjects.list);
-  const groups = useSelector(state => state.apps.audioNotes.groups);
+  const groups = useSelector(state => state.apps.audioNotes.list);
 
   const audioNoteSchema = {
     subjectId: Joi.string().label('Subject').required(),
@@ -90,7 +90,7 @@ function AudioNotesForm() {
 
   useEffect(() => {
     dispatch(loadSubjects());
-    dispatch(loadAudioNotesGroups());
+    dispatch(loadAudioNotes());
 
     navigator.mediaDevices
       .getUserMedia({ audio: true })

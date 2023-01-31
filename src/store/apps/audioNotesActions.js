@@ -15,11 +15,11 @@ export const loadAudioNotes = () => async (dispatch, getState) => {
   const { lastFetch } = getState().apps.audioNotes;
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
   if (diffInMinutes < loadingInterval) return;
+  const options = { headers: { userid } };
 
   try {
     dispatch(actions.REQUEST_AUDIO_NOTES());
 
-    const options = { headers: { userid } };
     const { data } = await httpService.get(apiEndPoint, options);
 
     dispatch(actions.GET_AUDIO_NOTES(data));
@@ -29,33 +29,22 @@ export const loadAudioNotes = () => async (dispatch, getState) => {
   }
 };
 
+export const createAudioNotesGroup = group => async dispatch => {
+  try {
+    const { data } = await httpService.post(`${apiEndPoint}/group`, group);
+
+    dispatch(actions.CREATE_AUDIO_NOTES_GROUP(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createAudioNote = (formData, params) => async dispatch => {
   try {
     const options = { params: params };
     const { data } = await httpService.post(apiEndPoint, formData, options);
 
     dispatch(actions.CREATE_AUDIO_NOTE(data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const loadAudioNotesGroups = () => async dispatch => {
-  const options = { headers: { userid } };
-
-  try {
-    const { data } = await httpService.get(`groups${apiEndPoint}`, options);
-    dispatch(actions.GET_AUDIO_NOTES_GROUPS(data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const createAudioNotesGroup = group => async dispatch => {
-  try {
-    const { data } = await httpService.post(`groups${apiEndPoint}`, group);
-
-    dispatch(actions.CREATE_AUDIO_NOTES_GROUP(data));
   } catch (error) {
     console.log(error);
   }

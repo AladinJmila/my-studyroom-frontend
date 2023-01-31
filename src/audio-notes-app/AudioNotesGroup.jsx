@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import AudioNotesCard from './AudioNotesCard';
 import { formatTime, playTrack } from './services';
 import { baseURL } from '../store/services/httpService';
+import { userIsEditor } from '../services/permissionsService';
+import CardEllipsisMenu from '../common/CardEllipsisMenu';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -14,6 +16,7 @@ function AudioNotesGroup({
   currentGroupIndex,
   setGroupsBtns,
 }) {
+  const showPrivateInfo = user && userIsEditor(group, user._id);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
@@ -95,6 +98,17 @@ function AudioNotesGroup({
               className={`fa fa-${showContent ? 'chevron-up' : 'chevron-down'}`}
             ></i>
           </button>
+        </div>
+        <div className='ellipsis-container'>
+          {showPrivateInfo && (
+            <CardEllipsisMenu
+              item={group}
+              onEdit={null}
+              onToggleProp={null}
+              onDelete={true}
+              vertical
+            />
+          )}
         </div>
       </div>
       {currentTrack && (

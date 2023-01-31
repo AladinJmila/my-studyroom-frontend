@@ -4,7 +4,6 @@ const slice = createSlice({
   name: 'audioNotes',
   initialState: {
     list: [],
-    groups: [],
     loading: false,
     lastFetch: null,
     selectedAudioNote: null,
@@ -19,37 +18,29 @@ const slice = createSlice({
       audioNotes.loading = false;
     },
 
-    GET_AUDIO_NOTES_GROUPS: (audioNotes, action) => {
-      audioNotes.groups = action.payload;
+    GET_AUDIO_NOTES: (audioNotes, action) => {
+      audioNotes.list = action.payload;
     },
 
     CREATE_AUDIO_NOTES_GROUP: (audioNotes, action) => {
-      audioNotes.groups.unshift(action.payload);
-    },
-
-    GET_AUDIO_NOTES: (audioNotes, action) => {
-      // audioNotes.list = action.payload;
-      // audioNotes.loading = false;
-      // audioNotes.lastFetch = Date.now();
+      audioNotes.list.shift(action.payload);
     },
 
     CREATE_AUDIO_NOTE: (audioNotes, action) => {
-      const { groups } = audioNotes;
-      const groupIndex = groups.findIndex(g => g._id === action.payload._id);
-      groups.splice(groupIndex, 1, action.payload);
+      const { list } = audioNotes;
+      const groupIndex = list.findIndex(g => g._id === action.payload._id);
+      list.splice(groupIndex, 1, action.payload);
     },
 
     DELETE_ADUIO_NOTE: (audioNotes, action) => {
-      const { groups } = audioNotes;
-      const groupIndex = groups.findIndex(
-        g => g._id === action.payload.groupId
-      );
+      const { list } = audioNotes;
+      const groupIndex = list.findIndex(g => g._id === action.payload.groupId);
 
-      const audioNoteIndex = groups[groupIndex].children.findIndex(
+      const audioNoteIndex = list[groupIndex].children.findIndex(
         a => a._id === action.payload._id
       );
 
-      groups[groupIndex].children.splice(audioNoteIndex, 1);
+      list[groupIndex].children.splice(audioNoteIndex, 1);
     },
   },
 });

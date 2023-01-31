@@ -109,11 +109,6 @@
   gap: 10px;
 }
 
-.audio-notes-card * {
-  padding: 0;
-  margin: 0;
-}
-
 .audio-notes-card .timeline {
   -webkit-appearance: none;
   position: absolute;
@@ -197,15 +192,18 @@
 
 .audio-notes-card .play-btn {
   margin-left: 0;
+  padding: 0;
 }
 
 .audio-notes-card .fa-play:before {
   font-size: 20px;
 }
 
-.audio-notes-card .ellipsis-container {
-  position: absolute;
-  right: 16px;
+.audio-notes-card .track-details h6 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
 }
 
 /* Audio Notes Group */
@@ -214,6 +212,7 @@
 }
 
 .audio-notes-group {
+  position: relative;
   width: 100%;
   color: white;
   background-color: var(--dark1);
@@ -223,11 +222,14 @@
   padding: 8px;
 }
 
-.audio-notes-group h6 {
+.audio-notes-group > h6 {
   text-align: center;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   padding-bottom: 8px;
   margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .audio-notes-group-contols {
@@ -242,11 +244,11 @@
   text-align: center;
 }
 
-.audio-notes-group h6,
-.audio-notes-card .track-details h6 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.audio-notes-card .ellipsis-container,
+.audio-notes-group .ellipsis-container {
+  position: absolute;
+  right: 16px;
+  top: 5px;
 }
 
 .audio-notes-group .expand-btn {
