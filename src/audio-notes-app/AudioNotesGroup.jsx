@@ -4,6 +4,8 @@ import { formatTime, playTrack } from './services';
 import { baseURL } from '../store/services/httpService';
 import { userIsEditor } from '../services/permissionsService';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
+import { useDispatch } from 'react-redux';
+import { deleteAudioNoteGroup } from '../store/apps/audioNotesActions';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -25,6 +27,7 @@ function AudioNotesGroup({
   const audioEl = useRef();
   const audioPadding = 5;
   const playBtn = useRef();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (playBtn.current) {
@@ -71,6 +74,10 @@ function AudioNotesGroup({
     }, 500);
   };
 
+  const handleDelete = group => {
+    dispatch(deleteAudioNoteGroup(group));
+  };
+
   return (
     <>
       <div className='audio-notes-group'>
@@ -105,7 +112,7 @@ function AudioNotesGroup({
               item={group}
               onEdit={null}
               onToggleProp={null}
-              onDelete={true}
+              onDelete={handleDelete}
               vertical
             />
           )}

@@ -3,6 +3,7 @@ import httpService from '../services/httpService';
 import { getCurrentUser } from '../services/authService';
 import * as actions from './audioNotes';
 import config from '../../config.json';
+import { toast } from 'react-toastify';
 
 const apiEndPoint = '/audioNotes';
 let userid;
@@ -50,11 +51,25 @@ export const createAudioNote = (formData, params) => async dispatch => {
   }
 };
 
+export const deleteAudioNoteGroup = group => async dispatch => {
+  if (!group.children.length) {
+    try {
+      await httpService.delete(`${apiEndPoint}/group/${group._id}`);
+
+      dispatch(actions.DELETE_AUDIO_NOTE_GROUP(group._id));
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    toast.error('Group must be empty to be deleted');
+  }
+};
+
 export const deleteAudioNote = audioNote => async dispatch => {
   try {
     await httpService.delete(`${apiEndPoint}/${audioNote._id}`);
 
-    dispatch(actions.DELETE_ADUIO_NOTE(audioNote));
+    dispatch(actions.DELETE_AUDIO_NOTE(audioNote));
   } catch (error) {
     console.log(error);
   }
