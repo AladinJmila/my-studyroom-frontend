@@ -51,6 +51,16 @@ export const createAudioNote = (formData, params) => async dispatch => {
   }
 };
 
+export const patchAudioNote = (id, update) => async dispatch => {
+  try {
+    const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update);
+
+    dispatch(actions.UPDATE_AUDIO_NOTE(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deleteAudioNoteGroup = group => async dispatch => {
   if (!group.children.length) {
     try {

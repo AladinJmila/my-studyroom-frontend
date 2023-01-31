@@ -32,6 +32,17 @@ const slice = createSlice({
       list.splice(groupIndex, 1, action.payload);
     },
 
+    UPDATE_AUDIO_NOTE: (audioNotes, action) => {
+      const { list } = audioNotes;
+      const groupIndex = list.findIndex(g => g._id === action.payload.groupId);
+
+      const audioNoteIndex = list[groupIndex].children.findIndex(
+        a => a._id === action.payload._id
+      );
+
+      list[groupIndex].children.splice(audioNoteIndex, 1, action.payload);
+    },
+
     DELETE_AUDIO_NOTE_GROUP: (audioNotes, action) => {
       const groupIndex = audioNotes.list.findIndex(
         g => g._id === action.payload
@@ -59,6 +70,7 @@ export const {
   CREATE_AUDIO_NOTES_GROUP,
   GET_AUDIO_NOTES,
   CREATE_AUDIO_NOTE,
+  UPDATE_AUDIO_NOTE,
   DELETE_AUDIO_NOTE_GROUP,
   DELETE_AUDIO_NOTE,
 } = slice.actions;

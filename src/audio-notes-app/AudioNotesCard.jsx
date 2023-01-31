@@ -6,7 +6,10 @@ import { formatTime, playTrack, updateProgress } from './services';
 import { baseURL } from '../store/services/httpService';
 import Check from '../common/Check';
 import { useDispatch } from 'react-redux';
-import { deleteAudioNote } from '../store/apps/audioNotesActions';
+import {
+  deleteAudioNote,
+  patchAudioNote,
+} from '../store/apps/audioNotesActions';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -55,23 +58,28 @@ const AudioNotesCard = ({
     if (e.target.value > 0) setRepititions(e.target.value);
   };
 
-  const submitNewRepetitions = () => {
+  const submitNewRepetitions = audioNote => {
     setShowUpdateRepsBtn(false);
-    console.log(repetitions);
+    dispatch(patchAudioNote(audioNote._id, { reps: repetitions }));
   };
 
   const handleDelete = audioNote => {
     dispatch(deleteAudioNote(audioNote));
   };
 
-  const handleCheck = () => {
-    console.log(audioNote);
+  const handleCheck = audioNote => {
+    dispatch(
+      patchAudioNote(audioNote._id, { isChecked: !audioNote.isChecked })
+    );
   };
 
   return (
     <div style={cardsBody} className='card mb-1 p-1 ps-3 pe-3 audio-notes-card'>
       <div className='controls'>
-        <Check onCheck={handleCheck} isChecked={audioNote.isChecked} />
+        <Check
+          onCheck={() => handleCheck(audioNote)}
+          isChecked={audioNote.isChecked}
+        />
         <button
           type='button'
           onClick={() => extendedPlay(playTrack, updateProgress)}
@@ -97,7 +105,7 @@ const AudioNotesCard = ({
             <button
               type='button'
               className='update-reps'
-              onClick={submitNewRepetitions}
+              onClick={() => submitNewRepetitions(audioNote)}
             >
               <i className='fa fa-check'></i>
             </button>
