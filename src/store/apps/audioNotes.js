@@ -28,13 +28,15 @@ const slice = createSlice({
     },
 
     GET_AUDIO_NOTES: (audioNotes, action) => {
-      audioNotes.list = action.payload;
-      audioNotes.loading = false;
-      audioNotes.lastFetch = Date.now();
+      // audioNotes.list = action.payload;
+      // audioNotes.loading = false;
+      // audioNotes.lastFetch = Date.now();
     },
 
     CREATE_AUDIO_NOTE: (audioNotes, action) => {
-      audioNotes.list.unshift(action.payload);
+      const { groups } = audioNotes;
+      const groupIndex = groups.findIndex(g => g._id === action.payload._id);
+      groups.splice(groupIndex, 1, action.payload);
     },
 
     DELETE_ADUIO_NOTE: (audioNotes, action) => {

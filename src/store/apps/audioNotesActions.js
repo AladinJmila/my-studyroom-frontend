@@ -33,6 +33,8 @@ export const createAudioNote = (formData, params) => async dispatch => {
   try {
     const options = { params: params };
     const { data } = await httpService.post(apiEndPoint, formData, options);
+
+    dispatch(actions.CREATE_AUDIO_NOTE(data));
   } catch (error) {
     console.log(error);
   }
@@ -43,7 +45,6 @@ export const loadAudioNotesGroups = () => async dispatch => {
 
   try {
     const { data } = await httpService.get(`groups${apiEndPoint}`, options);
-    console.log(data);
     dispatch(actions.GET_AUDIO_NOTES_GROUPS(data));
   } catch (error) {
     console.log(error);
