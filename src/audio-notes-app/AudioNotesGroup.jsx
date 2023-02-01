@@ -22,7 +22,6 @@ function AudioNotesGroup({
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
-  const [groupDuration, setGroupDuration] = useState(0);
 
   const audioEl = useRef();
   const audioPadding = 5;
@@ -33,10 +32,6 @@ function AudioNotesGroup({
     if (playBtn.current) {
       setGroupsBtns(prev => [...prev, playBtn.current]);
     }
-    group.children.forEach(child => {
-      !child.isChecked &&
-        setGroupDuration(prev => prev + child.track.duration * child.reps);
-    });
   }, []);
 
   const playGroup = () => {
@@ -96,7 +91,7 @@ function AudioNotesGroup({
           ) : (
             <p>{group.children.length} tracks</p>
           )}
-          <p>{formatTime(groupDuration)}</p>
+          <p>{formatTime(group.props.totalDuration)}</p>
           <button
             className='expand-btn'
             onClick={() => setShowContent(!showContent)}

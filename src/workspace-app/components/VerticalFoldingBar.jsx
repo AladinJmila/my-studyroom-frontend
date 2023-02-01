@@ -103,9 +103,7 @@ const VerticalFoldingBar = ({ name, show, count, setShow, itemRef }) => {
       ></i>
       {!show && (
         <>
-          {name === appName.sessionsAndTimer ||
-          name === appName.audioNotes ||
-          name === appName.visualNotes ? (
+          {name === appName.sessionsAndTimer || name === appName.visualNotes ? (
             <div
               className='folding-bar-items-count'
               style={{ visibility: 'hidden' }}

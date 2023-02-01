@@ -100,6 +100,7 @@ const AudioNotesCard = ({
             dir='rtl'
             value={repetitions}
             onChange={handleUpdateReps}
+            readOnly={audioNote.isChecked}
           />
           {showUpdateRepsBtn && (
             <button

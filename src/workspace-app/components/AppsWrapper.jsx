@@ -44,6 +44,10 @@ const AppsWrapper = ({
     state => state.ui.practicalsPerSubject[subjectName]
   );
 
+  const audioNotesCount = useSelector(
+    state => state.ui.audioNotesPerSubject[subjectName]
+  );
+
   const appsWrapperArray = [
     {
       name: appName.sessionsAndTimer,
@@ -87,7 +91,7 @@ const AppsWrapper = ({
     },
     {
       name: appName.audioNotes,
-      count: 0,
+      count: audioNotesCount,
       show: showAudioNotes,
       setShow: setShowAudioNotes,
       setRef: setAudioNotesRef,

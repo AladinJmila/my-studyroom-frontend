@@ -43,6 +43,11 @@ const slice = createSlice({
       list[groupIndex].children.splice(audioNoteIndex, 1, action.payload);
     },
 
+    UPDATE_AUDIO_NOTE_GROUP_DURATION: (audioNotes, action) => {
+      if (action.payload.upadate.hasOwnProperty('reps')) {
+      }
+    },
+
     DELETE_AUDIO_NOTE_GROUP: (audioNotes, action) => {
       const groupIndex = audioNotes.list.findIndex(
         g => g._id === action.payload

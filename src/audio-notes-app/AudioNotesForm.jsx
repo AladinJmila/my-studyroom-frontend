@@ -81,7 +81,7 @@ function AudioNotesForm() {
     const group = {
       subjectId,
       name: groupName,
-      props: { duration: 0 },
+      props: { totalDuration: 0, remainingDuration: 0 },
     };
     dispatch(createAudioNotesGroup(group));
     handleShowGroupInput();

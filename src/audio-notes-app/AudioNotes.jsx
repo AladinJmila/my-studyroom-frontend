@@ -52,7 +52,7 @@ const AudioNotes = () => {
     <div className='audio-notes-container'>
       <HeaderCard
         user={user}
-        count={0}
+        count={groups.length}
         item={item}
         onClick={handleShowForm}
         showForm={showForm}

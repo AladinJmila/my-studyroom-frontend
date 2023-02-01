@@ -6,6 +6,7 @@ import {
   setNotesPerSubject,
   setResourcesPerSubject,
   setPracticalsPerSubject,
+  setAudioNotesPerSubject,
 } from './../../store/ui/uiParams';
 import SubjectsShareForm from './SubjectsSahreForm';
 import { userIsEditor } from './../../services/permissionsService';
@@ -43,6 +44,7 @@ const SubjectsCard = ({
   dispatch(setNotesPerSubject(subject.name, subject.numberOfNotes));
   dispatch(setResourcesPerSubject(subject.name, subject.numberOfResources));
   dispatch(setPracticalsPerSubject(subject.name, subject.numberOfPracticals));
+  dispatch(setAudioNotesPerSubject(subject.name, subject.numberOfAudioNotes));
 
   const handleShowShareForm = () => {
     setShowShareForm(showShareForm ? false : true);
