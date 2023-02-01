@@ -45,7 +45,7 @@ body {
 .data-column-content {
   margin: 5px 5px 5px 10px;
   min-width: 500px;
-  max-width: 600px;
+  max-width: 500px;
   display: inline-block;
   height: 90vh;
 }

@@ -92,6 +92,14 @@ function AudioNotesGroup({
             <p>{group.children.length} tracks</p>
           )}
           <p>{formatTime(group.props.totalDuration)}</p>
+          <p>
+            {Math.ceil(
+              ((group.props.totalDuration - group.props.remainingDuration) /
+                group.props.totalDuration) *
+                100
+            )}
+            %
+          </p>
           <button
             className='expand-btn'
             onClick={() => setShowContent(!showContent)}

@@ -36,6 +36,7 @@ function AudioNotesForm() {
   const audioEl = useRef();
 
   const subjects = useSelector(state => state.apps.subjects.list);
+  const { selectedSubject } = useSelector(state => state.apps.subjects);
   const groups = useSelector(state => state.apps.audioNotes.list);
 
   const audioNoteSchema = {
@@ -90,14 +91,17 @@ function AudioNotesForm() {
 
   useEffect(() => {
     dispatch(loadSubjects());
-    dispatch(loadAudioNotes());
+    subjectId && dispatch(loadAudioNotes(subjectId));
+    if (selectedSubject && selectedSubject.name !== 'All Subjects') {
+      setSubjectId(selectedSubject._id);
+    }
 
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then(function (mediaStreamObj) {
         setMediaRecorder(new MediaRecorder(mediaStreamObj));
       });
-  }, []);
+  }, [subjectId, selectedSubject]);
 
   const record = e => {
     setIsRecording(!isRecording);
@@ -194,6 +198,7 @@ function AudioNotesForm() {
         name='subjectId'
         label='Subject'
         options={subjects}
+        value={subjectId}
         required
         onChange={e => setSubjectId(e.target.value)}
       />

@@ -12,7 +12,7 @@ const loadingInterval = Number(config.loadingInterval);
 
 if (user) userid = user._id;
 
-export const loadAudioNotes = () => async (dispatch, getState) => {
+export const loadAudioNotes = subjectId => async (dispatch, getState) => {
   const { lastFetch } = getState().apps.audioNotes;
   const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
   if (diffInMinutes < loadingInterval) return;
@@ -21,7 +21,10 @@ export const loadAudioNotes = () => async (dispatch, getState) => {
   try {
     dispatch(actions.REQUEST_AUDIO_NOTES());
 
-    const { data } = await httpService.get(apiEndPoint, options);
+    const { data } = await httpService.get(
+      `${apiEndPoint}/${subjectId}`,
+      options
+    );
 
     dispatch(actions.GET_AUDIO_NOTES(data));
   } catch (error) {
@@ -55,7 +58,7 @@ export const patchAudioNote = (id, update) => async dispatch => {
   try {
     const { data } = await httpService.patch(`${apiEndPoint}/${id}`, update);
 
-    dispatch(actions.UPDATE_AUDIO_NOTE(data));
+    dispatch(actions.UPDATE_AUDIO_NOTE({ data, update }));
   } catch (error) {
     console.log(error);
   }

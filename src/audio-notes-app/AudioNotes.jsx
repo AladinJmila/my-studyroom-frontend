@@ -5,6 +5,7 @@ import SortCard from '../common/SortCard';
 import { loadAudioNotes } from '../store/apps/audioNotesActions';
 import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
+import { BeatLoader } from 'react-spinners';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
@@ -13,14 +14,20 @@ const AudioNotes = () => {
   const currentGroupIndex = useRef();
   currentGroupIndex.current = 0;
 
-  const { user } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const groups = useSelector(state => state.apps.audioNotes.list);
   const { selectedSubject } = useSelector(state => state.apps.subjects);
-  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
+  const { loading } = useSelector(state => state.apps.audioNotes);
+
+  const subjectIsValid = subject => {
+    return subject && subject.name !== 'All Subjects';
+  };
 
   useEffect(() => {
-    dispatch(loadAudioNotes());
-  }, []);
+    if (subjectIsValid(selectedSubject))
+      dispatch(loadAudioNotes(selectedSubject._id));
+  }, [selectedSubject]);
 
   const handleShowForm = () => {
     setShowFrom(showForm ? false : true);
@@ -41,7 +48,7 @@ const AudioNotes = () => {
           playSubject();
         }}
         className='play-btn'
-        disabled={!selectedSubject || selectedSubject?.name === 'All Subjects'}
+        disabled={subjectIsValid(selectedSubject)}
       >
         <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
       </button>
@@ -59,17 +66,31 @@ const AudioNotes = () => {
       />
       <SortCard sortTarget={null} onSort={null} checkedName='Checked' />
       {showForm && <AudioNotesForm />}
-      {groups &&
-        groups.map(group => (
-          <AudioNotesGroup
-            key={group._id}
-            user={user}
-            group={group}
-            setGroupsBtns={setGroupsBtns}
-            playSubject={playSubject}
-            currentGroupIndex={currentGroupIndex}
-          />
-        ))}
+      {loading ? (
+        <div className='center-spinner'>
+          <BeatLoader size={50} color={'#6A7475'} loading={loading} />
+        </div>
+      ) : (
+        <>
+          {subjectIsValid(selectedSubject) ? (
+            groups &&
+            groups.map(group => (
+              <AudioNotesGroup
+                key={group._id}
+                user={user}
+                group={group}
+                setGroupsBtns={setGroupsBtns}
+                playSubject={playSubject}
+                currentGroupIndex={currentGroupIndex}
+              />
+            ))
+          ) : (
+            <div className='d-flex justify-content-center'>
+              <b>Select a specific Subject to load Audio Notes</b>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
