@@ -56,7 +56,7 @@ const NotesCard = ({ user, note, onDelete, onToggleProp, onEdit }) => {
         }
 
         reps++;
-      }, 1000);
+      }, 500);
 
       setBtnColor('success');
       setTimeout(() => setBtnColor('neutral'), 3000);

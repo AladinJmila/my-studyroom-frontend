@@ -10,8 +10,8 @@ const HeaderCard = ({
 }) => {
   return (
     <div className='d-flex flex-row justify-content-between sticky-top app-header'>
-      <h6 className='p-2'>
-        Showing {count} <b>{item}</b>
+      <h6 className='p-2 d-flex'>
+        Showing {count} <b className='ms-2'> {item}</b>
       </h6>
       <div>
         {user && youtube && (

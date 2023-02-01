@@ -4,6 +4,6 @@ export const appName = {
   resources: 'Resources',
   studyNotes: 'StudyNotes',
   practiceNotes: 'PracticeNotes',
-  audioNotes: 'AudioNotes (planned)',
+  audioNotes: 'AudioNotes',
   visualNotes: 'VisualNotes (planned)',
 };

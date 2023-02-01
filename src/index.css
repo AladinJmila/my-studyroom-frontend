@@ -45,7 +45,7 @@ body {
 .data-column-content {
   margin: 5px 5px 5px 10px;
   min-width: 500px;
-  max-width: 600px;
+  max-width: 500px;
   display: inline-block;
   height: 90vh;
 }
@@ -312,22 +312,29 @@ select option {
 }
 
 .card p,
-.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred
+  p,
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused
   p {
   margin-bottom: 10px;
 }
 
 .card ul,
-.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred
+  ul,
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused
   ul {
-  margin-bottom: 12px;
+  margin-bottom: 12px !important;
 }
 
 .card p + ul,
-.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred
+  p
+  + ul,
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused
   p
   + ul {
-  margin-top: -10px;
+  margin-top: -10px !important;
 }
 
 .card .subject-name {
@@ -339,7 +346,6 @@ select option {
 .extract-tasks-btn {
   border: none;
   margin: -4px 0 8px;
-  /* color: #6c757d !important; */
   font-weight: 500;
   padding: 0;
 }
