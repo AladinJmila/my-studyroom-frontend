@@ -48,7 +48,7 @@ const AudioNotes = () => {
           playSubject();
         }}
         className='play-btn'
-        disabled={subjectIsValid(selectedSubject)}
+        disabled={!subjectIsValid(selectedSubject)}
       >
         <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
       </button>
