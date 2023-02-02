@@ -93,11 +93,13 @@ function AudioNotesGroup({
           )}
           <p>{formatTime(group.props.totalDuration)}</p>
           <p>
-            {Math.ceil(
-              ((group.props.totalDuration - group.props.remainingDuration) /
-                group.props.totalDuration) *
-                100
-            )}
+            {group.props.totalDuration
+              ? Math.ceil(
+                  ((group.props.totalDuration - group.props.remainingDuration) /
+                    group.props.totalDuration) *
+                    100
+                )
+              : 0}
             %
           </p>
           <button
