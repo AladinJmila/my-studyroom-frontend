@@ -5,7 +5,8 @@ import { baseURL } from '../store/services/httpService';
 import { userIsEditor } from '../services/permissionsService';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { useDispatch } from 'react-redux';
-import { deleteAudioNoteGroup } from '../store/apps/audioNotesActions';
+import { deleteAudioNoteGroup, updateAudioNotesGroup } from '../store/apps/audioNotesActions';
+import Check from '../common/Check';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -73,9 +74,19 @@ function AudioNotesGroup({
     dispatch(deleteAudioNoteGroup(group));
   };
 
+  const handleCheck = group => {
+    dispatch(updateAudioNotesGroup(group._id, {isChecked: !group.isChecked}))
+  }
+
   return (
     <>
       <div className='audio-notes-group'>
+        <div className="check-container">
+          <Check 
+          onCheck={() => handleCheck(group)}
+          isChecked={group.isChecked}  
+          />
+        </div>
         <h6> {group.name}</h6>
         <div className='audio-notes-group-contols'>
           <button ref={playBtn} onClick={playGroup} className='play-btn'>

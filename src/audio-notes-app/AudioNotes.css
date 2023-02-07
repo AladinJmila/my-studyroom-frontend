@@ -244,6 +244,12 @@
   text-align: center;
 }
 
+.audio-notes-group .check-container {
+  position: absolute;
+  top: 2px;
+  left: 10px;
+}
+
 .audio-notes-card .ellipsis-container,
 .audio-notes-group .ellipsis-container {
   position: absolute;
