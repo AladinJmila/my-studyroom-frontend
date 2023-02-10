@@ -27,7 +27,10 @@ function AudioNotesGroup({
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
-  const [audioPadding, setAudioPadding] = useState(5);
+  const [audioPadding, setAudioPadding] = useState(
+    group.props?.audioPadding ? group.props.audioPadding : 3
+  );
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
 
   const audioEl = useRef();
   const playBtn = useRef();
@@ -82,9 +85,13 @@ function AudioNotesGroup({
     dispatch(updateAudioNotesGroup(group._id, { isChecked: !group.isChecked }));
   };
 
-  const handleSubmit = () => {
-    console.log(audioPadding);
-    // setShowMenu(false);
+  const handleAudioPadding = group => {
+    dispatch(
+      updateAudioNotesGroup(group._id, {
+        props: { ...group.props, audioPadding: parseInt(audioPadding) },
+      })
+    );
+    setShowSettingsMenu(false);
   };
 
   return (
@@ -131,7 +138,10 @@ function AudioNotesGroup({
             ></i>
           </button>
         </div>
-        <SettingsMenu>
+        <SettingsMenu
+          showSettingsMenu={showSettingsMenu}
+          setShowSettingsMenu={setShowSettingsMenu}
+        >
           <>
             <span className='setting-name'>Audio padding:</span>
             <input
@@ -139,7 +149,11 @@ function AudioNotesGroup({
               value={audioPadding}
               onChange={e => setAudioPadding(e.target.value)}
             />
-            <button type='button' className='submit' onClick={handleSubmit}>
+            <button
+              type='button'
+              className='submit'
+              onClick={() => handleAudioPadding(group)}
+            >
               <i className='fa fa-check'></i>
             </button>
           </>

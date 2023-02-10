@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import './SettingsMenu.css';
 
-const SettingsMenu = ({ children }) => {
-  const [showMenu, setShowMenu] = useState(false);
+const SettingsMenu = ({ children, showSettingsMenu, setShowSettingsMenu }) => {
+  const [showMenu, setShowMenu] = useState(showSettingsMenu);
+  useEffect(() => {
+    setShowMenu(showSettingsMenu);
+  }, [showSettingsMenu]);
 
   return (
     <div className='settings-menu'>
       <i
-        onClick={() => setShowMenu(!showMenu)}
+        onClick={() => {
+          setShowMenu(!showMenu);
+          setShowSettingsMenu(!showMenu);
+        }}
         className='fa fa-gear pointer'
         aria-hidden='true'
       ></i>
