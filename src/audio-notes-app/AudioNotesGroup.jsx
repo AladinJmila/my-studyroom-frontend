@@ -5,8 +5,12 @@ import { baseURL } from '../store/services/httpService';
 import { userIsEditor } from '../services/permissionsService';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
 import { useDispatch } from 'react-redux';
-import { deleteAudioNoteGroup, updateAudioNotesGroup } from '../store/apps/audioNotesActions';
+import {
+  deleteAudioNoteGroup,
+  updateAudioNotesGroup,
+} from '../store/apps/audioNotesActions';
 import Check from '../common/Check';
+import SettingsMenu from '../common/SettingsMenu';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -23,9 +27,9 @@ function AudioNotesGroup({
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
+  const [audioPadding, setAudioPadding] = useState(5);
 
   const audioEl = useRef();
-  const audioPadding = 5;
   const playBtn = useRef();
   const dispatch = useDispatch();
 
@@ -75,16 +79,21 @@ function AudioNotesGroup({
   };
 
   const handleCheck = group => {
-    dispatch(updateAudioNotesGroup(group._id, {isChecked: !group.isChecked}))
-  }
+    dispatch(updateAudioNotesGroup(group._id, { isChecked: !group.isChecked }));
+  };
+
+  const handleSubmit = () => {
+    console.log(audioPadding);
+    // setShowMenu(false);
+  };
 
   return (
     <>
       <div className='audio-notes-group'>
-        <div className="check-container">
-          <Check 
-          onCheck={() => handleCheck(group)}
-          isChecked={group.isChecked}  
+        <div className='check-container'>
+          <Check
+            onCheck={() => handleCheck(group)}
+            isChecked={group.isChecked}
           />
         </div>
         <h6> {group.name}</h6>
@@ -122,6 +131,19 @@ function AudioNotesGroup({
             ></i>
           </button>
         </div>
+        <SettingsMenu>
+          <>
+            <span className='setting-name'>Audio padding:</span>
+            <input
+              type='number'
+              value={audioPadding}
+              onChange={e => setAudioPadding(e.target.value)}
+            />
+            <button type='button' className='submit' onClick={handleSubmit}>
+              <i className='fa fa-check'></i>
+            </button>
+          </>
+        </SettingsMenu>
         <div className='ellipsis-container'>
           {showPrivateInfo && (
             <CardEllipsisMenu
