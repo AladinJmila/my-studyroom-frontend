@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
 import HeaderCard from '../common/HeaderCard';
 import SortCard from '../common/SortCard';
-import { loadAudioNotes } from '../store/apps/audioNotesActions';
 import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
-import { BeatLoader } from 'react-spinners';
+import { loadAudioNotes } from '../store/apps/audioNotesActions';
+import { formatTime } from './services';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
@@ -38,10 +39,14 @@ const AudioNotes = () => {
       return setSubjectIsPlaying(false);
     groupsBtns[currentGroupIndex.current].click();
   };
-
+  console.log(groups);
   const item = (
     <div className='d-flex'>
-      <div>AudioNotes</div>
+      <div className='me-2'>AudioNotes</div>
+      <div className='fw-normal'>
+        {subjectIsValid(selectedSubject) &&
+          formatTime(groups.reduce((a, b) => a + b.props.totalDuration, 0))}
+      </div>
       <button
         onClick={() => {
           setSubjectIsPlaying(!subjectIsPlaying);
@@ -57,15 +62,17 @@ const AudioNotes = () => {
 
   return (
     <div className='audio-notes-container'>
-      <HeaderCard
-        user={user}
-        count={groups.length}
-        item={item}
-        onClick={handleShowForm}
-        showForm={showForm}
-      />
-      <SortCard sortTarget={null} onSort={null} checkedName='Checked' />
-      {showForm && <AudioNotesForm />}
+      <div className='sticky-top'>
+        <HeaderCard
+          user={user}
+          count={groups.length}
+          item={item}
+          onClick={handleShowForm}
+          showForm={showForm}
+        />
+        <SortCard sortTarget={null} onSort={null} checkedName='Checked' />
+        {showForm && <AudioNotesForm />}
+      </div>
       {loading ? (
         <div className='center-spinner'>
           <BeatLoader size={50} color={'#6A7475'} loading={loading} />
