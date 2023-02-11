@@ -68,16 +68,16 @@ export const playTrack = ({
   audioEl.current.onended = () => {
     setIsPlaying(false);
 
-    console.log('audio reps', audioNote.reps);
-    console.log('prev times played', prevTimesPlayed);
+    // console.log('audio reps', audioNote.reps);
+    // console.log('prev times played', prevTimesPlayed);
 
     if (prevTimesPlayed === audioNote.reps) {
       onEnded && onEnded();
     }
 
     if (currentTrackIndex && totalTracks) {
-      console.log('tracks total', totalTracks);
-      console.log('track index', currentTrackIndex + 1);
+      // console.log('tracks total', totalTracks);
+      // console.log('track index', currentTrackIndex + 1);
       if (
         prevTimesPlayed === audioNote.reps &&
         currentTrackIndex + 1 === totalTracks

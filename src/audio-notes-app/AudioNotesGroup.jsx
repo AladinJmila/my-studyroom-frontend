@@ -53,7 +53,7 @@ function AudioNotesGroup({
     setPlayingTrackIndex(currentTrackIndex);
   }, [currentGroupIndex.current]);
 
-  console.log(currentTrackIndex);
+  // console.log(currentTrackIndex);
   const playGroup = () => {
     if (!group.isChecked) {
       // currentTrackIndex = 0;
@@ -67,7 +67,7 @@ function AudioNotesGroup({
         : audioPadding * 1000;
       setTimeout(() => {
         const playNext = () => {
-          console.log('attempted play');
+          // console.log('attempted play');
           setCurrentTrack(group.children[currentTrackIndex].track.name);
           const playArgs = {
             audioEl,
@@ -188,15 +188,9 @@ function AudioNotesGroup({
               <i className='fa fa-step-forward'></i>
             </button>
           </div>
-          {/* {isPlaying ? ( */}
-          {/* <p>
-              {currentTrackIndex + 1} / {group.children.length}
-            </p> */}
-          {/* // ) : ( */}
           <p>
             {playingTrackIndex + 1} / {group.children.length} tracks
           </p>
-          {/* // )} */}
           <p>{formatTime(group.props.totalDuration)}</p>
           <p>
             {group.props.totalDuration

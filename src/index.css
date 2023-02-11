@@ -6,7 +6,8 @@
   --color3: #dddddd;
 
   --white1: #fdfdfd;
-  --theme-primary: #2870dc;
+  /* --theme-primary: #2870dc; */
+  --theme-primary: #1972f5;
   --theme-success: #6ead27;
   --theme-danger: #f24570;
   --theme-dangert: #f24570b5;
@@ -101,7 +102,8 @@ body {
 }
 
 .closing-frame {
-  min-width: 45px;
+  width: 55px !important;
+  height: 91vh;
   background-color: var(--dark1);
   border-radius: 10px 0 0 10px;
   box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.5);

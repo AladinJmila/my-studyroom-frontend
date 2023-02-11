@@ -269,11 +269,25 @@
   display: flex;
 }
 
-.audio-notes-group .audio-control-btn {
+.audio-notes-group .audio-control-btn,
+.audio-header-details .audio-control-btn {
   border: none;
   background-color: transparent;
   width: 20px;
   margin-left: 8px;
-  color: white;
   z-index: 100;
+}
+
+.audio-notes-group .audio-control-btn {
+  color: white;
+}
+
+.audio-header-details .audio-control-btn.for-groups {
+  color: var(--theme-primary);
+}
+
+.audio-header-details .playing-group {
+  position: absolute;
+  top: 65%;
+  left: 40%;
 }
