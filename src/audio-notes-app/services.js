@@ -16,9 +16,10 @@ export const playTrack = ({
   isPlaying,
   timesPlayed,
   setIsPlaying,
-  audioPadding,
+  timeoutOffset,
   repsInterval,
   currentTrackIndex,
+  setPlayingTrackIndex,
   totalTracks,
   onEnded,
   playSubject,
@@ -33,7 +34,7 @@ export const playTrack = ({
 
       if (!repsInterval && audioNote.reps > 1) {
         const intervalDuration =
-          (audioNote.track.duration + audioPadding) * 1000;
+          (audioNote.track.duration + timeoutOffset) * 1000;
 
         repsInterval = workerTimers.setInterval(() => {
           timesPlayed++;
@@ -61,6 +62,7 @@ export const playTrack = ({
     }
   } else {
     currentTrackIndex++;
+    setPlayingTrackIndex(currentTrackIndex);
     onEnded && onEnded();
   }
   audioEl.current.onended = () => {
@@ -84,7 +86,7 @@ export const playTrack = ({
 
         setTimeout(() => {
           playSubject();
-        }, audioPadding * 1000);
+        }, timeoutOffset * 1000);
         timesPlayed = 1;
         prevTimesPlayed = 1;
       }
