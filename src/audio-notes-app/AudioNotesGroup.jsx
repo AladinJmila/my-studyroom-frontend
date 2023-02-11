@@ -41,14 +41,23 @@ function AudioNotesGroup({
 
   useEffect(() => {
     if (playBtn.current) {
-      setGroupsBtns(prev => [...prev, playBtn.current]);
+      setGroupsBtns(prev => [
+        ...prev,
+        { prev: prevBtn.current, play: playBtn.current, next: nextBtn.current },
+      ]);
     }
   }, []);
 
+  useEffect(() => {
+    currentTrackIndex = 0;
+    setPlayingTrackIndex(currentTrackIndex);
+  }, [currentGroupIndex.current]);
+
+  console.log(currentTrackIndex);
   const playGroup = () => {
     if (!group.isChecked) {
       // currentTrackIndex = 0;
-      if (currentTrackIndex > group.children.length - 1) {
+      if (playingTrackIndex > group.children.length - 1) {
         setPlayingTrackIndex(0);
         currentTrackIndex = 0;
       }
@@ -111,6 +120,8 @@ function AudioNotesGroup({
 
   const handleStepBackward = () => {
     setIsPlaying(false);
+    timesPlayed = 1;
+    repsInterval = null;
     currentTrackIndex = playingTrackIndex;
 
     if (playingTrackIndex > 0) {
@@ -120,23 +131,25 @@ function AudioNotesGroup({
       currentTrackIndex = 0;
       setPlayingTrackIndex(0);
     }
-    // playGroup();
   };
-  console.log(currentTrackIndex);
-  console.log(playingTrackIndex);
+
   const handleStepForward = () => {
     setIsPlaying(false);
     currentTrackIndex = playingTrackIndex;
+    timesPlayed = 1;
+    repsInterval = null;
+
     if (playingTrackIndex < group.children.length - 1) {
       currentTrackIndex++;
       setPlayingTrackIndex(playingTrackIndex + 1);
     } else if (playingTrackIndex === group.children.length - 1) {
-      // currentTrackIndex = playingTrackIndex;
       currentTrackIndex = playingTrackIndex;
       setPlayingTrackIndex(playingTrackIndex);
     }
-    // playGroup();
   };
+
+  // console.log(currentTrackIndex);
+  // console.log(playingTrackIndex);
 
   return (
     <>

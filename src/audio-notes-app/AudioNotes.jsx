@@ -37,9 +37,9 @@ const AudioNotes = () => {
   const playSubject = () => {
     if (currentGroupIndex.current + 1 > groups.length)
       return setSubjectIsPlaying(false);
-    groupsBtns[currentGroupIndex.current].click();
+    groupsBtns[currentGroupIndex.current].play.click();
   };
-  console.log(groups);
+  console.log(groupsBtns);
   const item = (
     <div className='d-flex'>
       <div className='me-2'>AudioNotes</div>
