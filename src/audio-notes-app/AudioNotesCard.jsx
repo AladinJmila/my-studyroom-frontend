@@ -37,7 +37,7 @@ const AudioNotesCard = ({
     isPlaying,
     timesPlayed,
     setIsPlaying,
-    audioPadding,
+    timeoutOffset: audioPadding * 1000,
     repsInterval,
   };
 

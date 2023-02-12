@@ -125,7 +125,7 @@
 }
 
 .audio-notes-card input[type='number'] {
-  width: 48px;
+  width: 46px;
   height: 50px;
   text-align: right;
   border: none;
@@ -168,7 +168,7 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .audio-notes-card .controls {
@@ -234,7 +234,7 @@
 
 .audio-notes-group-contols {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 2fr 2fr 1fr;
   gap: 10px;
   align-items: center;
   justify-content: space-between;
@@ -242,6 +242,12 @@
 
 .audio-notes-group p {
   text-align: center;
+}
+
+.audio-notes-group .check-container {
+  position: absolute;
+  top: 2px;
+  left: 10px;
 }
 
 .audio-notes-card .ellipsis-container,
@@ -257,4 +263,34 @@
   color: white;
   display: flex;
   justify-content: right;
+}
+
+.audio-notes-group .audio-controls {
+  display: flex;
+}
+
+.audio-notes-group .audio-control-btn,
+.audio-header-details .audio-control-btn {
+  border: none;
+  background-color: transparent;
+  width: 20px;
+  margin-left: 8px;
+  z-index: 100;
+}
+
+.audio-notes-group .audio-control-btn {
+  color: white;
+}
+
+.audio-header-details .audio-control-btn.for-groups {
+  color: var(--theme-primary);
+}
+
+.audio-header-details .playing-group {
+  position: absolute;
+  top: 65%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: var(--theme-primary);
 }

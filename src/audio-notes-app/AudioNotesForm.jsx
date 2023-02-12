@@ -90,6 +90,10 @@ function AudioNotesForm() {
   };
 
   useEffect(() => {
+    if (groups.length) setGroupId(groups[groups.length - 1]._id);
+  }, [groups]);
+
+  useEffect(() => {
     dispatch(loadSubjects());
     subjectId && dispatch(loadAudioNotes(subjectId));
     if (selectedSubject && selectedSubject.name !== 'All Subjects') {
@@ -208,6 +212,7 @@ function AudioNotesForm() {
             name='groupId'
             label='Group'
             options={groups}
+            value={groupId}
             required
             onChange={e => setGroupId(e.target.value)}
           />

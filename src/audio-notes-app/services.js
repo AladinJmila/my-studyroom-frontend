@@ -16,9 +16,10 @@ export const playTrack = ({
   isPlaying,
   timesPlayed,
   setIsPlaying,
-  audioPadding,
+  timeoutOffset,
   repsInterval,
   currentTrackIndex,
+  setPlayingTrackIndex,
   totalTracks,
   onEnded,
   playSubject,
@@ -33,7 +34,7 @@ export const playTrack = ({
 
       if (!repsInterval && audioNote.reps > 1) {
         const intervalDuration =
-          (audioNote.track.duration + audioPadding) * 1000;
+          audioNote.track.duration * 1000 + timeoutOffset;
 
         repsInterval = workerTimers.setInterval(() => {
           timesPlayed++;
@@ -61,35 +62,38 @@ export const playTrack = ({
     }
   } else {
     currentTrackIndex++;
+    setPlayingTrackIndex(currentTrackIndex);
     onEnded && onEnded();
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
 
-    console.log('audio reps', audioNote.reps);
-    console.log('prev times played', prevTimesPlayed);
+    // console.log('audio reps', audioNote.reps);
+    // console.log('prev times played', prevTimesPlayed);
 
     if (prevTimesPlayed === audioNote.reps) {
       onEnded && onEnded();
     }
 
     if (currentTrackIndex && totalTracks) {
-      console.log('tracks total', totalTracks);
-      console.log('track index', currentTrackIndex + 1);
+      // console.log('tracks total', totalTracks);
+      // console.log('track index', currentTrackIndex + 1);
       if (
         prevTimesPlayed === audioNote.reps &&
         currentTrackIndex + 1 === totalTracks
       ) {
         currentGroupIndex.current = currentGroupIndex.current + 1;
+        // console.log('incremented group in services', currentGroupIndex.current);
 
         setTimeout(() => {
           playSubject();
-        }, audioPadding * 1000);
+          // console.log('called play subject');
+        }, timeoutOffset);
         timesPlayed = 1;
         prevTimesPlayed = 1;
       }
     }
-    console.log(' ');
+    // console.log(' ');
   };
 };
 

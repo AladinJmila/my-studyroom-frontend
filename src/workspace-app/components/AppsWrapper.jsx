@@ -112,9 +112,8 @@ const AppsWrapper = ({
   return (
     <div
       style={{ padding: 0, height: '91vh' }}
-      className='col scrolling-wrapper d-flex flex-row justify-content-between'
+      className='col scrolling-wrapper d-flex flex-row justify-content-evenly'
     >
-      <div></div>
       <AnimateReorderX>
         {sortedAppsArray.map(item => (
           <DataColumn
@@ -129,7 +128,6 @@ const AppsWrapper = ({
           />
         ))}
       </AnimateReorderX>
-      <div className='closing-frame'></div>
     </div>
   );
 };

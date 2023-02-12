@@ -44,6 +44,7 @@ function Workspace() {
         setVisualNotesRef={setVisualNotesRef}
         setSchedulesRef={setSchedulesRef}
       />
+      <div className='closing-frame'></div>
     </main>
   );
 }

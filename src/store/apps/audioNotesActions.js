@@ -35,13 +35,23 @@ export const loadAudioNotes = subjectId => async (dispatch, getState) => {
 
 export const createAudioNotesGroup = group => async dispatch => {
   try {
-    const { data } = await httpService.post(`${apiEndPoint}/group`, group);
+    const { data } = await httpService.post(`${apiEndPoint}/groups`, group);
 
     dispatch(actions.CREATE_AUDIO_NOTES_GROUP(data));
   } catch (error) {
     console.log(error);
   }
 };
+
+export const updateAudioNotesGroup = (id, update) => async dispatch => {
+  try {
+    const { data } = await httpService.patch(`${apiEndPoint}/groups/${id}`, update)
+
+    dispatch(actions.UPDATE_AUDIO_NOTES_GROUP(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const createAudioNote = (formData, params) => async dispatch => {
   try {
