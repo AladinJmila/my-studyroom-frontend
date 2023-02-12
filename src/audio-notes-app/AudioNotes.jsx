@@ -62,7 +62,7 @@ const AudioNotes = () => {
   };
 
   const playSubject = () => {
-    console.log('attempted playing subject');
+    // console.log('attempted playing subject');
     if (currentGroupIndex.current + 1 > groups.length) {
       setSubjectIsPlaying(false);
       return (currentGroupIndex.current = 0);

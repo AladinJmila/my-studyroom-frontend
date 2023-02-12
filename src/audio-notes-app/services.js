@@ -83,17 +83,17 @@ export const playTrack = ({
         currentTrackIndex + 1 === totalTracks
       ) {
         currentGroupIndex.current = currentGroupIndex.current + 1;
-        console.log('incremented group in services', currentGroupIndex.current);
+        // console.log('incremented group in services', currentGroupIndex.current);
 
         setTimeout(() => {
           playSubject();
-          console.log('called play subject');
+          // console.log('called play subject');
         }, timeoutOffset);
         timesPlayed = 1;
         prevTimesPlayed = 1;
       }
     }
-    console.log(' ');
+    // console.log(' ');
   };
 };
 
