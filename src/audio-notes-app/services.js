@@ -34,7 +34,7 @@ export const playTrack = ({
 
       if (!repsInterval && audioNote.reps > 1) {
         const intervalDuration =
-          (audioNote.track.duration + timeoutOffset) * 1000;
+          audioNote.track.duration * 1000 + timeoutOffset;
 
         repsInterval = workerTimers.setInterval(() => {
           timesPlayed++;
@@ -83,10 +83,12 @@ export const playTrack = ({
         currentTrackIndex + 1 === totalTracks
       ) {
         currentGroupIndex.current = currentGroupIndex.current + 1;
+        console.log('incremented group in services', currentGroupIndex.current);
 
         setTimeout(() => {
           playSubject();
-        }, timeoutOffset * 1000);
+          console.log('called play subject');
+        }, timeoutOffset);
         timesPlayed = 1;
         prevTimesPlayed = 1;
       }

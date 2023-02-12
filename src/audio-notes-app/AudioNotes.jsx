@@ -20,10 +20,11 @@ const AudioNotes = () => {
   }, []);
 
   useEffect(() => {
-    setPlayingGroupIndex(currentGroupIndex.current);
+    if (currentGroupIndex.current + 1 <= groups.length)
+      setPlayingGroupIndex(currentGroupIndex.current);
   }, [currentGroupIndex.current]);
 
-  console.log('thindex', playingGroupIndex);
+  // console.log('thindex', playingGroupIndex);
 
   const dispatch = useDispatch();
   const groups = useSelector(state => state.apps.audioNotes.list);
@@ -52,7 +53,7 @@ const AudioNotes = () => {
       currentGroupIndex.current = currentGroupIndex.current - 1;
       setPlayingGroupIndex(currentGroupIndex.current);
     }
-    console.log('from main', currentGroupIndex.current);
+    // console.log('from main', currentGroupIndex.current);
   };
 
   const getPrevTrack = () => {
@@ -61,11 +62,15 @@ const AudioNotes = () => {
   };
 
   const playSubject = () => {
-    if (currentGroupIndex.current + 1 > groups.length)
-      return setSubjectIsPlaying(false);
+    console.log('attempted playing subject');
+    if (currentGroupIndex.current + 1 > groups.length) {
+      setSubjectIsPlaying(false);
+      return (currentGroupIndex.current = 0);
+    }
+
     groupsBtns[currentGroupIndex.current].play.click();
     setSubjectIsPlaying(!subjectIsPlaying);
-    console.log(currentGroupIndex.current);
+    // console.log(currentGroupIndex.current);
   };
 
   const getNextTrack = () => {
@@ -81,7 +86,7 @@ const AudioNotes = () => {
       currentGroupIndex.current = currentGroupIndex.current + 1;
       setPlayingGroupIndex(currentGroupIndex.current);
     }
-    console.log('from main', currentGroupIndex.current);
+    // console.log('from main', currentGroupIndex.current);
   };
 
   const item = (

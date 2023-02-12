@@ -67,7 +67,7 @@ function AudioNotesGroup({
         : audioPadding * 1000;
       setTimeout(() => {
         const playNext = () => {
-          // console.log('attempted play');
+          console.log('attempted play');
           setCurrentTrack(group.children[currentTrackIndex].track.name);
           const playArgs = {
             audioEl,
