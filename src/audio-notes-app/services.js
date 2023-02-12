@@ -78,8 +78,10 @@ export const playTrack = ({
     if (currentTrackIndex && totalTracks) {
       // console.log('tracks total', totalTracks);
       // console.log('track index', currentTrackIndex + 1);
+      console.log(currentTrackIndex + 1);
       if (
-        prevTimesPlayed === audioNote.reps &&
+        (prevTimesPlayed === audioNote.reps &&
+          currentTrackIndex + 1 === totalTracks) ||
         currentTrackIndex + 1 === totalTracks
       ) {
         currentGroupIndex.current = currentGroupIndex.current + 1;
