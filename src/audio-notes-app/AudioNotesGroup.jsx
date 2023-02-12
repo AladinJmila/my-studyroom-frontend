@@ -62,7 +62,7 @@ function AudioNotesGroup({
         currentTrackIndex = 0;
       }
       setPlayingTrackIndex(currentTrackIndex);
-      const timeoutOffset = group.children[currentTrackIndex].isChecked
+      const timeoutOffset = group.children[currentTrackIndex]?.isChecked
         ? 0
         : audioPadding * 1000;
       setTimeout(() => {
