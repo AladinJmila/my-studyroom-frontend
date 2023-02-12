@@ -92,50 +92,40 @@ const AudioNotes = () => {
   const item = (
     <div className='d-flex audio-header-details'>
       <div className='me-2'>AudioNotes</div>
-      <div className='fw-normal'>
-        {subjectIsValid(selectedSubject) &&
-          formatTime(groups.reduce((a, b) => a + b.props.totalDuration, 0))}
-      </div>
-      <div className='audio-controls'>
-        <button
-          onClick={getPrevSubject}
-          className='audio-control-btn for-groups'
-          disabled={!subjectIsValid(selectedSubject)}
-        >
-          <i className='fa fa-step-backward'></i>
-        </button>
-        <button
-          onClick={getPrevTrack}
-          className='audio-control-btn'
-          disabled={!subjectIsValid(selectedSubject)}
-        >
-          <i className='fa fa-step-backward'></i>
-        </button>
-        <button
-          onClick={playSubject}
-          className='audio-control-btn'
-          disabled={!subjectIsValid(selectedSubject)}
-        >
-          <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
-        </button>
-        <button
-          onClick={getNextTrack}
-          className='audio-control-btn'
-          disabled={!subjectIsValid(selectedSubject)}
-        >
-          <i className='fa fa-step-forward'></i>
-        </button>
-        <button
-          onClick={getNextSubject}
-          className='audio-control-btn for-groups'
-          disabled={!subjectIsValid(selectedSubject)}
-        >
-          <i className='fa fa-step-forward'></i>
-        </button>
-      </div>
-      <div className='playing-group'>
-        {groups.length && groups[playingGroupIndex].name}
-      </div>
+      {subjectIsValid(selectedSubject) && Boolean(groups.length) && (
+        <>
+          <div className='fw-normal'>
+            {subjectIsValid(selectedSubject) &&
+              formatTime(groups.reduce((a, b) => a + b.props.totalDuration, 0))}
+          </div>
+          <div className='audio-controls'>
+            <button
+              onClick={getPrevSubject}
+              className='audio-control-btn for-groups'
+            >
+              <i className='fa fa-step-backward'></i>
+            </button>
+            <button onClick={getPrevTrack} className='audio-control-btn'>
+              <i className='fa fa-step-backward'></i>
+            </button>
+            <button onClick={playSubject} className='audio-control-btn'>
+              <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
+            </button>
+            <button onClick={getNextTrack} className='audio-control-btn'>
+              <i className='fa fa-step-forward'></i>
+            </button>
+            <button
+              onClick={getNextSubject}
+              className='audio-control-btn for-groups'
+            >
+              <i className='fa fa-step-forward'></i>
+            </button>
+          </div>
+          <div className='playing-group'>
+            {groups.length && groups[playingGroupIndex].name}
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -159,7 +149,7 @@ const AudioNotes = () => {
       ) : (
         <>
           {subjectIsValid(selectedSubject) ? (
-            groups.length &&
+            Boolean(groups.length) &&
             groups.map(group => (
               <AudioNotesGroup
                 key={group._id}
