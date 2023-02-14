@@ -112,7 +112,7 @@ const AppsWrapper = ({
   return (
     <div
       style={{ padding: 0, height: '91vh' }}
-      className='col scrolling-wrapper d-flex flex-row justify-content-evenly'
+      className='col scrolling-wrapper d-flex flex-row justify-content-between apps-wrapper'
     >
       <AnimateReorderX>
         {sortedAppsArray.map(item => (

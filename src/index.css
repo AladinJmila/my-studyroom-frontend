@@ -43,6 +43,14 @@ body {
   z-index: 1000 !important;
 }
 
+.apps-wrapper > div:first-of-type {
+  margin-left: 1.5em;
+}
+
+.apps-wrapper > div:last-of-type {
+  margin-right: 1.5em;
+}
+
 .data-column-content {
   margin: 5px 5px 5px 10px;
   min-width: 500px;
