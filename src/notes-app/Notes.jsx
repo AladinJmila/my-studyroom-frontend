@@ -30,8 +30,8 @@ const Notes = () => {
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const numOfNotes = useSelector(
     state =>
-      state.ui.notesPerSubject[`${selectedSubject?.name}`] ||
-      state.ui.notesPerSubject['All Subjects']
+      state.ui.general.notesPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.general.notesPerSubject['All Subjects']
   );
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.notes);

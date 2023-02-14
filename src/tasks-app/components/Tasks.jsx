@@ -27,8 +27,8 @@ const Tasks = () => {
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const numOfTasks = useSelector(
     state =>
-      state.ui.tasksPerSubject[`${selectedSubject?.name}`] ||
-      state.ui.tasksPerSubject['All Subjects']
+      state.ui.general.tasksPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.general.tasksPerSubject['All Subjects']
   );
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.tasks);
