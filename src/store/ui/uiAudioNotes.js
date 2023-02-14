@@ -3,9 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'uiAudioNotes',
   initialState: {
-    currentPlayingGroup: '',
+    currentPlayingGroup: {
+      name: '',
+      index: 0,
+      groupsCount: 0,
+      tracksCount: 0,
+    },
     currentPlayingGroupProgress: '',
-    currentPlayingNote: '',
+    currentPlayingNote: {
+      name: '',
+      index: 0,
+    },
     currentPlayingNoteProgress: {
       progress: 0,
       total: 0,
@@ -13,7 +21,10 @@ const slice = createSlice({
   },
   reducers: {
     CURRENT_PLAYING_GROUP: (state, action) => {
-      state.currentPlayingGroup = action.payload;
+      state.currentPlayingGroup = {
+        ...state.currentPlayingGroup,
+        ...action.payload,
+      };
     },
     CURRENT_PLAYING_GOURP_PROGRESS: (state, action) => {
       state.currentPlayingGroupProgress = action.payload;
@@ -36,6 +47,7 @@ export const {
 export default slice.reducer;
 
 export const setCurrentPlayingGroup = payload => dispatch => {
+  console.log(payload);
   dispatch(CURRENT_PLAYING_GROUP(payload));
 };
 

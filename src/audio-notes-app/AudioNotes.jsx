@@ -7,6 +7,7 @@ import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
 import { loadAudioNotes } from '../store/apps/audioNotesActions';
 import { formatTime } from './services';
+import { setCurrentPlayingGroup } from '../store/ui/uiAudioNotes';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
@@ -31,6 +32,8 @@ const AudioNotes = () => {
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.audioNotes);
+  const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
+  console.log(currentPlayingGroup);
 
   const subjectIsValid = subject => {
     return subject && subject.name !== 'All Subjects';
@@ -40,6 +43,19 @@ const AudioNotes = () => {
     if (subjectIsValid(selectedSubject))
       dispatch(loadAudioNotes(selectedSubject._id));
   }, [selectedSubject]);
+
+  useEffect(() => {
+    dispatch(setCurrentPlayingGroup({ groupsCount: groups.length }));
+  }, [groups]);
+
+  useEffect(() => {
+    dispatch(
+      setCurrentPlayingGroup({
+        tracksCount: groups[currentPlayingGroup.index].children.length,
+        name: groups[currentPlayingGroup.index].name,
+      })
+    );
+  }, [currentPlayingGroup.index]);
 
   const handleShowForm = () => {
     setShowFrom(showForm ? false : true);
@@ -52,6 +68,11 @@ const AudioNotes = () => {
     if (currentGroupIndex.current > 0) {
       currentGroupIndex.current = currentGroupIndex.current - 1;
       setPlayingGroupIndex(currentGroupIndex.current);
+    }
+    if (currentPlayingGroup.index > 0) {
+      dispatch(
+        setCurrentPlayingGroup({ index: currentPlayingGroup.index - 1 })
+      );
     }
     // console.log('from main', currentGroupIndex.current);
   };
@@ -85,6 +106,12 @@ const AudioNotes = () => {
     if (currentGroupIndex.current < groups.length - 1) {
       currentGroupIndex.current = currentGroupIndex.current + 1;
       setPlayingGroupIndex(currentGroupIndex.current);
+    }
+
+    if (currentPlayingGroup.index < currentPlayingGroup.groupsCount - 1) {
+      dispatch(
+        setCurrentPlayingGroup({ index: currentPlayingGroup.index + 1 })
+      );
     }
     // console.log('from main', currentGroupIndex.current);
   };
