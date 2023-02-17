@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import AudioNotesCard from './AudioNotesCard';
 import { formatTime, playTrack } from './services';
-import { baseURL } from '../store/services/httpService';
-import { userIsEditor } from '../services/permissionsService';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
-import { useDispatch } from 'react-redux';
+import Check from '../common/Check';
+import SettingsMenu from '../common/SettingsMenu';
+import { userIsEditor } from '../services/permissionsService';
+import { baseURL } from '../store/services/httpService';
 import {
   deleteAudioNoteGroup,
   updateAudioNotesGroup,
 } from '../store/apps/audioNotesActions';
-import Check from '../common/Check';
-import SettingsMenu from '../common/SettingsMenu';
+import { setCurrentPlayingGroup } from '../store/ui/uiAudioNotes';
 
 let timesPlayed = 1;
 let repsInterval = null;
@@ -51,7 +52,7 @@ function AudioNotesGroup({
   useEffect(() => {
     currentTrackIndex = 0;
     setPlayingTrackIndex(currentTrackIndex);
-  }, [currentGroupIndex.current]);
+  }, [currentGroupIndex]);
 
   // console.log(currentTrackIndex);
   const playGroup = () => {
@@ -65,9 +66,12 @@ function AudioNotesGroup({
       const timeoutOffset = group.children[currentTrackIndex]?.isChecked
         ? 0
         : audioPadding * 1000;
+
       setTimeout(() => {
         const playNext = () => {
           console.log('attempted play');
+          console.log(currentTrackIndex);
+          console.log(currentGroupIndex);
           setCurrentTrack(group.children[currentTrackIndex].track.name);
           const playArgs = {
             audioEl,
@@ -83,6 +87,8 @@ function AudioNotesGroup({
             onEnded,
             playSubject,
             currentGroupIndex,
+            dispatch,
+            setCurrentPlayingGroup,
           };
           playTrack(playArgs);
         };
@@ -97,7 +103,7 @@ function AudioNotesGroup({
         };
 
         playNext();
-      }, 500);
+      }, 200);
     }
   };
 

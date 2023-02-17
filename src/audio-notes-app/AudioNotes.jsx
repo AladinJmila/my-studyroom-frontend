@@ -20,7 +20,6 @@ const AudioNotes = () => {
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.audioNotes);
   const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
-  console.log(currentPlayingGroup);
 
   const subjectIsValid = subject => {
     return subject && subject.name !== 'All Subjects';
@@ -42,6 +41,12 @@ const AudioNotes = () => {
         name: groups[currentPlayingGroup.index]?.name,
       })
     );
+    if (currentPlayingGroup.index > groups.length - 1)
+      dispatch(
+        setCurrentPlayingGroup({
+          index: 0,
+        })
+      );
   }, [currentPlayingGroup.index]);
 
   const handleShowForm = () => {
@@ -64,14 +69,14 @@ const AudioNotes = () => {
     groupsBtns[currentPlayingGroup.index].prev.click();
   };
 
-  const playSubject = () => {
+  const playSubject = currentGroupIndex => {
     // console.log('attempted playing subject');
     if (currentPlayingGroup.index + 1 > groups.length) {
       setSubjectIsPlaying(false);
       return dispatch(setCurrentPlayingGroup({ index: 0 }));
     }
 
-    groupsBtns[currentPlayingGroup.index].play.click();
+    groupsBtns[currentGroupIndex].play.click();
     setSubjectIsPlaying(!subjectIsPlaying);
   };
 
@@ -109,7 +114,10 @@ const AudioNotes = () => {
             <button onClick={getPrevTrack} className='audio-control-btn'>
               <i className='fa fa-step-backward'></i>
             </button>
-            <button onClick={playSubject} className='audio-control-btn'>
+            <button
+              onClick={() => playSubject(currentPlayingGroup.index)}
+              className='audio-control-btn'
+            >
               <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
             </button>
             <button onClick={getNextTrack} className='audio-control-btn'>
@@ -123,7 +131,7 @@ const AudioNotes = () => {
             </button>
           </div>
           <div className='playing-group'>
-            {groups.length && groups[currentPlayingGroup.index].name}
+            {groups.length && groups[currentPlayingGroup.index]?.name}
           </div>
         </>
       )}

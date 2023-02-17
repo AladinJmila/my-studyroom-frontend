@@ -24,11 +24,16 @@ export const playTrack = ({
   onEnded,
   playSubject,
   currentGroupIndex,
+  dispatch,
+  setCurrentPlayingGroup,
 }) => {
   let prevTimesPlayed = 1;
-
+  console.log('should play here');
+  console.log(isPlaying);
   if (!audioNote.isChecked) {
     if (!isPlaying) {
+      console.log('and here');
+
       setIsPlaying(true);
       audioEl.current.play();
 
@@ -84,11 +89,12 @@ export const playTrack = ({
           currentTrackIndex + 1 === totalTracks) ||
         currentTrackIndex + 1 === totalTracks
       ) {
-        currentGroupIndex.current = currentGroupIndex.current + 1;
+        // currentGroupIndex.current = currentGroupIndex.current + 1;
         // console.log('incremented group in services', currentGroupIndex.current);
 
         setTimeout(() => {
-          playSubject();
+          dispatch(setCurrentPlayingGroup({ index: currentGroupIndex + 1 }));
+          playSubject(currentGroupIndex + 1);
           // console.log('called play subject');
         }, timeoutOffset);
         timesPlayed = 1;
