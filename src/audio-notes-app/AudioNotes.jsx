@@ -159,9 +159,10 @@ const AudioNotes = () => {
         <>
           {subjectIsValid(selectedSubject) ? (
             Boolean(groups.length) &&
-            groups.map(group => (
+            groups.map((group, index) => (
               <AudioNotesGroup
                 key={group._id}
+                index={index}
                 user={user}
                 group={group}
                 setGroupsBtns={setGroupsBtns}

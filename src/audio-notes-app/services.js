@@ -19,21 +19,17 @@ export const playTrack = ({
   timeoutOffset,
   repsInterval,
   currentTrackIndex,
-  setPlayingTrackIndex,
   totalTracks,
   onEnded,
   playSubject,
   currentGroupIndex,
   dispatch,
   setCurrentPlayingGroup,
+  setCurrentPlayingNote,
 }) => {
   let prevTimesPlayed = 1;
-  console.log('should play here');
-  console.log(isPlaying);
   if (!audioNote.isChecked) {
     if (!isPlaying) {
-      console.log('and here');
-
       setIsPlaying(true);
       audioEl.current.play();
 
@@ -66,9 +62,8 @@ export const playTrack = ({
       repsInterval = null;
     }
   } else {
-    currentTrackIndex++;
-    setPlayingTrackIndex(currentTrackIndex);
-    onEnded && onEnded();
+    dispatch(setCurrentPlayingNote({ index: currentTrackIndex + 1 }));
+    onEnded && onEnded(currentTrackIndex + 1);
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
@@ -77,16 +72,14 @@ export const playTrack = ({
     // console.log('prev times played', prevTimesPlayed);
 
     if (prevTimesPlayed === audioNote.reps) {
-      onEnded && onEnded();
+      onEnded && onEnded(currentTrackIndex + 1);
     }
 
     if (currentTrackIndex && totalTracks) {
       // console.log('tracks total', totalTracks);
       // console.log('track index', currentTrackIndex + 1);
-      console.log(currentTrackIndex + 1);
       if (
-        (prevTimesPlayed === audioNote.reps &&
-          currentTrackIndex + 1 === totalTracks) ||
+        prevTimesPlayed === audioNote.reps &&
         currentTrackIndex + 1 === totalTracks
       ) {
         // currentGroupIndex.current = currentGroupIndex.current + 1;
