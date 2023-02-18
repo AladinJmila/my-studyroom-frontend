@@ -8,6 +8,7 @@ const slice = createSlice({
       index: 0,
       groupsCount: 0,
       tracksCount: 0,
+      isSubjectPlay: false,
     },
     currentPlayingGroupProgress: '',
     currentPlayingNote: {
@@ -47,7 +48,6 @@ export const {
 export default slice.reducer;
 
 export const setCurrentPlayingGroup = payload => dispatch => {
-  console.log(payload);
   dispatch(CURRENT_PLAYING_GROUP(payload));
 };
 

@@ -19,14 +19,7 @@ import {
 let timesPlayed = 1;
 let repsInterval = null;
 
-function AudioNotesGroup({
-  index,
-  user,
-  group,
-  playSubject,
-  currentGroupIndex,
-  setGroupsBtns,
-}) {
+function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
   const showPrivateInfo = user && userIsEditor(group, user._id);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -38,7 +31,6 @@ function AudioNotesGroup({
 
   const { currentPlayingNote } = useSelector(state => state.ui.audioNotes);
   const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
-  console.log(currentPlayingNote);
 
   const audioEl = useRef();
   const playBtn = useRef();
@@ -57,7 +49,7 @@ function AudioNotesGroup({
 
   useEffect(() => {
     dispatch(setCurrentPlayingNote({ index: 0 }));
-  }, [currentGroupIndex]);
+  }, [currentPlayingGroup.index]);
 
   const playGroup = () => {
     if (!group.isChecked) {
@@ -65,8 +57,6 @@ function AudioNotesGroup({
       if (currentPlayingNote.index > group.children.length - 1) {
         dispatch(setCurrentPlayingNote({ index: 0 }));
       }
-      console.log('here', index);
-      console.log('in state', currentPlayingGroup.index);
       const timeoutOffset = group.children[currentPlayingNote.index]?.isChecked
         ? 0
         : audioPadding * 1000;
@@ -89,17 +79,16 @@ function AudioNotesGroup({
             totalTracks: group.children.length,
             onEnded,
             playSubject,
-            currentGroupIndex,
+            currentGroupIndex: currentPlayingGroup.index,
             dispatch,
             setCurrentPlayingGroup,
             setCurrentPlayingNote,
+            isSubjectPlay: currentPlayingGroup.isSubjectPlay,
           };
           playTrack(playArgs);
         };
 
         const onEnded = currentTrackIndex => {
-          console.log(currentTrackIndex);
-          console.log(currentPlayingNote.index);
           if (currentTrackIndex < group.children.length) {
             dispatch(setCurrentPlayingNote({ index: currentTrackIndex }));
             setTimeout(() => {

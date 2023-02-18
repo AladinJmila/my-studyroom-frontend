@@ -71,13 +71,14 @@ const AudioNotes = () => {
 
   const playSubject = currentGroupIndex => {
     // console.log('attempted playing subject');
-    if (currentPlayingGroup.index + 1 > groups.length) {
+    if (currentGroupIndex + 1 > groups.length) {
       setSubjectIsPlaying(false);
       return dispatch(setCurrentPlayingGroup({ index: 0 }));
     }
 
     groupsBtns[currentGroupIndex].play.click();
     setSubjectIsPlaying(!subjectIsPlaying);
+    dispatch(setCurrentPlayingGroup({ isSubjectPlay: true }));
   };
 
   const getNextTrack = () => {
@@ -167,7 +168,7 @@ const AudioNotes = () => {
                 group={group}
                 setGroupsBtns={setGroupsBtns}
                 playSubject={playSubject}
-                currentGroupIndex={currentPlayingGroup.index}
+                subjectIsPlaying={subjectIsPlaying}
               />
             ))
           ) : (

@@ -26,6 +26,7 @@ export const playTrack = ({
   dispatch,
   setCurrentPlayingGroup,
   setCurrentPlayingNote,
+  isSubjectPlay,
 }) => {
   let prevTimesPlayed = 1;
   if (!audioNote.isChecked) {
@@ -67,7 +68,6 @@ export const playTrack = ({
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
-
     // console.log('audio reps', audioNote.reps);
     // console.log('prev times played', prevTimesPlayed);
 
@@ -84,6 +84,8 @@ export const playTrack = ({
       ) {
         // currentGroupIndex.current = currentGroupIndex.current + 1;
         // console.log('incremented group in services', currentGroupIndex.current);
+
+        console.log('isSubjectPlay ', isSubjectPlay);
 
         setTimeout(() => {
           dispatch(setCurrentPlayingGroup({ index: currentGroupIndex + 1 }));
