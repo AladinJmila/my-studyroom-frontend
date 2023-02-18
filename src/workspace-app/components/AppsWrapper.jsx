@@ -32,20 +32,20 @@ const AppsWrapper = ({
 
   const subjectName = selectedSubject ? selectedSubject.name : 'All Subjects';
   const tasksCount = useSelector(
-    state => state.ui.tasksPerSubject[subjectName]
+    state => state.ui.general.tasksPerSubject[subjectName]
   );
   const notesCount = useSelector(
-    state => state.ui.notesPerSubject[subjectName]
+    state => state.ui.general.notesPerSubject[subjectName]
   );
   const resourcesCount = useSelector(
-    state => state.ui.resourcesPerSubject[subjectName]
+    state => state.ui.general.resourcesPerSubject[subjectName]
   );
   const practicalsCount = useSelector(
-    state => state.ui.practicalsPerSubject[subjectName]
+    state => state.ui.general.practicalsPerSubject[subjectName]
   );
 
   const audioNotesCount = useSelector(
-    state => state.ui.audioNotesPerSubject[subjectName]
+    state => state.ui.general.audioNotesPerSubject[subjectName]
   );
 
   const appsWrapperArray = [
@@ -112,7 +112,7 @@ const AppsWrapper = ({
   return (
     <div
       style={{ padding: 0, height: '91vh' }}
-      className='col scrolling-wrapper d-flex flex-row justify-content-evenly'
+      className='col scrolling-wrapper d-flex flex-row justify-content-between apps-wrapper'
     >
       <AnimateReorderX>
         {sortedAppsArray.map(item => (

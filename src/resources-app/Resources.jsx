@@ -32,8 +32,8 @@ function Resources() {
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const numOfResources = useSelector(
     state =>
-      state.ui.resourcesPerSubject[`${selectedSubject?.name}`] ||
-      state.ui.resourcesPerSubject['All Subjects']
+      state.ui.general.resourcesPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.general.resourcesPerSubject['All Subjects']
   );
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.resources);

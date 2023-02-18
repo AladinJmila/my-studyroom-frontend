@@ -1,37 +1,36 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import AudioNotesCard from './AudioNotesCard';
 import { formatTime, playTrack } from './services';
-import { baseURL } from '../store/services/httpService';
-import { userIsEditor } from '../services/permissionsService';
 import CardEllipsisMenu from '../common/CardEllipsisMenu';
-import { useDispatch } from 'react-redux';
+import Check from '../common/Check';
+import SettingsMenu from '../common/SettingsMenu';
+import { userIsEditor } from '../services/permissionsService';
+import { baseURL } from '../store/services/httpService';
 import {
   deleteAudioNoteGroup,
   updateAudioNotesGroup,
 } from '../store/apps/audioNotesActions';
-import Check from '../common/Check';
-import SettingsMenu from '../common/SettingsMenu';
+import {
+  setCurrentPlayingGroup,
+  setCurrentPlayingNote,
+} from '../store/ui/uiAudioNotes';
 
 let timesPlayed = 1;
 let repsInterval = null;
-let currentTrackIndex = 0;
 
-function AudioNotesGroup({
-  user,
-  group,
-  playSubject,
-  currentGroupIndex,
-  setGroupsBtns,
-}) {
+function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
   const showPrivateInfo = user && userIsEditor(group, user._id);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState();
-  const [playingTrackIndex, setPlayingTrackIndex] = useState(0);
   const [audioPadding, setAudioPadding] = useState(
     group.props?.audioPadding ? group.props.audioPadding : 3
   );
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+
+  const { currentPlayingNote } = useSelector(state => state.ui.audioNotes);
+  const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
 
   const audioEl = useRef();
   const playBtn = useRef();
@@ -49,24 +48,23 @@ function AudioNotesGroup({
   }, []);
 
   useEffect(() => {
-    currentTrackIndex = 0;
-    setPlayingTrackIndex(currentTrackIndex);
-  }, [currentGroupIndex.current]);
+    dispatch(setCurrentPlayingNote({ index: 0 }));
+  }, [currentPlayingGroup.index]);
 
-  // console.log(currentTrackIndex);
   const playGroup = () => {
     if (!group.isChecked) {
-      // currentTrackIndex = 0;
-      if (playingTrackIndex > group.children.length - 1) {
-        setPlayingTrackIndex(0);
-        currentTrackIndex = 0;
+      dispatch(setCurrentPlayingGroup({ index }));
+      if (currentPlayingNote.index > group.children.length - 1) {
+        dispatch(setCurrentPlayingNote({ index: 0 }));
       }
-      setPlayingTrackIndex(currentTrackIndex);
-      const timeoutOffset = group.children[currentTrackIndex]?.isChecked
+      const timeoutOffset = group.children[currentPlayingNote.index]?.isChecked
         ? 0
         : audioPadding * 1000;
+
       setTimeout(() => {
-        const playNext = () => {
+        const playNext = currentTrackIndex => {
+          if (currentTrackIndex === undefined)
+            currentTrackIndex = currentPlayingNote.index;
           console.log('attempted play');
           setCurrentTrack(group.children[currentTrackIndex].track.name);
           const playArgs = {
@@ -78,26 +76,30 @@ function AudioNotesGroup({
             timeoutOffset,
             repsInterval,
             currentTrackIndex,
-            setPlayingTrackIndex,
             totalTracks: group.children.length,
             onEnded,
             playSubject,
-            currentGroupIndex,
+            currentGroupIndex: currentPlayingGroup.index,
+            dispatch,
+            setCurrentPlayingGroup,
+            setCurrentPlayingNote,
+            isSubjectPlay: currentPlayingGroup.isSubjectPlay,
           };
           playTrack(playArgs);
         };
 
-        const onEnded = () => {
-          currentTrackIndex++;
-          if (currentTrackIndex < group.children.length)
-            setPlayingTrackIndex(currentTrackIndex);
-          setTimeout(() => {
-            if (group.children[currentTrackIndex]) playNext();
-          }, timeoutOffset);
+        const onEnded = currentTrackIndex => {
+          if (currentTrackIndex < group.children.length) {
+            dispatch(setCurrentPlayingNote({ index: currentTrackIndex }));
+            setTimeout(() => {
+              if (group.children[currentPlayingNote.index])
+                playNext(currentTrackIndex);
+            }, timeoutOffset);
+          }
         };
 
         playNext();
-      }, 500);
+      }, 200);
     }
   };
 
@@ -122,34 +124,25 @@ function AudioNotesGroup({
     setIsPlaying(false);
     timesPlayed = 1;
     repsInterval = null;
-    currentTrackIndex = playingTrackIndex;
 
-    if (playingTrackIndex > 0) {
-      currentTrackIndex--;
-      setPlayingTrackIndex(playingTrackIndex - 1);
-    } else if (playingTrackIndex === 0) {
-      currentTrackIndex = 0;
-      setPlayingTrackIndex(0);
+    if (currentPlayingNote.index > 0) {
+      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index - 1 }));
+    } else if (currentPlayingNote.index === 0) {
+      dispatch(setCurrentPlayingNote({ index: 0 }));
     }
   };
 
   const handleStepForward = () => {
     setIsPlaying(false);
-    currentTrackIndex = playingTrackIndex;
     timesPlayed = 1;
     repsInterval = null;
 
-    if (playingTrackIndex < group.children.length - 1) {
-      currentTrackIndex++;
-      setPlayingTrackIndex(playingTrackIndex + 1);
-    } else if (playingTrackIndex === group.children.length - 1) {
-      currentTrackIndex = playingTrackIndex;
-      setPlayingTrackIndex(playingTrackIndex);
+    if (currentPlayingNote.index < group.children.length - 1) {
+      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index + 1 }));
+    } else if (currentPlayingNote.index === group.children.length - 1) {
+      dispatch(setCurrentPlayingNote({ index: group.children.length - 1 }));
     }
   };
-
-  // console.log(currentTrackIndex);
-  // console.log(playingTrackIndex);
 
   return (
     <>
@@ -189,7 +182,10 @@ function AudioNotesGroup({
             </button>
           </div>
           <p>
-            {playingTrackIndex + 1} / {group.children.length} tracks
+            {currentPlayingGroup.index === index
+              ? currentPlayingNote.index + 1
+              : 1}{' '}
+            / {group.children.length} tracks
           </p>
           <p>{formatTime(group.props.totalDuration)}</p>
           <p>

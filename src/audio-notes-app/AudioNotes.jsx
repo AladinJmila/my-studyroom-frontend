@@ -7,30 +7,19 @@ import AudioNotesForm from './AudioNotesForm';
 import AudioNotesGroup from './AudioNotesGroup';
 import { loadAudioNotes } from '../store/apps/audioNotesActions';
 import { formatTime } from './services';
+import { setCurrentPlayingGroup } from '../store/ui/uiAudioNotes';
 
 const AudioNotes = () => {
   const [showForm, setShowFrom] = useState(false);
   const [subjectIsPlaying, setSubjectIsPlaying] = useState(false);
   const [groupsBtns, setGroupsBtns] = useState([]);
-  const [playingGroupIndex, setPlayingGroupIndex] = useState(0);
-  const currentGroupIndex = useRef();
-
-  useEffect(() => {
-    currentGroupIndex.current = 0;
-  }, []);
-
-  useEffect(() => {
-    if (currentGroupIndex.current + 1 <= groups.length)
-      setPlayingGroupIndex(currentGroupIndex.current);
-  }, [currentGroupIndex.current]);
-
-  // console.log('thindex', playingGroupIndex);
 
   const dispatch = useDispatch();
   const groups = useSelector(state => state.apps.audioNotes.list);
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.audioNotes);
+  const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
 
   const subjectIsValid = subject => {
     return subject && subject.name !== 'All Subjects';
@@ -41,52 +30,70 @@ const AudioNotes = () => {
       dispatch(loadAudioNotes(selectedSubject._id));
   }, [selectedSubject]);
 
+  useEffect(() => {
+    dispatch(setCurrentPlayingGroup({ groupsCount: groups.length }));
+  }, [groups]);
+
+  useEffect(() => {
+    dispatch(
+      setCurrentPlayingGroup({
+        tracksCount: groups[currentPlayingGroup.index]?.children.length,
+        name: groups[currentPlayingGroup.index]?.name,
+      })
+    );
+    if (currentPlayingGroup.index > groups.length - 1)
+      dispatch(
+        setCurrentPlayingGroup({
+          index: 0,
+        })
+      );
+  }, [currentPlayingGroup.index]);
+
   const handleShowForm = () => {
     setShowFrom(showForm ? false : true);
   };
 
   const getPrevSubject = () => {
-    if (subjectIsPlaying) groupsBtns[currentGroupIndex.current].play.click();
+    if (subjectIsPlaying) groupsBtns[currentPlayingGroup.index].play.click();
     setSubjectIsPlaying(false);
 
-    if (currentGroupIndex.current > 0) {
-      currentGroupIndex.current = currentGroupIndex.current - 1;
-      setPlayingGroupIndex(currentGroupIndex.current);
+    if (currentPlayingGroup.index > 0) {
+      dispatch(
+        setCurrentPlayingGroup({ index: currentPlayingGroup.index - 1 })
+      );
     }
-    // console.log('from main', currentGroupIndex.current);
   };
 
   const getPrevTrack = () => {
     setSubjectIsPlaying(false);
-    groupsBtns[currentGroupIndex.current].prev.click();
+    groupsBtns[currentPlayingGroup.index].prev.click();
   };
 
-  const playSubject = () => {
+  const playSubject = currentGroupIndex => {
     // console.log('attempted playing subject');
-    if (currentGroupIndex.current + 1 > groups.length) {
+    if (currentGroupIndex + 1 > groups.length) {
       setSubjectIsPlaying(false);
-      return (currentGroupIndex.current = 0);
+      return dispatch(setCurrentPlayingGroup({ index: 0 }));
     }
 
-    groupsBtns[currentGroupIndex.current].play.click();
+    groupsBtns[currentGroupIndex].play.click();
     setSubjectIsPlaying(!subjectIsPlaying);
-    // console.log(currentGroupIndex.current);
+    dispatch(setCurrentPlayingGroup({ isSubjectPlay: true }));
   };
 
   const getNextTrack = () => {
     setSubjectIsPlaying(false);
-    groupsBtns[currentGroupIndex.current].next.click();
+    groupsBtns[currentPlayingGroup.index].next.click();
   };
 
   const getNextSubject = () => {
-    if (subjectIsPlaying) groupsBtns[currentGroupIndex.current].play.click();
+    if (subjectIsPlaying) groupsBtns[currentPlayingGroup.index].play.click();
     setSubjectIsPlaying(false);
-
-    if (currentGroupIndex.current < groups.length - 1) {
-      currentGroupIndex.current = currentGroupIndex.current + 1;
-      setPlayingGroupIndex(currentGroupIndex.current);
+    if (currentPlayingGroup.index < currentPlayingGroup.groupsCount - 1) {
+      dispatch(
+        setCurrentPlayingGroup({ index: currentPlayingGroup.index + 1 })
+      );
     }
-    // console.log('from main', currentGroupIndex.current);
   };
 
   const item = (
@@ -108,7 +115,10 @@ const AudioNotes = () => {
             <button onClick={getPrevTrack} className='audio-control-btn'>
               <i className='fa fa-step-backward'></i>
             </button>
-            <button onClick={playSubject} className='audio-control-btn'>
+            <button
+              onClick={() => playSubject(currentPlayingGroup.index)}
+              className='audio-control-btn'
+            >
               <i className={`fa fa-${subjectIsPlaying ? 'stop' : 'play'}`}></i>
             </button>
             <button onClick={getNextTrack} className='audio-control-btn'>
@@ -122,7 +132,7 @@ const AudioNotes = () => {
             </button>
           </div>
           <div className='playing-group'>
-            {groups.length && groups[playingGroupIndex].name}
+            {groups.length && groups[currentPlayingGroup.index]?.name}
           </div>
         </>
       )}
@@ -150,14 +160,15 @@ const AudioNotes = () => {
         <>
           {subjectIsValid(selectedSubject) ? (
             Boolean(groups.length) &&
-            groups.map(group => (
+            groups.map((group, index) => (
               <AudioNotesGroup
                 key={group._id}
+                index={index}
                 user={user}
                 group={group}
                 setGroupsBtns={setGroupsBtns}
                 playSubject={playSubject}
-                currentGroupIndex={currentGroupIndex}
+                subjectIsPlaying={subjectIsPlaying}
               />
             ))
           ) : (

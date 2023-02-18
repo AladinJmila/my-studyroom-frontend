@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-let subject = 'All Subjects';
-
 const slice = createSlice({
   name: 'uiParams',
   initialState: {

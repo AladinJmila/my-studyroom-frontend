@@ -19,14 +19,16 @@ export const playTrack = ({
   timeoutOffset,
   repsInterval,
   currentTrackIndex,
-  setPlayingTrackIndex,
   totalTracks,
   onEnded,
   playSubject,
   currentGroupIndex,
+  dispatch,
+  setCurrentPlayingGroup,
+  setCurrentPlayingNote,
+  isSubjectPlay,
 }) => {
   let prevTimesPlayed = 1;
-
   if (!audioNote.isChecked) {
     if (!isPlaying) {
       setIsPlaying(true);
@@ -61,34 +63,33 @@ export const playTrack = ({
       repsInterval = null;
     }
   } else {
-    currentTrackIndex++;
-    setPlayingTrackIndex(currentTrackIndex);
-    onEnded && onEnded();
+    dispatch(setCurrentPlayingNote({ index: currentTrackIndex + 1 }));
+    onEnded && onEnded(currentTrackIndex + 1);
   }
   audioEl.current.onended = () => {
     setIsPlaying(false);
-
     // console.log('audio reps', audioNote.reps);
     // console.log('prev times played', prevTimesPlayed);
 
     if (prevTimesPlayed === audioNote.reps) {
-      onEnded && onEnded();
+      onEnded && onEnded(currentTrackIndex + 1);
     }
 
     if (currentTrackIndex && totalTracks) {
       // console.log('tracks total', totalTracks);
       // console.log('track index', currentTrackIndex + 1);
-      console.log(currentTrackIndex + 1);
       if (
-        (prevTimesPlayed === audioNote.reps &&
-          currentTrackIndex + 1 === totalTracks) ||
+        prevTimesPlayed === audioNote.reps &&
         currentTrackIndex + 1 === totalTracks
       ) {
-        currentGroupIndex.current = currentGroupIndex.current + 1;
+        // currentGroupIndex.current = currentGroupIndex.current + 1;
         // console.log('incremented group in services', currentGroupIndex.current);
 
+        console.log('isSubjectPlay ', isSubjectPlay);
+
         setTimeout(() => {
-          playSubject();
+          dispatch(setCurrentPlayingGroup({ index: currentGroupIndex + 1 }));
+          playSubject(currentGroupIndex + 1);
           // console.log('called play subject');
         }, timeoutOffset);
         timesPlayed = 1;

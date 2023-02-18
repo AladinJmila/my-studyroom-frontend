@@ -30,8 +30,8 @@ const Practicals = () => {
   const { selectedSubject } = useSelector(state => state.apps.subjects);
   const numOfPracticals = useSelector(
     state =>
-      state.ui.practicalsPerSubject[`${selectedSubject?.name}`] ||
-      state.ui.practicalsPerSubject['All Subjects']
+      state.ui.general.practicalsPerSubject[`${selectedSubject?.name}`] ||
+      state.ui.general.practicalsPerSubject['All Subjects']
   );
   const { user } = useSelector(state => state.auth);
   const { loading } = useSelector(state => state.apps.practicals);
