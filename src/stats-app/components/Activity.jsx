@@ -45,6 +45,8 @@ const Activity = ({ activity, recordId }) => {
             ></div>
             <p>{activity.subject.name}</p> | <b>{activity.interval.name}</b>
           </div>
+          <div className='time-logged'>{activity.timeLogged}</div>
+
           <div className='minutes-input'>
             <input
               type='number'

@@ -43,7 +43,7 @@ const DataColumn = forwardRef(
             <div
               ref={divRef}
               onScroll={toggleShowScrollTop}
-              className='y-scroll data-column-content'
+              className={`y-scroll data-column-content ${name}`}
             >
               <div ref={topRef}></div>
               {showScrollTop && <ScrollTop onClick={handleScrollTop} />}
