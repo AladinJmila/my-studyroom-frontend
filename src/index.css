@@ -59,6 +59,13 @@ body {
   height: 90vh;
 }
 
+.data-column-content.StudyNotes {
+  margin: 5px 5px 5px 10px;
+  min-width: 700px;
+  display: inline-block;
+  height: 90vh;
+}
+
 .vertical-folding-bar {
   display: flex;
   position: relative;

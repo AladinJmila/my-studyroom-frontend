@@ -28,6 +28,16 @@ const AudioNotes = () => {
   useEffect(() => {
     if (subjectIsValid(selectedSubject))
       dispatch(loadAudioNotes(selectedSubject._id));
+
+    setSubjectIsPlaying(false);
+    setGroupsBtns([]);
+    dispatch(
+      setCurrentPlayingGroup({
+        index: 0,
+      })
+    );
+
+    console.log(groupsBtns);
   }, [selectedSubject]);
 
   useEffect(() => {
