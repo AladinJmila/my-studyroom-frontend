@@ -16,6 +16,7 @@ import {
   setCurrentPlayingNote,
 } from '../store/ui/uiAudioNotes'
 import AudioNotesDownload from './AudioNotesDownload'
+import ConfirmationModal from '../common/ConfirmationModal'
 
 let timesPlayed = 1
 let repsInterval = null
@@ -23,6 +24,7 @@ let repsInterval = null
 function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
   const showPrivateInfo = user && userIsEditor(group, user._id)
   const [showContent, setShowContent] = useState(false)
+  const [showConfirmationModal, setShowConfimationModal] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrack, setCurrentTrack] = useState()
   const [audioPadding, setAudioPadding] = useState(
@@ -145,6 +147,11 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
     }
   }
 
+  const handleDeleteAllNotes = group => {
+    setShowConfimationModal(true)
+    console.log(group)
+  }
+
   return (
     <>
       <div className="audio-notes-group">
@@ -233,13 +240,19 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
           {showPrivateInfo && (
             <CardEllipsisMenu
               item={group}
-              onEdit={null}
+              onEdit={handleDeleteAllNotes}
               onToggleProp={null}
               onDelete={handleDelete}
               vertical
             />
           )}
         </div>
+        {showConfirmationModal && (
+          <ConfirmationModal
+            message={`Delete all notes in ${group.name}?`}
+            setShowConfimationModal={setShowConfimationModal}
+          />
+        )}
       </div>
       {currentTrack && (
         <audio
