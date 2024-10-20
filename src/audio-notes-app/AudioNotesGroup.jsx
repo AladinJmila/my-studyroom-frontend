@@ -10,6 +10,7 @@ import { baseURL } from '../store/services/httpService'
 import {
   deleteAudioNoteGroup,
   updateAudioNotesGroup,
+  deleteAudioNoteGroupAllNotes,
 } from '../store/apps/audioNotesActions'
 import {
   setCurrentPlayingGroup,
@@ -25,6 +26,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
   const showPrivateInfo = user && userIsEditor(group, user._id)
   const [showContent, setShowContent] = useState(false)
   const [showConfirmationModal, setShowConfimationModal] = useState(false)
+  const [proceedWithOperation, setProceedWithOperation] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrack, setCurrentTrack] = useState()
   const [audioPadding, setAudioPadding] = useState(
@@ -147,10 +149,11 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
     }
   }
 
-  const handleDeleteAllNotes = group => {
-    setShowConfimationModal(true)
-    console.log(group)
-  }
+  useEffect(() => {
+    if (proceedWithOperation) {
+      dispatch(deleteAudioNoteGroupAllNotes(group))
+    }
+  }, [proceedWithOperation])
 
   return (
     <>
@@ -240,7 +243,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
           {showPrivateInfo && (
             <CardEllipsisMenu
               item={group}
-              onEdit={handleDeleteAllNotes}
+              onEdit={() => setShowConfimationModal(true)}
               onToggleProp={null}
               onDelete={handleDelete}
               vertical
@@ -251,6 +254,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
           <ConfirmationModal
             message={`Delete all notes in ${group.name}?`}
             setShowConfimationModal={setShowConfimationModal}
+            setProceedWithOperation={setProceedWithOperation}
           />
         )}
       </div>

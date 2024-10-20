@@ -103,7 +103,7 @@ export const deleteAudioNote = audioNote => async dispatch => {
 
 export const deleteAudioNoteGroupAllNotes = group => async dispatch => {
   if (group.children.length) {
-    for (const audioNote in group.children) {
+    for (const audioNote of group.children) {
       try {
         await httpService.delete(`${apiEndPoint}/${audioNote._id}`)
 
@@ -113,6 +113,6 @@ export const deleteAudioNoteGroupAllNotes = group => async dispatch => {
       }
     }
   } else {
-    toast.info('Group is already empty')
+    toast.warning('Group is already empty')
   }
 }

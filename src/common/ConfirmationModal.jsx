@@ -1,7 +1,11 @@
 import React from 'react'
 import './ConfirmationModal.css'
 
-const ConfirmationModal = ({ message, setShowConfimationModal }) => {
+const ConfirmationModal = ({
+  message,
+  setShowConfimationModal,
+  setProceedWithOperation,
+}) => {
   return (
     <div className="confiramtion-modal">
       <h6 className="text-truncate px-3">{message}</h6>
@@ -10,6 +14,7 @@ const ConfirmationModal = ({ message, setShowConfimationModal }) => {
         <button
           className="btn btn-primary btn-sm"
           onClick={() => {
+            setProceedWithOperation(true)
             setShowConfimationModal(false)
           }}
         >
@@ -18,6 +23,7 @@ const ConfirmationModal = ({ message, setShowConfimationModal }) => {
         <button
           className="btn btn-danger btn-sm"
           onClick={() => {
+            setProceedWithOperation(false)
             setShowConfimationModal(false)
           }}
         >
