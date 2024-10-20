@@ -293,3 +293,10 @@
   text-align: center;
   color: var(--theme-primary);
 }
+
+/* bulk download of audio notes */
+.audio-notes-download {
+  position: absolute;
+  top: 5px;
+  right: 75px;
+}

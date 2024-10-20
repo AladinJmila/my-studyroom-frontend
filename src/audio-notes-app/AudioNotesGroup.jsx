@@ -1,72 +1,73 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import AudioNotesCard from './AudioNotesCard';
-import { formatTime, playTrack } from './services';
-import CardEllipsisMenu from '../common/CardEllipsisMenu';
-import Check from '../common/Check';
-import SettingsMenu from '../common/SettingsMenu';
-import { userIsEditor } from '../services/permissionsService';
-import { baseURL } from '../store/services/httpService';
+import { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AudioNotesCard from './AudioNotesCard'
+import { formatTime, playTrack } from './services'
+import CardEllipsisMenu from '../common/CardEllipsisMenu'
+import Check from '../common/Check'
+import SettingsMenu from '../common/SettingsMenu'
+import { userIsEditor } from '../services/permissionsService'
+import { baseURL } from '../store/services/httpService'
 import {
   deleteAudioNoteGroup,
   updateAudioNotesGroup,
-} from '../store/apps/audioNotesActions';
+} from '../store/apps/audioNotesActions'
 import {
   setCurrentPlayingGroup,
   setCurrentPlayingNote,
-} from '../store/ui/uiAudioNotes';
+} from '../store/ui/uiAudioNotes'
+import AudioNotesDownload from './AudioNotesDownload'
 
-let timesPlayed = 1;
-let repsInterval = null;
+let timesPlayed = 1
+let repsInterval = null
 
 function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
-  const showPrivateInfo = user && userIsEditor(group, user._id);
-  const [showContent, setShowContent] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState();
+  const showPrivateInfo = user && userIsEditor(group, user._id)
+  const [showContent, setShowContent] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTrack, setCurrentTrack] = useState()
   const [audioPadding, setAudioPadding] = useState(
     group.props?.audioPadding ? group.props.audioPadding : 3
-  );
-  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+  )
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false)
 
-  const { currentPlayingNote } = useSelector(state => state.ui.audioNotes);
-  const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes);
+  const { currentPlayingNote } = useSelector(state => state.ui.audioNotes)
+  const { currentPlayingGroup } = useSelector(state => state.ui.audioNotes)
 
-  const audioEl = useRef();
-  const playBtn = useRef();
-  const prevBtn = useRef();
-  const nextBtn = useRef();
-  const dispatch = useDispatch();
+  const audioEl = useRef()
+  const playBtn = useRef()
+  const prevBtn = useRef()
+  const nextBtn = useRef()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (playBtn.current) {
       setGroupsBtns(prev => [
         ...prev,
         { prev: prevBtn.current, play: playBtn.current, next: nextBtn.current },
-      ]);
+      ])
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    dispatch(setCurrentPlayingNote({ index: 0 }));
-  }, [currentPlayingGroup.index]);
+    dispatch(setCurrentPlayingNote({ index: 0 }))
+  }, [currentPlayingGroup.index])
 
   const playGroup = () => {
     if (!group.isChecked) {
-      dispatch(setCurrentPlayingGroup({ index }));
+      dispatch(setCurrentPlayingGroup({ index }))
       if (currentPlayingNote.index > group.children.length - 1) {
-        dispatch(setCurrentPlayingNote({ index: 0 }));
+        dispatch(setCurrentPlayingNote({ index: 0 }))
       }
       const timeoutOffset = group.children[currentPlayingNote.index]?.isChecked
         ? 0
-        : audioPadding * 1000;
+        : audioPadding * 1000
 
       setTimeout(() => {
         const playNext = currentTrackIndex => {
           if (currentTrackIndex === undefined)
-            currentTrackIndex = currentPlayingNote.index;
-          console.log('attempted play');
-          setCurrentTrack(group.children[currentTrackIndex].track.name);
+            currentTrackIndex = currentPlayingNote.index
+          console.log('attempted play')
+          setCurrentTrack(group.children[currentTrackIndex].track.name)
           const playArgs = {
             audioEl,
             audioNote: group.children[currentTrackIndex],
@@ -84,90 +85,90 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             setCurrentPlayingGroup,
             setCurrentPlayingNote,
             isSubjectPlay: currentPlayingGroup.isSubjectPlay,
-          };
-          playTrack(playArgs);
-        };
+          }
+          playTrack(playArgs)
+        }
 
         const onEnded = currentTrackIndex => {
           if (currentTrackIndex < group.children.length) {
-            dispatch(setCurrentPlayingNote({ index: currentTrackIndex }));
+            dispatch(setCurrentPlayingNote({ index: currentTrackIndex }))
             setTimeout(() => {
               if (group.children[currentPlayingNote.index])
-                playNext(currentTrackIndex);
-            }, timeoutOffset);
+                playNext(currentTrackIndex)
+            }, timeoutOffset)
           }
-        };
+        }
 
-        playNext();
-      }, 200);
+        playNext()
+      }, 200)
     }
-  };
+  }
 
   const handleDelete = group => {
-    dispatch(deleteAudioNoteGroup(group));
-  };
+    dispatch(deleteAudioNoteGroup(group))
+  }
 
   const handleCheck = group => {
-    dispatch(updateAudioNotesGroup(group._id, { isChecked: !group.isChecked }));
-  };
+    dispatch(updateAudioNotesGroup(group._id, { isChecked: !group.isChecked }))
+  }
 
   const handleAudioPadding = group => {
     dispatch(
       updateAudioNotesGroup(group._id, {
         props: { ...group.props, audioPadding: parseInt(audioPadding) },
       })
-    );
-    setShowSettingsMenu(false);
-  };
+    )
+    setShowSettingsMenu(false)
+  }
 
   const handleStepBackward = () => {
-    setIsPlaying(false);
-    timesPlayed = 1;
-    repsInterval = null;
+    setIsPlaying(false)
+    timesPlayed = 1
+    repsInterval = null
 
     if (currentPlayingNote.index > 0) {
-      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index - 1 }));
+      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index - 1 }))
     } else if (currentPlayingNote.index === 0) {
-      dispatch(setCurrentPlayingNote({ index: 0 }));
+      dispatch(setCurrentPlayingNote({ index: 0 }))
     }
-  };
+  }
 
   const handleStepForward = () => {
-    setIsPlaying(false);
-    timesPlayed = 1;
-    repsInterval = null;
+    setIsPlaying(false)
+    timesPlayed = 1
+    repsInterval = null
 
     if (currentPlayingNote.index < group.children.length - 1) {
-      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index + 1 }));
+      dispatch(setCurrentPlayingNote({ index: currentPlayingNote.index + 1 }))
     } else if (currentPlayingNote.index === group.children.length - 1) {
-      dispatch(setCurrentPlayingNote({ index: group.children.length - 1 }));
+      dispatch(setCurrentPlayingNote({ index: group.children.length - 1 }))
     }
-  };
+  }
 
   return (
     <>
-      <div className='audio-notes-group'>
-        <div className='check-container'>
+      <div className="audio-notes-group">
+        <div className="check-container">
           <Check
             onCheck={() => handleCheck(group)}
             isChecked={group.isChecked}
           />
         </div>
         <h6> {group.name}</h6>
-        <div className='audio-notes-group-contols'>
-          <div className='audio-controls'>
+        <div className="audio-notes-group-contols">
+          <div className="audio-controls">
             <button
               ref={prevBtn}
               onClick={handleStepBackward}
-              className='audio-control-btn'
+              className="audio-control-btn"
               disabled={group.isChecked}
             >
-              <i className='fa fa-step-backward'></i>
+              <i className="fa fa-step-backward"></i>
             </button>
             <button
               ref={playBtn}
               onClick={playGroup}
-              className='audio-control-btn'
+              className="audio-control-btn"
               disabled={group.isChecked}
             >
               <i className={`fa fa-${isPlaying ? 'stop' : 'play'}`}></i>
@@ -175,10 +176,10 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             <button
               ref={nextBtn}
               onClick={handleStepForward}
-              className='audio-control-btn'
+              className="audio-control-btn"
               disabled={group.isChecked}
             >
-              <i className='fa fa-step-forward'></i>
+              <i className="fa fa-step-forward"></i>
             </button>
           </div>
           <p>
@@ -199,7 +200,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             %
           </p>
           <button
-            className='expand-btn'
+            className="expand-btn"
             onClick={() => setShowContent(!showContent)}
           >
             <i
@@ -207,27 +208,28 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             ></i>
           </button>
         </div>
+        <AudioNotesDownload group={group} />
         <SettingsMenu
           showSettingsMenu={showSettingsMenu}
           setShowSettingsMenu={setShowSettingsMenu}
         >
           <>
-            <span className='setting-name'>Audio padding:</span>
+            <span className="setting-name">Audio padding:</span>
             <input
-              type='number'
+              type="number"
               value={audioPadding}
               onChange={e => setAudioPadding(e.target.value)}
             />
             <button
-              type='button'
-              className='submit'
+              type="button"
+              className="submit"
               onClick={() => handleAudioPadding(group)}
             >
-              <i className='fa fa-check'></i>
+              <i className="fa fa-check"></i>
             </button>
           </>
         </SettingsMenu>
-        <div className='ellipsis-container'>
+        <div className="ellipsis-container">
           {showPrivateInfo && (
             <CardEllipsisMenu
               item={group}
@@ -257,7 +259,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
           />
         ))}
     </>
-  );
+  )
 }
 
-export default AudioNotesGroup;
+export default AudioNotesGroup
