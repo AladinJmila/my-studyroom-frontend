@@ -1,27 +1,27 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard';
+import { Link, NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import NavBarIntervalsCard from '../schedules-app/components/NavBarIntervalsCard'
 
 function NavBar() {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  const user = useSelector(state => state.auth.user);
-  const { playingLoop } = useSelector(state => state.apps.loops);
-  const { playingSession } = useSelector(state => state.apps.sessions);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
+  const user = useSelector(state => state.auth.user)
+  const { playingLoop } = useSelector(state => state.apps.loops)
+  const { playingSession } = useSelector(state => state.apps.sessions)
 
-  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed)
 
   return (
     <div>
       <nav
-        className='navbar navbar-expand-lg navbar-dark bg-dark'
+        className="navbar navbar-expand-lg navbar-dark bg-dark"
         style={{ width: '100%' }}
       >
-        <div className='container-fluid d-flex flex-row'>
-          <Link className='navbar-brand ' to='/home'>
+        <div className="container-fluid d-flex flex-row">
+          <Link className="navbar-brand " to="/workspace">
             My Studyroom
           </Link>
-          <div className='ms-4 me-4 flex-fill' style={{ width: '50%' }}>
+          <div className="ms-4 me-4 flex-fill" style={{ width: '50%' }}>
             {playingSession && playingLoop && (
               <NavBarIntervalsCard
                 playingSession={playingSession}
@@ -31,42 +31,42 @@ function NavBar() {
           </div>
           <button
             onClick={handleNavCollapse}
-            className='navbar-toggler'
-            type='button'
-            data-toggle='collapse'
-            data-target='#navbarNav'
-            aria-controls='navbarNav'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <span className='navbar-toggler-icon'></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
           <div
             className={`${isNavCollapsed ? 'collapse' : ''}  navbar-collapse`}
-            id='navbarNav'
+            id="navbarNav"
           >
-            <ul className='navbar-nav me-auto'>
-              <li className='nav-item'>
+            <ul className="navbar-nav me-auto">
+              {/* <li className='nav-item'>
                 <NavLink className='nav-link' to='/home'>
                   Home
                 </NavLink>
-              </li>
+              </li> */}
               {user && (
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='/workspace'>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/workspace">
                     Workspace
                   </NavLink>
                 </li>
               )}
               {!user && (
                 <>
-                  <li className='nav-item'>
-                    <NavLink className='nav-link' to='/login'>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/login">
                       Login
                     </NavLink>
                   </li>
-                  <li className='nav-item'>
-                    <NavLink className='nav-link' to='/register'>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/register">
                       Register
                     </NavLink>
                   </li>
@@ -74,27 +74,27 @@ function NavBar() {
               )}
               {user && (
                 <>
-                  <li className='nav-item'>
+                  <li className="nav-item">
                     <NavLink
-                      className='nav-link'
-                      to='/my-profile'
+                      className="nav-link"
+                      to="/my-profile"
                       style={{ whiteSpace: 'nowrap' }}
                     >
                       {user?.name}
                     </NavLink>
                   </li>
-                  <li className='nav-item'>
-                    <NavLink className='nav-link' to='/logout'>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/logout">
                       Logout
                     </NavLink>
                   </li>
                 </>
               )}
-              <li className='nav-item'>
+              {/* <li className='nav-item'>
                 <NavLink className='nav-link' to='/about'>
                   About
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
             {/* <form className='d-flex'>
               <input
@@ -111,7 +111,7 @@ function NavBar() {
         </div>
       </nav>
     </div>
-  );
+  )
 }
 
-export default NavBar;
+export default NavBar
