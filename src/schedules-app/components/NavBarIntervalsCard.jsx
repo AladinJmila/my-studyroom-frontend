@@ -4,7 +4,7 @@ import * as workerTimers from 'worker-timers'
 import { playStartBeep, computeHalfInterval } from '../services/timerServices'
 import PlayPauseStep from './../../common/PlayPauseStep'
 import beep from '../../static/audio/new-notification.mp3'
-import beepHalf from '../../static/audio/beep-09.wav'
+// import beepHalf from '../../static/audio/beep-09.wav'
 import { toast } from 'react-toastify'
 import {
   loadNewestTimerRecord,
@@ -13,7 +13,7 @@ import {
 } from '../../store/apps/timerRecordsActions'
 
 const myBeep = new Audio(beep)
-const myHalfBeep = new Audio(beepHalf)
+const myHalfBeep = new Audio(beep)
 let trackIndex = 1
 let roundIndex = 1
 let repNum = 1

@@ -1,4 +1,4 @@
-import beep from '../../static/audio/beep-07a.wav'
+import beep from '../../static/audio/new-notification.mp3'
 const myBeep = new Audio(beep)
 
 export const playStartBeep = (time, currentInterval, reps) => {
