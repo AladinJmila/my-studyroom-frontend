@@ -77,7 +77,12 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
           setCurrentTrack(group.children[currentTrackIndex].track.name)
           const playArgs = {
             audioEl,
-            audioNote: group.children[currentTrackIndex],
+            audioNote: {
+              ...group.children[currentTrackIndex],
+              reps: audioReps
+                ? audioReps
+                : group.children[currentTrackIndex].reps,
+            },
             isPlaying,
             timesPlayed,
             setIsPlaying,
