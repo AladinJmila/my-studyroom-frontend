@@ -32,6 +32,9 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
   const [audioPadding, setAudioPadding] = useState(
     group.props?.audioPadding ? group.props.audioPadding : 3
   )
+  const [audioReps, setAudioReps] = useState(
+    group.props?.audioReps ? group.props.audioReps : 0
+  )
   const [showSettingsMenu, setShowSettingsMenu] = useState(false)
 
   const { currentPlayingNote } = useSelector(state => state.ui.audioNotes)
@@ -120,6 +123,15 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
     dispatch(
       updateAudioNotesGroup(group._id, {
         props: { ...group.props, audioPadding: parseInt(audioPadding) },
+      })
+    )
+    setShowSettingsMenu(false)
+  }
+
+  const handleAudioReps = group => {
+    dispatch(
+      updateAudioNotesGroup(group._id, {
+        props: { ...group.props, audioReps: parseInt(audioReps) },
       })
     )
     setShowSettingsMenu(false)
@@ -237,6 +249,19 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             >
               <i className="fa fa-check"></i>
             </button>
+            <span className="setting-name">Repetitions:</span>
+            <input
+              type="number"
+              value={audioReps}
+              onChange={e => setAudioReps(e.target.value)}
+            />
+            <button
+              type="button"
+              className="submit"
+              onClick={() => handleAudioReps(group)}
+            >
+              <i className="fa fa-check"></i>
+            </button>
           </>
         </SettingsMenu>
         <div className="ellipsis-container">
@@ -273,6 +298,7 @@ function AudioNotesGroup({ index, user, group, playSubject, setGroupsBtns }) {
             index={index}
             groupName={group.name}
             audioPadding={audioPadding}
+            groupReps={audioReps}
           />
         ))}
     </>
