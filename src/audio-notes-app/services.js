@@ -28,7 +28,6 @@ export const playTrack = ({
   setCurrentPlayingNote,
   isSubjectPlay,
 }) => {
-  console.log(audioNote)
   let prevTimesPlayed = 1
   if (!audioNote.isChecked) {
     if (!isPlaying) {

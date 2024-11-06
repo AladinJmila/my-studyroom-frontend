@@ -1,159 +1,165 @@
-import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import getBlobDuration from 'get-blob-duration';
-import Joi from 'joi-browser';
-import { appsFormStyle } from '../services/stylesService';
-import { formatTime } from './services';
-import Select from '../common/Select';
-import Input from '../common/Input';
-import { loadSubjects } from '../store/apps/subjectsActions';
+import { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import getBlobDuration from 'get-blob-duration'
+import Joi from 'joi-browser'
+import { appsFormStyle } from '../services/stylesService'
+import { formatTime } from './services'
+import Select from '../common/Select'
+import Input from '../common/Input'
+import { loadSubjects } from '../store/apps/subjectsActions'
 import {
   createAudioNotesGroup,
   loadAudioNotes,
   createAudioNote,
-} from '../store/apps/audioNotesActions';
-import './AudioNotes.css';
+} from '../store/apps/audioNotesActions'
+import './AudioNotes.css'
+import { setSelectedGroup } from '../store/apps/groupsActions'
 
-let recordInterval;
+let recordInterval
 
 function AudioNotesForm() {
-  const [subjectId, setSubjectId] = useState('');
-  const [groupName, setGroupName] = useState('');
-  const [groupId, setGroupId] = useState('');
-  const [errors, setErrors] = useState({});
-  const [showGroupInput, setShowGroupInput] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioURL, setAudioURL] = useState('');
-  const [progressPosition, setProgressPosition] = useState(0);
-  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
-  const [audioDuration, setAudioDuration] = useState(0);
-  const [audioBlob, setAudioBlob] = useState();
-  const dispatch = useDispatch();
+  const { selectedGroup } = useSelector(state => state.apps.groups)
 
-  const audioEl = useRef();
+  const [subjectId, setSubjectId] = useState('')
+  const [groupName, setGroupName] = useState('')
+  const [groupId, setGroupId] = useState(selectedGroup?._id || '')
+  const [errors, setErrors] = useState({})
+  const [showGroupInput, setShowGroupInput] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const [recordingTime, setRecordingTime] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState(null)
+  const [audioURL, setAudioURL] = useState('')
+  const [progressPosition, setProgressPosition] = useState(0)
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0)
+  const [audioDuration, setAudioDuration] = useState(0)
+  const [audioBlob, setAudioBlob] = useState()
+  const dispatch = useDispatch()
 
-  const subjects = useSelector(state => state.apps.subjects.list);
-  const { selectedSubject } = useSelector(state => state.apps.subjects);
-  const groups = useSelector(state => state.apps.audioNotes.list);
+  const audioEl = useRef()
+
+  const subjects = useSelector(state => state.apps.subjects.list)
+  const { selectedSubject } = useSelector(state => state.apps.subjects)
+  const groups = useSelector(state => state.apps.audioNotes.list)
 
   const audioNoteSchema = {
     subjectId: Joi.string().label('Subject').required(),
     groupId: Joi.string().label('Group').required(),
     audioBlob: Joi.object().label('Recording').required(),
-  };
+  }
 
   const validateAudioNote = () => {
-    const options = { abortEarly: false };
-    const audioNoteBody = { subjectId, groupId, audioBlob };
-    const { error } = Joi.validate(audioNoteBody, audioNoteSchema, options);
+    const options = { abortEarly: false }
+    const audioNoteBody = { subjectId, groupId, audioBlob }
+    const { error } = Joi.validate(audioNoteBody, audioNoteSchema, options)
 
-    if (!error) return null;
+    if (!error) return null
 
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
+    const errors = {}
+    for (let item of error.details) errors[item.path[0]] = item.message
+    return errors
+  }
 
   const groupSchema = {
     subjectId: Joi.string().label('Subject').required(),
     groupName: Joi.string().label('Group Name').required(),
-  };
+  }
 
   const validateGroup = () => {
-    const options = { abortEarly: false };
-    const groupBody = { subjectId, groupName };
-    const { error } = Joi.validate(groupBody, groupSchema, options);
+    const options = { abortEarly: false }
+    const groupBody = { subjectId, groupName }
+    const { error } = Joi.validate(groupBody, groupSchema, options)
 
-    if (!error) return null;
+    if (!error) return null
 
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
+    const errors = {}
+    for (let item of error.details) errors[item.path[0]] = item.message
+    return errors
+  }
 
   const handleShowGroupInput = () => {
-    setShowGroupInput(!showGroupInput);
-  };
+    setShowGroupInput(!showGroupInput)
+  }
 
   const handleAddGroup = e => {
     const group = {
       subjectId,
       name: groupName,
       props: { totalDuration: 0, remainingDuration: 0 },
-    };
-    dispatch(createAudioNotesGroup(group));
-    handleShowGroupInput();
-    setGroupName('');
-  };
+    }
+    dispatch(createAudioNotesGroup(group))
+    handleShowGroupInput()
+    setGroupName('')
+  }
 
   useEffect(() => {
-    if (groups.length) setGroupId(groups[groups.length - 1]._id);
-  }, [groups]);
+    if (!selectedGroup && groups.length) {
+      setGroupId(groups[groups.length - 1]._id)
+      dispatch(setSelectedGroup(groups[groups.length - 1]))
+    }
+  }, [groups])
 
   useEffect(() => {
-    dispatch(loadSubjects());
-    subjectId && dispatch(loadAudioNotes(subjectId));
+    dispatch(loadSubjects())
+    subjectId && dispatch(loadAudioNotes(subjectId))
     if (selectedSubject && selectedSubject.name !== 'All Subjects') {
-      setSubjectId(selectedSubject._id);
+      setSubjectId(selectedSubject._id)
     }
 
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then(function (mediaStreamObj) {
-        setMediaRecorder(new MediaRecorder(mediaStreamObj));
-      });
-  }, [subjectId, selectedSubject]);
+        setMediaRecorder(new MediaRecorder(mediaStreamObj))
+      })
+  }, [subjectId, selectedSubject])
 
   const record = e => {
-    setIsRecording(!isRecording);
+    setIsRecording(!isRecording)
 
-    let chunks = [];
+    let chunks = []
 
     if (!isRecording) {
-      mediaRecorder.start();
-      setAudioDuration(0);
-      setAudioCurrentTime(0);
-      setProgressPosition(0);
-      setIsPlaying(false);
+      mediaRecorder.start()
+      setAudioDuration(0)
+      setAudioCurrentTime(0)
+      setProgressPosition(0)
+      setIsPlaying(false)
       recordInterval = setInterval(() => {
-        setRecordingTime(prev => prev + 1);
-      }, 1000);
+        setRecordingTime(prev => prev + 1)
+      }, 1000)
       // console.log(mediaRecorder.state);
     } else {
-      mediaRecorder.stop();
-      clearInterval(recordInterval);
-      setRecordingTime(0);
+      mediaRecorder.stop()
+      clearInterval(recordInterval)
+      setRecordingTime(0)
       // console.log(mediaRecorder.state);
     }
 
     mediaRecorder.ondataavailable = e => {
-      chunks.push(e.data);
-    };
+      chunks.push(e.data)
+    }
 
     mediaRecorder.onstop = e => {
-      const blob = new Blob(chunks, { type: 'audio/wav' });
-      setAudioBlob(blob);
+      const blob = new Blob(chunks, { type: 'audio/wav' })
+      setAudioBlob(blob)
       getBlobDuration(blob).then(duration => {
-        setAudioDuration(Math.ceil(duration));
-      });
+        setAudioDuration(Math.ceil(duration))
+      })
 
-      chunks = [];
-      setAudioURL(window.URL.createObjectURL(blob));
-    };
-  };
+      chunks = []
+      setAudioURL(window.URL.createObjectURL(blob))
+    }
+  }
 
   const play = () => {
-    if (!audioURL) return;
-    setIsPlaying(!isPlaying);
+    if (!audioURL) return
+    setIsPlaying(!isPlaying)
     if (!isPlaying) {
-      audioEl.current.play();
+      audioEl.current.play()
     } else {
-      audioEl.current.pause();
+      audioEl.current.pause()
     }
-  };
+  }
 
   if (audioEl.current) {
     audioEl.current.ontimeupdate = () => {
@@ -161,134 +167,139 @@ function AudioNotesForm() {
         audioEl.current.duration !== Infinity
           ? Math.ceil(audioEl.current.duration)
           : audioDuration
-      );
-      setAudioCurrentTime(Math.ceil(audioEl.current.currentTime));
+      )
+      setAudioCurrentTime(Math.ceil(audioEl.current.currentTime))
       const position = Math.ceil(
         (100 * Math.ceil(audioEl.current.currentTime)) /
           (audioEl.current.duration !== Infinity
             ? Math.ceil(audioEl.current.duration)
             : audioDuration)
-      );
-      setProgressPosition(isNaN(position) ? 0 : position);
-    };
+      )
+      setProgressPosition(isNaN(position) ? 0 : position)
+    }
 
-    audioEl.current.onended = () => setIsPlaying(false);
+    audioEl.current.onended = () => setIsPlaying(false)
   }
 
   const seekTime = e => {
     audioEl.current.currentTime =
-      (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration;
-  };
+      (e.nativeEvent.offsetX / e.target.clientWidth) * audioDuration
+  }
 
   const handleSubmit = e => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData();
-    formData.append('audio', audioBlob);
+    const formData = new FormData()
+    formData.append('audio', audioBlob)
 
     const params = {
       subjectId,
       groupId,
       audioDuration,
-    };
+    }
 
-    dispatch(createAudioNote(formData, params));
-    setAudioBlob(null);
-  };
+    dispatch(createAudioNote(formData, params))
+    setAudioBlob(null)
+  }
 
   return (
     <form onSubmit={handleSubmit} style={{ marginTop: 12, ...appsFormStyle }}>
       <Select
-        name='subjectId'
-        label='Subject'
+        name="subjectId"
+        label="Subject"
         options={subjects}
         value={subjectId}
         required
         onChange={e => setSubjectId(e.target.value)}
       />
-      <div className='row'>
-        <div className='col-10 ps pe-0'>
+      <div className="row">
+        <div className="col-10 ps pe-0">
           <Select
-            name='groupId'
-            label='Group'
+            name="groupId"
+            label="Group"
             options={groups}
             value={groupId}
             required
-            onChange={e => setGroupId(e.target.value)}
+            onChange={e => {
+              setGroupId(e.target.value)
+              dispatch(
+                setSelectedGroup(groups.filter(g => g._id == e.target.value)[0])
+              )
+            }}
           />
         </div>
         <button
-          type='button'
-          className='btn btn-outline-dark ms-4 mt-4 mb-3 me-0 col-1'
+          type="button"
+          className="btn btn-outline-dark ms-4 mt-4 mb-3 me-0 col-1"
           onClick={handleShowGroupInput}
         >
-          <i className='fa fa-plus' aria-hidden='true'></i>
+          <i className="fa fa-plus" aria-hidden="true"></i>
         </button>
       </div>
 
       {showGroupInput && (
-        <div className='row'>
-          <div className='col-10 ps pe-0'>
+        <div className="row">
+          <div className="col-10 ps pe-0">
             <Input
-              type='text'
+              type="text"
               required
-              name='groupName'
-              label='Group name'
+              name="groupName"
+              label="Group name"
               value={groupName}
               onChange={e => setGroupName(e.target.value)}
             />
           </div>
           <button
-            type='button'
-            className='btn btn-outline-dark ms-4 mt-4 mb-3 me-0 col-1'
+            type="button"
+            className="btn btn-outline-dark ms-4 mt-4 mb-3 me-0 col-1"
             onClick={handleAddGroup}
             disabled={validateGroup()}
           >
-            <i className='fa fa-check' aria-hidden='true'></i>
+            <i className="fa fa-check" aria-hidden="true"></i>
           </button>
         </div>
       )}
 
-      <div className='audio-recorder'>
-        <div className='controls'>
+      <div className="audio-recorder">
+        <div className="controls">
           <button
-            type='button'
+            type="button"
             className={`record-btn ${isRecording ? 'rec' : 'stop-rec'}`}
             onClick={record}
           ></button>
           <button
             disabled={isRecording}
-            type='button'
-            className='play-btn'
+            type="button"
+            className="play-btn"
             onClick={play}
           >
             <i className={`fa fa-${isPlaying ? 'pause' : 'play'}`}></i>
           </button>
         </div>
         <input
-          type='range'
-          className='timeline'
-          max='100'
+          type="range"
+          className="timeline"
+          max="100"
           value={progressPosition}
           style={{ backgroundSize: `${progressPosition}% 100%` }}
           onClick={seekTime}
           readOnly
         />
 
-        <p className='time'>
+        <p className="time">
           {isRecording
             ? formatTime(recordingTime)
             : `${formatTime(audioCurrentTime)} / ${formatTime(audioDuration)}`}
         </p>
         <audio ref={audioEl} src={audioURL}></audio>
       </div>
-      <div className='d-grid gap-2'>
-        <button className='btn btn-dark mb-2' disabled={validateAudioNote()}>
+      <div className="d-grid gap-2">
+        <button className="btn btn-dark mb-2" disabled={validateAudioNote()}>
           Save
         </button>
       </div>
     </form>
-  );
+  )
 }
 
-export default AudioNotesForm;
+export default AudioNotesForm
